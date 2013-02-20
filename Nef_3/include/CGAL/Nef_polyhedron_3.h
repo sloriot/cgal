@@ -981,6 +981,137 @@ protected:
 
   };
 
+  template <class HDS>
+  class Build_polyhedron_from_shell : public CGAL::Modifier_base<HDS> {
+    struct Compare_handles{
+      template <class Handle>
+      bool operator()(Handle h1,Handle h2) const
+      {
+        return &(*h1) < &(*h2);
+      }
+    };    
+    
+    typedef std::map<Vertex_const_handle,int,Compare_handles> Vertex_index;
+    
+    template <class Output_iterator>
+    class Vertices_of_shell{
+      Output_iterator out_;
+    public:
+      Vertices_of_shell(Output_iterator out) : out_(out) {}
+      
+      void visit(Vertex_const_handle vh) {*out_++=vh;}
+      void visit(Halfedge_const_handle ) {}
+      void visit(Halffacet_const_handle ) {}
+      void visit(SHalfedge_const_handle ) {}
+      void visit(SHalfloop_const_handle ) {}
+      void visit(SFace_const_handle sf) {}
+    };
+    
+    class Visitor {
+
+      typedef typename CGAL::Triangulation_euclidean_traits_xy_3<Kernel>       XY;
+      typedef typename CGAL::Triangulation_euclidean_traits_yz_3<Kernel>       YZ;
+      typedef typename CGAL::Triangulation_euclidean_traits_xz_3<Kernel>       XZ;
+
+      Vertex_index& VI;
+      Polyhedron_incremental_builder_3<HDS>& B;
+     
+    public:
+      Visitor(Polyhedron_incremental_builder_3<HDS>& BB,
+              Vertex_index& vi) : VI(vi), B(BB){}
+
+      void visit(Halffacet_const_handle opposite_facet) {
+
+        CGAL_NEF_TRACEN("Build_polyhedron_from_shell: visit facet " << opposite_facet->plane());
+
+        CGAL_assertion(Infi_box::is_standard(opposite_facet->plane()));
+        
+        SHalfedge_const_handle se;
+        Halffacet_cycle_const_iterator fc;
+        
+        Halffacet_const_handle f = opposite_facet->twin();
+
+        SHalfedge_around_facet_const_circulator 
+          sfc1(f->facet_cycles_begin()), sfc2(sfc1);
+        
+        if(++f->facet_cycles_begin() != f->facet_cycles_end() ||
+           ++(++(++sfc1)) != sfc2) {
+          Vector_3 orth = f->plane().orthogonal_vector();
+          int c = CGAL::abs(orth[0]) > CGAL::abs(orth[1]) ? 0 : 1;
+          c = CGAL::abs(orth[2]) > CGAL::abs(orth[c]) ? 2 : c;
+          
+          if(c == 0) {
+            Triangulation_handler2<YZ> th(f);
+            th.handle_triangles(B, VI);
+          } else if(c == 1) {
+            Triangulation_handler2<XZ> th(f);
+            th.handle_triangles(B, VI);
+          } else if(c == 2) {
+            Triangulation_handler2<XY> th(f);
+            th.handle_triangles(B, VI);
+          } else
+            CGAL_error_msg( "wrong value");
+
+        } else {
+
+          B.begin_facet();
+          fc = f->facet_cycles_begin();
+          se = SHalfedge_const_handle(fc);
+          CGAL_assertion(se!=0);
+          SHalfedge_around_facet_const_circulator hc_start(se);
+          SHalfedge_around_facet_const_circulator hc_end(hc_start);
+          CGAL_For_all(hc_start,hc_end) {
+            CGAL_NEF_TRACEN("   add vertex " << hc_start->source()->center_vertex()->point());
+            B.add_vertex_to_facet(VI[hc_start->source()->center_vertex()]);
+          }
+          B.end_facet();
+        }
+      }
+
+      void visit(SFace_const_handle) {}
+      void visit(Halfedge_const_handle) {}
+      void visit(Vertex_const_handle) {}
+      void visit(SHalfedge_const_handle) {}
+      void visit(SHalfloop_const_handle) {}
+    };
+
+    const Nef_polyhedron_3& nef;
+    Shell_entry_const_iterator shell;
+  public:
+
+    Build_polyhedron_from_shell(const Nef_polyhedron_3& nef_,Shell_entry_const_iterator shell_) : 
+      nef(nef_),shell(shell_) {}
+    
+    void operator()( HDS& hds) {
+
+      Polyhedron_incremental_builder_3<HDS> B(hds, true);
+
+      
+      std::vector<Vertex_const_handle> vertices;
+      typedef std::back_insert_iterator< std::vector<Vertex_const_handle> > Output_it;
+      Vertices_of_shell<Output_it> indexer(std::back_inserter(vertices));
+      nef.visit_shell_objects(SFace_const_handle(shell),indexer);      
+      
+      B.begin_surface(vertices.size(),
+                      2*vertices.size()-4,
+                      3*vertices.size()-6);
+
+
+      
+      Vertex_index vmap;
+      int index=-1;
+      for (typename std::vector<Vertex_const_handle>::iterator it=vertices.begin();it!=vertices.end();++it){
+        vmap[*it]=++index;
+        B.add_vertex((*it)->point());
+      }
+
+      Visitor V(B,vmap);
+      nef.visit_shell_objects(SFace_const_handle(shell),V);
+      B.end_surface();
+    }
+
+  };  
+  
 
  public:
  void delegate( Modifier_base<SNC_structure>& modifier, 
@@ -1052,6 +1183,33 @@ protected:
    P.delegate(bp);
  }
 
+  template <class Polyhedron,class Polyhedron_output_iterator>
+  std::size_t convert_all_inner_shells_to_polyhedrons(Polyhedron_output_iterator out) const
+  {
+    Volume_const_iterator vol_it=this->volumes_begin(),vol_end=this->volumes_end();
+    if ( Infi_box::extended_kernel() ) ++vol_it; // skip Infi_box
+    CGAL_assertion ( vol_it != vol_end );
+    ++vol_it; // skip unbounded volume  
+    
+    std::size_t nb_poly=0;
+    
+    for (;vol_it!=vol_end;++vol_it)
+    {
+      Shell_entry_const_iterator  shell_it=vol_it->shells_begin(),
+                                  shell_end=vol_it->shells_end();
+      for (;shell_it!=shell_end;++shell_it)
+      {
+        Polyhedron P;
+        typedef Build_polyhedron_from_shell<typename Polyhedron::HalfedgeDS> Builder;
+        Builder builder(*this,shell_it);
+        P.delegate(builder);
+        ++nb_poly;
+        *out++=P;
+      }
+    }
+    return nb_poly;
+  }
+ 
   bool is_valid( bool verb = false, int level = 0) {
     // checks the combinatorial consistency.
     Verbose_ostream verr(verb);
