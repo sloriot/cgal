@@ -1004,14 +1004,14 @@ protected:
       void visit(Halffacet_const_handle ) {}
       void visit(SHalfedge_const_handle ) {}
       void visit(SHalfloop_const_handle ) {}
-      void visit(SFace_const_handle sf) {}
+      void visit(SFace_const_handle ) {}
     };
     
     class Visitor {
 
-      typedef typename CGAL::Triangulation_euclidean_traits_xy_3<Kernel>       XY;
-      typedef typename CGAL::Triangulation_euclidean_traits_yz_3<Kernel>       YZ;
-      typedef typename CGAL::Triangulation_euclidean_traits_xz_3<Kernel>       XZ;
+      typedef typename CGAL::Projection_traits_xy_3<Kernel>       XY;
+      typedef typename CGAL::Projection_traits_yz_3<Kernel>       YZ;
+      typedef typename CGAL::Projection_traits_xz_3<Kernel>       XZ;
 
       Vertex_index& VI;
       Polyhedron_incremental_builder_3<HDS>& B;
