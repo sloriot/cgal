@@ -28,6 +28,10 @@ namespace CGAL {
 template<class Polyhedron>
 class Nef_nary_intersection_3 {
 
+  struct Dummy{
+    void operator()(const Polyhedron&){}
+  };
+
   int inserted;
   std::list<Polyhedron> queue;
   typedef typename std::list<Polyhedron>::iterator pit;
@@ -55,13 +59,22 @@ class Nef_nary_intersection_3 {
     }
   }
 
-  Polyhedron get_intersection() {
+  template<class Visitor>
+  Polyhedron get_intersection(const Visitor& visitor) {
 
-    while(queue.size() > 1)
+    while(queue.size() > 1){
       intersect();
+      visitor(queue.front());
+    }
     inserted = 0;
     return queue.front();
   }
+
+  Polyhedron get_intersection() {
+    Dummy visitor;
+    return get_intersection(visitor);
+  }
+
 };
 
 } //namespace CGAL

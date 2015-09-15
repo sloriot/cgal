@@ -28,6 +28,10 @@ namespace CGAL {
 template<class Polyhedron>
 class Nef_nary_union_3 {
 
+  struct Dummy{
+    void operator()(const Polyhedron&){}
+  };
+
   int inserted;
   std::list<Polyhedron> queue;
   typedef typename std::list<Polyhedron>::iterator pit;
@@ -55,12 +59,20 @@ class Nef_nary_union_3 {
     }
   }
 
-  Polyhedron get_union() {
+  template <class Visitor>
+  Polyhedron get_union(const Visitor& visitor) {
 
-    while(queue.size() > 1)
+    while(queue.size() > 1){
       unite();
+      visitor(queue.front());
+    }
     inserted = 0;
     return queue.front();
+  }
+
+  Polyhedron get_union(){
+    Dummy visitor;
+    return get_union(visitor);
   }
 };
 
