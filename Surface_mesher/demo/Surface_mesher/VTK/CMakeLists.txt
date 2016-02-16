@@ -1,7 +1,5 @@
 PROJECT( mesh_a_3D_image )
 
-set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
-
 set(PACKAGE_ROOT ../../..)
 
 # Add several CGAL packages to the include and link paths,
