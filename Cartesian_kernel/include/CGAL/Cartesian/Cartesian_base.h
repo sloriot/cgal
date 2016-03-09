@@ -124,7 +124,7 @@ struct Cartesian_base
     typedef Iso_rectangleC2<Kernel>                     Iso_rectangle_2;
     typedef Aff_transformationC2<Kernel>                Aff_transformation_2;
 
-    typedef PointC3<Kernel>                             Point_3;
+    typedef PointC3<Kernel,FT>                             Point_3;
     typedef VectorC3<Kernel>                            Vector_3;
     typedef DirectionC3<Kernel>                         Direction_3;
     typedef LineC3<Kernel>                              Line_3;

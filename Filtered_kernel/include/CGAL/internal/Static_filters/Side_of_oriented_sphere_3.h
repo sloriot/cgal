@@ -24,6 +24,9 @@
 #include <CGAL/Profile_counter.h>
 #include <CGAL/internal/Static_filters/Static_filter_error.h>
 #include <CGAL/internal/Static_filters/tools.h>
+#include <CGAL/NewKernel_d/Vector/avx4.h>
+
+#define PRINTME(X) std::cout << #X << std::setprecision(17)<< " " << X << "\n";
 
 namespace CGAL { namespace internal { namespace Static_filters_predicates {
 
@@ -35,6 +38,14 @@ class Side_of_oriented_sphere_3
   typedef typename K_base::Side_of_oriented_sphere_3    Base;
 
 public:
+
+  static
+  __m256d avx2_abs(__m256d v)
+  {
+    __m256d m = {-0., -0., -0., -0.};
+    m = (__m256d)~(__m256i)(m);
+    return _mm256_and_pd(v,m);
+  }
 
   Oriented_side
   operator()(const Point_3 &p, const Point_3 &q, const Point_3 &r,
@@ -58,6 +69,168 @@ public:
           fit_in_double(get_approx(t).x(), tx) && fit_in_double(get_approx(t).y(), ty) &&
           fit_in_double(get_approx(t).z(), tz))
       {
+        #if 1
+	  CGAL_BRANCH_PROFILER_BRANCH_1(tmp);
+        __m256d pt=p.base-t.base;
+        __m256d qt=q.base-t.base;
+        __m256d rt=r.base-t.base;
+        __m256d st=s.base-t.base;
+
+
+          // Compute the semi-static bound.
+          __m256d max = avx2_abs(pt);
+
+          __m256d aqt = avx2_abs(qt);
+          __m256d art= avx2_abs(rt);
+          __m256d ast= avx2_abs(st);
+        
+          max = _mm256_max_pd(_mm256_max_pd(aqt,max), _mm256_max_pd(art,ast));
+
+
+
+          double eps = 1.2466136531027298e-13 * max[0] * max[1] * max[2];
+  
+
+          double mini = std::min(std::min(max[0],max[1]), max[2]);
+          double maxi = std::max(std::max(max[0],max[1]), max[2]);
+
+          double det = -Avx_vector_4::determinant_of_vectors(pt,qt,rt,st);
+
+
+#if 0
+{
+          double ptx = px - tx;
+          double pty = py - ty;
+          double ptz = pz - tz;
+          double pt2 = CGAL_NTS square(ptx) + CGAL_NTS square(pty)
+	             + CGAL_NTS square(ptz);
+          double qtx = qx - tx;
+          double qty = qy - ty;
+          double qtz = qz - tz;
+          double qt2 = CGAL_NTS square(qtx) + CGAL_NTS square(qty)
+	             + CGAL_NTS square(qtz);
+          double rtx = rx - tx;
+          double rty = ry - ty;
+          double rtz = rz - tz;
+         double rt2 = CGAL_NTS square(rtx) + CGAL_NTS square(rty)
+	             + CGAL_NTS square(rtz);
+          double stx = sx - tx;
+          double sty = sy - ty;
+          double stz = sz - tz;
+          double st2 = CGAL_NTS square(stx) + CGAL_NTS square(sty)
+	             + CGAL_NTS square(stz);
+
+          // Compute the semi-static bound.
+          double maxx = CGAL::abs(ptx);
+          double maxy = CGAL::abs(pty);
+          double maxz = CGAL::abs(ptz);
+
+          double aqtx = CGAL::abs(qtx);
+          double artx = CGAL::abs(rtx);
+          double astx = CGAL::abs(stx);
+
+          double aqty = CGAL::abs(qty);
+          double arty = CGAL::abs(rty);
+          double asty = CGAL::abs(sty);
+
+          double aqtz = CGAL::abs(qtz);
+          double artz = CGAL::abs(rtz);
+          double astz = CGAL::abs(stz);
+
+#ifdef CGAL_USE_SSE2_MAX
+          CGAL::Max<double> mmax; 
+          maxx = mmax(maxx, aqtx, artx, astx);
+          maxy = mmax(maxy, aqty, arty, asty);
+          maxz = mmax(maxz, aqtz, artz, astz);
+#else
+          if (maxx < aqtx) maxx = aqtx;
+          if (maxx < artx) maxx = artx;
+          if (maxx < astx) maxx = astx;
+
+          if (maxy < aqty) maxy = aqty;
+          if (maxy < arty) maxy = arty;
+          if (maxy < asty) maxy = asty;
+
+          if (maxz < aqtz) maxz = aqtz;
+          if (maxz < artz) maxz = artz;
+          if (maxz < astz) maxz = astz;
+#endif
+
+          double eps_tmp = 1.2466136531027298e-13 * maxx * maxy * maxz;
+  
+#ifdef CGAL_USE_SSE2_MAX
+          /*
+          CGAL::Min<double> mmin; 
+          double tmp = mmin(maxx, maxy, maxz);
+          maxz = mmax(maxx, maxy, maxz);
+          maxx = tmp;
+          */
+          sse2minmax(maxx,maxy,maxz);
+          // maxy can contain ANY element
+          
+#else
+          // Sort maxx < maxy < maxz.
+          if (maxx > maxz)
+              std::swap(maxx, maxz);
+          if (maxy > maxz)
+              std::swap(maxy, maxz);
+          else if (maxy < maxx)
+              std::swap(maxx, maxy);
+#endif
+          
+        
+          double det_tmp = CGAL::determinant(ptx,pty,ptz,pt2,
+                                         rtx,rty,rtz,rt2,
+                                         qtx,qty,qtz,qt2,
+                                         stx,sty,stz,st2);
+          
+        
+//~ PRINTME(det_tmp);
+//~ PRINTME(det);
+//~ PRINTME(eps_tmp);
+//~ PRINTME(eps);
+//~ PRINTME(maxx);
+//~ PRINTME(mini);
+//~ PRINTME(maxz);
+//~ PRINTME(maxi);
+//~ std::cout << std::endl;
+          
+          if (maxx < 1e-58) /* sqrt^5(min_double/eps) */ {
+            if (maxx == 0)
+            {
+              if (mini!=0) std::cerr <<"ERROR1\n";
+            }
+          }
+          // Protect against overflow in the computation of det.
+          else if (maxz < 1e61) /* sqrt^5(max_double/4 [hadamard]) */ {
+            eps *= (maxz * maxz);
+            if (det_tmp > eps_tmp)  {if (!(det> eps))std::cerr <<"ERROR2\n";}
+            else
+            if (det_tmp < -eps_tmp) if (!(det<-eps)) std::cerr <<"ERROR3\n";
+          }
+          
+}
+
+
+
+
+
+
+#endif
+          // Protect against underflow in the computation of eps.
+          if (mini < 1e-58) /* sqrt^5(min_double/eps) */ {
+            if (mini == 0)
+              return ON_ORIENTED_BOUNDARY;
+          }
+          // Protect against overflow in the computation of det.
+          else if (maxi < 1e61) /* sqrt^5(max_double/4 [hadamard]) */ {
+            eps *= (maxi * mini);
+            if (det > eps)  return ON_POSITIVE_SIDE;
+            if (det < -eps) return ON_NEGATIVE_SIDE;
+          }
+
+	  CGAL_BRANCH_PROFILER_BRANCH_2(tmp);        
+        #else
 	  CGAL_BRANCH_PROFILER_BRANCH_1(tmp);
 
           double ptx = px - tx;
@@ -156,6 +329,7 @@ public:
           }
 
 	  CGAL_BRANCH_PROFILER_BRANCH_2(tmp);
+          #endif
       }
       return Base::operator()(p, q, r, s, t);
   }

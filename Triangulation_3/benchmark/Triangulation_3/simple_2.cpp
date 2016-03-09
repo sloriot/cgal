@@ -5,6 +5,13 @@
 #include <CGAL/Timer.h>
 #include <iostream>
 
+void *malloc(size_t size)
+{
+  return aligned_alloc(32, size);
+
+}
+
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel  K;
 typedef CGAL::Delaunay_triangulation_3<K> DT;
 typedef K::Point_3 Point_3;

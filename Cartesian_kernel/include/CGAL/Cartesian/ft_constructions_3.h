@@ -32,32 +32,32 @@
 
 namespace CGAL {
 
-template < class K >
+template < class K, class FT >
 inline
 typename K::FT
-squared_distance(const PointC3<K> &p,
-                 const PointC3<K> &q)
+squared_distance(const PointC3<K,FT> &p,
+                 const PointC3<K,FT> &q)
 {
   return squared_distanceC3(p.x(), p.y(), p.z(), q.x(), q.y(), q.z());
 }
 
-template < class K >
+template < class K, class FT >
 inline
 typename K::FT
 scaled_distance_to_plane(const PlaneC3<K> &h,
-                         const PointC3<K> &p)
+                         const PointC3<K,FT> &p)
 {
   return scaled_distance_to_planeC3(h.a(), h.b(), h.c(), h.d(),
                                     p.x(), p.y(), p.z());
 }
 
-template < class K >
+template < class K, class FT >
 inline
 typename K::FT
-scaled_distance_to_plane(const PointC3<K> &hp,
-                         const PointC3<K> &hq,
-                         const PointC3<K> &hr,
-                         const PointC3<K> &p)
+scaled_distance_to_plane(const PointC3<K,FT> &hp,
+                         const PointC3<K,FT> &hq,
+                         const PointC3<K,FT> &hr,
+                         const PointC3<K,FT> &p)
 {
   return scaled_distance_to_planeC3(hp.x(), hp.y(), hp.z(),
                                     hq.x(), hq.y(), hq.z(),

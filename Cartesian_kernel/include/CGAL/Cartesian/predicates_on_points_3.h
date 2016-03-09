@@ -30,71 +30,71 @@
 
 namespace CGAL {
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-equal_xy(const PointC3<K> &p, const PointC3<K> &q)
+equal_xy(const PointC3<K,FT> &p, const PointC3<K,FT> &q)
 {
   return K().equal_xy_3_object()(p, q);
 }
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-equal_xyz(const PointC3<K> &p, const PointC3<K> &q)
+equal_xyz(const PointC3<K,FT> &p, const PointC3<K,FT> &q)
 {
   return p.x() == q.x() && p.y() == q.y() && p.z() == q.z();
 }
 
-template < class K >
+template < class K, class FT >
 inline
 Comparison_result
-compare_xy(const PointC3<K> &p, const PointC3<K> &q)
+compare_xy(const PointC3<K,FT> &p, const PointC3<K,FT> &q)
 {
   return K().compare_xy_3_object()(p, q);
 }
 
-template < class K >
+template < class K, class FT >
 inline
 Comparison_result
-compare_lexicographically_xy(const PointC3<K> &p, const PointC3<K> &q)
+compare_lexicographically_xy(const PointC3<K,FT> &p, const PointC3<K,FT> &q)
 {
   return K().compare_xy_3_object()(p, q);
 }
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-lexicographically_xy_smaller_or_equal(const PointC3<K> &p, 
-				      const PointC3<K> &q)
+lexicographically_xy_smaller_or_equal(const PointC3<K,FT> &p, 
+				      const PointC3<K,FT> &q)
 { 
   return compare_lexicographically_xy(p, q) != LARGER;
 }
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-lexicographically_xy_smaller(const PointC3<K> &p, 
-			     const PointC3<K> &q)
+lexicographically_xy_smaller(const PointC3<K,FT> &p, 
+			     const PointC3<K,FT> &q)
 { 
   return K().less_xy_3_object()(p, q);
 }
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-strict_dominance(const PointC3<K> &p,
-		 const PointC3<K> &q)
+strict_dominance(const PointC3<K,FT> &p,
+		 const PointC3<K,FT> &q)
 {
   return strict_dominanceC3(p.x(), p.y(), p.z(),
 			    q.x(), q.y(), q.z());
 }
 
-template < class K >
+template < class K, class FT >
 inline
 bool
-dominance(const PointC3<K> &p,
-	  const PointC3<K> &q)
+dominance(const PointC3<K,FT> &p,
+	  const PointC3<K,FT> &q)
 {
   return dominanceC3(p.x(), p.y(), p.z(),
 		     q.x(), q.y(), q.z());

@@ -29,11 +29,11 @@
 
 namespace CGAL {
 
-template < class K >
+template < class K, class FT >
 inline
 typename K::Oriented_side
 side_of_oriented_plane(const PlaneC3<K> &h,
-                       const PointC3<K> &p)
+                       const PointC3<K,FT> &p)
 { 
   return side_of_oriented_planeC3(h.a(), h.b(), h.c(), h.d(),
 	                          p.x(), p.y(), p.z());

@@ -26,10 +26,11 @@
 #define CGAL_CARTESIAN_POINT_3_H
 
 #include <CGAL/Origin.h>
+#include <x86intrin.h>
 
 namespace CGAL {
 
-template < class R_ >
+template < class R_, class FT_ >
 class PointC3
 {
   typedef typename R_::Vector_3             Vector_3;
@@ -42,7 +43,7 @@ class PointC3
 public:
   typedef typename Vector_3::Cartesian_const_iterator Cartesian_const_iterator;
   typedef R_                                R;
-  typedef typename R_::FT                   FT;
+  typedef FT_ FT;
 
   PointC3() {}
 
@@ -68,71 +69,157 @@ public:
       return base.z();
   }
 
-  const FT & hx() const
-  {
-      return base.hx();
-  }
-  const FT & hy() const
-  {
-      return base.hy();
-  }
-  const FT & hz() const
-  {
-      return base.hz();
-  }
-  const FT & hw() const
-  {
-      return base.hw();
-  }
+  //~ const FT & hx() const
+  //~ {
+      //~ return base.hx();
+  //~ }
+  //~ const FT & hy() const
+  //~ {
+      //~ return base.hy();
+  //~ }
+  //~ const FT & hz() const
+  //~ {
+      //~ return base.hz();
+  //~ }
+  //~ const FT & hw() const
+  //~ {
+      //~ return base.hw();
+  //~ }
 
-  const FT & cartesian(int i) const;
-  const FT & operator[](int i) const;
-  const FT & homogeneous(int i) const;
+  //~ const FT & cartesian(int i) const;
+  //~ const FT & operator[](int i) const;
+  //~ const FT & homogeneous(int i) const;
 
-  Cartesian_const_iterator cartesian_begin() const 
-  {
-    return base.cartesian_begin(); 
-  }
+  //~ Cartesian_const_iterator cartesian_begin() const 
+  //~ {
+    //~ return base.cartesian_begin(); 
+  //~ }
 
-  Cartesian_const_iterator cartesian_end() const 
-  {
-    return base.cartesian_end();
-  }
+  //~ Cartesian_const_iterator cartesian_end() const 
+  //~ {
+    //~ return base.cartesian_end();
+  //~ }
 
-  int dimension() const
-  {
-      return base.dimension();
-  }
+  //~ int dimension() const
+  //~ {
+      //~ return base.dimension();
+  //~ }
 
-  Point_3 transform(const Aff_transformation_3 &t) const
-  {
-    return t.transform(*this);
-  }
+  //~ Point_3 transform(const Aff_transformation_3 &t) const
+  //~ {
+    //~ return t.transform(*this);
+  //~ }
 };
 
-template < class R >
-inline
-const typename PointC3<R>::FT &
-PointC3<R>::cartesian(int i) const
+template < class R_ >
+class PointC3<R_,double>
 {
-  return base.cartesian(i);
-}
+  typedef typename R_::Vector_3             Vector_3;
+  typedef typename R_::Point_3              Point_3;
+  typedef typename R_::Aff_transformation_3 Aff_transformation_3;
 
-template < class R >
-inline
-const typename PointC3<R>::FT &
-PointC3<R>::operator[](int i) const
-{
-  return base[i];
-}
+  // We do not use reference counting here as it is done at the Vector_3 level.
+public:
+  __m256d base;
 
-template < class R >
-inline
-const typename PointC3<R>::FT &
-PointC3<R>::homogeneous(int i) const
-{
-  return base.homogeneous(i);
-}
+  typedef typename Vector_3::Cartesian_const_iterator Cartesian_const_iterator;
+  typedef R_                                R;
+  typedef typename R_::FT                   FT;
+
+  PointC3() {}
+
+  PointC3(const Origin &)
+    : base{0,0,0,0} {}
+
+  PointC3(const FT &x, const FT &y, const FT &z)
+    : base{x, y, z,x*x+y*y+z*z} {}
+
+  //~ PointC3(const FT &x, const FT &y, const FT &z, const FT &w)
+    //~ : base(x, y, z, w) {}
+
+  const FT& x() const
+  {
+      return base[0];
+  }
+  const FT& y() const
+  {
+      return base[1];
+  }
+  const FT& z() const
+  {
+      return base[2];
+  }
+
+  const FT& sqsum() const
+  {
+    return base[3];
+  }
+
+  //~ const FT & hx() const
+  //~ {
+      //~ return base.hx();
+  //~ }
+  //~ const FT & hy() const
+  //~ {
+      //~ return base.hy();
+  //~ }
+  //~ const FT & hz() const
+  //~ {
+      //~ return base.hz();
+  //~ }
+  //~ const FT & hw() const
+  //~ {
+      //~ return base.hw();
+  //~ }
+
+  //~ const FT & cartesian(int i) const;
+  //~ const FT & operator[](int i) const;
+  //~ const FT & homogeneous(int i) const;
+
+  //~ Cartesian_const_iterator cartesian_begin() const 
+  //~ {
+    //~ return base.cartesian_begin(); 
+  //~ }
+
+  //~ Cartesian_const_iterator cartesian_end() const 
+  //~ {
+    //~ return base.cartesian_end();
+  //~ }
+
+  //~ int dimension() const
+  //~ {
+      //~ return base.dimension();
+  //~ }
+
+  //~ Point_3 transform(const Aff_transformation_3 &t) const
+  //~ {
+    //~ return t.transform(*this);
+  //~ }
+};
+
+//~ template < class R >
+//~ inline
+//~ const typename PointC3<R>::FT &
+//~ PointC3<R>::cartesian(int i) const
+//~ {
+  //~ return base.cartesian(i);
+//~ }
+
+//~ template < class R >
+//~ inline
+//~ const typename PointC3<R>::FT &
+//~ PointC3<R>::operator[](int i) const
+//~ {
+  //~ return base[i];
+//~ }
+
+//~ template < class R >
+//~ inline
+//~ const typename PointC3<R>::FT &
+//~ PointC3<R>::homogeneous(int i) const
+//~ {
+  //~ return base.homogeneous(i);
+//~ }
 
 } //namespace CGAL
 
