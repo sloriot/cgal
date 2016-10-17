@@ -21,6 +21,8 @@
 #define CGAL_POINT_SET_PROPERTY_MAP_H
 
 #include <CGAL/value_type_traits.h>
+#include <boost/iterator/transform_iterator.hpp>
+#include <CGAL/Iterator_range.h>
 
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 104000
@@ -346,6 +348,24 @@ typename Pointer_property_map<T>::const_type
 make_property_map(const std::vector<T>& v)
 {
   return make_property_map(&v[0]);
+}
+
+/// \ingroup PkgProperty_map
+/// creates a range on the fly calling `get(pmap,e)`
+/// for each `e` element of `range`
+/// \tparam InputRange a model of `ConstRange`
+/// \tparam `PropertyMap` a model of `ReadablePropertyMap` with the value-type
+///          of `InputRange` as key.
+template<class InputRange, class PropertyMap>
+Iterator_range< boost::transform_iterator<Property_map_to_unary_function<PropertyMap>,
+                                          typename InputRange::const_iterator> >
+transform_range_using_property_map(const Range& range,
+                                   const PropertyMap& pmap)
+{
+  Property_map_to_unary_function<PropertyMap> f(pmap);
+  return make_range(
+    boost::make_transform_iterator( boost::begin(range), f),
+    boost::make_transform_iterator( boost::end(range), f ) );
 }
 
 } // namespace CGAL
