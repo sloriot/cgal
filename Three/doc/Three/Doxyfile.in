@@ -8,6 +8,6 @@ INPUT        += ${CGAL_Polyhedron_DEMO_DIR}/Polyhedron/Scene.h \
 EXAMPLE_PATH = ${CGAL_PACKAGE_DIR}/demo
 IMAGE_PATH = ${CGAL_PACKAGE_DIR}/doc/Three/fig/
 
-EXTRACT_ALL                =  false
+EXTRACT_ALL =  NO
 HIDE_UNDOC_MEMBERS         =  true
 HIDE_UNDOC_CLASSES         =  true

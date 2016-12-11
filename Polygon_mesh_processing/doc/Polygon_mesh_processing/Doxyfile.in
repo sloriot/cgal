@@ -2,7 +2,7 @@
 
 PROJECT_NAME = "CGAL ${CGAL_DOC_VERSION} - Polygon Mesh Processing"
 # custom options for this package
-EXTRACT_ALL                =  false
+EXTRACT_ALL =  NO
 HIDE_UNDOC_CLASSES         =  true
 WARN_IF_UNDOCUMENTED       =  false
 

@@ -1,5 +1,5 @@
 @INCLUDE = ${CGAL_DOC_PACKAGE_DEFAULTS}
 
 PROJECT_NAME = "CGAL ${CGAL_DOC_VERSION} - Convex Decomposition of Polyhedra"
-EXTRACT_ALL                =  false
+EXTRACT_ALL =  NO
 HIDE_UNDOC_CLASSES         =  true

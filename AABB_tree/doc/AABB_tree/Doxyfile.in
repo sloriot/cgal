@@ -2,7 +2,7 @@
 
 PROJECT_NAME = "CGAL ${CGAL_DOC_VERSION} - 3D Fast Intersection and Distance Computation (AABB Tree)"
 
-EXTRACT_ALL                =  false
+EXTRACT_ALL =  NO
 HIDE_UNDOC_MEMBERS         =  true
 HIDE_UNDOC_CLASSES         =  true
 

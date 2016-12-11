@@ -3,7 +3,7 @@
 PROJECT_NAME = "CGAL ${CGAL_DOC_VERSION} - 3D Minkowski Sum of Polyhedra"
 HIDE_UNDOC_MEMBERS         =  true
 HIDE_UNDOC_CLASSES         =  true
-EXTRACT_ALL                =  false
+EXTRACT_ALL =  NO
 
 
 
