@@ -84,6 +84,8 @@ struct Construct_circumcenter_d {
 template<typename ForwardIterator>
 Point_d operator()(ForwardIterator first, ForwardIterator last);
 };
+/*! Additional functor provided by this model
+ */
 struct Compute_squared_radius_d {
 /*! returns the radius of the sphere defined by `A=tuple[first,last)`. The sphere is centered in the affine hull of A and passes through all the points of A. The order of the points of A does not matter.
     \pre A is affinely independant.
@@ -102,7 +104,9 @@ struct Side_of_bounded_sphere_d {
 template<class ForwardIterator>
 Bounded_side operator()(ForwardIterator first, ForwardIterator last, const Point_d&p);
 };
+/// returns a function object
 Construct_circumcenter_d construct_circumcenter_d_object();
+/// returns a function object
 Compute_squared_radius_d compute_squared_radius_d_object();
 }; /* end Epick_d */
 } /* end namespace CGAL */

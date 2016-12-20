@@ -109,13 +109,13 @@ Test for non-equality.
 bool operator!=(const Line_arc_2<CircularKernel> &la1, const Line_arc_2<CircularKernel> &la2); 
 
 /*!
-
+reads a line arc from a stream
 \relates Line_arc_2
 */ 
 istream& operator>> (std::istream& is, Line_arc_2 & ca); 
 
 /*!
-
+writes a line arc into a stream
 \relates Line_arc_2 
 */ 
 ostream& operator<< (std::ostream& os, const Line_arc_2 & ca); 

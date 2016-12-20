@@ -13,23 +13,23 @@ template< typename d, typename CMap >
 class Dart {
 public:
 /*!
-
+Handle type
 */
 typedef CMap::Dart_handle Dart_handle;
 
 /*!
-
+Const handle type
 */
 typedef CMap::Dart_const_handle Dart_const_handle;
 
 /*!
-
+Handle attribute type
 */
 template <unsigned int i>
 using Attribute_handle = CMap::Attribute_handle<i>;
 
 /*!
-
+Const handle attribute type
 */
 template <unsigned int i>
 using Attribute_const_handle = CMap::Attribute_const_handle<i>;

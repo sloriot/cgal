@@ -30,12 +30,12 @@ public:
 /// @{
 
 /*!
-
+Self
 */ 
 typedef Envelope_diagram_2<EnvTraits> Self; 
 
 /*!
-
+Base class
 */ 
 typedef Arrangement_2<EnvTraits> Base; 
 
@@ -69,6 +69,7 @@ Envelope_diagram_2 (EnvTraits *traits);
 
 /// @} 
 
+  /// Vertex class
   class Vertex : public Arrangement_2<EnvTraits>::Vertex {
   public:
     /// \name Access Functions 
@@ -99,6 +100,7 @@ Envelope_diagram_2 (EnvTraits *traits);
     /// @}
   };
 
+  /// Halfedge class
   class Halfedge : public Arrangement_2<EnvTraits>::Halfedge {
   public:
     /// \name Access Functions 
@@ -128,6 +130,7 @@ Envelope_diagram_2 (EnvTraits *traits);
     /// @}
   };
 
+  /// Face class
   class Face : public Arrangement_2<EnvTraits>::Face {
   public:
     /// \name Access Functions 

@@ -35,12 +35,12 @@ public:
 /// @{
 
 /*!
-
+Field number type
 */ 
 typedef FieldNumberType FT; 
 
 /*!
-
+Ring number type
 */ 
 typedef FieldNumberType RT; 
 

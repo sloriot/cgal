@@ -76,7 +76,6 @@ class OR_property_map {
 /// \cgalModels `ReadablePropertyMap`
 ///
 /// \tparam InputIterator an input iterator
-/// \endcond
 template<class InputIterator>
 struct Input_iterator_property_map{
   typedef InputIterator key_type;
@@ -89,6 +88,7 @@ struct Input_iterator_property_map{
   reference
   get(Input_iterator_property_map<InputIterator>,InputIterator it){ return *it; }
 };
+/// \endcond
 
 /// \ingroup PkgProperty_map
 /// Property map that converts a `T*` pointer (or in general an iterator
@@ -137,11 +137,10 @@ struct Identity_property_map
   /// @param k a key which is returned as mapped value.
   value_type& operator[](key_type& k) const { return k; }
 
-  typedef Identity_property_map<T> Self;
   /// \name Put/get free functions
   /// @{
-  friend reference get(const Self&,const key_type& k) {return k;}
-  friend void put(const Self&,key_type& k, const value_type& v) {k=v;}
+  friend reference get(const Identity_property_map<T>&,const key_type& k) {return k;}
+  friend void put(const Identity_property_map<T>&,key_type& k, const value_type& v) {k=v;}
   /// @}
 };
 
@@ -174,11 +173,10 @@ struct First_of_pair_property_map
   /// @param pair a key whose first item is accessed
   value_type& operator[](key_type& pair) const { return pair.first; }
 
-  typedef First_of_pair_property_map<Pair> Self;
   /// \name Put/get free functions
   /// @{
-  friend reference get(const Self&,const key_type& k) {return k.first;}
-  friend void put(const Self&,key_type& k, const value_type& v) {k.first=v;}
+  friend reference get(const First_of_pair_property_map<Pair>&,const key_type& k) {return k.first;}
+  friend void put(const First_of_pair_property_map<Pair>&,key_type& k, const value_type& v) {k.first=v;}
   /// @}
 };
 
@@ -213,11 +211,10 @@ struct Second_of_pair_property_map
   /// @param pair a key whose second item is accessed
   value_type& operator[](key_type& pair) const { return pair.second; }
 
-  typedef Second_of_pair_property_map<Pair> Self;
   /// \name Put/get free functions
   /// @{
-  friend reference get(const Self&,const key_type& k) {return k.second;}
-  friend void put(const Self&,key_type& k, const value_type& v) {k.second=v;}
+  friend reference get(const Second_of_pair_property_map<Pair>&,const key_type& k) {return k.second;}
+  friend void put(const Second_of_pair_property_map<Pair>&,key_type& k, const value_type& v) {k.second=v;}
   /// @}
 };
 
@@ -250,11 +247,10 @@ struct Nth_of_tuple_property_map
   /// @param tuple a key whose Nth item is accessed
   value_type& operator[](key_type& tuple) const { return tuple.template get<N>(); }
 
-  typedef Nth_of_tuple_property_map<N,Tuple> Self;
   /// \name Put/get free functions
   /// @{
-  friend reference get(const Self&,const key_type& k) {return k.template get<N>();}
-  friend void put(const Self&,key_type& k, const value_type& v) {k.template get<N>()=v;}
+  friend reference get(const Nth_of_tuple_property_map<N,Tuple>&,const key_type& k) {return k.template get<N>();}
+  friend void put(const Nth_of_tuple_property_map<N,Tuple>&,key_type& k, const value_type& v) {k.template get<N>()=v;}
   /// @}
 };
 
@@ -270,17 +266,20 @@ Nth_of_tuple_property_map<N, Tuple>
 
 /// \ingroup PkgProperty_map
 /// Struct that turns a property map into a unary functor with
-/// `operator()(key k)` calling the get function with `k`
+/// `operator()(key k)` calling the `get` function with `k`
 template <class PropertyMap>
-struct Property_map_to_unary_function{
+class Property_map_to_unary_function{
   typedef typename boost::property_traits<PropertyMap>::key_type argument_type;
   typedef typename boost::property_traits<PropertyMap>::reference result_type;
 
   PropertyMap map;
+public:
+  /// Constructor
   Property_map_to_unary_function(PropertyMap m=PropertyMap())
     : map(m)
   {}
 
+  /// returns the value of `get(map, a)`, `map` being the property map provided in the constructor
   template <class KeyType>
   result_type
   operator()(const KeyType& a) const

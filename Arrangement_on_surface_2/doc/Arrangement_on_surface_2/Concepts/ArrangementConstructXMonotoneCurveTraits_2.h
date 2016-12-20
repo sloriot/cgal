@@ -22,7 +22,9 @@ construct an \f$ x\f$-monotone curve from two points.
 */
 class ArrangementConstructXMonotoneCurveTraits_2 {
 public:
+  /// x-monotone curve type
   typedef ArrTraits::X_monotone_curve_2                 X_monotone_curve_2;
+  /// point type
   typedef ArrTraits::Point_2                            Point_2;
 
   /*!

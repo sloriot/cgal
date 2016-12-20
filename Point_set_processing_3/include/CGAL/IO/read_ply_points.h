@@ -450,6 +450,7 @@ public:
       m_normal_pmap (normal_pmap)
   { }
 
+  /// see `PlyInterpreter`
   bool is_applicable (Ply_reader& reader)
   {
     return reader.does_tag_exist<FT> ("x")
@@ -457,6 +458,7 @@ public:
       && reader.does_tag_exist<FT> ("z");
   }
   
+  /// see `PlyInterpreter`
   void process_line (Ply_reader& reader)
   {
     FT x = (FT)0.,y = (FT)0., z = (FT)0.,

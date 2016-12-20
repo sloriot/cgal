@@ -72,26 +72,19 @@ typedef unspecified_type Bound;
 /// \name Accessing functor objects 
 /// @{
 
-/*!
-
-*/ 
+/// function constructing a function object
 Construct_curve_2 construct_curve_2_object() const; 
 
-/*!
-
-*/ 
+/// function constructing a function object
 Construct_point_2 construct_point_2_object() const; 
 
-/*!
-
-*/ 
+/// function constructing a function object
 Construct_x_monotone_segment_2 construct_x_monotone_segment_2_object() const; 
 
 /// @}
 
 /*!
-
-
+Function object to construct 2D curves
 */
 class Construct_curve_2 {
 public:
@@ -121,8 +114,7 @@ Curve_2 operator() (std::string s);
 }; /* end Arr_algebraic_segment_traits_2::Construct_curve_2 */
 
 /*!
-
-
+Function object to construct points
 */
 class Construct_point_2 {
 public:
@@ -172,8 +164,7 @@ Point_2 operator() (int x, int y);
 }; /* end Arr_algebraic_segment_traits_2::Construct_point_2 */
 
 /*!
-
-
+Functor to construct x-monotone segments
 */
 class Construct_x_monotone_segment_2 {
 public:

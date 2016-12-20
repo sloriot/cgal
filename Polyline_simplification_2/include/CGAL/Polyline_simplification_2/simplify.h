@@ -54,6 +54,8 @@ class Polygon_2;
 
 namespace Polyline_simplification_2 {
 
+#ifndef DOXYGEN_RUNNING
+  
 template <typename PCT, typename CostFunction, typename StopFunction>
 class Polyline_simplification_2
 {
@@ -313,7 +315,8 @@ operator()()
   }
 
   };
-
+#endif // DOXYGEN_RUNNING
+  
 /*!
 \ingroup  PkgPolylineSimplification2Functions
 

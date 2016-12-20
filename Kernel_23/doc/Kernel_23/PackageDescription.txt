@@ -59,14 +59,14 @@
 
 - `CGAL::Cartesian<FieldNumberType>`
 - `CGAL::Cartesian_converter<K1, K2, NTConverter>`
-- `CGAL::cartesian_to_homogeneous`
+- \link kernel_conversion `CGAL::cartesian_to_homogeneous` \endlink
 - `CGAL::Filtered_kernel<CK>`
 - `CGAL::Filtered_kernel_adaptor<CK>`
 - `CGAL::Filtered_predicate<EP, FP, C2E, C2F>`
 - `CGAL::Homogeneous<RingNumberType>`
 - `CGAL::Homogeneous_converter<K1, K2, RTConverter, FTConverter>`
-- `CGAL::homogeneous_to_cartesian`
-- `CGAL::homogeneous_to_quotient_cartesian`
+- \link kernel_conversion `CGAL::homogeneous_to_cartesian` \endlink
+- \link kernel_conversion `CGAL::homogeneous_to_quotient_cartesian` \endlink
 - `CGAL::Kernel_traits<T>`
 - `CGAL::Simple_cartesian<FieldNumberType>`
 - `CGAL::Simple_homogeneous<RingNumberType>`

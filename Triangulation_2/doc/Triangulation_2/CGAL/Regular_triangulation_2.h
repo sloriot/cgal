@@ -12,6 +12,7 @@ template < typename Traits >
 struct Weighted_point_mapper_2
   :   public Traits
 {
+  /// Point_2 type
   typedef typename Traits::Weighted_point_2 Point_2;
 };
 

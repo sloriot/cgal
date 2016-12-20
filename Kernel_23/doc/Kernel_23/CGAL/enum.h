@@ -37,29 +37,34 @@ Bounded_side opposite(const Bounded_side &o);
 
 /*!
 \ingroup kernel_enums
+Enum for angles
 \sa `angle_grp`
  */
 enum Angle {OBTUSE, RIGHT, ACUTE};
 
 /*!
 \ingroup kernel_enums
+Enum for bounded sides
 \sa `CGAL::opposite(const Bounded_side& o)`
 */
 enum Bounded_side {ON_UNBOUNDED_SIDE, ON_BOUNDARY, ON_BOUNDED_SIDE};
 
 /*!
 \ingroup kernel_enums
+Enum for comparision results
 */
 enum Comparison_result { SMALLER, EQUAL, LARGER };
 
 /*!
 \ingroup kernel_enums
+Enum for signs
 \sa `CGAL::Orientation`
 */
 enum  Sign { NEGATIVE, ZERO, POSITIVE };
 
 /*!
 \ingroup kernel_enums
+Enum for orientations
 \sa `CGAL::LEFT_TURN` 
 \sa `CGAL::RIGHT_TURN` 
 \sa `CGAL::COLLINEAR`
@@ -71,11 +76,16 @@ typedef Sign Orientation;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 */
-enum Oriented_side {ON_NEGATIVE_SIDE, ON_ORIENTED_BOUNDARY, ON_POSITIVE_SIDE };
+enum Oriented_side {ON_NEGATIVE_SIDE, ///< indicates when falling on the negative side
+                    ON_ORIENTED_BOUNDARY, ///< indicates when fallig on the boundary
+                    ON_POSITIVE_SIDE  ///< indicates when falling on the positive side
+  };
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 
 \sa `CGAL::COUNTERCLOCKWISE`
 */
@@ -83,12 +93,14 @@ const CGAL::Orientation CLOCKWISE = NEGATIVE;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 \sa `CGAL::CLOCKWISE`
 */
 const CGAL::Orientation COUNTERCLOCKWISE = POSITIVE;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 \sa `CGAL::LEFT_TURN` 
 \sa `CGAL::RIGHT_TURN` 
 */
@@ -96,6 +108,7 @@ const CGAL::Orientation COLLINEAR = ZERO;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 
 \sa `CGAL::COLLINEAR` 
 
@@ -105,6 +118,7 @@ const CGAL::Orientation LEFT_TURN = POSITIVE;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 
 \sa `CGAL::COLLINEAR`
 \sa `CGAL::LEFT_TURN`
@@ -114,16 +128,19 @@ const CGAL::Orientation RIGHT_TURN = NEGATIVE;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 */
 const CGAL::Orientation COPLANAR  = ZERO;
 
 /*!
 \ingroup kernel_enums
+Convenience symbolic constant
 */
 const CGAL::Orientation DEGENERATE = ZERO;
 
 /*!
 \ingroup kernel_enums
+Parameter space enum
 */
 enum Box_parameter_space_2
      {

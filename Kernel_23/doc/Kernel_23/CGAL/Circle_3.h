@@ -160,7 +160,7 @@ bool operator == (const Circle_3<Kernel>& c1,
 Circle_3<Kernel> const& c2); 
 
 /*!
-
+return true if `c1` and `c2` are different and false otherwise.
 \relates Circle_3 
 */ 
 bool operator != (const Circle_3<Kernel> & c1, 

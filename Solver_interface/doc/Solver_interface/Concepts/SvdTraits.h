@@ -56,26 +56,26 @@ Concept of vector type used by the concept `SvdTraits`.
 class SvdTraits::Vector {
 public:
   /*!
-    initialize all the elements of the vector to zero. 
+    initializes all the elements of the vector to zero. 
   */ 
   Vector(size_t n); 
   /*!
-
+    returns the size of the vector
    */ 
   size_t size(); 
 
   /*!
-    return the `i`th entry, `i` from `0` to `size()-1`. 
+    returns the `i`th entry, `i` from `0` to `size()-1`. 
   */ 
   FT operator()(size_t i); 
 
   /*!
-    set the `i`'th entry to `value`. 
+    sets the `i`'th entry to `value`. 
   */ 
   void set(size_t i, const FT value); 
 
   /*!
-    return the vector as an array. 
+    returns the vector as an array. 
   */ 
   FT* vector(); 
 };
@@ -90,28 +90,28 @@ Concept of matrix type used by the concept `SvdTraits`.
 class SvdTraits::Matrix {
 public:
   /*!
-    initialize all the entries of the matrix to zero. 
+    initializes all the entries of the matrix to zero. 
   */ 
   Matrix(size_t n1, size_t n2); 
 
   /*!
-
+    returns the number of rows
    */ 
   size_t number_of_rows(); 
 
   /*!
-
+     returns the number of columns
    */ 
   size_t number_of_columns(); 
 
   /*!
-    return the entry at row `i` and column `j`, `i` from `0` to `number_of_rows - 1`, 
+    returns the entry at row `i` and column `j`, `i` from `0` to `number_of_rows - 1`, 
     `j` from `0` to `number_of_columns - 1`. 
   */ 
   FT operator()(size_t i, size_t j); 
 
   /*!
-    set the entry at row `i` and column `j` to `value`. 
+    sets the entry at row `i` and column `j` to `value`. 
   */ 
   void set(size_t i, size_t j, const FT value); 
 };

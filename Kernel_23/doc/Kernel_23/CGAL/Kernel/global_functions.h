@@ -146,7 +146,7 @@ const CGAL::Point_3<Kernel> &r);
 
 /// \defgroup barycenter_grp CGAL::barycenter()
 /// \ingroup kernel_global_function
-/// \sa \link centroid `CGAL::centroid()`  \endlink
+/// \sa \link centroid_grp `CGAL::centroid()`  \endlink
 /// @{
 
 /*!
@@ -327,7 +327,7 @@ const CGAL::Plane_3<Kernel> &h2);
 
 /// \defgroup centroid_grp CGAL::centroid()
 /// \ingroup kernel_global_function
-/// \sa \link barycenter `CGAL::barycenter()` \endlink
+/// \sa \link barycenter_grp `CGAL::barycenter()` \endlink
 /// @{
 
 /*!

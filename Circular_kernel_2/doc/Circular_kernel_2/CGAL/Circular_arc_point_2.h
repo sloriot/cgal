@@ -92,13 +92,13 @@ bool operator>=(const Circular_arc_point_2<CircularKernel> &p,
 const Circular_arc_point_2<CircularKernel> &q); 
 
 /*!
-
+reads a circular arc from a stream
 \relates Circular_arc_point_2 
 */ 
 istream& operator>> (std::istream& is, Circular_arc_point_2 & cp); 
 
 /*!
-
+writes a circular arc into a stream
 \relates Circular_arc_point_2 
 */ 
 ostream& operator<< (std::ostream& os, const Circular_arc_point_2 &ce); 

@@ -35,12 +35,12 @@ public:
 /// @{
 
 /*!
-
+Field number type
 */ 
 typedef Quotient<RingNumberType> FT; 
 
 /*!
-
+Ring number type
 */ 
 typedef RingNumberType RT; 
 

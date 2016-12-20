@@ -273,6 +273,7 @@ namespace CGAL {
       /// @} /* end of operations */
     }; /* end of Arr_polyline_traits_2::Push_front_2 */
 
+    /// Function object to trim a x-monotone curve
     class Trim_2 {
     public:
       /*! Obtain a trimmed version of the polycurve with src and tgt as end

@@ -23,6 +23,7 @@ template< typename Kernel, typename Container >
 class Greene_convex_decomposition_2 {
 public:
 
+  /// Polygon type
   typedef CGAL::Polygon_2<Kernel,Container> Polygon_2;
 
 /// @}
@@ -58,6 +59,7 @@ template< typename Kernel, typename Container >
 class Hertel_Mehlhorn_convex_decomposition_2 {
 public:
 
+  /// Polygon type
   typedef CGAL::Polygon_2<Kernel,Container> Polygon_2;
 
 /// @}
@@ -90,6 +92,7 @@ template< typename Kernel, typename Container >
 class Optimal_convex_decomposition_2 {
 public:
 
+  /// Polygon type
   typedef CGAL::Polygon_2<Kernel,Container> Polygon_2;
 
 /// @}

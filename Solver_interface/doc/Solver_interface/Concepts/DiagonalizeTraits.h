@@ -26,9 +26,11 @@ template <typename FT, unsigned int dim = 3>
 class DiagonalizeTraits
 {
 public:
-
+  /// Vector type
   typedef cpp11::array<FT, dim> Vector;
+  /// Matrix type
   typedef cpp11::array<FT, dim*dim> Matrix;
+  /// Covariance matrix type
   typedef cpp11::array<FT, (dim * (dim+1) / 2)> Covariance_matrix;
 
   /// fill `eigenvalues` with the eigenvalues of the covariance matrix represented by `cov`.
