@@ -118,9 +118,22 @@ Polyhedron_scan_OFF<HDS>:: operator()( HDS& target) {
             m_in.clear( std::ios::badbit);
             return;
         }
+        std::set<std::size_t> ids_seen;
         for ( std::size_t j = 0; j < no; j++) {
             std::size_t index;
             scanner.scan_facet_vertex_index( index, i);
+            if (!ids_seen.insert(index).second)
+            {
+              if ( scanner.verbose()) {
+                  std::cerr << " " << std::endl;
+                  std::cerr << "Polyhedron_scan_OFF<Traits>::" << std::endl;
+                  std::cerr << "operator()(): input error: facet " << i
+                       << " used several time the same vertex." << std::endl;
+              }
+              B.rollback();
+              m_in.clear( std::ios::badbit);
+              return;
+            }
             B.add_vertex_to_facet( index);
         }
         //TO DO : Insert read color

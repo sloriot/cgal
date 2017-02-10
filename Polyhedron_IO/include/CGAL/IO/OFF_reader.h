@@ -84,10 +84,12 @@ namespace CGAL{
 
       scanner.scan_facet( no, i);
       read_OFF_internal::resize(polygons[i], no);
+      std::set<std::size_t> ids_seen;
       for(std::size_t j = 0; j < no; ++j) {
         std::size_t id;
         scanner.scan_facet_vertex_index(id, i);
-        if(id < scanner.size_of_vertices())
+        if(id < scanner.size_of_vertices() &&
+           ids_seen.insert(id).second ) //avoid facets with duplicated vertices
         {
           polygons[i][j] = id;
         }
@@ -134,10 +136,12 @@ namespace CGAL{
       scanner.scan_facet( no, i);
 
       read_OFF_internal::resize(polygons[i], no);
+      std::set<std::size_t> ids_seen;
       for(std::size_t j = 0; j < no; ++j) {
         std::size_t id;
         scanner.scan_facet_vertex_index(id, i);
-        if(id < scanner.size_of_vertices())
+        if(id < scanner.size_of_vertices() &&
+           ids_seen.insert(id).second ) //avoid facets with duplicated vertices
         {
           polygons[i][j] = id;
         }
