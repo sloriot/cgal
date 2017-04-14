@@ -326,7 +326,7 @@ class SNC_simplify_base : public SNC_decorator<SNC_structure> {
     }
   }
   
-  bool simplify() {
+  bool simplify(bool simplify_collinear_edges) {
 
     bool update_facets  =  false;
     bool update_sfaces  =  false;
@@ -395,48 +395,50 @@ class SNC_simplify_base : public SNC_decorator<SNC_structure> {
       this->sncp()->reset_object_list(f->boundary_entry_objects());
     }
     
+    if (simplify_collinear_edges)
+    {
     /* 
      * Edges simplification
      */
-
-    Halfedge_iterator e(D.halfedges_begin());
-    while( e != D.halfedges_end() && e->is_twin())
-      e++;
-    while( e != (*this->sncp()).halfedges_end()) {
-      CGAL_assertion( !e->is_twin());
-      Halfedge_iterator e_next(e);
-      do 
-	e_next++;
-      while( e_next != D.halfedges_end() && e_next->is_twin());
-      SM_decorator SD(&*e->source());
-      if( SD.is_isolated(e)) {
-	if(e->mark() == e->incident_sface()->volume()->mark()) {
-	  CGAL_NEF_TRACEN("removing pair ");
-	  this->sncp()->delete_halfedge_pair(e);
-	  update_facets = true;
-	}
-      } 
-      else { 
-	if( D.has_outdeg_two(e)) {
-	  SHalfedge_handle e1(SD.first_out_edge(e)); 
-	  SHalfedge_handle e2(SD.cyclic_adj_succ(e1));
-	  if( e1->circle()==e2->twin()->circle() &&
-	      e1->mark()==e->mark() && e1->mark()==e2->mark()) {
-	    Halffacet_handle f1(e1->facet()); 
-	    Halffacet_handle f2(e2->facet());
-	    CGAL_NEF_TRACEN("UNION of f1 & f2->twin()");
-	    merge_sets( f1, f2->twin(), hash_facet, uf_facet);
-	    merge_sets( f1->twin(), f2, hash_facet, uf_facet);
-	    CGAL_NEF_TRACEN("removing e");
-	    remove_edge_and_merge_facet_cycles(e);
-	    update_facets = true;
-	  }
-	}
+      Halfedge_iterator e(D.halfedges_begin());
+      while( e != D.halfedges_end() && e->is_twin())
+        e++;
+      while( e != (*this->sncp()).halfedges_end()) {
+        CGAL_assertion( !e->is_twin());
+        Halfedge_iterator e_next(e);
+        do 
+          e_next++;
+        while( e_next != D.halfedges_end() && e_next->is_twin());
+        SM_decorator SD(&*e->source());
+        if( SD.is_isolated(e)) {
+          if(e->mark() == e->incident_sface()->volume()->mark()) {
+            CGAL_NEF_TRACEN("removing pair ");
+            this->sncp()->delete_halfedge_pair(e);
+            update_facets = true;
+          }
+        } 
+        else { 
+          if( D.has_outdeg_two(e)) {
+            SHalfedge_handle e1(SD.first_out_edge(e)); 
+            SHalfedge_handle e2(SD.cyclic_adj_succ(e1));
+            if( e1->circle()==e2->twin()->circle() &&
+                e1->mark()==e->mark() && e1->mark()==e2->mark()) {
+              Halffacet_handle f1(e1->facet()); 
+              Halffacet_handle f2(e2->facet());
+              CGAL_NEF_TRACEN("UNION of f1 & f2->twin()");
+              merge_sets( f1, f2->twin(), hash_facet, uf_facet);
+              merge_sets( f1->twin(), f2, hash_facet, uf_facet);
+              CGAL_NEF_TRACEN("removing e");
+              remove_edge_and_merge_facet_cycles(e);
+              update_facets = true;
+            }
+          }
+        }
+        e = e_next;
       }
-      e = e_next;
-    }
 
-    update_facets = vertex_simplification() || update_facets;
+      update_facets = vertex_simplification() || update_facets;
+    }
     purge_no_find_objects(hash_volume, hash_facet, hash_sface, uf_volume, 
 			  uf_facet, uf_sface);
     create_boundary_links_forall_sfaces( hash_sface, uf_sface);
@@ -721,9 +723,9 @@ class SNC_simplify<SNC_indexed_items, SNC_structure>
  public:
   SNC_simplify(SNC_structure& sncs) : Base(sncs) {}
 
-  bool simplify() {
+  bool simplify(bool simplify_collinear_edges) {
 
-    bool result = Base::simplify();
+    bool result = Base::simplify(simplify_collinear_edges);
 
     Halffacet_iterator fit;
     CGAL_forall_halffacets(fit, *this) {

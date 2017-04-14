@@ -185,9 +185,10 @@ class SNC_indexed_items {
     typedef Halfedge_base<Refs>          Base;
     typedef typename Refs::Mark          Mark;
     int index;
+    static const int default_index = -33;
   public:
-    SVertex() : Base(), index(0) {}
-    SVertex(Mark m) : Base(m), index(0) {}
+    SVertex() : Base(), index(default_index) {}
+    SVertex(Mark m) : Base(m), index(default_index) {}
     SVertex(const SVertex<Refs>& sv) : Base(sv) { index = sv.index; }
     SVertex<Refs>& operator=(const SVertex<Refs>& sv) {
       (Base&) *this = (Base) sv;
@@ -198,6 +199,7 @@ class SNC_indexed_items {
     void set_index(int idx = Index_generator::get_unique_index()) 
     { index = idx; }
     int get_index() const { return index; }
+    bool has_default_index() const { return index==default_index; }
   };
 };
 

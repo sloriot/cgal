@@ -95,7 +95,7 @@ public:
     : Base(M,G) {}
 
   template <typename Association>
-  void simplify(Association&) {
+  void simplify(Association&, bool simplify_collinear_edges) {
     CGAL_NEF_TRACEN("simplifying"); 
     
     typedef typename CGAL::Union_find<SFace_handle>::handle Union_find_handle;
@@ -180,18 +180,21 @@ public:
 	  store_sm_boundary_object(v,v->incident_sface()); // isolated, but should stay
       } else { // v not isolated
 	SHalfedge_handle e2 = first_out_edge(v), e1 = e2->sprev();
-	if ( has_outdeg_two(v) &&
-	     v->mark() == e1->mark() && e1->mark() == e2->mark() &&
-	     e1->circle() == e2->circle() ) {
-	  CGAL_NEF_TRACEN("collinear at "<<PH(v)<<PH(e1)<<PH(e2));
-	  if ( e1 == e2 ){ 
-	    CGAL_NEF_TRACEN("edge_to_loop"); 
-	    convert_edge_to_loop(e1);
-	  } else {
-	    CGAL_NEF_TRACEN("merge_edge_pairs"); 
-	    merge_edge_pairs_at_target(e1); 
-	  } 	
-	}
+        if (simplify_collinear_edges)
+        {
+        	if ( has_outdeg_two(v) &&
+        	     v->mark() == e1->mark() && e1->mark() == e2->mark() &&
+        	     e1->circle() == e2->circle() ) {
+        	  CGAL_NEF_TRACEN("collinear at "<<PH(v)<<PH(e1)<<PH(e2));
+        	  if ( e1 == e2 ){ 
+        	    CGAL_NEF_TRACEN("edge_to_loop"); 
+        	    convert_edge_to_loop(e1);
+        	  } else {
+        	    CGAL_NEF_TRACEN("merge_edge_pairs"); 
+        	    merge_edge_pairs_at_target(e1); 
+        	  } 	
+          }
+        }
       }
     }
     
@@ -362,7 +365,7 @@ class SNC_SM_overlayer<SNC_indexed_items, SM_decorator_>
   }
 
   template <typename Association>
-  void simplify(Association& A) {
+  void simplify(Association& A, bool simplify_collinear_edges) {
     CGAL_NEF_TRACEN("simplifying"); 
     
     typedef typename CGAL::Union_find<SFace_handle>::handle Union_find_handle;
@@ -447,17 +450,23 @@ class SNC_SM_overlayer<SNC_indexed_items, SM_decorator_>
 	  store_sm_boundary_object(v,v->incident_sface()); // isolated, but should stay
       } else { // v not isolated
 	SHalfedge_handle e2 = first_out_edge(v), e1 = e2->sprev();
-	if ( has_outdeg_two(v) &&
-	     v->mark() == e1->mark() && e1->mark() == e2->mark() &&
-	     e1->circle() == e2->circle() ) {
-	  CGAL_NEF_TRACEN("collinear at "<<PH(v)<<PH(e1)<<PH(e2));
-	  if ( e1 == e2 ){ 
-	    CGAL_NEF_TRACEN("edge_to_loop"); 
-	    convert_edge_to_loop(e1);
-	  } else {
-	    CGAL_NEF_TRACEN("merge_edge_pairs"); 
-	    merge_edge_pairs_at_target(e1, A); 
-	  } 	
+        // the sphere map is always cut in to hemisphere. The cut introduce some dummy
+        // vertices that are usually removed during the simplification step. Vertices with
+        // the default index are those vertices.
+        if (simplify_collinear_edges || v->has_default_index())
+        {
+          if ( has_outdeg_two(v) &&
+               v->mark() == e1->mark() && e1->mark() == e2->mark() &&
+               e1->circle() == e2->circle() ) {
+            CGAL_NEF_TRACEN("collinear at "<<PH(v)<<PH(e1)<<PH(e2));
+            if ( e1 == e2 ){ 
+              CGAL_NEF_TRACEN("edge_to_loop"); 
+              convert_edge_to_loop(e1);
+            } else {
+              CGAL_NEF_TRACEN("merge_edge_pairs"); 
+              merge_edge_pairs_at_target(e1, A); 
+            }
+          }
 	}
       }
     }

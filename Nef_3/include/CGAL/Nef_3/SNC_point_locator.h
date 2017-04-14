@@ -99,21 +99,25 @@ public:
   virtual Object_handle shoot(const Ray_3& s, int mask=255) const = 0;
 
   virtual void intersect_with_edges( Halfedge_handle edge,
-                                     const Intersection_call_back& call_back) 
+                                     const Intersection_call_back& call_back,
+                                     bool simplify_collinear_edges) 
     const = 0;
 
   virtual void intersect_with_facets( Halfedge_handle edge,
-                                      const Intersection_call_back& call_back)
+                                      const Intersection_call_back& call_back,
+                                      bool simplify_collinear_edges)
     const = 0;
 
   virtual void intersect_with_edges_and_facets( Halfedge_handle edge,
-	const Intersection_call_back& call_back) const = 0;
+	const Intersection_call_back& call_back,
+	bool simplify_collinear_edges) const = 0;
 
   class Intersection_call_back 
   {
   public:
     virtual void operator()( Halfedge_handle edge, Object_handle object, 
-                             const Point_3& intersection_point) const = 0;
+                             const Point_3& intersection_point,
+                             bool simplify_collinear_edges) const = 0;
     
     virtual ~Intersection_call_back() {}
   };
@@ -978,7 +982,8 @@ public:
   }
 
   virtual void intersect_with_edges_and_facets( Halfedge_handle e0,
-	const typename SNC_point_locator::Intersection_call_back& call_back) const {
+	const typename SNC_point_locator::Intersection_call_back& call_back,
+	bool simplify_collinear_edges) const {
 
     CGAL_NEF_TIMER(it_t.start());
     CGAL_assertion( initialized);
@@ -1015,7 +1020,7 @@ public:
         if( is.does_intersect_internally( s, Segment_3(e->source()->point(),
 	                                               e->twin()->source()->point()), q)) {
           q = normalized(q);
-          call_back( e0, make_object(Halfedge_handle(e)), q);
+          call_back( e0, make_object(Halfedge_handle(e)), q, simplify_collinear_edges);
           _CGAL_NEF_TRACEN("edge intersects edge "<<' '<<&*e<< Segment_3(e->source()->point(),
                                                                 e->twin()->source()->point())<<" on "<<q);
         }
@@ -1028,7 +1033,7 @@ public:
         Point_3 q;
         if( is.does_intersect_internally( s, f, q) ) {
           q = normalized(q);
-          call_back( e0, make_object(Halffacet_handle(f)), q);
+          call_back( e0, make_object(Halffacet_handle(f)), q, simplify_collinear_edges);
           _CGAL_NEF_TRACEN("edge intersects facet on plane "<<f->plane()<<" on "<<q);
         }
       }
@@ -1061,7 +1066,8 @@ public:
   }
 
   virtual void intersect_with_edges( Halfedge_handle e0,
-    const typename SNC_point_locator::Intersection_call_back& call_back) const {
+    const typename SNC_point_locator::Intersection_call_back& call_back,
+    bool simplify_collinear_edges) const {
     CGAL_NEF_TIMER(it_t.start());
     CGAL_assertion( initialized);
     _CGAL_NEF_TRACEN( "intersecting edge: "<<&*e0<<' '<<Segment_3(e0->source()->point(),
@@ -1092,7 +1098,7 @@ public:
         if( is.does_intersect_internally( s, Segment_3(e->source()->point(),
 	                                               e->twin()->source()->point()), q)) {
           q = normalized(q);
-          call_back( e0, make_object(Halfedge_handle(e)), q);
+          call_back( e0, make_object(Halfedge_handle(e)), q, simplify_collinear_edges);
           _CGAL_NEF_TRACEN("edge intersects edge "<<' '<<&*e<< Segment_3(e->source()->point(),
                                                                 e->twin()->source()->point())<<" on "<<q);
         }
@@ -1117,7 +1123,8 @@ public:
   }
 
   virtual void intersect_with_facets( Halfedge_handle e0, 
-    const typename SNC_point_locator::Intersection_call_back& call_back) const {
+    const typename SNC_point_locator::Intersection_call_back& call_back,
+    bool simplify_collinear_edges) const {
     CGAL_NEF_TIMER(it_t.start());
     CGAL_assertion( initialized);
     _CGAL_NEF_TRACEN( "intersecting edge: "<< Segment_3(e0->source()->point(),
@@ -1153,7 +1160,7 @@ public:
         Point_3 q;
         if( is.does_intersect_internally( s, f, q) ) {
           q = normalized(q);
-          call_back( e0, make_object(Halffacet_handle(f)), q);
+          call_back( e0, make_object(Halffacet_handle(f)), q, simplify_collinear_edges);
           _CGAL_NEF_TRACEN("edge intersects facet on plane "<<f->plane()<<" on "<<q);
         }
       }

@@ -135,7 +135,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
   template <typename Selection, typename Association>
   Vertex_handle binop_local_views( Vertex_const_handle v0, Vertex_const_handle v1,
 				   const Selection& BOP, SNC_structure& rsnc
-				   ,Association& A)
+				   ,Association& A, bool simplify_collinear_edges)
     /*{\opOverlays two spheres maps.}*/ {
     //    CGAL_NEF_SETDTHREAD(19*43*131);
     
@@ -147,7 +147,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
     SM_overlayer O(&*v01);
     O.subdivide( &*v0, &*v1, A);
     O.select( BOP);
-    O.simplify(A);
+    O.simplify(A, simplify_collinear_edges);
 
     return v01;
   }
@@ -188,7 +188,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
       snc0(s0), snc1(s1), bop(_bop), result(r),
       inverse_order(invert_order), A(Ain) {}
 
-      void operator()(Halfedge_handle e0, Object_handle o1, const Point_3& ip)
+      void operator()(Halfedge_handle e0, Object_handle o1, const Point_3& ip, bool simplify_collinear_edges)
       const {
           
 #ifdef CGAL_NEF3_DUMP_STATISTICS
@@ -232,7 +232,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 	v1 = D.create_local_view_on( p, e);
 	if( inverse_order)
 	  std::swap( v0, v1);
-	D.binop_local_views( v0, v1, bop, result,A);
+	D.binop_local_views( v0, v1, bop, result,A,simplify_collinear_edges);
 	result.delete_vertex(v0);
 	result.delete_vertex(v1);
 #endif
@@ -245,14 +245,14 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 	v1 = D.create_local_view_on( p, f);
 	if( inverse_order)
 	  std::swap( v0, v1);
-	D.binop_local_views( v0, v1, bop, result,A);
+	D.binop_local_views( v0, v1, bop, result,A,simplify_collinear_edges);
 	result.delete_vertex(v0);
 	result.delete_vertex(v1);	
 #else // CGAL_NEF3_OVERLAY_BY_HAND_OFF
 	SNC_constructor C(result);
 	Sphere_map* M0 = C.create_edge_facet_overlay(e0, f, p, bop, inverse_order, A);
 	SM_overlayer O(M0);
-	O.simplify(A);
+	O.simplify(A, simplify_collinear_edges);
 #endif // CGAL_NEF3_OVERLAY_BY_HAND_OFF
       }
       else 
@@ -278,7 +278,8 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 		     const SNC_point_locator* pl1,
 		     const SNC_structure& snc2,
 		     const SNC_point_locator* pl2,
-		     const Selection& BOP)
+		     const Selection& BOP,
+         bool simplify_collinear_edges)
       /*{\opPerforms a binary operation defined on |BOP| between two
       SNC structures.  The input structures are not modified and the
       result of the operation is stored in |result|.
@@ -368,19 +369,19 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 #endif
       if( CGAL::assign( v, o)) {
 	CGAL_NEF_TRACEN("p0 found on vertex");
-	binop_local_views( v0, v, BOP, *this->sncp(),A);
+	binop_local_views( v0, v, BOP, *this->sncp(),A,simplify_collinear_edges);
 	ignore[v] = true;
       }
       else if( CGAL::assign( e, o)) {
 	CGAL_NEF_TRACEN("p0 found on edge");
 	Vertex_handle v1 = create_local_view_on( p0, e);
-	binop_local_views( v0, v1, BOP, *this->sncp(),A);
+	binop_local_views( v0, v1, BOP, *this->sncp(),A,simplify_collinear_edges);
 	this->sncp()->delete_vertex(v1);
       }
       else if( CGAL::assign( f, o)) {
 	CGAL_NEF_TRACEN("p0 found on facet" << f->plane());
 	Vertex_handle v1 = create_local_view_on( p0, f);
-	binop_local_views( v0, v1, BOP, *this->sncp(),A);
+	binop_local_views( v0, v1, BOP, *this->sncp(),A,simplify_collinear_edges);
 	this->sncp()->delete_vertex(v1);
       }
       else if( CGAL::assign( c, o)) {
@@ -392,7 +393,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 #endif
 #ifdef CGAL_NEF3_OVERLAY_BY_HAND_OFF
 	  Vertex_handle v1 = create_local_view_on( p0, c);
-	  binop_local_views( v0, v1, BOP, *this->sncp(),A);
+	  binop_local_views( v0, v1, BOP, *this->sncp(),A,simplify_collinear_edges);
 	  this->sncp()->delete_vertex(v1);
 #else
 	  SNC_constructor C(*this->sncp());
@@ -400,7 +401,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 	  SM_decorator SM(&*v1);
 	  SM.change_marks(BOP, c->mark());
 	  SM_overlayer O(&*v1);
-	  O.simplify(A);
+	  O.simplify(A, simplify_collinear_edges);
 #endif
 	} else {
 	  CGAL_NEF_TRACEN("vertex in volume deleted " << std::endl << 
@@ -445,13 +446,13 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
       if( CGAL::assign( e, o)) {
 	CGAL_NEF_TRACEN("p1 found on edge");
 	Vertex_handle v1 = create_local_view_on( p1, e);
-	binop_local_views( v1, v0, BOP, *this->sncp(),A);
+	binop_local_views( v1, v0, BOP, *this->sncp(),A,simplify_collinear_edges);
 	this->sncp()->delete_vertex(v1);
       } 
       else if( CGAL::assign( f, o)) {
 	CGAL_NEF_TRACEN("p1 found on facet");
 	Vertex_handle v1 = create_local_view_on( p1, f);
-	binop_local_views( v1, v0, BOP, *this->sncp(),A);
+	binop_local_views( v1, v0, BOP, *this->sncp(),A,simplify_collinear_edges);
 	this->sncp()->delete_vertex(v1);
       } 
       else if( CGAL::assign( c, o)) {
@@ -464,7 +465,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 	{
 #ifdef CGAL_NEF3_OVERLAY_BY_HAND_OFF
 	  Vertex_handle v1 = create_local_view_on( p1, c);
-	  binop_local_views( v1, v0, BOP, *this->sncp(),A);
+	  binop_local_views( v1, v0, BOP, *this->sncp(),A,simplify_collinear_edges);
 	  this->sncp()->delete_vertex(v1);	  
 #else
 	  SNC_constructor C(*this->sncp());
@@ -472,7 +473,7 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
 	  SM_decorator SM(&*v1);
 	  SM.change_marks(c->mark(), BOP);
 	  SM_overlayer O(&*v1);
-	  O.simplify(A);
+	  O.simplify(A, simplify_collinear_edges);
 #endif
 	} else {
 	  CGAL_NEF_TRACEN("vertex in volume deleted " << std::endl << 
@@ -562,7 +563,8 @@ class Binary_operation : public CGAL::SNC_decorator<Map> {
         binop_intersection_test_segment_tree<SNC_decorator> binop_box_intersection;
         binop_box_intersection(call_back0, call_back1, 
 			       const_cast<SNC_structure&>(snc1), 
-			       const_cast<SNC_structure&>(snc2));
+			       const_cast<SNC_structure&>(snc2),
+			       simplify_collinear_edges);
 #endif
 
 #ifdef CGAL_NEF3_TIMER_INTERSECTION
