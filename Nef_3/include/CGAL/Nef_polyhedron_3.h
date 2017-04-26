@@ -601,7 +601,7 @@ protected:
  template <class T1, class T2,
            template <class T31, class T32, class T33>
            class T3, class T4 >
- Nef_polyhedron_3( CGAL::Polyhedron_3<T1,T2,T3,T4>& P, bool simplify_collinear_edges=true) {
+ Nef_polyhedron_3( CGAL::Polyhedron_3<T1,T2,T3,T4>& P, bool simplify_redundant_edges=true) {
     CGAL_NEF_TRACEN("construction from Polyhedron_3");
     SNC_structure rsnc;
     *this = Nef_polyhedron_3(rsnc, new SNC_point_locator_default, false);
@@ -609,23 +609,23 @@ protected:
     polyhedron_3_to_nef_3
       <CGAL::Polyhedron_3<T1,T2,T3,T4>, SNC_structure>( P, snc());
     build_external_structure();
-    simplify(simplify_collinear_edges);
+    simplify(simplify_redundant_edges);
     CGAL::Mark_bounded_volumes<Nef_polyhedron_3> mbv(true);
-    delegate(mbv,false,true,simplify_collinear_edges);
+    delegate(mbv,false,true,simplify_redundant_edges);
     set_snc(snc());
   }
 
  template <class PolygonMesh>
- explicit Nef_polyhedron_3(const PolygonMesh& pm, bool simplify_collinear_edges = true) {
+ explicit Nef_polyhedron_3(const PolygonMesh& pm, bool simplify_redundant_edges = true) {
     CGAL_NEF_TRACEN("construction from PolygonMesh with internal index maps");
     SNC_structure rsnc;
     *this = Nef_polyhedron_3(rsnc, new SNC_point_locator_default, false);
     initialize_infibox_vertices(EMPTY);
     polygon_mesh_to_nef_3<PolygonMesh, SNC_structure>(const_cast<PolygonMesh&>(pm), snc());
     build_external_structure();
-    simplify(simplify_collinear_edges);
+    simplify(simplify_redundant_edges);
     CGAL::Mark_bounded_volumes<Nef_polyhedron_3> mbv(true);
-    delegate(mbv,false,true,simplify_collinear_edges);
+    delegate(mbv,false,true,simplify_redundant_edges);
     set_snc(snc());
   }
 
@@ -633,7 +633,7 @@ protected:
  explicit Nef_polyhedron_3(const PolygonMesh& pm,
                            const HalfedgeIndexMap& him,
                            const FaceIndexMap& fim,
-                           bool simplify_collinear_edges = true,
+                           bool simplify_redundant_edges = true,
                            typename boost::disable_if <
                               boost::is_same<FaceIndexMap, bool>
                            >::type* = NULL // disambiguate with another constructor
@@ -645,22 +645,22 @@ protected:
     initialize_infibox_vertices(EMPTY);
     polygon_mesh_to_nef_3<PolygonMesh, SNC_structure>(const_cast<PolygonMesh&>(pm), snc(), fim, him);
     build_external_structure();
-    simplify(simplify_collinear_edges);
+    simplify(simplify_redundant_edges);
     CGAL::Mark_bounded_volumes<Nef_polyhedron_3> mbv(true);
-    delegate(mbv,false,true,simplify_collinear_edges);
+    delegate(mbv,false,true,simplify_redundant_edges);
     set_snc(snc());
   }
   
  Nef_polyhedron_3(const Nef_polyhedron& N, 
 		  SFace_const_iterator sf,
-		  bool simplify_collinear_edges=true) 
+		  bool simplify_redundant_edges=true) 
  {
    SNC_structure rsnc;
    *this = Nef_polyhedron_3(rsnc, new SNC_point_locator_default, false);
    initialize_infibox_vertices(EMPTY);
    shell_to_nef_3(N, sf, snc());
    build_external_structure();
-   simplify(simplify_collinear_edges);
+   simplify(simplify_redundant_edges);
    CGAL::Mark_bounded_volumes<Nef_polyhedron_3> mbv(true);
    delegate(mbv);
    set_snc(snc());
@@ -1068,7 +1068,7 @@ protected:
  void delegate( Modifier_base<SNC_structure>& modifier, 
 		bool compute_external = false, 
 		bool do_simplify = true,
-		bool simplify_collinear_edges = true)
+		bool simplify_redundant_edges = true)
 {
    // calls the `operator()' of the `modifier'. Precondition: The
    // `modifier' returns a consistent representation.
@@ -1081,7 +1081,7 @@ protected:
      build_external_structure();
    }
    if(do_simplify)
-     simplify(simplify_collinear_edges);
+     simplify(simplify_redundant_edges);
    CGAL_expensive_postcondition( is_valid());
  }
 
@@ -1095,7 +1095,7 @@ protected:
  void delegate( Modifier_base<SNC_and_PL>& modifier, 
 		bool compute_external = false,
 		bool do_simplify = false,
-		bool simplify_collinear_edges = true)
+		bool simplify_redundant_edges = true)
  {
    // calls the `operator()' of the `modifier'. Precondition: The
    // `modifier' returns a consistent representation.
@@ -1109,7 +1109,7 @@ protected:
      build_external_structure();
    }
    if(do_simplify)
-     simplify(simplify_collinear_edges);
+     simplify(simplify_redundant_edges);
    CGAL_expensive_postcondition( is_valid());
  }
  
@@ -1319,9 +1319,9 @@ protected:
 
   /*{\Moperations 4 3 }*/
 
-  void simplify(bool simplify_collinear_edges = true) {
+  void simplify(bool simplify_redundant_edges = true) {
     SNC_simplify simp(snc());
-    bool simplified = simp.simplify(simplify_collinear_edges);
+    bool simplified = simp.simplify(simplify_redundant_edges);
     CGAL_NEF_TRACEN( "simplify(): structure simplified? "<<simplified);
     
     if( simplified) {
@@ -1418,14 +1418,14 @@ protected:
   }
 
   Nef_polyhedron_3<Kernel,Items, Mark>
-  intersection(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_collinear_edges=true) const
+  intersection(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_redundant_edges=true) const
     /*{\Mop returns |\Mvar| $\cap$ |N1|. }*/ {
     CGAL_NEF_TRACEN(" intersection between nef3 "<<&*this<<" and "<<&N1);
     AND _and;
     SNC_structure rsnc;
     Nef_polyhedron_3<Kernel,Items, Mark> res(rsnc, new SNC_point_locator_default, false);
     Binary_operation bo( res.snc());
-    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _and, simplify_collinear_edges);
+    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _and, simplify_redundant_edges);
     return res;
   }
 
@@ -1442,7 +1442,7 @@ protected:
   }
 
   Nef_polyhedron_3<Kernel,Items, Mark> 
-  join(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_collinear_edges=true) const
+  join(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_redundant_edges=true) const
   /*{\Mop returns |\Mvar| $\cup$ |N1|. }*/ { 
     CGAL_NEF_TRACEN(" join between nef3 "<<&*this<<" and "<<&N1);
     OR _or;
@@ -1450,12 +1450,12 @@ protected:
     SNC_structure rsnc;
     Nef_polyhedron_3<Kernel,Items, Mark> res(rsnc, new SNC_point_locator_default, false);
     Binary_operation bo(res.snc());
-    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _or, simplify_collinear_edges);
+    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _or, simplify_redundant_edges);
     return res;
   }
 
   Nef_polyhedron_3<Kernel,Items, Mark> 
-  difference(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_collinear_edges=true) const
+  difference(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_redundant_edges=true) const
   /*{\Mop returns |\Mvar| $-$ |N1|. }*/ { 
     CGAL_NEF_TRACEN(" difference between nef3 "<<&*this<<" and "<<&N1);
     DIFF _diff;
@@ -1463,12 +1463,12 @@ protected:
     SNC_structure rsnc;
     Nef_polyhedron_3<Kernel,Items, Mark> res(rsnc, new SNC_point_locator_default, false);
     Binary_operation bo(res.snc());
-    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _diff, simplify_collinear_edges);
+    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _diff, simplify_redundant_edges);
     return res;
   }    
 
   Nef_polyhedron_3<Kernel,Items, Mark> 
-  symmetric_difference(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_collinear_edges=true) const
+  symmetric_difference(const Nef_polyhedron_3<Kernel,Items, Mark>& N1, bool simplify_redundant_edges=true) const
   /*{\Mop returns the symmectric difference |\Mvar - T| $\cup$ 
           |T - \Mvar|. }*/ {
     CGAL_NEF_TRACEN(" symmetic difference between nef3 "<<&*this<<" and "<<&N1);
@@ -1477,7 +1477,7 @@ protected:
     SNC_structure rsnc;
     Nef_polyhedron_3<Kernel,Items, Mark> res(rsnc, new SNC_point_locator_default, false);
     Binary_operation bo(res.snc());
-    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _xor, simplify_collinear_edges);
+    bo(res.pl(), snc(), pl(), N1.snc(), N1.pl(), _xor, simplify_redundant_edges);
     return res;
   }
 

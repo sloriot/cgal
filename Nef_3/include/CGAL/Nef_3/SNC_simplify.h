@@ -326,7 +326,7 @@ class SNC_simplify_base : public SNC_decorator<SNC_structure> {
     }
   }
   
-  bool simplify(bool simplify_collinear_edges) {
+  bool simplify(bool simplify_redundant_edges) {
 
     bool update_facets  =  false;
     bool update_sfaces  =  false;
@@ -395,7 +395,7 @@ class SNC_simplify_base : public SNC_decorator<SNC_structure> {
       this->sncp()->reset_object_list(f->boundary_entry_objects());
     }
     
-    if (simplify_collinear_edges)
+    if (simplify_redundant_edges)
     {
     /* 
      * Edges simplification
@@ -723,9 +723,9 @@ class SNC_simplify<SNC_indexed_items, SNC_structure>
  public:
   SNC_simplify(SNC_structure& sncs) : Base(sncs) {}
 
-  bool simplify(bool simplify_collinear_edges) {
+  bool simplify(bool simplify_redundant_edges) {
 
-    bool result = Base::simplify(simplify_collinear_edges);
+    bool result = Base::simplify(simplify_redundant_edges);
 
     Halffacet_iterator fit;
     CGAL_forall_halffacets(fit, *this) {
