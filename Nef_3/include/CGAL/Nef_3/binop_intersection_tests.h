@@ -49,6 +49,7 @@ struct binop_intersection_test_segment_tree {
   struct Bop_edge0_face1_callback {
     SNC_intersection   &is;
     Callback           &cb;
+    bool simplify_redundant_edges;
 
     struct Pair_hash_function {
       typedef std::size_t result_type;
@@ -65,8 +66,8 @@ struct binop_intersection_test_segment_tree {
       }
     };
 
-    Bop_edge0_face1_callback(SNC_intersection &is, Callback &cb)
-    : is(is), cb(cb)
+    Bop_edge0_face1_callback(SNC_intersection &is, Callback &cb, bool sre)
+    : is(is), cb(cb), simplify_redundant_edges(sre)
     {}
 
     void operator()( Nef_box& box0, Nef_box& box1 ) {
@@ -80,7 +81,7 @@ struct binop_intersection_test_segment_tree {
         return;
       Point_3 ip;
       if( is.does_intersect_internally( Const_decorator::segment(e0), f1, ip )) {
-        cb(e0,make_object(f1),ip,true);
+        cb(e0,make_object(f1),ip,simplify_redundant_edges);
       }
     }
   };
@@ -90,9 +91,10 @@ struct binop_intersection_test_segment_tree {
   struct Bop_edge1_face0_callback {
     SNC_intersection &is;
     Callback         &cb;
+    bool simplify_redundant_edges;
 
-    Bop_edge1_face0_callback(SNC_intersection &is, Callback &cb)
-    : is(is), cb(cb)
+    Bop_edge1_face0_callback(SNC_intersection &is, Callback &cb, bool sre)
+    : is(is), cb(cb), simplify_redundant_edges(sre)
     {}
 
     void operator()( Nef_box& box0, Nef_box& box1 ) {
@@ -107,7 +109,7 @@ struct binop_intersection_test_segment_tree {
       Point_3 ip;
       if( is.does_intersect_internally( Const_decorator::segment( e1 ),
                                         f0, ip ) )
-        cb(e1,make_object(f0),ip,true);
+        cb(e1,make_object(f0),ip,simplify_redundant_edges);
     }
   };
 
@@ -163,7 +165,7 @@ struct binop_intersection_test_segment_tree {
     b.clear();
 
     CGAL_NEF_TRACEN("start edge0 face1");
-    Bop_edge0_face1_callback<Callback> callback_edge0_face1( is, cb0 );
+    Bop_edge0_face1_callback<Callback> callback_edge0_face1( is, cb0, simplify_redundant_edges );
     CGAL_forall_edges( e0, sncp ) a.push_back( Nef_box( e0 ) );
     CGAL_forall_facets( f1, snc1i)    b.push_back( Nef_box( f1 ) );
 #ifdef CGAL_NEF3_BOX_INTERSECTION_CUTOFF
@@ -178,7 +180,7 @@ struct binop_intersection_test_segment_tree {
     b.clear();
 
     CGAL_NEF_TRACEN("start edge1 face0");
-    Bop_edge1_face0_callback<Callback> callback_edge1_face0( is, cb1 );
+    Bop_edge1_face0_callback<Callback> callback_edge1_face0( is, cb1, simplify_redundant_edges );
     CGAL_forall_edges( e1, snc1i)  a.push_back( Nef_box( e1 ) );
     CGAL_forall_facets( f0, sncp ) b.push_back( Nef_box( f0 ) );
 #ifdef CGAL_NEF3_BOX_INTERSECTION_CUTOFF
