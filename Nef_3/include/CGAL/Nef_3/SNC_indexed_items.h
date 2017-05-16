@@ -186,13 +186,15 @@ class SNC_indexed_items {
     typedef typename Refs::Mark          Mark;
     int index;
     static const int default_index = -33;
+    bool m_is_split_vertex;
   public:
-    SVertex() : Base(), index(default_index) {}
-    SVertex(Mark m) : Base(m), index(default_index) {}
-    SVertex(const SVertex<Refs>& sv) : Base(sv) { index = sv.index; }
+    SVertex() : Base(), index(default_index), m_is_split_vertex(false) {}
+    SVertex(Mark m) : Base(m), index(default_index), m_is_split_vertex(false) {}
+    SVertex(const SVertex<Refs>& sv) : Base(sv) { index = sv.index; m_is_split_vertex=sv.m_is_split_vertex; }
     SVertex<Refs>& operator=(const SVertex<Refs>& sv) {
       (Base&) *this = (Base) sv;
       index = sv.index;
+      m_is_split_vertex=sv.m_is_split_vertex;
       return *this;
     }
 
@@ -200,6 +202,8 @@ class SNC_indexed_items {
     { index = idx; }
     int get_index() const { return index; }
     bool has_default_index() const { return index==default_index; }
+    bool is_split_vertex() const { return m_is_split_vertex;}
+    void set_split_vertex() { m_is_split_vertex=true;}
   };
 };
 

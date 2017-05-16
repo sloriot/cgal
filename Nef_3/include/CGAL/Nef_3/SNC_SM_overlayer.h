@@ -453,7 +453,7 @@ class SNC_SM_overlayer<SNC_indexed_items, SM_decorator_>
         // the sphere map is always cut in to hemisphere. The cut introduce some dummy
         // vertices that are usually removed during the simplification step. Vertices with
         // the default index are those vertices.
-        if (simplify_redundant_edges || v->has_default_index())
+        if (simplify_redundant_edges || v->has_default_index() || v->is_split_vertex())
         {
           if ( has_outdeg_two(v) &&
                v->mark() == e1->mark() && e1->mark() == e2->mark() &&

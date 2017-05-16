@@ -1530,6 +1530,34 @@ subdivide(const Map* M0, const Map* M1,
   CGAL_assertion_code(CGAL_forall_svertices(v,*this) CGAL_NEF_TRACEN(PH(v)));
 }
 
+template <class Point_3, class RT>
+struct less_svertex
+{
+  bool operator() (const Point_3& sv1, const Point_3& sv2) const
+  {
+    if (sign(sv1.x())!=sign(sv2.x()))
+      return sv1.x() < sv2.x();
+    if (sign(sv1.y())!=sign(sv2.y()))
+      return sv1.y() < sv2.y();
+    if (sign(sv1.z())!=sign(sv2.z()))
+      return sv1.z() < sv2.z();
+    RT norm1 = square(sv1.x())+square(sv1.y())+square(sv1.z());
+    RT norm2 = square(sv2.x())+square(sv2.y())+square(sv2.z());
+    RT c1 = square(sv1.x()), c2=square(sv2.x());
+    if (c1*norm2 != c2*norm1)
+      return (c1*norm2 < c2*norm1) == (sign(sv1.x())==POSITIVE);
+    c1 = square(sv1.y());
+    c2 = square(sv2.y());
+    if (c1*norm2 != c2*norm1)
+      return (c1*norm2 < c2*norm1) == (sign(sv1.y())==POSITIVE);
+    c1 = square(sv1.z());
+    c2 = square(sv2.z());
+    if (c1*norm2 != c2*norm1)
+      return (c1*norm2 < c2*norm1) == (sign(sv1.z())==POSITIVE);
+    return false;
+  }
+};
+
 template <typename Map>
 template <typename Association>
 void SM_overlayer<Map>::
@@ -1545,6 +1573,9 @@ subdivide(const Map* M0, const Map* M1,
 
   Seg_list L;
   Seg_map  From;
+  std::set<typename Sphere_segment::Point_3,
+           less_svertex<typename Sphere_segment::Point_3,
+                        typename Sphere_segment::RT> > input_points;  
   for (int i=0; i<2; ++i) {
     SVertex_const_iterator v;
     CGAL_forall_svertices(v,PI[i]) {
@@ -1562,17 +1593,21 @@ subdivide(const Map* M0, const Map* M1,
           v = e->source();
           L.push_back(trivial_segment(PI[i],v));
           From[--L.end()] = Seg_info(v,i);
+          input_points.insert(L.back().source());
         } else {
 	 CGAL_NEF_TRACEN("once around " << e->source()->point());
           Seg_pair p = two_segments(PI[i],e);
           L.push_back(p.first);
           L.push_back(p.second);
           From[--L.end()] = From[--(--L.end())] = Seg_info(e,i);
+          //@TODO Shall we do something here?
         }
       } else {
 	CGAL_NEF_TRACEN("normal segment " << e->source()->point());
         L.push_back(segment(PI[i],e));
         From[--L.end()] = Seg_info(e,i);
+        input_points.insert(L.back().source());
+        input_points.insert(L.back().target());
       }
     }
     if ( PI[i].has_shalfloop() ) {
@@ -1828,6 +1863,14 @@ subdivide(const Map* M0, const Map* M1,
   
   CGAL_NEF_TRACEN("subdivided");
   CGAL_assertion_code(CGAL_forall_svertices(v,*this) CGAL_NEF_TRACEN(PH(v)));
+  CGAL_forall_svertices(v,*this)
+  {
+    if (input_points.count( v->point() )==0)
+    {
+      CGAL_NEF_TRACEN("Mark " << v->point() << " to be removed");
+      v->set_split_vertex();
+    }
+  }
 }
 
 template <typename Map>
