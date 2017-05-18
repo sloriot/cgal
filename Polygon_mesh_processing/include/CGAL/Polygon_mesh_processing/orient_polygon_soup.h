@@ -213,6 +213,27 @@ struct Polygon_soup_orienter
     // We first consider all polygons as non-oriented
     oriented.resize(polygons.size());
 
+    // first check for degenerate edges
+    for(P_ID polygon_index=0, end=polygons.size(); polygon_index!=end; ++polygon_index)
+    {
+      std::size_t polygon_size=polygons[polygon_index].size();
+      V_ID prev=polygons[polygon_index][polygon_size-1];
+      std::vector<std::size_t> to_remove;
+      for (std::size_t i=0; i<polygon_size; ++i)
+      {
+        if (prev==polygons[polygon_index][i])
+        {
+          to_remove.push_back(i);
+        }
+        prev=polygons[polygon_index][i];
+      }
+      while(!to_remove.empty())
+      {
+        polygons[polygon_index].erase(polygons[polygon_index].begin()+to_remove.back());
+        to_remove.pop_back();
+      }
+    }
+
     P_ID polygon_index = 0;
 
 //    CC_ID current_cc_index=-1;
