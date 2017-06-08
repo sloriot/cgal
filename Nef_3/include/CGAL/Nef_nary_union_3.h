@@ -35,15 +35,17 @@ class Nef_nary_union_3 {
   std::list<Polyhedron> queue;
   typedef typename std::list<Polyhedron>::iterator pit;
   Polyhedron empty;
+  bool simplify;
 
  public:
-  Nef_nary_union_3() : inserted(0) {}
+  Nef_nary_union_3(bool s=true) : inserted(0), simplify(s) {}
   
   void unite() {
     pit i1(queue.begin()), i2(i1);
     ++i2;
 
-    Polyhedron tmp(*i1 + *i2);
+    Polyhedron tmp(*i1);
+    tmp = tmp.join(*i2, simplify);
 
     queue.pop_front();
     queue.pop_front();
