@@ -154,6 +154,91 @@ public:
   }
 };
 
+template<class TriangleMesh,
+         class VertexPointMap,
+         class EdgeToFaces,
+         class CoplanarFaceSet>
+class Collect_face_bbox_per_edge_bbox_with_coplanar_handling_one_mesh {
+protected:
+  const TriangleMesh& tm;
+  const VertexPointMap& vpmap;
+  EdgeToFaces& edge_to_faces;
+  CoplanarFaceSet& coplanar_faces;
+
+  typedef boost::graph_traits<TriangleMesh> Graph_traits;
+  typedef typename Graph_traits::face_descriptor face_descriptor;
+  typedef typename Graph_traits::halfedge_descriptor halfedge_descriptor;
+  typedef typename CGAL::Box_intersection_d::Box_with_info_d<double, 3, halfedge_descriptor> Box;
+  typedef typename boost::property_traits<VertexPointMap>::reference Point;
+
+public:
+  Collect_face_bbox_per_edge_bbox_with_coplanar_handling_one_mesh(
+    const TriangleMesh& tm,
+    const VertexPointMap& vpmap,
+    EdgeToFaces& edge_to_faces,
+    CoplanarFaceSet& coplanar_faces)
+  : tm(tm)
+  , vpmap(vpmap)
+  , edge_to_faces(edge_to_faces)
+  , coplanar_faces(coplanar_faces)
+  {}
+
+  void operator()( const Box& face_box, const Box& edge_box) const {
+    halfedge_descriptor fh = face_box.info();
+    halfedge_descriptor eh = edge_box.info();
+    
+    if ( face(eh, tm) == face(fh, tm) || face(opposite(eh,tm), tm) == face(fh, tm) )
+      return; //edge incident to the triangle
+
+    if(is_border(eh,tm)) eh = opposite(eh, tm);
+
+    //check if the segment intersects the plane of the facet or if it is included in the plane
+    Point a = get(vpmap, source(fh, tm));
+    Point b = get(vpmap, target(fh, tm));
+    Point c = get(vpmap, target(next(fh, tm), tm));
+    /// SHOULD_USE_TRAITS_TAG
+    const Orientation abcp = orientation(a,b,c, get(vpmap, target(eh, tm)));
+    const Orientation abcq = orientation(a,b,c, get(vpmap, source(eh, tm)));
+    if (abcp==abcq){
+      if (abcp!=COPLANAR){
+        return; //no intersection
+      }
+
+      // TODO in coplanar_faces we must handle edge incident that are coplanar with the face but do not intersect
+      
+      if (orientation(a,b,c,get(vpmap, target( next(eh, tm), tm)))==COPLANAR)
+        coplanar_faces.insert(std::make_pair(face(eh, tm), face(fh, tm)));
+
+      halfedge_descriptor eh_opp=opposite(eh, tm);
+      if (!is_border(eh_opp, tm) &&
+          orientation(a,b,c,get(vpmap, target(next(eh_opp, tm),tm)))==COPLANAR)
+      {
+        coplanar_faces.insert(std::make_pair(face(opposite(eh, tm), tm), face(fh, tm)));
+      }
+      //in case only the edge is coplanar, the intersection points will be detected using an incident facet
+      return;
+    }
+    
+    if ( abcp==COPLANAR && 
+         (target(eh, tm)==source(fh, tm) ||
+          target(eh, tm)==target(fh, tm) || 
+          target(eh, tm)==target(next(fh, tm), tm) ) ) return; // no intersection (incident edge)
+
+    if ( abcq==COPLANAR && 
+         (source(eh, tm)==source(fh, tm) ||
+          source(eh, tm)==target(fh, tm) || 
+          source(eh, tm)==target(next(fh, tm), tm) ) ) return; // no intersection (incident edge)
+
+    // non-coplanar case
+    edge_to_faces[edge(eh,tm)].insert(face(fh, tm));
+  }
+
+  void operator()(const Box* face_box_ptr, const Box* edge_box_ptr) const
+  {
+    operator()(*face_box_ptr, *edge_box_ptr);
+  }
+};
+
 template <class TriangleMesh, class Base>
 class Callback_with_self_intersection_report
   : public Base

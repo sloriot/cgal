@@ -45,6 +45,17 @@ struct No_mark
   friend void put(No_mark<G>,
                   typename boost::graph_traits<G>::edge_descriptor, bool)
   {}
+  
+  
+  void call_put(G&,
+                typename boost::graph_traits<G>::edge_descriptor,
+                bool) const
+  {}
+
+  bool call_get(G&, typename boost::graph_traits<G>::edge_descriptor) const
+  {
+    return false;
+  }
 };
 
 template<class G,

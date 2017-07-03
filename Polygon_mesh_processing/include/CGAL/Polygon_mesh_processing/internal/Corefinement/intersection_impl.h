@@ -97,6 +97,7 @@ struct Default_surface_intersection_visitor{
   {}
   static const bool Predicates_on_constructions_needed = false;
   static const bool do_need_vertex_graph = false;
+  static const bool do_duplicate_nodes_for_autorefinement = false;
 };
 
 
@@ -183,6 +184,7 @@ class Intersection_of_triangle_meshes
                      Predicates_on_constructions_needed> nodes;
   Node_visitor visitor;
   Faces_to_nodes_map         f_to_node;      //Associate a pair of triangle to their intersection points
+  CGAL_assertion_code(bool doing_autorefinement;)
 // member functions
   void filter_intersections(const TriangleMesh& tm_f,
                             const TriangleMesh& tm_e,
@@ -251,6 +253,55 @@ class Intersection_of_triangle_meshes
                               callback, cutoff );
   }
 
+  // for autorefinement
+  void filter_intersections(const TriangleMesh& tm,
+                            const VertexPointMap& vpm)
+  {
+    std::vector<Box> face_boxes, edge_boxes;
+    std::vector<Box*> face_boxes_ptr, edge_boxes_ptr;
+
+    face_boxes.reserve(num_faces(tm));
+    face_boxes_ptr.reserve(num_faces(tm));
+    BOOST_FOREACH(face_descriptor fd, faces(tm))
+    {
+      halfedge_descriptor h=halfedge(fd,tm);
+      face_boxes.push_back( Box(
+        get(vpm,source(h,tm)).bbox() +
+        get(vpm,target(h,tm)).bbox() +
+        get(vpm,target(next(h,tm),tm)).bbox(),
+        h ) );
+      face_boxes_ptr.push_back( &face_boxes.back() );
+    }
+
+    edge_boxes.reserve(num_edges(tm));
+    edge_boxes_ptr.reserve(num_edges(tm));
+    BOOST_FOREACH(edge_descriptor ed, edges(tm))
+    {
+      halfedge_descriptor h=halfedge(ed,tm);
+      edge_boxes.push_back( Box(
+        get(vpm,source(h,tm)).bbox() +
+        get(vpm,target(h,tm)).bbox(),
+        h ) );
+      edge_boxes_ptr.push_back( &edge_boxes.back() );
+    }
+
+    /// \todo experiments different cutoff values
+    std::ptrdiff_t cutoff = 2 * std::ptrdiff_t(
+        std::sqrt(face_boxes.size()+edge_boxes.size()) );
+
+    Edge_to_faces& edge_to_faces = ltm_edge_to_stm_faces;
+
+    typedef Collect_face_bbox_per_edge_bbox_with_coplanar_handling_one_mesh<
+      TriangleMesh, VertexPointMap, Edge_to_faces, Coplanar_face_set>
+     Callback;
+    Callback  callback(tm, vpm, edge_to_faces, coplanar_faces);
+
+    //using pointers in box_intersection_d is about 10% faster
+    CGAL::box_intersection_d( face_boxes_ptr.begin(), face_boxes_ptr.end(),
+                              edge_boxes_ptr.begin(), edge_boxes_ptr.end(),
+                              callback, cutoff );
+  }
+
   template<class Cpl_inter_pt,class Key>
   std::pair<Node_id,bool>
   get_or_create_node(const Cpl_inter_pt& ipt,
@@ -311,9 +362,10 @@ class Intersection_of_triangle_meshes
     if (!is_border(e_2, tm2))
     {
       face_descriptor f_2 = face(e_2, tm2);
-      Face_pair face_pair = &tm1<&tm2
-                          ? Face_pair(f_1,f_2)
-                          : Face_pair(f_2,f_1);
+      Face_pair face_pair = &tm1==&tm2 ? make_sorted_pair(f_1,f_2):
+                                         &tm1<&tm2
+                                         ? Face_pair(f_1,f_2)
+                                         : Face_pair(f_2,f_1);
       if ( coplanar_faces.count(face_pair)==0 )
         f_to_node[Face_pair_and_int(face_pair,0)].insert(node_id);
     }
@@ -321,9 +373,10 @@ class Intersection_of_triangle_meshes
     if (!is_border(e_2, tm2))
     {
       face_descriptor f_2 = face(e_2, tm2);
-      Face_pair face_pair = &tm1<&tm2
-                          ? Face_pair(f_1,f_2)
-                          : Face_pair(f_2,f_1);
+      Face_pair face_pair = &tm1==&tm2 ? make_sorted_pair(f_1,f_2):
+                                         &tm1<&tm2
+                                         ? Face_pair(f_1,f_2)
+                                         : Face_pair(f_2,f_1);
       if ( coplanar_faces.count(face_pair) == 0 )
         f_to_node[Face_pair_and_int(face_pair,0)].insert(node_id);
     }
@@ -469,7 +522,7 @@ class Intersection_of_triangle_meshes
     const VertexPointMap& vpm1,
     const VertexPointMap& vpm2)
   {
-    CGAL_assertion( &tm1 < &tm2 );
+    CGAL_assertion( &tm1 < &tm2 || &tm1==&tm2 );
 
     typedef cpp11::tuple<Intersection_type,
                          Intersection_type,
@@ -478,7 +531,7 @@ class Intersection_of_triangle_meshes
 
     typedef std::map<Key,Node_id> Coplanar_node_map;
     Coplanar_node_map coplanar_node_map;
-
+//todo fix the order for f_to_node insertion
     BOOST_FOREACH(const Face_pair& face_pair, coplanar_faces)
     {
       face_descriptor f1=face_pair.first;
@@ -708,7 +761,7 @@ class Intersection_of_triangle_meshes
         } // end switch on the type of the intersection
       } // end loop on all faces that intersect the edge
     } // end loop on all entries (edges) in 'edge_to_face'
-    CGAL_assertion(nodes.size()==unsigned(current_node+1));
+    //CGAL_assertion(nodes.size()==unsigned(current_node+1));
   }
 
   struct Graph_node{
@@ -737,6 +790,32 @@ class Intersection_of_triangle_meshes
     }
   };
 
+  void update_graph_for_autorefinement()
+  {
+    typedef std::pair< Face_pair_and_int, Node_id_set > Pair_type;
+    std::vector< Pair_type > new_entries;
+    new_entries.reserve(f_to_node.size());
+    for (typename Faces_to_nodes_map::iterator it=f_to_node.begin();
+                                               it!=f_to_node.end();++it)
+    {
+      Node_id_set& segment=it->second;
+      CGAL_assertion(segment.size()==2 || segment.size()==1);
+      if (segment.size()==2){
+        segment.first*=2;
+        segment.second*=2;
+        new_entries.push_back(*it);
+        // switch face pair
+        std::swap(new_entries.back().first.first.first,
+                  new_entries.back().first.first.second);
+        // update indices
+        new_entries.back().second.first += 1;
+        new_entries.back().second.second += 1;
+      }
+    }
+
+    // now insert the duplicated entries
+    f_to_node.insert(new_entries.begin(), new_entries.end());
+  }
 
   template <class Output_iterator>
   void construct_polylines(Output_iterator out){
@@ -745,6 +824,10 @@ class Intersection_of_triangle_meshes
     std::vector<Graph_node> graph(nb_nodes);
     //counts the number of time each node has been seen
     bool isolated_point_seen=false;
+    
+    std::cout << "f_to_node.size() " << f_to_node.size() << "\n";
+    std::cout << "nb_nodes " << nb_nodes << "\n";
+    
     for (typename Faces_to_nodes_map::iterator it=f_to_node.begin();it!=f_to_node.end();++it){
       const Node_id_set& segment=it->second;
       CGAL_assertion(segment.size()==2 || segment.size()==1);
@@ -753,8 +836,12 @@ class Intersection_of_triangle_meshes
         Node_id j=segment.second;
         graph[i].insert(j);
         graph[j].insert(i);
+        
+        std::cout << "edge (" << i << "-" << j << ")\n";
+        
       }
       else{
+        std::cout << "isolated vertex\n";
         CGAL_assertion(segment.size()==1);
         isolated_point_seen=true;
       }
@@ -877,13 +964,27 @@ public:
                                   const Node_visitor& v=Node_visitor())
   : nodes(tm1, tm2, vpm1, vpm2)
   , visitor(v)
-  {}
+  {
+    CGAL_assertion_code( doing_autorefinement=false; )
+  }
+
+  // for autorefinement
+  Intersection_of_triangle_meshes(const TriangleMesh& tm,
+                                  const VertexPointMap& vpm,
+                                  const Node_visitor& v=Node_visitor())
+  : nodes(tm, tm, vpm, vpm)
+  , visitor(v)
+  {
+    CGAL_assertion_code( doing_autorefinement=true; )  
+  }
 
   template <class OutputIterator>
   OutputIterator operator()(OutputIterator output,
                             bool throw_on_self_intersection,
                             bool build_polylines)
   {
+    CGAL_assertion(!doing_autorefinement);
+    
     const TriangleMesh& tm1=nodes.tm1;
     const TriangleMesh& tm2=nodes.tm2;
     const VertexPointMap& vpm1=nodes.vpm1;
@@ -942,6 +1043,64 @@ public:
 #endif
 
     visitor.finalize(nodes,tm1,tm2,vpm1,vpm2);
+
+    return output;
+  }
+
+  //for autorefinement
+  template <class OutputIterator>
+  OutputIterator operator()(OutputIterator output,
+                            bool build_polylines)
+  {
+    CGAL_assertion(doing_autorefinement);
+
+    const TriangleMesh& tm=nodes.tm1;
+    const VertexPointMap& vpm=nodes.vpm1;
+
+    filter_intersections(tm, vpm);
+
+    Node_id current_node(-1);
+    CGAL_assertion(current_node+1==0);
+
+    //first handle coplanar triangles
+    compute_intersection_of_coplanar_faces(current_node, tm, tm, vpm, vpm);
+    if (!coplanar_faces.empty())
+      visitor.input_have_coplanar_faces();
+
+    //compute intersection points of segments and triangles.
+    //build the nodes of the graph and connectivity infos
+    compute_intersection_points(ltm_edge_to_stm_faces, tm, tm, vpm, vpm, current_node);
+
+    if (!build_polylines){
+      visitor.finalize(nodes,tm,tm,vpm,vpm);
+      return output;
+    }
+    //remove duplicated intersecting edges:
+    //  In case two faces are incident along an intersection edge coplanar
+    //  in a face of another polyhedron (and one extremity inside the face),
+    //  the intersection will be reported twice. We kept track
+    //  (check_coplanar_edge(s)) of this so that,
+    //  we can remove one intersecting edge out of the two
+    remove_duplicated_intersecting_edges();
+
+    // duplicate edges for autorefinement
+    if (Node_visitor::do_duplicate_nodes_for_autorefinement && &nodes.tm1==&nodes.tm2)
+      update_graph_for_autorefinement();
+
+
+#if 0
+    //collect connectivity infos and create polylines
+    if ( Node_visitor::do_need_vertex_graph )
+#endif
+      //using the graph approach (at some point we know all
+      // connections between intersection points)
+      construct_polylines(output);
+#if 0
+    else
+      construct_polylines_with_info(nodes,out); //direct construction by propagation
+#endif
+
+    visitor.finalize(nodes,tm,tm,vpm,vpm);
 
     return output;
   }

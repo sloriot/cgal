@@ -212,6 +212,7 @@ public:
       p.exact();
     }
     enodes.push_back(p);
+    enodes.push_back(p);
   }
 
   //add a new node in the final graph.
