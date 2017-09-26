@@ -31,12 +31,14 @@
 #include <CGAL/Polygon_mesh_processing/internal/named_function_params.h>
 #include <CGAL/Polygon_mesh_processing/internal/named_params_helper.h>
 #include <CGAL/array.h>
+#include <CGAL/Union_find.h>
 
 #include <map>
 #include <vector>
 #include <utility>
 #include <boost/range.hpp>
 #include <boost/foreach.hpp>
+#include <boost/unordered_map.hpp>
 
 #ifdef DOXYGEN_RUNNING
 #define CGAL_PMP_NP_TEMPLATE_PARAMETERS NamedParameters
@@ -212,13 +214,38 @@ struct Naive_border_stitching_modifier
     } while( h != start );
   }
 
+  template <class vertex_descriptor, class Handle_map>
+  typename Union_find<vertex_descriptor>::handle
+  uf_get_handle(vertex_descriptor v,
+                Union_find<vertex_descriptor>& uf_vertices,
+                Handle_map& handles)
+  {
+    std::pair<typename Handle_map::iterator, bool> insert_res =
+    handles.insert( std::make_pair(v, typename Union_find<vertex_descriptor>::handle()) );
+    if( insert_res.second )
+    {
+      insert_res.first->second=uf_vertices.make_set(v);
+    }
+    return insert_res.first->second;
+  }
+
+  template <class vertex_descriptor, class Handle_map>
+  void uf_join_vertices(vertex_descriptor v1, vertex_descriptor v2,
+                        Union_find<vertex_descriptor>& uf_vertices,
+                        Handle_map& handles)
+  {
+    typename Union_find<vertex_descriptor>::handle
+      h1 = uf_get_handle(v1, uf_vertices, handles),
+      h2 = uf_get_handle(v2, uf_vertices, handles);
+    uf_vertices.unify_sets(h1, h2);
+  }
+
   void operator()(PM& pmesh)
   {
     /// Merge the vertices
-    std::vector<vertex_descriptor> vertices_to_delete;
-    // since there might be several vertices with identical point
-    // we use the following map to choose one vertex per point
-    std::map<Point, vertex_descriptor> vertices_kept;
+    typedef CGAL::Union_find<vertex_descriptor> Uf_vertices;
+    Uf_vertices uf_vertices;
+    boost::unordered_map<vertex_descriptor, typename Uf_vertices::handle> uf_handles;
 
     BOOST_FOREACH(const halfedges_pair hk, to_stitch)
     {
@@ -230,25 +257,31 @@ struct Naive_border_stitching_modifier
       CGAL_assertion(!CGAL::is_border(opposite(h1, pmesh), pmesh));
       CGAL_assertion(!CGAL::is_border(opposite(h2, pmesh), pmesh));
 
+      vertex_descriptor tgt1 = target(h1, pmesh), src1 = source(h1, pmesh);
+      vertex_descriptor src2 = source(h2, pmesh), tgt2 = target(h2, pmesh);
+      uf_join_vertices(tgt1, src2, uf_vertices, uf_handles);
+      uf_join_vertices(src1, tgt2, uf_vertices, uf_handles);
+    }
+
+    std::vector<vertex_descriptor> vertices_to_delete;
+    BOOST_FOREACH(const halfedges_pair hk, to_stitch)
+    {
+      halfedge_descriptor h1 = hk.first;
+      halfedge_descriptor h2 = hk.second;
+
       vertex_descriptor h1_tgt = target(h1, pmesh);
       vertex_descriptor h2_src = source(h2, pmesh);
 
       //update vertex pointers: target of h1 vs source of h2
-      vertex_descriptor v_to_keep = h1_tgt;
-      std::pair<typename std::map<Point, vertex_descriptor>::iterator, bool >
-        insert_res =
-        vertices_kept.insert( std::make_pair(get(vpmap, v_to_keep), v_to_keep) );
+      vertex_descriptor v_to_keep =
+        *uf_vertices.find(uf_get_handle(h1_tgt, uf_vertices, uf_handles));
 
-      if (!insert_res.second && v_to_keep != insert_res.first->second)
-      {
-        v_to_keep = insert_res.first->second;
-        //we remove h1->vertex()
-        vertices_to_delete.push_back( h1_tgt );
+      if (v_to_keep!=h1_tgt){
+        vertices_to_delete.push_back(h1_tgt);
         update_target_vertex(h1, v_to_keep, pmesh);
       }
       if (v_to_keep != h2_src)
       {
-        //we remove h2->opposite()->vertex()
         vertices_to_delete.push_back( h2_src );
         update_target_vertex(opposite(h2, pmesh), v_to_keep, pmesh);
       }
@@ -258,19 +291,14 @@ struct Naive_border_stitching_modifier
       vertex_descriptor h2_tgt = target(h2, pmesh);
 
       //update vertex pointers: target of h1 vs source of h2
-      v_to_keep = h2_tgt;
-      insert_res =
-          vertices_kept.insert( std::make_pair(get(vpmap, v_to_keep), v_to_keep) );
-      if (!insert_res.second && v_to_keep != insert_res.first->second)
+      v_to_keep = *uf_vertices.find(uf_get_handle(h2_tgt, uf_vertices, uf_handles));
+      if (v_to_keep!=h2_tgt)
       {
-        v_to_keep = insert_res.first->second;
-        //we remove h2->vertex()
         vertices_to_delete.push_back( h2_tgt );
         update_target_vertex(h2, v_to_keep, pmesh);
       }
       if (v_to_keep!=h1_src)
       {
-        //we remove h1->opposite()->vertex()
         vertices_to_delete.push_back( h1_src );
         update_target_vertex(opposite(h1, pmesh), v_to_keep, pmesh);
       }
@@ -343,16 +371,6 @@ private:
 * The halfedges to be stitched are provided in `hedge_pairs_to_stitch`.
 * For each pair `p` in this vector, `p.second` and its opposite will be removed
 * from `pmesh`.
-*
-* The vertices that get removed from `pmesh` are selected as follows:
-* The pair of halfedges in `hedge_pairs_to_stitch` are processed linearly.
-* Let `p` be such a pair.
-* If the target of `p.first` has not been marked for deletion,
-* then the source of `p.second` is.
-* If the target of `p.second` has not been marked for deletion,
-* then the source of `p.first` is.
-* A vertex is marked for deletion if its corresponding point has already been seen
-* in another vertex previously handled.
 *
 * \pre For each halfedge in a pair of `hedge_pairs_to_stitch`, the corresponding
 *      edge is neither degenerated nor incident to a degenerate border edge.
