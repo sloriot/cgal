@@ -881,10 +881,10 @@ intersect(Face_handle f, int i,
 // split constraint edge (f,i) 
 // and return the Vertex_handle of the new Vertex
 { 
-  std::cerr << "You are using an exact number types" << std::endl;
-  std::cerr << "using a Constrained_triangulation_plus_2 class" << std::endl;
-  std::cerr << "would avoid cascading intersection computation" << std::endl;
-  std::cerr << " and be much more efficient" << std::endl;
+  //~ std::cerr << "You are using an exact number types" << std::endl;
+  //~ std::cerr << "using a Constrained_triangulation_plus_2 class" << std::endl;
+  //~ std::cerr << "would avoid cascading intersection computation" << std::endl;
+  //~ std::cerr << " and be much more efficient" << std::endl;
   const Point& pa = vaa->point();
   const Point& pb = vbb->point();
   const Point& pc = f->vertex(cw(i))->point();

@@ -252,6 +252,7 @@ public:
 
   void call_put(const VertexPointMap& vpm, vertex_descriptor vd, std::size_t i, TriangleMesh& tm)
   {
+    CGAL_assertion(tm1_vertices.size() > i);
     put(vpm, vd, exact_to_double(enodes[i]));
     if (&tm1==&tm)
       tm1_vertices[i] = vd;

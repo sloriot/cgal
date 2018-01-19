@@ -37,6 +37,53 @@
 namespace CGAL{
 namespace Corefinement{
 
+template < typename GT,
+           typename Vb = Triangulation_vertex_base_2<GT> >
+class Triangulation_vb_2: public
+  Triangulation_vertex_base_with_info_2<std::size_t, GT, Vb>
+{
+  typedef Triangulation_vertex_base_with_info_2<std::size_t, GT, Vb> Base;
+
+public:
+
+  using typename Base::Point;
+  using typename Base::Face_handle;
+
+  template < typename TDS2 >
+  struct Rebind_TDS {
+    typedef typename Base::template Rebind_TDS<TDS2>::Other          Vb2;
+    typedef Triangulation_vb_2<GT, Vb2>   Other;
+  };
+
+  Triangulation_vb_2()
+    : Base()
+  {
+    info()=(std::numeric_limits<std::size_t>::max)();
+  }
+
+  Triangulation_vb_2(const Point & p)
+    : Base(p)
+  {
+    info()=(std::numeric_limits<std::size_t>::max)();
+  }
+
+  Triangulation_vb_2(const Point & p, Face_handle c)
+    : Base(p, c)
+  {
+    info()=(std::numeric_limits<std::size_t>::max)();
+  }
+
+  Triangulation_vb_2(Face_handle c)
+    : Base(c)
+  {
+    info()=(std::numeric_limits<std::size_t>::max)();
+  }
+
+  using Base::info;
+};
+
+
+
 // TODO option to ignore internal edges for patches of coplanar faces
 
 template <class TriangleMesh>
@@ -180,10 +227,11 @@ private:
    typedef typename Intersection_nodes<TriangleMesh,
         VertexPointMap, Predicates_on_constructions_needed>::Exact_kernel    EK;
     typedef Triangulation_2_projection_traits_3<EK>                  CDT_traits;
-    typedef Triangulation_vertex_base_with_info_2<Node_id,CDT_traits>        Vb;
+    typedef Triangulation_vb_2<CDT_traits>                                   Vb;
     typedef Constrained_triangulation_face_base_2<CDT_traits>                Fb;
     typedef Triangulation_data_structure_2<Vb,Fb>                         TDS_2;
-    typedef Constrained_Delaunay_triangulation_2<CDT_traits,TDS_2>          CDT;
+    typedef CGAL::Exact_intersections_tag                                  Itag;
+    typedef Constrained_Delaunay_triangulation_2<CDT_traits,TDS_2, Itag>    CDT;
     typedef typename CDT::Vertex_handle                       CDT_Vertex_handle;
 // data members
 private:
@@ -614,7 +662,7 @@ public:
     vpms[tm2_ptr] = vpm2;
 
     vertex_descriptor null_vertex = Graph_traits::null_vertex();
-    const Node_id nb_nodes = nodes.size();
+    Node_id nb_nodes = nodes.size();
     // we reserve nb_nodes+3 because we use the last three entries for the
     // face triangulation
     mesh_to_node_id_to_vertex[tm1_ptr].resize(nb_nodes+3, null_vertex);
@@ -805,12 +853,16 @@ public:
         std::map<Node_id,typename CDT::Vertex_handle> id_to_CDT_vh;
 
         //associate an edge of the triangulation to a halfedge in a given polyhedron
-        std::map<std::pair<Node_id,Node_id>,halfedge_descriptor> edge_to_hedge;
+        typedef cpp11::tuple<typename CDT::Vertex_handle,
+                             typename CDT::Vertex_handle,
+                             halfedge_descriptor> Vertices_hedge_tuple;
+        std::vector<Vertices_hedge_tuple> vertices_to_hedge;
 
         // the vertices of f
         cpp11::array<vertex_descriptor,3> f_vertices;
         // the node_id of an input vertex or a fake id (>=nb_nodes)
         cpp11::array<Node_id,3> f_indices = {{nb_nodes,nb_nodes+1,nb_nodes+2}};
+
         if (it_fb!=face_boundaries.end()){ //the boundary of the triangle face was refined
           f_vertices[0]=it_fb->second.vertices[0];
           f_vertices[1]=it_fb->second.vertices[1];
@@ -827,9 +879,6 @@ public:
           f_vertices[2]=target(h2,tm); //nb_nodes+2
 
           update_face_indices(f_vertices,f_indices,vertex_to_node_id);
-          edge_to_hedge[std::make_pair( f_indices[2],f_indices[0] )] = h0;
-          edge_to_hedge[std::make_pair( f_indices[0],f_indices[1] )] = h1;
-          edge_to_hedge[std::make_pair( f_indices[1],f_indices[2] )] = h2;
         }
 
         typename EK::Point_3 p = nodes.to_exact(get(vpm,f_vertices[0])),
@@ -847,7 +896,6 @@ public:
         triangle_vertices[2]=cdt.tds().insert_dim_up(cdt.infinite_vertex(), false);
         triangle_vertices[2]->set_point(r);
 
-
         triangle_vertices[0]->info()=f_indices[0];
         triangle_vertices[1]->info()=f_indices[1];
         triangle_vertices[2]->info()=f_indices[2];
@@ -855,6 +903,14 @@ public:
         node_id_to_vertex[nb_nodes  ]=f_vertices[0];
         node_id_to_vertex[nb_nodes+1]=f_vertices[1];
         node_id_to_vertex[nb_nodes+2]=f_vertices[2];
+
+        if (it_fb==face_boundaries.end())
+        {
+          halfedge_descriptor h0=halfedge(f,tm), h1=next(h0,tm), h2=next(h1,tm);
+          vertices_to_hedge.push_back( Vertices_hedge_tuple(triangle_vertices[2], triangle_vertices[0], h0) );
+          vertices_to_hedge.push_back( Vertices_hedge_tuple(triangle_vertices[0], triangle_vertices[1], h1) );
+          vertices_to_hedge.push_back( Vertices_hedge_tuple(triangle_vertices[1], triangle_vertices[2], h2) );
+        }
 
         //if one of the triangle input vertex is also a node
         for (int ik=0;ik<3;++ik){
@@ -892,7 +948,6 @@ public:
 
             const Node_ids& ids_on_edge=f_boundary.node_ids_array[i];
             CDT_Vertex_handle previous=triangle_vertices[i];
-            Node_id prev_index=f_indices[i];// node-id of the mesh vertex
             halfedge_descriptor hedge = next(f_boundary.halfedges[(i+2)%3],tm);
             CGAL_assertion( source(hedge,tm)==f_boundary.vertices[i] );
             if (!ids_on_edge.empty()){ //is there at least one node on this edge?
@@ -903,10 +958,9 @@ public:
                 CDT_Vertex_handle vh=insert_point_on_ch_edge(cdt,infinite_faces[i],nodes.exact_node(id));
                 vh->info()=id;
                 id_to_CDT_vh.insert(std::make_pair(id,vh));
-                edge_to_hedge[std::make_pair(prev_index,id)]=hedge;
+                vertices_to_hedge.push_back(Vertices_hedge_tuple(previous, vh, hedge));
                 previous=vh;
                 hedge=next(hedge,tm);
-                prev_index=id;
               }
             }
             else{
@@ -915,8 +969,7 @@ public:
               CGAL_assertion( source(hd,tm) == f_boundary.vertices[ i ] );
             }
             CGAL_assertion(hedge==f_boundary.halfedges[i]);
-            edge_to_hedge[std::make_pair(prev_index,f_indices[(i+1)%3])] =
-              it_fb->second.halfedges[i];
+            vertices_to_hedge.push_back(Vertices_hedge_tuple(previous, triangle_vertices[(i+1)%3], it_fb->second.halfedges[i]));
           }
         }
 
@@ -953,6 +1006,7 @@ public:
         }
 
         //XSL_TAG_CPL_VERT
+        //// TODO: we only have to take a positive normal and this will be guaranteed by the CDT2 package
         //collect edges incident to a point that is the intersection of two
         // coplanar faces. This ensure that triangulations are compatible.
         if (it_fb!=face_boundaries.end()) //is f not a triangle ?
@@ -995,9 +1049,77 @@ public:
           }
         }
 
+        CGAL_assertion(node_ids.size()== std::set<Node_id>(node_ids.begin(), node_ids.end()).size());
+
+        // go over all cdt vertices and check for newly created vertices
+        // due to intersection of constrained edges
+        for(typename CDT::Finite_vertices_iterator vit=cdt.finite_vertices_begin(),
+              vit_end=cdt.finite_vertices_end();vit_end!=vit;++vit)
+        {
+          if (vit->info()==(std::numeric_limits<std::size_t>::max)())
+          {
+            nodes.add_new_node( vit->point() );
+            vit->info()=nodes.size()-1;
+            node_ids.push_back(vit->info());
+          }
+        }
+
+        const Node_id new_nb_nodes=nodes.size();
+        const Node_id node_increase = new_nb_nodes - nb_nodes;
+        mesh_to_node_id_to_vertex[tm1_ptr].resize(new_nb_nodes+3, null_vertex);
+        mesh_to_node_id_to_vertex[tm2_ptr].resize(new_nb_nodes+3, null_vertex);
+        if (node_increase!=0)
+        {
+          CGAL_assertion(node_ids.size()== std::set<Node_id>(node_ids.begin(), node_ids.end()).size());
+          // update node_id_to_vertex
+          node_id_to_vertex[new_nb_nodes+2] = node_id_to_vertex[nb_nodes+2];
+          node_id_to_vertex[new_nb_nodes+1] = node_id_to_vertex[nb_nodes+1];
+          node_id_to_vertex[new_nb_nodes  ] = node_id_to_vertex[nb_nodes  ];
+
+          for (int ik=0; ik<3; ++ik)
+          {
+            if (triangle_vertices[ik]->info() == nb_nodes+ik)
+              triangle_vertices[ik]->info() = new_nb_nodes+ik;
+          }
+
+          nb_nodes=new_nb_nodes;
+          nodes.all_nodes_created();
+        }
+
+        // to associate a pair of nodes to the corresponding halfedge
+        std::map<std::pair<Node_id,Node_id>,halfedge_descriptor> edge_to_hedge;
+        BOOST_FOREACH(const Vertices_hedge_tuple& t, vertices_to_hedge)
+        {
+          edge_to_hedge[std::make_pair(cpp11::get<0>(t)->info(), cpp11::get<1>(t)->info())]=cpp11::get<2>(t);
+        }
+
         // import the triangle in `cdt` in the face `f` of `tm`
         triangulate_a_face(f, tm, nodes, node_ids, node_id_to_vertex,
           edge_to_hedge, cdt, vpm, new_node_visitor, new_face_visitor);
+
+        if (node_increase!=0)
+        {
+          // we need to update `constrained_edges` as some edges might be gone due to edge split
+          CGAL_assertion_code(std::size_t prev_size=constrained_edges.size());
+          constrained_edges.clear();
+          for(typename CDT::Finite_edges_iterator feit=cdt.finite_edges_begin(),
+                feit_end=cdt.finite_edges_end(); feit!=feit_end; ++feit)
+          {
+            if (feit->first->is_constrained(feit->second))
+            {
+              if (!cdt.is_infinite(feit->first) &&
+                  !cdt.is_infinite(feit->first->neighbor(feit->second)))
+              {
+                Node_id id1 = feit->first->vertex( (feit->second+1)%3 )->info(),
+                        id2 = feit->first->vertex( (feit->second+2)%3 )->info();
+                constrained_edges.push_back(std::make_pair(id1, id2));
+                constrained_edges.push_back(std::make_pair(id2, id1));
+              }
+            }
+          }
+          // TODO check why constrained are reported twice, I guess this is specific to autorefinement
+          CGAL_assertion(constrained_edges.size() == prev_size/2+4*node_increase);
+        }
 
         // TODO Here we do the update only for internal edges.
         // Update for border halfedges could be done during the split

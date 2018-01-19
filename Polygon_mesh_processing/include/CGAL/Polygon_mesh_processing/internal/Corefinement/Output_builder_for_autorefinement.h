@@ -379,6 +379,9 @@ public:
       halfedge_descriptor h1 = it->second.h1;
       halfedge_descriptor h2 = it->second.h2;
 
+      CGAL_assertion(h1!=GT::null_halfedge());
+      CGAL_assertion(h2!=GT::null_halfedge());
+
       CGAL_assertion(ids.first==vertex_to_node_id[source(h1,tm)]);
       CGAL_assertion(ids.second==vertex_to_node_id[target(h1,tm)]);
       CGAL_assertion(ids.first==vertex_to_node_id[source(h2,tm)]);

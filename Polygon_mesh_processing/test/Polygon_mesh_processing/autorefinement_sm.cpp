@@ -24,38 +24,52 @@ int main(int argc, char* argv[])
   }
   input.close();
 
-  std::cout << "Test surface_self_intersection\n";
-  std::vector< std::vector<K::Point_3> >polylines;
+  //~ std::cout << "Test surface_self_intersection\n";
+  //~ std::vector< std::vector<K::Point_3> >polylines;
 
-  PMP::experimental::surface_self_intersection(mesh, std::back_inserter(polylines));
+  //~ PMP::experimental::surface_self_intersection(mesh, std::back_inserter(polylines));
 
-  //dump polylines
-  std::ofstream output("intersection_polylines.cgal");
-  BOOST_FOREACH(const std::vector<K::Point_3>& polyline, polylines)
-  {
-    output << polyline.size() << " ";
-    std::copy(polyline.begin(), polyline.end(),std::ostream_iterator<K::Point_3>(output," "));
-    output << "\n";
-  }
-  output.close();
+  //~ //dump polylines
+  //~ std::ofstream output("intersection_polylines.cgal");
+  //~ BOOST_FOREACH(const std::vector<K::Point_3>& polyline, polylines)
+  //~ {
+    //~ output << polyline.size() << " ";
+    //~ std::copy(polyline.begin(), polyline.end(),std::ostream_iterator<K::Point_3>(output," "));
+    //~ output << "\n";
+  //~ }
+  //~ output.close();
 
-  std::cout << "Number of vertices before autorefinement " << num_vertices(mesh) << "\n";
-  PMP::experimental::autorefine(mesh);
-  std::cout << "Number of vertices after autorefinement " << num_vertices(mesh) << "\n";
+  //~ std::cout << "Number of vertices before autorefinement " << num_vertices(mesh) << "\n";
+  
+  //~ Mesh::Property_map<Mesh::Edge_index,bool> ecm =
+    //~ mesh.add_property_map<Mesh::Edge_index, bool>("e:is_constrained").first;
+  //~ PMP::experimental::autorefine(mesh, PMP::parameters::edge_is_constrained_map(ecm));
+  //~ std::cout << "Number of vertices after autorefinement " << num_vertices(mesh) << "\n";
 
-  output.open("mesh_autorefined.off");
-  output << mesh;
-  output.close();
+  //~ std::ofstream output("mesh_autorefined.off");
+  //~ output << mesh;
+  //~ output.close();
 
-  input.open(filename);
-  mesh.clear();
-  input >> mesh;
+  //~ Mesh::Property_map<Mesh::Face_index, int> cc_ids =
+    //~ mesh.add_property_map<Mesh::Face_index, int>("f:cc_ids").first;
+  //~ int nb_cc = PMP::connected_components(mesh,cc_ids);
+
+  //~ std::cout << "nb_cc = " << nb_cc << "\n";
+
+
+  //~ mesh.remove_property_map(ecm);
+  //~ mesh.remove_property_map(cc_ids);
+
+
+  //~ input.open(filename);
+  //~ mesh.clear();
+  //~ input >> mesh;
   std::cout << "Number of vertices before self-intersection removal " << num_vertices(mesh) << "\n";
   if (!PMP::experimental::autorefine_and_remove_self_intersections(mesh))
     std::cout << "WARNING: Cannot remove all self-intersections\n";
   std::cout << "Number of vertices after self-intersection removal " << num_vertices(mesh) << "\n";
 
-  output.open("mesh_fixed.off");
+  std::ofstream output("mesh_fixed.off");
   output << std::setprecision(17) << mesh;
   output.close();
 
