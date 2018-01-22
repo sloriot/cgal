@@ -249,6 +249,8 @@ private:
 
   std::map< Node_id,std::set<Node_id> > coplanar_constraints;
 
+  const Node_id invalid_id = (std::numeric_limits<std::size_t>::max)();
+
 //data members that require initialization in the constructor
   NewNodeVisitor& new_node_visitor;
   NewFaceVisitor& new_face_visitor;
@@ -831,6 +833,10 @@ public:
       }
     }
 
+    std::map<typename EK::Point_3, Node_id> constraints_intersection; // TODO we can probably replace the key by a pair of ids....
+
+std::cout <<"nodes.size() " << nodes.size() << "\n";
+
     //2)triangulation of the triangle faces containing intersection point in their interior
     //  and also those with intersection points only on the boundary.
     for (typename std::map<TriangleMesh*,On_face_map>::iterator
@@ -1053,14 +1059,34 @@ public:
 
         // go over all cdt vertices and check for newly created vertices
         // due to intersection of constrained edges
+        bool constraints_split = false;
+        CGAL_assertion_code(std::size_t nb_existed_nodes_reused = 0);
         for(typename CDT::Finite_vertices_iterator vit=cdt.finite_vertices_begin(),
               vit_end=cdt.finite_vertices_end();vit_end!=vit;++vit)
         {
-          if (vit->info()==(std::numeric_limits<std::size_t>::max)())
+          if (vit->info()==invalid_id)
           {
-            nodes.add_new_node( vit->point() );
-            vit->info()=nodes.size()-1;
-            node_ids.push_back(vit->info());
+            /// TODO HANDLE ME: This as several consequences for the output_builder:
+            /// - there might be elements in an_edge_per_polyline that no longer exist: we should for example de-register those edges by calling a new function of the output_builder
+            /// - some polylines are obviously missing (since new nodes of degree at least 4 have been created)
+            
+            constraints_split=true;
+
+            typename std::map<typename EK::Point_3, Node_id>::iterator it_find = 
+              constraints_intersection.insert( std::make_pair(vit->point(), invalid_id ) ).first;
+            if (it_find->second == invalid_id)
+            {
+              nodes.add_new_node( vit->point() );
+              vit->info()=nodes.size()-1;
+              node_ids.push_back(vit->info());
+              it_find->second=vit->info();
+            }
+            else
+            {
+              vit->info()=it_find->second;
+              node_ids.push_back(it_find->second);
+              CGAL_assertion_code( ++nb_existed_nodes_reused );
+            }
           }
         }
 
@@ -1097,7 +1123,7 @@ public:
         triangulate_a_face(f, tm, nodes, node_ids, node_id_to_vertex,
           edge_to_hedge, cdt, vpm, new_node_visitor, new_face_visitor);
 
-        if (node_increase!=0)
+        if (constraints_split)
         {
           // we need to update `constrained_edges` as some edges might be gone due to edge split
           CGAL_assertion_code(std::size_t prev_size=constrained_edges.size());
@@ -1118,7 +1144,7 @@ public:
             }
           }
           // TODO check why constrained are reported twice, I guess this is specific to autorefinement
-          CGAL_assertion(constrained_edges.size() == prev_size/2+4*node_increase);
+          CGAL_assertion(constrained_edges.size() == prev_size/2+4*(node_increase+nb_existed_nodes_reused));
         }
 
         // TODO Here we do the update only for internal edges.
@@ -1153,6 +1179,8 @@ public:
       }
     }
 
+    is_node_of_degree_one.resize(nb_nodes);
+std::cout <<"nodes.size() " << nodes.size() << "\n";
     nodes.finalize();
 
     // additional operations

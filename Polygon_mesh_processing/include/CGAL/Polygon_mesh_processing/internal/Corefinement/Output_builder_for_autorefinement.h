@@ -200,9 +200,12 @@ public:
 
     if (it!=an_edge_per_polyline.end())
       it->second.add( hedge );
-
+//~ //// tmp 
+    //~ an_edge_per_polyline[indices].add(hedge);
+    
     //register an intersection halfedge
-    all_intersection_edges_map[indices].add(hedge);
+    all_intersection_edges_map[indices].add(hedge); // ces entrées sont aussi potentiellement corrompues 
+                                                    // (ça peut entrainer une mauvaise indexation des sommets....
   }
 
   template <class Nodes_vector, class Mesh_to_map_node>
@@ -379,9 +382,31 @@ public:
       halfedge_descriptor h1 = it->second.h1;
       halfedge_descriptor h2 = it->second.h2;
 
+      if (h1 ==GT::null_halfedge() || h2 ==GT::null_halfedge())
+      {
+        std::cout << "Pb with " <<  ids.first << " " << ids.second << "\n";
+        std::cout << "        " <<  nodes[ids.first] << " " << nodes[ids.second] << "\n";
+      }
+
+      //~ if (h1==GT::null_halfedge() || h2==GT::null_halfedge()) continue;
+      
       CGAL_assertion(h1!=GT::null_halfedge());
       CGAL_assertion(h2!=GT::null_halfedge());
 
+      if (ids.first!=vertex_to_node_id[source(h1,tm)]  || 
+          ids.second!=vertex_to_node_id[target(h1,tm)] ||
+          ids.first!=vertex_to_node_id[source(h2,tm)]  ||
+          ids.second!=vertex_to_node_id[target(h2,tm)])
+      {
+        std::cout << " --- ids.first " << ids.first << "\n";
+        std::cout << " --- vertex_to_node_id[source(h1,tm)] " << vertex_to_node_id[source(h1,tm)] << "\n";
+        std::cout << " --- vertex_to_node_id[source(h2,tm)] " << vertex_to_node_id[source(h2,tm)] << "\n";
+        std::cout << " --- ids.second " << ids.second << "\n";
+        std::cout << " --- vertex_to_node_id[target(h1,tm)] " << vertex_to_node_id[target(h1,tm)] << "\n";
+        std::cout << " --- vertex_to_node_id[target(h2,tm)] " << vertex_to_node_id[target(h2,tm)] << "\n";
+        //~ continue;
+      }
+      
       CGAL_assertion(ids.first==vertex_to_node_id[source(h1,tm)]);
       CGAL_assertion(ids.second==vertex_to_node_id[target(h1,tm)]);
       CGAL_assertion(ids.first==vertex_to_node_id[source(h2,tm)]);
@@ -532,6 +557,15 @@ public:
           std::size_t patch_id_p2=patch_ids[ get(fids, face(h1,tm)) ];
           std::size_t patch_id_q1=patch_ids[ get(fids, face(opposite(h2,tm),tm)) ];
           std::size_t patch_id_q2=patch_ids[ get(fids, face(h2,tm)) ];
+
+/// in practise this commented test should be valid, we however need to thing about
+/// the transitivité of patch removed (for connected nested parts that should be discarded).
+          //~ // no need to retest
+          //~ if (!patch_status_not_set.test(patch_id_p1) &&
+              //~ !patch_status_not_set.test(patch_id_p2) &&
+              //~ !patch_status_not_set.test(patch_id_q1) &&
+              //~ !patch_status_not_set.test(patch_id_q2)) continue;
+
 
           //indicates that patch status will be updated
           patch_status_not_set.reset(patch_id_p1);
