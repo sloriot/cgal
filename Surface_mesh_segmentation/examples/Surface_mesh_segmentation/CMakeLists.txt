@@ -41,6 +41,16 @@ else()
   message(STATUS "Examples that use OpenMesh will not be compiled.")
 endif()
 
+# Activate concurrency option
+option(ACTIVATE_CONCURRENCY "Enable concurrency" ON)
+if ( ACTIVATE_CONCURRENCY )
+    find_package( TBB REQUIRED )
+
+    if ( TBB_FOUND )
+        include(${TBB_USE_FILE})
+        list(APPEND CGAL_3RD_PARTY_LIBRARIES ${TBB_LIBRARIES})
+    endif()
+endif()
 
 # include for local package
 include_directories( BEFORE ../../include )
@@ -70,3 +80,10 @@ if(OpenMesh_FOUND)
   target_link_libraries( segmentation_from_sdf_values_OpenMesh_example PRIVATE ${OPENMESH_LIBRARIES} )
 endif()
 
+create_single_source_cgal_program( "concavity_value_example.cpp" )
+create_single_source_cgal_program( "concavity_value_SM_example.cpp" )
+
+create_single_source_cgal_program( "approximate_convex_segmentation_example.cpp" )
+create_single_source_cgal_program( "approximate_convex_segmentation_SM_example.cpp" )
+
+create_single_source_cgal_program( "approximate_convex_segmentation_convex_hulls_example.cpp" )

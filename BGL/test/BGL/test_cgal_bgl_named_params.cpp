@@ -90,6 +90,12 @@ void test(const NamedParameters& np)
   assert(get_param(np, CGAL::internal_np::get_cost_policy).v == 34);
   assert(get_param(np, CGAL::internal_np::get_placement_policy).v == 35);
 
+    // Named parameters that we use in the package 'Surface Mesh Segmentation'
+  assert(get_param(np, CGAL::internal_np::min_number_of_segments).v == 47);
+  assert(get_param(np, CGAL::internal_np::convex_hulls_of_segments).v == 48);
+  assert(get_param(np, CGAL::internal_np::use_closest_point).v == 49);
+  assert(get_param(np, CGAL::internal_np::segment_size_threshold).v == 50);
+
     // To-be-documented named parameters
   assert(get_param(np, CGAL::internal_np::face_normal).v == 36);
   assert(get_param(np, CGAL::internal_np::random_seed).v == 37);
@@ -167,6 +173,12 @@ void test(const NamedParameters& np)
   check_same_type<34>(get_param(np, CGAL::internal_np::get_cost_policy));
   check_same_type<35>(get_param(np, CGAL::internal_np::get_placement_policy));
 
+    // Named parameters that we use in the package 'Surface Mesh Segmentation'
+  check_same_type<48>(get_param(np, CGAL::internal_np::min_number_of_segments));
+  check_same_type<49>(get_param(np, CGAL::internal_np::convex_hulls_of_segments));
+  check_same_type<50>(get_param(np, CGAL::internal_np::use_closest_point));
+  check_same_type<51>(get_param(np, CGAL::internal_np::segment_size_threshold));
+
     // To-be-documented named parameters
   check_same_type<36>(get_param(np, CGAL::internal_np::face_normal));
   check_same_type<37>(get_param(np, CGAL::internal_np::random_seed));
@@ -241,6 +253,10 @@ int main()
                          .use_compact_clipper(A<45>(45))
                          .apply_per_connected_component(A<46>(46))
                          .output_iterator(A<47>(47))
+                         .min_number_of_segments(A<48>(48))
+                         .convex_hulls_of_segments(A<49>(49))
+                         .use_closest_point(A<50>(50))
+                         .segment_size_threshold(A<51>(51))
        );
 
   return EXIT_SUCCESS;

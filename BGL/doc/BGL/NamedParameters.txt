@@ -173,7 +173,39 @@ operation.\n
 <b>Default:</b> None.
 \cgalNPEnd
 
+\cgalNPBegin{min_number_of_segments} \anchor BGL_min_number_of_segments
+indicates the minimum number of segments a segmentation must produce.\n
+<b>Type:</b> a type convertible to `std::size_t` \n
+<b>Default:</b> 1
+\cgalNPEnd
 
+\cgalNPBegin{convex_hulls_of_segments} \anchor BGL_convex_hulls_of_segments
+a property map filled up with the convex hulls of the segments computed by `CGAL::approximate_convex_segmentation()`.\n
+<b>Type:</b> a property map model of mutable `LvaluePropertyMap` with a key convertible to `std::size_t`
+ *           and a model of `MutableFaceGraph` as value type. A good candidate is `boost::vector_property_map<TriangleMesh>` \n
+<b>Default:</b> None.
+\cgalNPEnd
+
+\cgalNPBegin{use_closest_point} \anchor BGL_use_closest_point
+indicates if the closest point or the normal projection should be used to compute the concavity of a vertex.\n
+<b>Type:</b> a type convertible to `bool` \n
+<b>Default:</b> false
+\cgalNPEnd
+
+\cgalNPBegin{segment_size_threshold} \anchor BGL_segment_size_threshold
+a bound on the length of the diagonal of the bounding box of the segments. It is a percentage of the length of the diagonal of the input mesh (valid values are within `[0,100`]).\n
+<b>Type:</b> a type convertible to `double` \n
+<b>Default:</b> 0
+\cgalNPEnd
+
+\cgalNPBegin{geom_traits} \anchor BGL_geom_traits
+is the geometric traits instance in which the operation should be performed.\n
+<b>Type:</b> a Geometric traits class.\n
+<b>Default</b>:
+\code typename CGAL::Kernel_traits<
+        typename boost::property_traits<
+          typename boost::property_map<PolygonMesh, CGAL::vertex_point_t>::type>::value_type>::Kernel \endcode
+\cgalNPEnd
 
 \cgalNPTableEnd
 
