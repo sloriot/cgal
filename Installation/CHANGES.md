@@ -20,6 +20,11 @@ Release date: March 2019
     - `CGAL::Polygon_mesh_processing::merge_duplicated_vertices_in_boundary_cycle()`
     - `CGAL::Polygon_mesh_processing::merge_duplicated_vertices_in_boundary_cycles()`
 
+### Surface mesh segmentation package
+-   Added new functions:
+    -   `CGAL::concavity_values()` computes the concavity value of a set of faces in a triangle mesh
+    -   `CGAL::approximate_convex_segmentation()` computes approximate convex segmentation of a triangle mesh
+
 Release 4.13
 ------------
 
