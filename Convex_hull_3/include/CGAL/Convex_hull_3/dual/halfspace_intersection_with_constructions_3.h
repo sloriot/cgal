@@ -126,7 +126,7 @@ namespace CGAL
               p_origin = boost::get(origin);
             } else {
               // choose exact integral type
-              typedef typename internal::Exact_field_selector<void*>::Type ET;
+              typedef typename internal::Exact_ring_selector<typename K::RT>::Type ET;
 
               // find a point inside the intersection
               typedef Interior_polyhedron_3<K, ET> Interior_polyhedron;
