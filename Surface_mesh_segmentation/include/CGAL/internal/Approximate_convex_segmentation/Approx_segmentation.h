@@ -177,6 +177,29 @@ public:
     }
   }
 
+   
+  // comparator that orders segments by the lengths of their diagonals
+  struct Size_segment_comparator
+  {
+    Size_segment_comparator(Approx_segmentation& alg) : m_alg(alg) {}
+    
+    bool operator() (const graph_vertex_descriptor& a, const graph_vertex_descriptor& b) const
+    {
+      double diagonal_a = m_alg.compute_diagonal_length(m_alg.m_segment_map[a].bbox);
+      double diagonal_b = m_alg.compute_diagonal_length(m_alg.m_segment_map[b].bbox);
+      
+      if (diagonal_a != diagonal_b)
+        {
+          return diagonal_a < diagonal_b;
+        }
+      
+      return a < b;
+    }
+    
+  private:
+    Approx_segmentation& m_alg;
+  };
+ 
   /**
   * Postprocesses produced segments: merges any produced segment that is smaller than `segment_size_threshold` with a neighbour segment regardless the concavity threshold
   * @param segment_size_threshold the minimal size of a segment postprocessing procedure must return in percentage with regard to the diameter of the input mesh. The value must be in the range [0, 100]
@@ -187,28 +210,6 @@ public:
     std::cout << "Postprocessing segments..." << std::endl;
     std::cout << "segment_size_threshold=" << segment_size_threshold << std::endl;
 #endif
-  
-    // comparator that orders segments by the lengths of their diagonals
-    struct Size_segment_comparator
-    {
-      Size_segment_comparator(Approx_segmentation& alg) : m_alg(alg) {}
-
-      bool operator() (const graph_vertex_descriptor& a, const graph_vertex_descriptor& b) const
-      {
-        double diagonal_a = m_alg.compute_diagonal_length(m_alg.m_segment_map[a].bbox);
-        double diagonal_b = m_alg.compute_diagonal_length(m_alg.m_segment_map[b].bbox);
-        
-        if (diagonal_a != diagonal_b)
-        {
-          return diagonal_a < diagonal_b;
-        }
-
-        return a < b;
-      }
-
-    private:
-      Approx_segmentation& m_alg;
-    };
   
     // restore edges that were removed on segmentation stage
     restore_invalid_edges(concavity_threshold);
