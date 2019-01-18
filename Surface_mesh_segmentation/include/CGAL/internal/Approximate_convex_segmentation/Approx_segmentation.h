@@ -109,7 +109,7 @@ class Approx_segmentation
   typedef typename boost::property_map<Graph, decimation_props_t>::type Graph_decimation_map;
 
   // constants
-  const double CONCAVITY_FACTOR = 0.1;
+  static const double CONCAVITY_FACTOR;
 
 public:
   Approx_segmentation(const TriangleMesh& mesh, const Vpm& vpm, const GeomTraits& traits, bool use_closest_point)
@@ -766,6 +766,13 @@ private:
     }
   }
 };    
+
+template < class TriangleMesh,
+           class Vpm,
+           class GeomTraits,
+           class ConcurrencyTag
+         >
+const double Approx_segmentation<TriangleMesh,Vpm,GeomTraits,ConcurrencyTag>::CONCAVITY_FACTOR = 0.1;
 
 }
 }
