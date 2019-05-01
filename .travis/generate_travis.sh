@@ -28,7 +28,7 @@ do
 			i=0
  			INDEX=$[INDEX+1]
 		fi
-  	echo "$f " >> ./.travis/packages.txt
+  	echo "$f" >> ./.travis/packages.txt
 	fi
 done
 if [ -f ".travis.yml" ] 
