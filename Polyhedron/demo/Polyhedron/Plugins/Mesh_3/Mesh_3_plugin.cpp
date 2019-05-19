@@ -101,7 +101,7 @@ public:
       if( qobject_cast<Scene_image_item*>(scene->item(ind)))
         return true;
     }
-#endif  
+#endif
     Q_FOREACH(int ind, scene->selectionIndices()){
       Scene_surface_mesh_item* sm_item
           = qobject_cast<Scene_surface_mesh_item*>(scene->item(ind));

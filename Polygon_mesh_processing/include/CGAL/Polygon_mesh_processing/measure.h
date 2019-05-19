@@ -265,10 +265,10 @@ public:
         }
       }
     }
-    return std::make_pair(result_halfedge, result_len); 
+    return std::make_pair(result_halfedge, result_len);
   }
-  
- template<typename PolygonMesh>  
+
+ template<typename PolygonMesh>
  std::pair<typename boost::graph_traits<PolygonMesh>::halfedge_descriptor,
            typename CGAL::Kernel_traits<typename property_map_value<PolygonMesh,
                                                                     CGAL::vertex_point_t>::type>::Kernel::FT>
@@ -568,7 +568,7 @@ volume(const TriangleMesh& tmesh, const CGAL_PMP_NP_CLASS& np)
 centroid(const TriangleMesh& tmesh, const CGAL_PMP_NP_CLASS& np)
 {
   // See: http://www2.imperial.ac.uk/~rn/centroid.pdf
-    
+
   CGAL_assertion(is_triangle_mesh(tmesh));
   CGAL_assertion(is_closed(tmesh));
 
@@ -617,12 +617,12 @@ typedef typename Kernel::FT FT;
     v3 = sum(v3, Vector_3(square(v2.x()), square(v2.y()), square(v2.z())));
     v2 = sum(vp, vr);
     v3 = sum(v3, Vector_3(square(v2.x()), square(v2.y()), square(v2.z())));
-              
-    centroid = sum(centroid, Vector_3(n.x() * v3.x(), n.y() * v3.y(), n.z() * v3.z())); 
+
+    centroid = sum(centroid, Vector_3(n.x() * v3.x(), n.y() * v3.y(), n.z() * v3.z()));
   }
   centroid = scale(centroid, FT(1)/(FT(2)*volume));
   return point(ORIGIN, centroid);
-  
+
 }
 
 template<typename TriangleMesh>
@@ -633,7 +633,7 @@ centroid(const TriangleMesh& tmesh)
   return centroid(tmesh,
                   CGAL::Polygon_mesh_processing::parameters::all_default());
 }
-  
+
 }
 }
 

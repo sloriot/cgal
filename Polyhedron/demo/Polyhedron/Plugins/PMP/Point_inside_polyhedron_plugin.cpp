@@ -40,7 +40,7 @@ class Polyhedron_demo_point_inside_polyhedron_plugin :
   Q_PLUGIN_METADATA(IID "com.geometryfactory.PolyhedronDemo.PluginInterface/1.0")
 
 public:
-  bool applicable(QAction*) const 
+  bool applicable(QAction*) const
   {
     for(CGAL::Three::Scene_interface::Item_id i = 0, end = scene->numberOfEntries();
         i < end; ++i)
@@ -72,9 +72,9 @@ public:
 
     addDockWidget(dock_widget);
 
-    connect(ui_widget.Select_button,  SIGNAL(clicked()), this, SLOT(on_Select_button())); 
-    connect(ui_widget.Sample_random_points_from_bbox,  SIGNAL(clicked()), this, SLOT(on_Sample_random_points_from_bbox())); 
-    
+    connect(ui_widget.Select_button,  SIGNAL(clicked()), this, SLOT(on_Select_button()));
+    connect(ui_widget.Sample_random_points_from_bbox,  SIGNAL(clicked()), this, SLOT(on_Sample_random_points_from_bbox()));
+
   }
 
   virtual void closure()
@@ -84,12 +84,12 @@ public:
 
 
 public Q_SLOTS:
-  void point_inside_polyhedron_action() { 
+  void point_inside_polyhedron_action() {
     dock_widget->show();
     dock_widget->raise();
   }
 
-  void on_Select_button() 
+  void on_Select_button()
   {
     bool inside = ui_widget.Inside_check_box->isChecked();
     bool on_boundary = ui_widget.On_boundary_check_box->isChecked();
@@ -131,7 +131,7 @@ public Q_SLOTS:
     if((inside_smesh_testers.empty()) || point_sets.empty()) { QApplication::restoreOverrideCursor(); return; }
 
     // deselect all points
-    for(std::vector<Point_set*>::iterator point_set_it = point_sets.begin(); 
+    for(std::vector<Point_set*>::iterator point_set_it = point_sets.begin();
       point_set_it != point_sets.end(); ++point_set_it) {
       (*point_set_it)->unselect_all();
     }
@@ -143,8 +143,8 @@ public Q_SLOTS:
     timer.reset();
 
     std::size_t nb_query = 0, nb_selected = 0;// for print message
-    for(std::vector<Point_set*>::iterator point_set_it = point_sets.begin(); 
-      point_set_it != point_sets.end(); ++point_set_it) 
+    for(std::vector<Point_set*>::iterator point_set_it = point_sets.begin();
+      point_set_it != point_sets.end(); ++point_set_it)
     {
       Point_set* point_set = *point_set_it;
       for (std::size_t pt = 0;
@@ -159,7 +159,7 @@ public Q_SLOTS:
           for (std::size_t i = 0; i < inside_smesh_testers.size(); ++i)
             {
               CGAL::Bounded_side res = (*inside_smesh_testers[i])(point_set->point(*point_it));
-              
+
               if( (inside      && res == CGAL::ON_BOUNDED_SIDE) ||
                   (on_boundary && res == CGAL::ON_BOUNDARY)     ||
                   (outside     && res == CGAL::ON_UNBOUNDED_SIDE) )
@@ -185,7 +185,7 @@ public Q_SLOTS:
     // for repaint
     Q_FOREACH(CGAL::Three::Scene_interface::Item_id id, scene->selectionIndices()) {
       Scene_points_with_normal_item* point_item = qobject_cast<Scene_points_with_normal_item*>(scene->item(id));
-      if(point_item) { 
+      if(point_item) {
         found = true;
         point_item->invalidateOpenGLBuffers();
         scene->itemChanged(point_item);
@@ -199,7 +199,7 @@ public Q_SLOTS:
   }
 
   void on_Sample_random_points_from_bbox() {
-    
+
     // calculate bbox of selected polyhedron items
     boost::optional<CGAL::Three::Scene_interface::Bbox> bbox
       = boost::make_optional(false, CGAL::Three::Scene_interface::Bbox());
@@ -222,13 +222,13 @@ public Q_SLOTS:
     }
 
     if(!bbox) {
-      print_message("Error: there is no selected polyhedron item(s)."); 
+      print_message("Error: there is no selected polyhedron item(s).");
       return;
     }
 
     // take number of points param
     bool ok;
-    const int nb_points = 
+    const int nb_points =
       QInputDialog::getInt(mw, tr("Number of Points"),
       tr("Number of Points:"),
       100000, // default value

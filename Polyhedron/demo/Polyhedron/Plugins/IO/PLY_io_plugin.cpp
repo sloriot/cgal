@@ -23,10 +23,10 @@ class Polyhedron_demo_ply_plugin :
   Q_PLUGIN_METADATA(IID "com.geometryfactory.PolyhedronDemo.IOPluginInterface/1.0" FILE "ply_io_plugin.json")
 
 public:
-  bool isDefaultLoader(const CGAL::Three::Scene_item *item) const 
-  { 
-    if(qobject_cast<const Scene_points_with_normal_item*>(item)) 
-      return true; 
+  bool isDefaultLoader(const CGAL::Three::Scene_item *item) const
+  {
+    if(qobject_cast<const Scene_points_with_normal_item*>(item))
+      return true;
     return false;
   }
   QString name() const { return "ply_plugin"; }
@@ -57,7 +57,7 @@ Polyhedron_demo_ply_plugin::load(QFileInfo fileinfo) {
     CGAL::Three::Three::warning( tr("The file you are trying to load is empty."));
     return 0;
   }
-  
+
   // Test if input is mesh or point set
   bool input_is_mesh = false;
   std::string line;
@@ -92,7 +92,7 @@ Polyhedron_demo_ply_plugin::load(QFileInfo fileinfo) {
     // First try mesh
     SMesh *surface_mesh = new SMesh();
     std::string comments;
-    
+
     if (CGAL::read_ply (in, *surface_mesh, comments))
     {
       Scene_surface_mesh_item* sm_item = new Scene_surface_mesh_item(surface_mesh);
@@ -168,13 +168,13 @@ bool Polyhedron_demo_ply_plugin::save(const CGAL::Three::Scene_item* item, QFile
 
   if (!ok)
     return false;
-  
+
   std::ofstream out(fileinfo.filePath().toUtf8().data(), std::ios::binary);
   if (choice == tr("Binary"))
     CGAL::set_binary_mode(out);
   else
     out.precision (std::numeric_limits<double>::digits10 + 2);
-  
+
   // This plugin supports point sets
   const Scene_points_with_normal_item* point_set_item =
     qobject_cast<const Scene_points_with_normal_item*>(item);
@@ -192,7 +192,7 @@ bool Polyhedron_demo_ply_plugin::save(const CGAL::Three::Scene_item* item, QFile
     qobject_cast<const Scene_surface_mesh_item*>(item);
   if (sm_item)
     return CGAL::write_ply (out, *(sm_item->polyhedron()), sm_item->comments());
-  
+
   // This plugin supports textured surface meshes
   const Scene_textured_surface_mesh_item* stm_item =
     qobject_cast<const Scene_textured_surface_mesh_item*>(item);

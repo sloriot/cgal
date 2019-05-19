@@ -1057,7 +1057,7 @@ private:
       leftSide = node->has_left_side();
       rightSide = node->has_right_side();
     }
-    else if (node->node_type() == Cone_tree_node::EDGE_SOURCE) 
+    else if (node->node_type() == Cone_tree_node::EDGE_SOURCE)
     {
       leftSide = true;
       rightSide = true;

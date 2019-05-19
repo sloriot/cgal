@@ -154,7 +154,7 @@ public:
     translated_point_functor(traits.construct_translated_point_3_object()),
     centroid_functor(traits.construct_centroid_3_object()),
     tree(create_traits(mesh, vertex_point_map)),
-    use_diagonal(use_diagonal) 
+    use_diagonal(use_diagonal)
   {
     typedef typename boost::property_traits<VertexPointPmap>::reference Point_ref;
     typename GeomTraits::Collinear_3  collinear = traits.collinear_3_object();
@@ -383,7 +383,7 @@ private:
     double cone_angle,
     bool accept_if_acute,
     const Disk_samples_list& disk_samples) const {
-    
+
     const Point p1 = get(vertex_point_map,target(halfedge(facet,mesh),mesh));
     const Point p2 = get(vertex_point_map,target(next(halfedge(facet,mesh),mesh),mesh));
     const Point p3 = get(vertex_point_map,target(prev(halfedge(facet,mesh),mesh),mesh));

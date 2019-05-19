@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -168,7 +168,7 @@ public:    //    compute_supporting_line(q.supporting_segment(), a1, b1, c1);
 
   static
   void compute_supporting_line(const Site_2& s,
-			       RT& a, RT& b, RT& c)
+                               RT& a, RT& b, RT& c)
   {
     a = s.source().y() - s.target().y();
     b = s.target().x() - s.source().x();
@@ -185,7 +185,7 @@ public:    //    compute_supporting_line(q.supporting_segment(), a1, b1, c1);
 
   static
   void compute_supporting_line(const Segment_2& s,
-			       RT& a, RT& b, RT& c)
+                               RT& a, RT& b, RT& c)
   {
     a = s.source().y() - s.target().y();
     b = s.target().x() - s.source().x();
@@ -297,7 +297,7 @@ public:
   static
   Comparison_result
   compare_squared_distances_to_lines(const Point_2& p,
-				     const Line_2& l1,
+                                     const Line_2& l1,
                                      const Line_2& l2)
   {
     RT d2_l1 = CGAL::square(l1.a() * p.x() + l1.b() * p.y() + l1.c());
@@ -338,7 +338,7 @@ public:
     os2 = oriented_side_of_line(l, s.target());
 
     return ( (os1 == ON_POSITIVE_SIDE && os2 != ON_NEGATIVE_SIDE) ||
-	     (os1 != ON_NEGATIVE_SIDE && os2 == ON_POSITIVE_SIDE) );
+             (os1 != ON_NEGATIVE_SIDE && os2 == ON_POSITIVE_SIDE) );
   }
 
 };

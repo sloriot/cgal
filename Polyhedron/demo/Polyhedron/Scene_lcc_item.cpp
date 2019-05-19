@@ -13,7 +13,7 @@ typedef Point_container Pc;
 typedef Viewer_interface Vi;
 
 typedef Scene_lcc_item::LCC::Dart_handle Dart_handle;
-typedef Scene_lcc_item::LCC::Point Point;  
+typedef Scene_lcc_item::LCC::Point Point;
 
 struct lcc_priv{
   typedef Scene_lcc_item::LCC::Dart_const_handle Dart_const_handle;
@@ -21,9 +21,9 @@ struct lcc_priv{
   std::vector<float> faces;
   std::vector<float> lines;
   std::vector<float> vertices;
-  
+
   std::size_t nb_lines, nb_vertices, nb_faces;
-  
+
   lcc_priv(const Scene_lcc_item::LCC& lcc)
     :lcc(lcc){}
 
@@ -40,7 +40,7 @@ struct lcc_priv{
       cur=lcc.next(cur);
     }
     while(cur!=dh);
-    
+
     cur=dh;
     std::vector<Point> pts_in_face;
     do
@@ -50,7 +50,7 @@ struct lcc_priv{
     }
     while(cur!=dh);
     Scene_lcc_item::LCC::Vector normal(0,0,0);
-    
+
     for (std::size_t i = 0; i < pts_in_face.size() ; ++ i){
       const Point& pa = pts_in_face[i];
       const Point& pb = pts_in_face[(i+1)%pts_in_face.size()];
@@ -59,16 +59,16 @@ struct lcc_priv{
       double z = normal.z() + (pa.x()-pb.x())*(pa.y()+pb.y());
       normal = Scene_lcc_item::LCC::Vector(x,y,z);
     }
-    
+
     if (pts_in_face.size()==3)
-    { 
+    {
       for(auto pt = pts_in_face.begin();
           pt != pts_in_face.end();
           ++pt)
       {
         faces.push_back(pt->x() + offset.x);
         faces.push_back(pt->y() + offset.y);
-        faces.push_back(pt->z() + offset.z);    
+        faces.push_back(pt->z() + offset.z);
       }
     }
     else if (CGAL::Buffer_for_vao<float, std::size_t>::is_facet_convex(pts_in_face,normal))
@@ -87,7 +87,7 @@ struct lcc_priv{
         faces.push_back(p.x() + offset.x);
         faces.push_back(p.y() + offset.y);
         faces.push_back(p.z() + offset.z);
-        
+
         p = pts_in_face[0];
         faces.push_back(p.x() + offset.x);
         faces.push_back(p.y() + offset.y);
@@ -101,14 +101,14 @@ struct lcc_priv{
         faces.push_back(p.y() + offset.y);
         faces.push_back(p.z() + offset.z);
       }
-      else 
+      else
       {
         for(std::size_t i=1; i<pts_in_face.size()-1; ++i)
         {
           Point& p0 = pts_in_face[0];
           Point& p1 = pts_in_face[i];
           Point& p2 = pts_in_face[i+1];
-  
+
           // (1) add points
           faces.push_back(p0.x() + offset.x);
           faces.push_back(p0.y() + offset.y);
@@ -129,14 +129,14 @@ struct lcc_priv{
         Scene_lcc_item::LCC::Vector v;
         std::size_t index;
       };
-      
+
       struct Face_info
       {
         bool exist_edge[3];
         bool is_external;
         bool is_process;
       };
-      
+
       typedef CGAL::Triangulation_2_projection_traits_3<CGAL::Exact_predicates_inexact_constructions_kernel> P_traits;
       typedef CGAL::Triangulation_vertex_base_with_info_2<Vertex_info, P_traits> Vb;
       typedef CGAL::Triangulation_face_base_with_info_2<Face_info, P_traits>     Fb1;
@@ -144,7 +144,7 @@ struct lcc_priv{
       typedef CGAL::Triangulation_data_structure_2<Vb,Fb>                        TDS;
       typedef CGAL::Exact_predicates_tag                                         Itag;
       typedef CGAL::Constrained_Delaunay_triangulation_2<P_traits, TDS, Itag>    CDT;
-      
+
       P_traits cdt_traits(normal);
       CDT cdt(cdt_traits);
         // (1) We insert all the edges as contraint in the CDT.
@@ -160,12 +160,12 @@ struct lcc_priv{
           { cdt.insert_constraint(previous, vh); }
           previous=vh;
         }
-        
+
         if (previous!=NULL && previous!=first)
         { cdt.insert_constraint(previous, first); }
-        
+
         // (2) We mark all external triangles
-        // (2.1) We initialize is_external and is_process values 
+        // (2.1) We initialize is_external and is_process values
         for(typename CDT::All_faces_iterator fit = cdt.all_faces_begin(),
               fitend = cdt.all_faces_end(); fit!=fitend; ++fit)
         {
@@ -198,10 +198,10 @@ struct lcc_priv{
             }
           }
         }
-        
+
         if ( face_internal!=NULL )
         { face_queue.push(face_internal); }
-        
+
         while(!face_queue.empty())
         {
           typename CDT::Face_handle fh = face_queue.front();
@@ -220,8 +220,8 @@ struct lcc_priv{
             }
           }
         }
-        
-        // (3) Now we iterates on the internal faces to add the vertices 
+
+        // (3) Now we iterates on the internal faces to add the vertices
         //     and the normals to the appropriate vectors
         for(typename CDT::Finite_faces_iterator ffit=cdt.finite_faces_begin(),
               ffitend = cdt.finite_faces_end(); ffit!=ffitend; ++ffit)
@@ -229,7 +229,7 @@ struct lcc_priv{
           if(!ffit->info().is_external)
           {
             for(unsigned int i=0; i<3; ++i)
-            {            
+            {
               Point p = ffit->vertex(i)->point();
               faces.push_back(p.x() + offset.x);
               faces.push_back(p.y() + offset.y);
@@ -238,7 +238,7 @@ struct lcc_priv{
           }
         }
     }
-      
+
   }
 
 };
@@ -252,12 +252,12 @@ Scene_lcc_item::Scene_lcc_item(const LCC& lcc)
   setTriangleContainer(0,
                        new Tri(Three::mainViewer()->isOpenGL_4_3() ? Vi::PROGRAM_FLAT
                                                                    : Vi::PROGRAM_OLD_FLAT, false));
-  
-  setEdgeContainer(0, 
+
+  setEdgeContainer(0,
                    new Ec(Three::mainViewer()->isOpenGL_4_3() ? Vi::PROGRAM_SOLID_WIREFRAME
                                                               : Vi::PROGRAM_NO_SELECTION
                                                                 , false));
-  setPointContainer(0, 
+  setPointContainer(0,
                     new Pc(Vi::PROGRAM_NO_SELECTION, false));
 }
 
@@ -309,7 +309,7 @@ void Scene_lcc_item::draw(CGAL::Three::Viewer_interface* viewer) const
     computeElements();
     initializeBuffers(viewer);
   }
-  
+
   getTriangleContainer(0)->setColor(this->color());
   getTriangleContainer(0)->draw(viewer, true);
 }
@@ -338,7 +338,7 @@ void Scene_lcc_item::drawEdges(CGAL::Three::Viewer_interface* viewer) const
   if(viewer->isOpenGL_4_3())
   {
     QVector2D vp(viewer->width(), viewer->height());
-    
+
     getEdgeContainer(0)->setViewport(vp);
     getEdgeContainer(0)->setWidth(2);
   }
@@ -369,7 +369,7 @@ void Scene_lcc_item::drawPoints(CGAL::Three::Viewer_interface* viewer) const
     computeElements();
     initializeBuffers(viewer);
   }
-  
+
   getPointContainer(0)->setColor(QColor(Qt::black));
   getPointContainer(0)->draw(viewer, true);
   viewer->setGlPointSize(point_size);
@@ -383,7 +383,7 @@ void Scene_lcc_item::computeElements() const
   typename LCC::size_type markfaces    = d->lcc.get_new_mark();
   typename LCC::size_type markedges    = d->lcc.get_new_mark();
   typename LCC::size_type markvertices = d->lcc.get_new_mark();
-  
+
   for (typename LCC::Dart_range::const_iterator it=d->lcc.darts().begin(),
        itend=d->lcc.darts().end(); it!=itend; ++it )
   {
@@ -397,7 +397,7 @@ void Scene_lcc_item::computeElements() const
         d->lcc.mark(itv, markvolumes); // To be sure that all darts of the basic iterator will be marked
         if (!d->lcc.is_marked(itv, markfaces))
         {
-          d->compute_face(itv); 
+          d->compute_face(itv);
           for (typename LCC::template Dart_of_cell_basic_range<2>::
                const_iterator itf=d->lcc.template darts_of_cell_basic<2>(itv, markfaces).begin(),
                itfend=d->lcc.template darts_of_cell_basic<2>(itv, markfaces).end();
@@ -412,11 +412,11 @@ void Scene_lcc_item::computeElements() const
               d->lines.push_back(p1.x() + offset.x);
               d->lines.push_back(p1.y() + offset.y);
               d->lines.push_back(p1.z() + offset.z);
-              
+
               d->lines.push_back(p2.x() + offset.x);
               d->lines.push_back(p2.y() + offset.y);
               d->lines.push_back(p2.z() + offset.z);
-              
+
               for (typename LCC::template Dart_of_cell_basic_range<1>::
                    const_iterator ite=d->lcc.template darts_of_cell_basic<1>(itf, markedges).begin(),
                    iteend=d->lcc.template darts_of_cell_basic<1>(itf, markedges).end();
@@ -438,7 +438,7 @@ void Scene_lcc_item::computeElements() const
       }
     }
   }
-  
+
   for (typename LCC::Dart_range::const_iterator it=d->lcc.darts().begin(),
        itend=d->lcc.darts().end(); it!=itend; ++it )
   {
@@ -446,26 +446,26 @@ void Scene_lcc_item::computeElements() const
     d->lcc.unmark(it, markedges);
     d->lcc.unmark(it, markfaces);
     d->lcc.unmark(it, markvolumes);
-    
+
   }
-  
+
   d->lcc.free_mark(markvolumes);
   d->lcc.free_mark(markfaces);
   d->lcc.free_mark(markedges);
-  d->lcc.free_mark(markvertices);  
-  
+  d->lcc.free_mark(markvertices);
+
   getTriangleContainer(0)->allocate(
         Tri::Flat_vertices, d->faces.data(),
         static_cast<int>(d->faces.size()*sizeof(float)));
-  
+
   getEdgeContainer(0)->allocate(
         Ec::Vertices, d->lines.data(),
         static_cast<int>(d->lines.size()*sizeof(float)));
-  
+
   getPointContainer(0)->allocate(
         Pc::Vertices, d->vertices.data(),
         static_cast<int>(d->vertices.size()*sizeof(float)));
-  
+
   setBuffersFilled(true);
   d->nb_faces = d->faces.size();
   d->nb_lines = d->lines.size();
@@ -478,8 +478,8 @@ void Scene_lcc_item::initializeBuffers(CGAL::Three::Viewer_interface *viewer) co
   getEdgeContainer(0)->initializeBuffers(viewer);
   getEdgeContainer(0)->setFlatDataSize(d->nb_lines);
   getPointContainer(0)->initializeBuffers(viewer);
-  getPointContainer(0)->setFlatDataSize(d->nb_vertices);  
-  
+  getPointContainer(0)->setFlatDataSize(d->nb_vertices);
+
   d->faces.clear();
   d->faces.shrink_to_fit();
   d->lines.clear();

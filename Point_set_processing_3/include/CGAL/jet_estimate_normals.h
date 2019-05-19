@@ -45,7 +45,7 @@
 #include <CGAL/Point_set_processing_3/internal/Parallel_callback.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
-#include <tbb/scalable_allocator.h>  
+#include <tbb/scalable_allocator.h>
 #endif // CGAL_LINKED_WITH_TBB
 
 namespace CGAL {
@@ -90,7 +90,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
   std::vector<Point> points;
   CGAL::Point_set_processing_3::internal::neighbor_query
     (query, tree, k, neighbor_radius, points);
-  
+
   // performs jet fitting
   Monge_jet_fitting monge_fit;
   const unsigned int degree_monge = 1; // we seek for normal and not more.
@@ -127,7 +127,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
       , advancement (advancement)
       , interrupted (interrupted)
     { }
-    
+
     void operator()(const tbb::blocked_range<std::size_t>& r) const
     {
       for( std::size_t i = r.begin(); i != r.end(); ++i)
@@ -143,7 +143,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
 #endif // CGAL_LINKED_WITH_TBB
 
 
-  
+
 } /* namespace internal */
 /// \endcond
 
@@ -197,7 +197,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
    \cgalNamedParamsEnd
 */
 template <typename ConcurrencyTag,
-	  typename PointRange,
+          typename PointRange,
           typename NamedParameters
 >
 void
@@ -207,7 +207,7 @@ jet_estimate_normals(
   const NamedParameters& np)
 {
   using boost::choose_param;
-  
+
   CGAL_TRACE("Calls jet_estimate_normals()\n");
 
   // basic geometric types
@@ -228,7 +228,7 @@ jet_estimate_normals(
   NormalMap normal_map = choose_param(get_param(np, internal_np::normal_map), NormalMap());
   unsigned int degree_fitting = choose_param(get_param(np, internal_np::degree_fitting), 2);
   FT neighbor_radius = choose_param(get_param(np, internal_np::neighbor_radius), FT(0));
-  
+
   const std::function<bool(double)>& callback = choose_param(get_param(np, internal_np::callback),
                                                                std::function<bool(double)>());
 
@@ -257,7 +257,7 @@ jet_estimate_normals(
 
   // Instanciate a KD-tree search.
   // Note: We have to convert each input iterator to Point_3.
-  std::vector<Point> kd_tree_points; 
+  std::vector<Point> kd_tree_points;
   for(it = points.begin(); it != points.end(); it++)
     kd_tree_points.push_back(get(point_map, *it));
   Tree tree(kd_tree_points.begin(), kd_tree_points.end());
@@ -269,13 +269,13 @@ jet_estimate_normals(
   // vectors (already normalized)
 #ifndef CGAL_LINKED_WITH_TBB
   CGAL_static_assertion_msg (!(boost::is_convertible<ConcurrencyTag, Parallel_tag>::value),
-			     "Parallel_tag is enabled but TBB is unavailable.");
+                             "Parallel_tag is enabled but TBB is unavailable.");
 #else
    if (boost::is_convertible<ConcurrencyTag,Parallel_tag>::value)
    {
      Point_set_processing_3::internal::Parallel_callback
        parallel_callback (callback, kd_tree_points.size());
-     
+
      std::vector<Vector> normals (kd_tree_points.size (),
                                   CGAL::NULL_VECTOR);
      CGAL::internal::Jet_estimate_normals<Kernel, SvdTraits, Tree>
@@ -296,15 +296,15 @@ jet_estimate_normals(
      {
        std::size_t nb = 0;
        for(it = points.begin(); it != points.end(); it++, ++ nb)
-	 {
-	   Vector normal = internal::jet_estimate_normal<Kernel,SvdTraits,Tree>(
-										get(point_map,*it), 
-										tree, k, neighbor_radius, degree_fitting);
+         {
+           Vector normal = internal::jet_estimate_normal<Kernel,SvdTraits,Tree>(
+                                                                                get(point_map,*it),
+                                                                                tree, k, neighbor_radius, degree_fitting);
 
-	   put(normal_map, *it, normal); // normal_map[it] = normal
+           put(normal_map, *it, normal); // normal_map[it] = normal
            if (callback && !callback ((nb+1) / double(kd_tree_points.size())))
              break;
-    	 }
+             }
      }
 
 
@@ -316,7 +316,7 @@ jet_estimate_normals(
 /// \cond SKIP_IN_MANUAL
 // variant with default NP
 template <typename ConcurrencyTag,
-	  typename PointRange>
+          typename PointRange>
 void
 jet_estimate_normals(
   PointRange& points,
@@ -329,7 +329,7 @@ jet_estimate_normals(
 #ifndef CGAL_NO_DEPRECATED_CODE
 // deprecated API
 template <typename ConcurrencyTag,
-	  typename ForwardIterator,
+          typename ForwardIterator,
           typename PointMap,
           typename NormalMap,
           typename Kernel,
@@ -355,11 +355,11 @@ jet_estimate_normals(
      degree_fitting (degree_fitting).
      geom_traits(Kernel()));
 }
-  
+
 #if defined(CGAL_EIGEN3_ENABLED) || defined(CGAL_LAPACK_ENABLED)
 // deprecated API
 template <typename ConcurrencyTag,
-	  typename ForwardIterator,
+          typename ForwardIterator,
           typename PointMap,
           typename NormalMap,
           typename Kernel
@@ -394,7 +394,7 @@ jet_estimate_normals(
 
 // deprecated API
 template <typename ConcurrencyTag,
-	  typename ForwardIterator,
+          typename ForwardIterator,
           typename PointMap,
           typename NormalMap
 >
@@ -416,10 +416,10 @@ jet_estimate_normals(
      normal_map (normal_map).
      degree_fitting (degree_fitting));
 }
-  
+
 // deprecated API
 template <typename ConcurrencyTag,
-	  typename ForwardIterator,
+          typename ForwardIterator,
           typename NormalMap
 >
 CGAL_DEPRECATED_MSG("you are using the deprecated V1 API of CGAL::jet_estimate_normals(), please update your code")

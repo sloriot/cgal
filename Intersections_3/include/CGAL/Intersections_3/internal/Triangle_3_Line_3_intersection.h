@@ -28,9 +28,9 @@
 #include <CGAL/intersections.h>
 
 namespace CGAL {
-  
+
 namespace Intersections {
-  
+
 namespace internal {
 
 template <class K>
@@ -323,9 +323,9 @@ t3l3_intersection_aux(const typename K::Triangle_3 &t,
   //   k.intersect_3_object();
 
   // The intersection between a Line and Plane is either Point or Line
-  typename Intersection_traits<K, typename K::Line_3, typename K::Plane_3>::result_type 
+  typename Intersection_traits<K, typename K::Line_3, typename K::Plane_3>::result_type
     v = internal::intersection(l,t.supporting_plane(), K());
-  
+
   // Intersection should be a point (because of orientation test done before)
   if(v) {
     if(const typename K::Point_3* p = intersect_get<typename K::Point_3>(v)) {

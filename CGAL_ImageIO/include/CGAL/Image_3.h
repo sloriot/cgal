@@ -190,44 +190,44 @@ public:
 
 public:
   template <typename Image_word_type,
-	    typename Target_type,
-	    typename Coord_type,
-	    class Image_transform>
+            typename Target_type,
+            typename Coord_type,
+            class Image_transform>
   Target_type
-  trilinear_interpolation(const Coord_type&x, 
-			  const Coord_type&y, 
-			  const Coord_type&z,
-			  const Target_type& value_outside =
-			    Target_type(),
-			  Image_transform transform = 
-			    Image_transform() ) const;
+  trilinear_interpolation(const Coord_type&x,
+                          const Coord_type&y,
+                          const Coord_type&z,
+                          const Target_type& value_outside =
+                            Target_type(),
+                          Image_transform transform =
+                            Image_transform() ) const;
 
   // default Image_transform = CGAL::Identity
   template <typename Image_word_type,
-	    typename Target_type,
-	    typename Coord_type>
+            typename Target_type,
+            typename Coord_type>
   Target_type
-  trilinear_interpolation(const Coord_type&x, 
-			  const Coord_type&y, 
-			  const Coord_type&z,
-			  const Target_type& value_outside =
-			  Target_type()) const
+  trilinear_interpolation(const Coord_type&x,
+                          const Coord_type&y,
+                          const Coord_type&z,
+                          const Target_type& value_outside =
+                          Target_type()) const
   {
     return trilinear_interpolation<
       Image_word_type,
       Target_type>(x, y, z, value_outside,
-			  CGAL::Identity<Image_word_type>());
+                          CGAL::Identity<Image_word_type>());
   }
 
   template <typename Image_word_type,
-	    typename Coord_type,
+            typename Coord_type,
             typename Target_type>
   Target_type
   labellized_trilinear_interpolation(const Coord_type&x,
-				     const Coord_type&y,
-				     const Coord_type&z,
-				     const Target_type& value_outside =
-  				       Target_type()) const
+                                     const Coord_type&y,
+                                     const Coord_type&z,
+                                     const Target_type& value_outside =
+                                         Target_type()) const
   {
     CGAL::ImageIO::Indicator_factory<Image_word_type> indicator_factory;
     return labellized_trilinear_interpolation<Image_word_type>
@@ -235,7 +235,7 @@ public:
   }
 
   template <typename Image_word_type,
-	    typename Coord_type,
+            typename Coord_type,
             typename Target_type,
             typename Indicator_factory>
   Target_type
@@ -249,20 +249,20 @@ public:
 }; // end Image_3
 
 template <typename Image_word_type,
-	  typename Target_type,
-	  typename Coord_type,
-	  class Image_transform>
+          typename Target_type,
+          typename Coord_type,
+          class Image_transform>
 Target_type
-Image_3::trilinear_interpolation(const Coord_type& x, 
-				 const Coord_type& y, 
-				 const Coord_type& z,
-				 const Target_type& value_outside,
-				 Image_transform transform) const 
+Image_3::trilinear_interpolation(const Coord_type& x,
+                                 const Coord_type& y,
+                                 const Coord_type& z,
+                                 const Target_type& value_outside,
+                                 Image_transform transform) const
 {
   // Check on double/float coordinates, because (int)-0.1 gives 0
   if ( x < 0 || y < 0 || z < 0 )
     return value_outside;
-  
+
   const Coord_type lx = x / image()->vx;
   const Coord_type ly = y / image()->vy;
   const Coord_type lz = z / image()->vz;
@@ -270,7 +270,7 @@ Image_3::trilinear_interpolation(const Coord_type& x,
   const std::size_t dimy = ydim();
   const std::size_t dimz = zdim();
   const std::size_t dimxy = dimx*dimy;
-  
+
   if(lx < 0 ||
      ly < 0 ||
      lz < 0 ||
@@ -279,10 +279,10 @@ Image_3::trilinear_interpolation(const Coord_type& x,
      lx >= Coord_type(dimx-1))
   {
     return value_outside;
-  }  
+  }
 
   // images are indexed by (z,y,x)
-  const int i1 = (int)(lz); 
+  const int i1 = (int)(lz);
   const int j1 = (int)(ly);
   const int k1 = (int)(lx);
   const int i2 = i1 + 1;
@@ -303,7 +303,7 @@ Image_3::trilinear_interpolation(const Coord_type& x,
    *     |  |b___|_c|
    *     | /     | /
    *    a|/_____d|/  _y
-   *    
+   *
    *
    * a = val(i1, j1, k1)
    * b = val(i2, j1, k1)
@@ -328,7 +328,7 @@ Image_3::trilinear_interpolation(const Coord_type& x,
   ptr -= dimxy; // i1 * dimxy + j2 * dimx + k1
   const Target_type d = Target_type(transform(*ptr));
   const Target_type h = Target_type(transform(*(ptr+1)));
-  
+
 
 //   const Target_type a = ((Image_word_type*)image()->data)[i1 * dimxy + j1 * dimx + k1];
 //   const Target_type b = ((Image_word_type*)image()->data)[i2 * dimxy + j1 * dimx + k1];
@@ -362,14 +362,14 @@ Image_3::trilinear_interpolation(const Coord_type& x,
 //     }
 //     else {
 //       if(i1 < 0)
-// 	a = outside;
+//         a = outside;
 //       else
-// 	a = ((Image_word_type*)image()->data)[i1 * dimxy + j1 * dimx + k1];
+//         a = ((Image_word_type*)image()->data)[i1 * dimxy + j1 * dimx + k1];
 
 //       if(i2 >= dimz)
-// 	b = outside;
-//       else 
-// 	b = ((Image_word_type*)image()->data)[i2 * dimxy + j1 * dimx + k1];
+//         b = outside;
+//       else
+//         b = ((Image_word_type*)image()->data)[i2 * dimxy + j1 * dimx + k1];
 //     }
 
 //     if(j2 >= dimy) {
@@ -377,14 +377,14 @@ Image_3::trilinear_interpolation(const Coord_type& x,
 //     }
 //     else {
 //       if(i1 < 0)
-// 	d = outside;
+//         d = outside;
 //       else
-// 	d = ((Image_word_type*)image()->data)[i1 * dimxy + j2 * dimx + k1];
+//         d = ((Image_word_type*)image()->data)[i1 * dimxy + j2 * dimx + k1];
 
 //       if(i2 >= dimz)
-// 	c = outside;
+//         c = outside;
 //       else
-// 	c = ((Image_word_type*)image()->data)[i2 * dimxy + j2 * dimx + k1];
+//         c = ((Image_word_type*)image()->data)[i2 * dimxy + j2 * dimx + k1];
 //     }
 //   }
 
@@ -397,14 +397,14 @@ Image_3::trilinear_interpolation(const Coord_type& x,
 //     }
 //     else {
 //       if(i1 < 0)
-// 	e = outside;
+//         e = outside;
 //       else
-// 	e = ((Image_word_type*)image()->data)[i1 * dimxy + j1 * dimx + k2];
+//         e = ((Image_word_type*)image()->data)[i1 * dimxy + j1 * dimx + k2];
 
 //       if(i2 >= dimz)
-// 	f = outside;
-//       else 
-// 	f = ((Image_word_type*)image()->data)[i2 * dimxy + j1 * dimx + k2];
+//         f = outside;
+//       else
+//         f = ((Image_word_type*)image()->data)[i2 * dimxy + j1 * dimx + k2];
 //     }
 
 //     if(j2 >= dimy) {
@@ -412,14 +412,14 @@ Image_3::trilinear_interpolation(const Coord_type& x,
 //     }
 //     else {
 //       if(i1 < 0)
-// 	h = outside;
+//         h = outside;
 //       else
-// 	h = ((Image_word_type*)image()->data)[i1 * dimxy + j2 * dimx + k2];
+//         h = ((Image_word_type*)image()->data)[i1 * dimxy + j2 * dimx + k2];
 
 //       if(i2 >= dimz)
-// 	g = outside;
+//         g = outside;
 //       else
-// 	g = ((Image_word_type*)image()->data)[i2 * dimxy + j2 * dimx + k2];
+//         g = ((Image_word_type*)image()->data)[i2 * dimxy + j2 * dimx + k2];
 //     }
 //   }
 
@@ -433,15 +433,15 @@ Image_3::trilinear_interpolation(const Coord_type& x,
 //   std::cerr << dj2 << " " << dj1 << "\n";
 //   std::cerr << dk2 << " " << dk1 << "\n";
 
-  return ( (  ( a * di2 + b * di1 ) * dj2 + 
-	      ( d * di2 + c * di1 ) * dj1   ) * dk2 +
-	   (  ( e * di2 + f * di1 ) * dj2 + 
-	      ( h * di2 + g * di1 ) * dj1   ) * dk1 );
+  return ( (  ( a * di2 + b * di1 ) * dj2 +
+              ( d * di2 + c * di1 ) * dj1   ) * dk2 +
+           (  ( e * di2 + f * di1 ) * dj2 +
+              ( h * di2 + g * di1 ) * dj1   ) * dk1 );
 } // end trilinear_interpolation
 
 
 template <typename Image_word_type,
-	  typename Coord_type,
+          typename Coord_type,
           typename Target_type,
           typename Indicator_factory>
 Target_type
@@ -454,14 +454,14 @@ Image_3::labellized_trilinear_interpolation
 {
   // Check on double/float coordinates, because (int)-0.1 gives 0
   if ( x < 0 || y < 0 || z < 0 ) return value_outside;
-  
+
   Coord_type lx = x / image()->vx;
   Coord_type ly = y / image()->vy;
   Coord_type lz = z / image()->vz;
   const std::size_t dimx = xdim();
   const std::size_t dimy = ydim();
   const std::size_t dimz = zdim();
-  
+
   if( lx < 0 ||
       ly < 0 ||
       lz < 0 ||
@@ -470,10 +470,10 @@ Image_3::labellized_trilinear_interpolation
      lx >= Coord_type(dimx-1))
   {
     return value_outside;
-  }  
+  }
 
   // images are indexed by (z,y,x)
-  const int i1 = (int)(lz); 
+  const int i1 = (int)(lz);
   const int j1 = (int)(ly);
   const int k1 = (int)(lx);
   const int i2 = i1 + 1;
@@ -490,7 +490,7 @@ Image_3::labellized_trilinear_interpolation
   index[7] = index[6] + 1;
 
   std::array<Image_word_type,8> labels;
-  
+
   labels[0] = ((Image_word_type*)image()->data)[index[0]];
   int lc = 1;
   for(int lci=1; lci<8; ++lci){
@@ -508,19 +508,19 @@ Image_3::labellized_trilinear_interpolation
   }
 
   CGAL_HISTOGRAM_PROFILER(
-    "Number of labels around a vertex, Image_3::labellized_trilinear_interpolation()", 
+    "Number of labels around a vertex, Image_3::labellized_trilinear_interpolation()",
     static_cast<unsigned int>(lc));
 
   if(lc == 1) {
     return static_cast<Target_type>(labels[0]);
   }
-    
+
   double best_value = 0.;
   Image_word_type best = 0;
   for(int i = 0; i < lc; ++i)
   {
     Image_word_type iwt = labels[i];
-    const double r = 
+    const double r =
       trilinear_interpolation<Image_word_type,double,Coord_type>(
         x, y, z, value_outside, indicator_factory.indicator(iwt));
 

@@ -72,7 +72,7 @@ struct PLY_property
 template <typename FT> struct Convert_FT        { typedef double type; };
 // ...except if kernel uses type float
 template <>            struct Convert_FT<float> { typedef float type;  };
-    
+
 template <typename PointOrVectorMap>
 struct Get_FT_from_map
 {
@@ -139,13 +139,13 @@ make_ply_normal_writer(VectorMap normal_map)
 namespace internal {
 
 namespace PLY {
-  
+
 class PLY_read_number
 {
 protected:
   std::string m_name;
   std::size_t m_format;
-    
+
 public:
   PLY_read_number (std::string name, std::size_t format)
     : m_name (name), m_format (format) { }
@@ -176,7 +176,7 @@ public:
     stream >> s;
     c = static_cast<unsigned char>(s);
   }
-    
+
   void read_ascii (std::istream& stream, float& t) const
   {
     stream >> iformat(t);
@@ -186,15 +186,15 @@ public:
   {
     stream >> iformat(t);
   }
-    
+
   // Default template when Type is not a char type
   template <typename Type>
   void read_ascii (std::istream& stream, Type& t) const
   {
     stream >> t;
   }
-    
-    
+
+
   template <typename Type>
   Type read (std::istream& stream) const
   {
@@ -211,11 +211,11 @@ public:
         char uChar[sizeof (Type)];
         Type type;
       } buffer;
-          
+
       std::size_t size = sizeof (Type);
 
       stream.read(buffer.uChar, size);
-      
+
       if (m_format == 2) // Big endian
       {
         for (std::size_t i = 0; i < size / 2; ++ i)
@@ -291,7 +291,7 @@ class PLY_element
 {
   std::string m_name;
   std::size_t m_number;
-    
+
   std::vector<PLY_read_number*> m_properties;
 public:
 
@@ -313,7 +313,7 @@ public:
     const_cast<PLY_element&>(other).m_properties.clear();
     return *this;
   }
-    
+
   ~PLY_element()
   {
     for (std::size_t i = 0; i < m_properties.size(); ++ i)
@@ -325,7 +325,7 @@ public:
   std::size_t number_of_properties() const { return m_properties.size(); }
 
   PLY_read_number* property (std::size_t idx) { return m_properties[idx]; }
-    
+
   void add_property (PLY_read_number* read_number)
   {
     m_properties.push_back (read_number);
@@ -344,7 +344,7 @@ public:
         return (dynamic_cast<PLY_read_typed_list<Type>*>(m_properties[i]) != NULL);
     return false;
   }
-    
+
   template <typename Type>
   bool has_property (const char* tag, Type)
   {
@@ -407,11 +407,11 @@ public:
         }
         else
           t = property_double->buffer();
-          
+
         return;
       }
   }
-  
+
 };
 
 class PLY_reader
@@ -436,7 +436,7 @@ public:
     std::size_t lineNumber = 0; // current line number
     enum Format { ASCII = 0, BINARY_LITTLE_ENDIAN = 1, BINARY_BIG_ENDIAN = 2};
     Format format = ASCII;
-    
+
     std::string line;
     std::istringstream iss;
 
@@ -496,7 +496,7 @@ public:
             return false;
           }
 
-                  
+
           if (type == "list") // Special case
           {
             std::string size_type = name;
@@ -507,7 +507,7 @@ public:
               std::cerr << "Error line " << lineNumber << " of file" << std::endl;
               return false;
             }
-                    
+
             TRY_TO_GENERATE_LIST_PROPERTY ("char", "int8", boost::int8_t);
             else TRY_TO_GENERATE_LIST_PROPERTY ("uchar", "uint8", boost::uint8_t);
             else TRY_TO_GENERATE_LIST_PROPERTY ("short", "int16", boost::int16_t);
@@ -528,7 +528,7 @@ public:
             else TRY_TO_GENERATE_PROPERTY ("float", "float32", float);
             else TRY_TO_GENERATE_PROPERTY ("double", "float64", double);
           }
-                  
+
           continue;
         }
         else if (keyword == "comment")
@@ -549,7 +549,7 @@ public:
             std::cerr << "Error line " << lineNumber << " of file" << std::endl;
             return false;
           }
-                
+
           m_elements.push_back (PLY_element(type, number));
         }
         // When end_header is reached, stop loop and begin reading points
@@ -563,7 +563,7 @@ public:
   ~PLY_reader ()
   {
   }
-  
+
 };
 
 template <class Reader, class T>
@@ -572,7 +572,7 @@ void get_value(Reader& r, T& v, PLY_property<T>& wrapper)
   return r.assign(v, wrapper.name);
 }
 
-  
+
 template <std::size_t N>
 struct Filler
 {
@@ -615,7 +615,7 @@ struct Filler<0>
     get_value(r, std::get<0>(values), std::get<2>(wrappers));
   }
 };
-  
+
 template <typename OutputValueType,
           typename PropertyMap,
           typename Constructor,
@@ -629,7 +629,7 @@ void process_properties (PLY_element& element, OutputValueType& new_element,
   PmapValueType new_value = call_functor<PmapValueType>(std::get<1>(current), values);
   put (std::get<0>(current), new_element, new_value);
 }
-  
+
 template <typename OutputValueType,
           typename PropertyMap,
           typename Constructor,
@@ -646,7 +646,7 @@ void process_properties (PLY_element& element, OutputValueType& new_element,
   Filler<sizeof...(T)-1>::fill(element, values, current);
   PmapValueType new_value = call_functor<PmapValueType>(std::get<1>(current), values);
   put (std::get<0>(current), new_element, new_value);
-  
+
   process_properties (element, new_element, std::forward<NextPropertyBinder>(next),
                       std::forward<PropertyMapBinders>(properties)...);
 }
@@ -690,7 +690,7 @@ template <> inline void property_header_type<int> (std::ostream& stream) { strea
 template <> inline void property_header_type<unsigned int> (std::ostream& stream) { stream << "uint"; }
 template <> inline void property_header_type<float> (std::ostream& stream) { stream << "float"; }
 template <> inline void property_header_type<double> (std::ostream& stream) { stream << "double"; }
-    
+
 template <typename T>
 void property_header (std::ostream& stream, const PLY_property<T>& prop)
 {
@@ -707,7 +707,7 @@ void property_header (std::ostream& stream, const PLY_property<std::vector<T> >&
   stream << " " << prop.name << std::endl;
 }
 
-  
+
 template <std::size_t N>
 struct Properties_header
 {
@@ -733,7 +733,7 @@ template <typename PropertyMap,
 void output_property_header (std::ostream& stream,
                              std::tuple<PropertyMap, PLY_property<T>... >&& current)
 {
-  Properties_header<sizeof...(T)-1>::write(stream, current); 
+  Properties_header<sizeof...(T)-1>::write(stream, current);
 }
 
 
@@ -767,7 +767,7 @@ void output_property_header (std::ostream& stream,
                              NextPropertyHandler&& next,
                              PropertyHandler&& ... properties)
 {
-  Properties_header<sizeof...(T)-1>::write(stream, current); 
+  Properties_header<sizeof...(T)-1>::write(stream, current);
   output_property_header (stream, std::forward<NextPropertyHandler>(next),
                           std::forward<PropertyHandler>(properties)...);
 }
@@ -808,7 +808,7 @@ void simple_property_write (std::ostream& stream, ForwardIterator it,
                             std::pair<PropertyMap, PLY_property<std::vector<T> > > map)
 {
   const typename PropertyMap::reference value = get(map.first, *it);
-    
+
   if (CGAL::get_mode(stream) == IO::ASCII)
   {
     stream << value.size();
@@ -827,7 +827,7 @@ void simple_property_write (std::ostream& stream, ForwardIterator it,
   }
 }
 
-    
+
 template <typename ForwardIterator,
           typename PropertyMap,
           typename ... T>
@@ -870,7 +870,7 @@ void output_properties (std::ostream& stream,
   output_properties (stream, it, std::forward<NextPropertyHandler>(next),
                      std::forward<PropertyHandler>(properties)...);
 }
-  
+
 template <typename ForwardIterator,
           typename PropertyMap,
           typename ... T,
@@ -910,7 +910,7 @@ public:
   {
 
   }
-    
+
   virtual void print(std::ostream& stream, const Index& index)
   {
     stream << get(m_pmap, index);
@@ -927,7 +927,7 @@ public:
   {
 
   }
-    
+
   virtual void print(std::ostream& stream, const Index& index)
   {
     if (get_mode(stream) == IO::ASCII)
@@ -950,7 +950,7 @@ public:
   {
 
   }
-    
+
   virtual void print(std::ostream& stream, const Index& index)
   {
     if (get_mode(stream) == IO::ASCII)

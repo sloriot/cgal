@@ -24,7 +24,7 @@ int main()
   typedef std::vector<Point> MultiPoint;
   typedef std::vector<Linestring> MultiLinestring;
   typedef std::vector<Polygon> MultiPolygon;
-  
+
   Point p;
   {
     std::ifstream in("data/point.wkt");

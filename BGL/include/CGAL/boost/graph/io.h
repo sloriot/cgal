@@ -39,13 +39,13 @@ namespace CGAL {
   /*!
    \ingroup PkgBGLIOFct
     writes the graph `g` in the wrl format (VRML 2.0).
-    
+
     \cgalNamedParamsBegin
     *    \cgalParamBegin{vertex_point_map} the property map with the points associated to the vertices of `g`.
     *       If this parameter is omitted, an internal property map for
     *       `CGAL::vertex_point_t` should be available in `FaceGraph`\cgalParamEnd
     * \cgalNamedParamsEnd
-    */ 
+    */
 template <typename FaceGraph, typename NamedParameters>
 bool write_wrl(std::ostream& os,
                const FaceGraph& g,
@@ -54,14 +54,14 @@ bool write_wrl(std::ostream& os,
   typedef typename boost::graph_traits<FaceGraph>::vertex_descriptor vertex_descriptor;
   typedef typename boost::graph_traits<FaceGraph>::face_descriptor face_descriptor;
   typedef typename boost::graph_traits<FaceGraph>::vertices_size_type vertices_size_type;
-  
+
   typename Polygon_mesh_processing::GetVertexPointMap<FaceGraph, NamedParameters>::const_type
       vpm = choose_param(get_param(np, internal_np::vertex_point),
                          get_const_property_map(CGAL::vertex_point, g));
 
   boost::container::flat_map<vertex_descriptor,vertices_size_type> reindex;
   int n = 0;
-  
+
   os << "#VRML V2.0 utf8\n"
     "Group {\n"
     "children [\n"
@@ -115,23 +115,23 @@ template <typename FaceGraph>
 bool write_wrl(std::ostream& os,
                const FaceGraph& g)
 {
-  return write_wrl(os, g, 
+  return write_wrl(os, g,
                    parameters::all_default());
 }
-  
+
 /*!
    \ingroup PkgBGLIOFct
     writes the graph `g` in the OFF format.
-    
+
     \cgalNamedParamsBegin
     *    \cgalParamBegin{vertex_point_map} the property map with the points associated to the vertices of `g`.
     *       If this parameter is omitted, an internal property map for
     *       `CGAL::vertex_point_t` should be available in `FaceGraph`\cgalParamEnd
     * \cgalNamedParamsEnd
-    
+
     \sa Overloads of this function for specific models of the concept `FaceGraph`.
 
-  */ 
+  */
 template <typename FaceGraph, typename NamedParameters>
 bool write_off(std::ostream& os,
                const FaceGraph& g,
@@ -155,7 +155,7 @@ bool write_off(std::ostream& os,
     os << get(vpm,v) << '\n';
     reindex[v]=n++;
   }
-  
+
   for(face_descriptor f : faces(g)){
     os << degree(f,g);
     for(vertex_descriptor v : vertices_around_face(halfedge(f,g),g)){
@@ -172,7 +172,7 @@ bool write_off(std::ostream& os,
     writes the graph `g` in the OFF format into a file named `fname`.
     \sa Overloads of this function for specific models of the concept `FaceGraph`.
 
-  */ 
+  */
 template <typename FaceGraph, typename NamedParameters>
 bool write_off(const char* fname,
                const FaceGraph& g,
@@ -196,7 +196,7 @@ template <typename FaceGraph>
 bool write_off(std::ostream& os,
                const FaceGraph& g)
 {
-  return write_off(os, g, 
+  return write_off(os, g,
                    parameters::all_default());
 }
 template <typename FaceGraph>
@@ -210,11 +210,11 @@ bool write_off(const char* fname,
 template <typename FaceGraph>
 bool write_off(const std::string& fname,
                const FaceGraph& g)
-{ return write_off(fname, g, 
+{ return write_off(fname, g,
                    parameters::all_default()); }
 
   namespace internal { namespace read_off_tools {
-  
+
   inline bool is_whitespace(const std::string& s)
   {
     for(unsigned int i=0; i < s.size(); i++){
@@ -224,7 +224,7 @@ bool write_off(const std::string& fname,
     }
     return true;
   }
-  
+
 inline std::string next_non_comment(std::istream& is)
 {
   std::string line;
@@ -241,7 +241,7 @@ inline std::string next_non_comment(std::istream& is)
 /*!
    \ingroup PkgBGLIOFct
     reads the graph `g` from data in the OFF format. Ignores comment lines which start with a hash, and lines with whitespace.
-    
+
     \cgalNamedParamsBegin
     *    \cgalParamBegin{vertex_point_map} the property map with the points associated to the vertices of `g`.
     *       If this parameter is omitted, an internal property map for
@@ -251,7 +251,7 @@ inline std::string next_non_comment(std::istream& is)
     \pre The data must represent a 2-manifold
     \attention The graph `g` is not cleared, and the data from the stream are added.
 
-  */ 
+  */
 template <typename FaceGraph, typename NamedParameters>
 bool read_off(std::istream& is,
               FaceGraph& g,
@@ -265,13 +265,13 @@ bool read_off(std::istream& is,
 
   typedef typename Polygon_mesh_processing::GetVertexPointMap<FaceGraph, NamedParameters>::type Vpm;
   typedef  typename boost::property_traits<Vpm>::value_type Point_3;
-  
+
   Vpm vpm = choose_param(get_param(np, internal_np::vertex_point),
                          get_property_map(CGAL::vertex_point, g));
   vertices_size_type nv, nvf;
   faces_size_type nf;
   int ignore;
-  
+
   std::string line = next_non_comment(is);
   {
     std::istringstream iss(line);
@@ -284,7 +284,7 @@ bool read_off(std::istream& is,
     std::istringstream iss(line);
     iss >> nv >> nf >> ignore;
   }
-  
+
   std::vector<vertex_descriptor> vertices(nv);
   Point_3 p;
   for(vertices_size_type i=0; i < nv; i++){
@@ -324,7 +324,7 @@ bool read_off(std::istream& is,
     \pre The data must represent a 2-manifold
     \attention The graph `g` is not cleared, and the data from the stream are added.
 
-  */ 
+  */
 template <typename FaceGraph, typename NamedParameters>
 bool read_off(const char* fname,
               FaceGraph& g,
@@ -348,12 +348,12 @@ template <typename FaceGraph, typename NamedParameters>
 bool read_off(const std::string& fname,
               FaceGraph& g,
               NamedParameters np)
-{ return read_off(fname.c_str(), g, np); }  
+{ return read_off(fname.c_str(), g, np); }
 
 template <typename FaceGraph>
 bool read_off(const std::string& fname,
               FaceGraph& g)
-{ return read_off(fname, g, parameters::all_default()); }  
+{ return read_off(fname, g, parameters::all_default()); }
 
 template <typename FaceGraph, typename NamedParameters>
 bool write_inp(std::ostream& os,

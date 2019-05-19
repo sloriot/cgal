@@ -176,7 +176,7 @@ void Polyhedron_demo_join_and_split_polyhedra_plugin::on_actionSplitPolyhedra_tr
       int cc=0;
       std::vector<QColor> color_map;
       if(
-//           item->isItemMulticolor() || 
+//           item->isItemMulticolor() ||
          item->hasPatchIds())
         color_map = item->color_vector();
       else

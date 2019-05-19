@@ -1,9 +1,9 @@
-// Copyright (c) 1999  
+// Copyright (c) 1999
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Andreas Fabri
 
@@ -107,16 +107,16 @@ public:
   point(int i) const
   {
     CGAL_kernel_precondition( i >= 0 );
-    
+
     typename R::Construct_vector_2 construct_vector;
     typename R::Construct_scaled_vector_2 construct_scaled_vector;
     typename R::Construct_translated_point_2 construct_translated_point;
     if (i == 0) return source();
     if (i == 1) return second_point();
     return construct_translated_point(source(),
-				      construct_scaled_vector(construct_vector(source(), 
-									       second_point()),
-							      FT(i)));
+                                      construct_scaled_vector(construct_vector(source(),
+                                                                               second_point()),
+                                                              FT(i)));
   }
 
 
@@ -198,7 +198,7 @@ public:
     return !(*this == r);
   }
 
-  Ray_2 
+  Ray_2
   transform(const Aff_transformation_2 &t) const
   {
     return Ray_2(t.transform(source()), t.transform(second_point()));
@@ -209,7 +209,7 @@ public:
 
 template <class R >
 std::ostream&
-insert(std::ostream& os, const Ray_2<R>& r, const Cartesian_tag&) 
+insert(std::ostream& os, const Ray_2<R>& r, const Cartesian_tag&)
 {
     switch(get_mode(os)) {
     case IO::ASCII :
@@ -246,7 +246,7 @@ operator<<(std::ostream& os, const Ray_2<R>& r)
 
 template <class R >
 std::istream&
-extract(std::istream& is, Ray_2<R>& r, const Cartesian_tag&) 
+extract(std::istream& is, Ray_2<R>& r, const Cartesian_tag&)
 {
     typename R::Point_2 p, q;
     is >> p >> q;
@@ -258,7 +258,7 @@ extract(std::istream& is, Ray_2<R>& r, const Cartesian_tag&)
 
 template <class R >
 std::istream&
-extract(std::istream& is, Ray_2<R>& r, const Homogeneous_tag&) 
+extract(std::istream& is, Ray_2<R>& r, const Homogeneous_tag&)
 {
   typename R::Point_2 p, q;
   is >> p >> q;

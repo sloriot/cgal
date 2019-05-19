@@ -306,6 +306,6 @@ int main()
   simple_flattening_triangle_along_edge();
   nonsimple_flattening_triangle_along_edge();
   detect_is_saddle_vertex();
-  
+
   return 0;
 }

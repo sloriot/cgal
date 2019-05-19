@@ -10,10 +10,10 @@ IOStreams.  The basic task of such an operator is to produce a
 representation of an object that can be written as a sequence of
 characters on devices as a console, a file, or a pipe. The enum `Mode` distinguish between three different printing formats.
 
-In  `ASCII` mode, numbers 
+In  `ASCII` mode, numbers
 e.g. the coordinates of a point or
 the coefficients of a line, are written
-in a machine independent format. 
+in a machine independent format.
 In <span class="textsc">BINARY</span> mode, data are written
 in a binary format, e.g. a double is represented
 as a sequence of four byte. The format depends on the machine.
@@ -128,7 +128,7 @@ IO::Mode set_pretty_mode(std::ios& s);
 /*!
 \ingroup PkgStreamSupportRef
 
-The definition of `Input_rep` is completely symmetric to `Output_rep`. 
+The definition of `Input_rep` is completely symmetric to `Output_rep`.
 
 */
 template< typename T, typename F >
@@ -139,24 +139,24 @@ class Input_rep {
 /*!
 \ingroup PkgStreamSupportRef
 
-The purpose of `Output_rep` is to provide a way to control output formatting that works independently of the object's stream output operator. 
+The purpose of `Output_rep` is to provide a way to control output formatting that works independently of the object's stream output operator.
 
-If you dont specialize `Output_rep` for `T`, `T`'s stream output operator is called from within `Output_rep`, by default. If you want another behaviour for your type `T`, you have to provide a specialization for that type. Furthermore, you can provide specializations with a second template parameter (a formatting tag). The second template parameter defaults to `Null_tag` and means *default behaviour*. 
+If you dont specialize `Output_rep` for `T`, `T`'s stream output operator is called from within `Output_rep`, by default. If you want another behaviour for your type `T`, you have to provide a specialization for that type. Furthermore, you can provide specializations with a second template parameter (a formatting tag). The second template parameter defaults to `Null_tag` and means *default behaviour*.
 
-Specializations of `Output_rep` should provide the following features: 
+Specializations of `Output_rep` should provide the following features:
 
-\code{.cpp} 
+\code{.cpp}
 
-template< class F > 
-struct Output_rep< Some_type, F > { 
+template< class F >
+struct Output_rep< Some_type, F > {
   static const bool is_specialized = true;
   Output_rep( const Some_type& t );
   std::ostream& operator()( std::ostream& out ) const;
-}; 
+};
 
-\endcode 
+\endcode
 
-You can also specialize for a formatting tag `F`. 
+You can also specialize for a formatting tag `F`.
 
 The constant `is_specialized` can be tested by meta-programming tools to
 verify that a given type can be used with `oformat()`. Its value has to be
@@ -223,7 +223,7 @@ bool is_pretty(std::ios& s);
 /*!
 \ingroup PkgStreamSupportRef
 
-Convenience function to construct an output representation (`Output_rep`) for type `T`. 
+Convenience function to construct an output representation (`Output_rep`) for type `T`.
 
 Generic IO for type `T`.
 */
@@ -240,7 +240,7 @@ template <class T> Input_rep<T> iformat( const T& t);
 /*!
 \ingroup PkgStreamSupportRef
 
-Convenience function to construct an output representation (`Output_rep`) for type `T`. 
+Convenience function to construct an output representation (`Output_rep`) for type `T`.
 
 Generic IO for type `T` with formatting tag.
 */
@@ -251,11 +251,11 @@ template <class T, typename F> Output_rep<T,F> oformat( const T& t, F );
 
 \brief Inserts object `c` in the stream `os`. Returns `os`.
 
-\cgal defines output operators for classes that are derived 
-from the class `ostream`. This allows to write to ostreams 
-as `cout` or `cerr`, as well as to `std::ostringstream` 
-and `std::ofstream`. 
-The output operator is defined for all classes in the \cgal `Kernel` and for the class `Color` as well. 
+\cgal defines output operators for classes that are derived
+from the class `ostream`. This allows to write to ostreams
+as `cout` or `cerr`, as well as to `std::ostringstream`
+and `std::ofstream`.
+The output operator is defined for all classes in the \cgal `Kernel` and for the class `Color` as well.
 
 \sa `CGAL::set_mode()`
 \sa `CGAL::set_ascii_mode()`
@@ -291,13 +291,13 @@ istream& operator>>(istream& is, Class c);
 
 
 //! \ingroup PkgIOstreams
-//! \brief `read_point_WKT()` fills a `Point` from a  WKT stream. The first line starting with POINT 
-//! in the stream will be used. 
-//! 
+//! \brief `read_point_WKT()` fills a `Point` from a  WKT stream. The first line starting with POINT
+//! in the stream will be used.
+//!
 //! \tparam Point can be a `CGAL::Point_2` or `CGAL::Point_3`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
 //! \attention This function is only available with boost versions starting at 1.56.
-//! 
+//!
 //! \see `CGAL::Point_2`
 //! \see `CGAL::Point_3`
 template<typename Point>
@@ -306,16 +306,16 @@ read_point_WKT( std::istream& in,
                 Point& point );
 
 //! \ingroup PkgIOstreams
-//! \brief `read_multi_point_WKT()` overwrites the content of a `MultiPoint` 
+//! \brief `read_multi_point_WKT()` overwrites the content of a `MultiPoint`
 //! with the first line starting with MULTIPOINT in the stream.
-//! 
-//! \tparam MultiPoint must be a model of `RandomAccessRange` of `CGAL::Point_2` or `CGAL::Point_3`, 
+//!
+//! \tparam MultiPoint must be a model of `RandomAccessRange` of `CGAL::Point_2` or `CGAL::Point_3`,
 //! and have:
 //! - a function `push_back()` that takes the same point type,
 //! - a function `clear()`,
 //! - a function `resize()` that takes an `size_type`
 //! - an `operator[]()` that takes a `size_type`.
-//! 
+//!
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
 //! \attention This function is only available with boost versions starting at 1.56.
 //! \see `CGAL::Point_2`
@@ -330,7 +330,7 @@ read_multi_point_WKT( std::istream& in,
 //! \brief `read_linestring_WKT()` fills a `Linestring` from a WKT stream.
 //! The first line starting with LINESTRING in the stream will be used.
 //!
-//! \tparam Linestring must be a model of `RandomAccessRange` of `CGAL::Point_2`, 
+//! \tparam Linestring must be a model of `RandomAccessRange` of `CGAL::Point_2`,
 //! and have:
 //! - a function `push_back()` that takes a `CGAL::Point_2`.
 //! - a function `clear()`,
@@ -345,10 +345,10 @@ read_linestring_WKT( std::istream& in,
                      LineString& polyline );
 
 //! \ingroup PkgIOstreams
-//! \brief `read_multi_linestring_WKT()` overwrites the content of a `MultiLineString` 
+//! \brief `read_multi_linestring_WKT()` overwrites the content of a `MultiLineString`
 //! with the first line starting with MULTILINESTRING in the stream.
 //!
-//! \tparam MultiLineString must be a model of `RandomAccessRange` of `Linestring`, 
+//! \tparam MultiLineString must be a model of `RandomAccessRange` of `Linestring`,
 //! and have:
 //! - a function `push_back()` that takes a `Linestring`,
 //! - a function `clear()`,
@@ -356,7 +356,7 @@ read_linestring_WKT( std::istream& in,
 //! - an `operator[]()` that takes a `size_type`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
 //! \attention This function is only available with boost versions starting at 1.56.
-//! 
+//!
 //! \see `CGAL::Point_2`
 template<typename MultiLineString>
 std::istream&
@@ -366,11 +366,11 @@ read_multi_linestring_WKT( std::istream& in,
 //! \ingroup PkgIOstreams
 //! \brief `read_polygon_WKT()` fills `polygon` from a WKT stream.
 //! The first line starting with POLYGON in the stream will be used.
-//! 
+//!
 //! \tparam Polygon is a `CGAL::General_polygon_with_holes_2`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
 //! \attention This function is only available with boost versions starting at 1.56.
-//! 
+//!
 //! \see `CGAL::General_polygon_with_holes_2`
 template<typename Polygon>
 std::istream&
@@ -378,10 +378,10 @@ read_polygon_WKT( std::istream& in,
                   Polygon& polygon );
 
 //! \ingroup PkgIOstreams
-//! \brief `read_multi_polygon_WKT()` overwrites the content of a `MultiPolygon` 
+//! \brief `read_multi_polygon_WKT()` overwrites the content of a `MultiPolygon`
 //! with the first line starting with MULTIPOLYGON in the stream.
 //!
-//! \tparam MultiPolygon must be a model of `RandomAccessRange` of `CGAL::General_polygon_with_holes_2`, 
+//! \tparam MultiPolygon must be a model of `RandomAccessRange` of `CGAL::General_polygon_with_holes_2`,
 //! and have:
 //! - a function `push_back()` that takes a `CGAL::General_polygon_with_holes_2`,
 //! - a function `clear()`,
@@ -419,7 +419,7 @@ write_polygon_WKT( std::ostream& out,
                    const Polygon& poly );
 
 //! \ingroup PkgIOstreams
-//! \brief `write_linestring_WKT()` writes the content of `ls` 
+//! \brief `write_linestring_WKT()` writes the content of `ls`
 //! into a WKT stream.
 //! \tparam LineString must be a `RandomAccessRange` of `CGAL::Point_2`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
@@ -431,7 +431,7 @@ write_linestring_WKT( std::ostream& out,
                       LineString ls );
 
 //! \ingroup PkgIOstreams
-//! \brief `write_multi_point_WKT()` writes the content of `mp` 
+//! \brief `write_multi_point_WKT()` writes the content of `mp`
 //! into a WKT stream.
 //! \tparam MultiPoint must be a `RandomAccessRange` of `CGAL::Point_2`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
@@ -443,7 +443,7 @@ write_multi_point_WKT( std::ostream& out,
                        MultiPoint& mp );
 
 //! \ingroup PkgIOstreams
-//! \brief `write_multi_polygon_WKT()` writes the content of `polygons` 
+//! \brief `write_multi_polygon_WKT()` writes the content of `polygons`
 //! into a WKT stream.
 //! \tparam MultiPolygon must be a `RandomAccessRange` of `CGAL::General_polygon_with_holes_2`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
@@ -455,8 +455,8 @@ write_multi_polygon_WKT( std::ostream& out,
                          MultiPolygon& polygons );
 
 //! \ingroup PkgIOstreams
-//! \brief `write_multi_linestring_WKT()` writes the content of `mls` 
-//! into a WKT stream. 
+//! \brief `write_multi_linestring_WKT()` writes the content of `mls`
+//! into a WKT stream.
 //! \tparam MultiLineString must be a `RandomAccessRange` of `LineString`.
 //! \attention Only Cartesian Kernels with double or float  as `FT` are supported.
 //! \attention This function is only available with boost versions starting at 1.56.
@@ -467,8 +467,8 @@ write_multi_linestring_WKT( std::ostream& out,
                             MultiLineString& mls );
 
 //! \ingroup PkgIOstreams
-//!  reads the content of a WKT stream and fills 
-//! `points`, `polylines` and `polygons` with all the POINT, MULTIPOINT, 
+//!  reads the content of a WKT stream and fills
+//! `points`, `polylines` and `polygons` with all the POINT, MULTIPOINT,
 //! LINESTRING, MULTILINESTRING, POLYGON and MULTIPOLYGON it finds in `input`.
 //! \tparam MultiPoint must be a model of `RandomAccessRange` of `CGAL::Point_2` or `CGAL::Point_3`.
 //! \tparam MultiLineString must be a `RandomAccessRange` of `Linestring`.
@@ -481,7 +481,7 @@ template<typename MultiPoint,
          typename MultiPolygon>
 std::istream&
 read_WKT( std::istream& input,
-                        MultiPoint& points,   
+                        MultiPoint& points,
                         MultiLineString& polylines,
                         MultiPolygon& polygons);
 }

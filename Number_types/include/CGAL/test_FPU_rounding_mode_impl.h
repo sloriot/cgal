@@ -48,7 +48,7 @@ struct Check_FPU_rounding_mode_is_restored {
 
 #ifdef CGAL_HEADER_ONLY
 
-inline const Check_FPU_rounding_mode_is_restored& 
+inline const Check_FPU_rounding_mode_is_restored&
 get_static_check_fpu_rounding_mode_is_restored()
 {
   // A static object that emits a warning if the rounding mode at the
@@ -62,7 +62,7 @@ get_static_check_fpu_rounding_mode_is_restored()
 
 namespace {
   CGAL_UNUSED const Check_FPU_rounding_mode_is_restored &
-    check_fpu_rounding_mode_is_restored 
+    check_fpu_rounding_mode_is_restored
     = get_static_check_fpu_rounding_mode_is_restored();
 }
 

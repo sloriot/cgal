@@ -461,6 +461,6 @@ int main()
   shortest_path_regular_tetrahedron();
   test_simple_saddle_vertex_mesh();
   test_boundary_mesh();
-  
+
    return 0;
 }

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Susan Hert <hert@mpi-sb.mpg.de>
 
@@ -45,7 +45,7 @@ public:
   Partition_is_valid_traits_2(const Traits& traits)
     : Traits(traits)
   {}
-public:   
+public:
    Is_valid
    is_valid_object(const Traits& traits) const
    {  return Is_valid(traits); }

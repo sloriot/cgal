@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -38,7 +38,7 @@ void must_be_filtered(const T&)
 #if defined CGAL_ARITHMETIC_FILTER_H
 template < class CT, class ET, class Type, bool Protection, class Cache>
 void must_be_filtered(const Filtered_exact<CT, ET, Type, Protection,
-		      Cache> &)
+                      Cache> &)
 { dont_compile(CT(), ET()); }
 #endif
 

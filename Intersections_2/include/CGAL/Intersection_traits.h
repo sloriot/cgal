@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Philipp Möller
 
@@ -37,7 +37,7 @@
     typedef typename boost::variant<typename K::R1, typename K::R2 >    \
                      variant_type;                                      \
     typedef typename boost::optional< variant_type > result_type;       \
-  };  
+  };
 
 #define CGAL_INTERSECTION_TRAITS_3(A, B, R1, R2, R3)            \
   template<typename K>     \
@@ -45,7 +45,7 @@
     typedef typename boost::variant<typename K::R1, typename K::R2,     \
                                     typename K::R3> variant_type;       \
     typedef typename boost::optional< variant_type > result_type;       \
-  };                                                                    
+  };
 
 #define CGAL_INTERSECTION_FUNCTION(A, B, DIM)                           \
   template<typename K>                                                  \
@@ -119,7 +119,7 @@ template<typename B>
 class IT<Bbox_3, B> : public Intersection_traits< typename Kernel_traits<B>::Kernel, CGAL::Bbox_3, B >
 { };
 
-  
+
 namespace Intersections {
 namespace internal {
 
@@ -145,7 +145,7 @@ namespace internal {
 // it somewhat nicer.
 template<typename T>
 inline
-const T* intersect_get(const CGAL::Object& o) { 
+const T* intersect_get(const CGAL::Object& o) {
   return CGAL::object_cast<T>(&o);
 }
 
@@ -205,7 +205,7 @@ do_intersect_impl(const A& a, const B& b, Dynamic_dimension_tag) {
 
 } // namespace internal
 } // namespace Intersections
-  
+
 // See overloads in the respective header files
 
 // template<typename A, typename B>
@@ -221,7 +221,7 @@ do_intersect_impl(const A& a, const B& b, Dynamic_dimension_tag) {
 // inline
 // bool
 // do_intersect(const A& a, const B& b) {
-//   CGAL_static_assertion_msg((boost::is_same<typename A::Ambient_dimension, typename B::Ambient_dimension>::value), 
+//   CGAL_static_assertion_msg((boost::is_same<typename A::Ambient_dimension, typename B::Ambient_dimension>::value),
 //                         "do_intersect with objects of different dimensions not supported");
 //   return internal::do_intersect_impl(a, b, typename A::Ambient_dimension());
 // }

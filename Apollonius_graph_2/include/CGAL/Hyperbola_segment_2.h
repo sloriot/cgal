@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -84,8 +84,8 @@ protected:
 public:
   Hyperbola_segment_2() : Hyperbola_2< Gt >() {}
 
-  Hyperbola_segment_2(const Site_2 &f1,	const Site_2 &f2,
-		      const Point_2 &p1, const Point_2 &p2)
+  Hyperbola_segment_2(const Site_2 &f1,        const Site_2 &f2,
+                      const Point_2 &p1, const Point_2 &p2)
     : Hyperbola_2< Gt >(f1, f2)
   {
     this->p1 = p1;
@@ -115,7 +115,7 @@ public:
     p.clear();
 
     if ( !(CGAL::is_positive(s0)) &&
-	 !(CGAL::is_negative(s1)) ) {
+         !(CGAL::is_negative(s1)) ) {
       FT tt;
       int k;
 
@@ -123,22 +123,22 @@ public:
       k = 1;
       tt = FT(-this->STEP);
       while ( CGAL::compare(tt, s0) == LARGER ) {
-	p.insert( p.begin(), f(tt) );
-	k--;
-	tt = -FT(k * k) * this->STEP;
+        p.insert( p.begin(), f(tt) );
+        k--;
+        tt = -FT(k * k) * this->STEP;
       }
       p.insert( p.begin(), f(s0) );
 
       k = 1;
       tt = FT(this->STEP);
       while ( CGAL::compare(tt, s1) == SMALLER ) {
-	p.push_back( f(tt) );
-	k++;
-	tt = FT(k * k) * this->STEP;
+        p.push_back( f(tt) );
+        k++;
+        tt = FT(k * k) * this->STEP;
       }
       p.push_back( f(s1) );
     } else if ( !(CGAL::is_negative(s0)) &&
-		!(CGAL::is_negative(s1)) ) {
+                !(CGAL::is_negative(s1)) ) {
       FT tt;
       int k;
 
@@ -149,10 +149,10 @@ public:
       k = int(CGAL::to_double(CGAL::sqrt(tt / this->STEP)));
 
       while ( CGAL::compare(tt, s1) == SMALLER ) {
-	if ( CGAL::compare(tt, s0) != SMALLER )
-	  p.push_back( f(tt) );
-	k++;
-	tt = FT(k * k) * this->STEP;
+        if ( CGAL::compare(tt, s0) != SMALLER )
+          p.push_back( f(tt) );
+        k++;
+        tt = FT(k * k) * this->STEP;
       }
       p.push_back( f(s1) );
     } else {
@@ -165,10 +165,10 @@ public:
       k = int(CGAL::to_double(-CGAL::sqrt(-tt / this->STEP)));
 
       while ( CGAL::compare(tt, s0) == LARGER ) {
-	if ( CGAL::compare(tt, s1) != LARGER )
-	  p.push_back( f(tt) );
-	k--;
-	tt = -FT(k * k) * this->STEP;
+        if ( CGAL::compare(tt, s1) != LARGER )
+          p.push_back( f(tt) );
+        k--;
+        tt = -FT(k * k) * this->STEP;
       }
       p.push_back( f(s0) );
     }

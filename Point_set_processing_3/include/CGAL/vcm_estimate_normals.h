@@ -272,7 +272,7 @@ compute_vcm (const PointRange& points,
 
     PointMap point_map = choose_param(get_param(np, internal_np::point_map), PointMap());
     Kernel kernel;
-    
+
     // First, compute the VCM for each point
     std::vector< std::array<double, 6> > cov;
     std::size_t N = 20;
@@ -332,7 +332,7 @@ compute_vcm (ForwardIterator first,
 }
 #endif // CGAL_NO_DEPRECATED_CODE
 /// \endcond
-  
+
 /// \cond SKIP_IN_MANUAL
 template <typename PointRange,
           typename NamedParameters
@@ -358,9 +358,9 @@ vcm_estimate_normals_internal (PointRange& points,
 
     PointMap point_map = choose_param(get_param(np, internal_np::point_map), PointMap());
     NormalMap normal_map = choose_param(get_param(np, internal_np::normal_map), NormalMap());
-    
+
     typedef std::array<double, 6> Covariance;
-    
+
     // Compute the VCM and convolve it
     std::vector<Covariance> cov;
     if (nb_neighbors_convolve == -1) {
@@ -410,7 +410,7 @@ vcm_estimate_normals_internal (PointRange& points,
 /// @endcond
 
 
-/**  
+/**
    \ingroup PkgPointSetProcessing3Algorithms
    Estimates normal directions of the range of `points`
    using the Voronoi Covariance Measure with a radius for the convolution.
@@ -578,7 +578,7 @@ vcm_estimate_normals (ForwardIterator first, ///< iterator over the first input 
      diagonalize_traits (VCMTraits()));
 }
 
-// deprecated API  
+// deprecated API
 template < typename ForwardIterator,
            typename PointMap,
            typename NormalMap
@@ -600,7 +600,7 @@ vcm_estimate_normals (ForwardIterator first,
      normal_map (normal_map));
 }
 
-// deprecated API  
+// deprecated API
 template < typename ForwardIterator,
            typename PointMap,
            typename NormalMap
@@ -623,7 +623,7 @@ vcm_estimate_normals (ForwardIterator first,
 }
 
 
-// deprecated API  
+// deprecated API
 template < typename ForwardIterator,
            typename NormalMap
 >
@@ -641,7 +641,7 @@ vcm_estimate_normals (ForwardIterator first,
      CGAL::parameters::normal_map (normal_map));
 }
 
-// deprecated API  
+// deprecated API
 template < typename ForwardIterator,
            typename NormalMap
 >

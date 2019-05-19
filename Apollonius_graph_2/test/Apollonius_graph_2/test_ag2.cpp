@@ -62,7 +62,7 @@ int main()
     assert( ifs_algo );
 
     std::cout << "testing the Apollonius graph class"
-	      << " with filtered traits..." << std::flush;
+              << " with filtered traits..." << std::flush;
     bool algo_ok =
       CGAL::test_filtered_traits_algo<CK,Method_tag,EK,Method_tag,
       std::ifstream>(ifs_algo);

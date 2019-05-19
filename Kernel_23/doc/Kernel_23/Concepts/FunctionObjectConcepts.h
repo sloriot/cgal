@@ -17,30 +17,30 @@ public:
 
 
   /*!
-    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending 
-  on the angle formed by the two vectors `u` and `v`. 
-  */ 
-  Angle operator()(const Kernel::Vector_2&u, 
-                   const Kernel::Vector_2&v); 
+    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending
+  on the angle formed by the two vectors `u` and `v`.
+  */
+  Angle operator()(const Kernel::Vector_2&u,
+                   const Kernel::Vector_2&v);
 
   /*!
-    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending 
-    on the angle formed by the three points `p`, `q`, `r` (`q` being the vertex of 
-    the angle). The returned value is the same as `operator()(p - q, r - q)`. 
-  */ 
-  Angle operator()(const Kernel::Point_2&p, 
-                   const Kernel::Point_2&q, 
-                   const Kernel::Point_2&r); 
+    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending
+    on the angle formed by the three points `p`, `q`, `r` (`q` being the vertex of
+    the angle). The returned value is the same as `operator()(p - q, r - q)`.
+  */
+  Angle operator()(const Kernel::Point_2&p,
+                   const Kernel::Point_2&q,
+                   const Kernel::Point_2&r);
 
   /*!
-    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending 
-    on the angle formed by the two vectors `pq`, `rs`. The returned value is 
-    the same as `operator()(q - p, s - r)`. 
-  */ 
-  Angle operator()(const Kernel::Point_2&p, 
-                   const Kernel::Point_2&q, 
-                   const Kernel::Point_2&r, 
-                   const Kernel::Point_2&s); 
+    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending
+    on the angle formed by the two vectors `pq`, `rs`. The returned value is
+    the same as `operator()(q - p, s - r)`.
+  */
+  Angle operator()(const Kernel::Point_2&p,
+                   const Kernel::Point_2&q,
+                   const Kernel::Point_2&r,
+                   const Kernel::Point_2&s);
 
 
   /// @}
@@ -78,23 +78,23 @@ public:
                    const Kernel::Point_3&r);
 
   /*!
-    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending 
-    on the angle formed by the two vectors `pq`, `rs`. The returned value is 
-    the same as `operator()(q - p, s - r)`. 
-  */ 
-  Angle operator()(const Kernel::Point_3&p, 
-                   const Kernel::Point_3&q, 
-                   const Kernel::Point_3&r, 
-                   const Kernel::Point_3&s);   
+    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending
+    on the angle formed by the two vectors `pq`, `rs`. The returned value is
+    the same as `operator()(q - p, s - r)`.
+  */
+  Angle operator()(const Kernel::Point_3&p,
+                   const Kernel::Point_3&q,
+                   const Kernel::Point_3&r,
+                   const Kernel::Point_3&s);
 
   /*!
-    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending 
-    on the angle formed by the normal of the triangle `pqr` and the vector `v`. 
-  */ 
-  Angle operator()(const Kernel::Point_3&p, 
-                   const Kernel::Point_3&q, 
-                   const Kernel::Point_3&r, 
-                   const Kernel::Vector_3&v); 
+    returns \ref CGAL::OBTUSE, \ref CGAL::RIGHT or \ref CGAL::ACUTE depending
+    on the angle formed by the normal of the triangle `pqr` and the vector `v`.
+  */
+  Angle operator()(const Kernel::Point_3&p,
+                   const Kernel::Point_3&q,
+                   const Kernel::Point_3&r,
+                   const Kernel::Vector_3&v);
   /// @}
 
 }; /* end Kernel::Angle_3 */
@@ -103,7 +103,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `are_ordered_along_line_grp`
 
@@ -116,14 +116,14 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff the three points are collinear and 
-    `q` lies between `p` and `r`. 
-    Note that `true` is returned, if `q==p` or 
-    `q==r`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, iff the three points are collinear and
+    `q` lies between `p` and `r`.
+    Note that `true` is returned, if `q==p` or
+    `q==r`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
   /// @}
 
@@ -133,7 +133,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `are_ordered_along_line_grp`
 
@@ -146,14 +146,14 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff the three points are collinear and 
-    `q` lies between `p` and `r`. 
-    Note that `true` is returned, if `q==p` or 
-    `q==r`. 
-    */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns `true`, iff the three points are collinear and
+    `q` lies between `p` and `r`.
+    Note that `true` is returned, if `q==p` or
+    `q==r`.
+    */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
   /// @}
 
@@ -163,7 +163,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `parallel_grp`
 
@@ -176,25 +176,25 @@ public:
   /// @{
 
   /*!
-    returns `true`, if `l1` and `l2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Line_2&l1, 
-                  const Kernel::Line_2&l2); 
+    returns `true`, if `l1` and `l2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Line_2&l1,
+                  const Kernel::Line_2&l2);
 
   /*!
-    returns `true`, if `r1` and `r2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Ray_2&r1, 
-                  const Kernel::Ray_2&r2); 
+    returns `true`, if `r1` and `r2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Ray_2&r1,
+                  const Kernel::Ray_2&r2);
 
   /*!
-    returns `true`, if `s1` and `s2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Segment_2&s1, 
-                  const Kernel::Segment_2&s2); 
+    returns `true`, if `s1` and `s2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Segment_2&s1,
+                  const Kernel::Segment_2&s2);
 
   /// @}
 
@@ -204,7 +204,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `parallel_grp`
 
@@ -217,32 +217,32 @@ public:
   /// @{
 
   /*!
-    returns `true`, if `l1` and `l2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Line_3&l1, 
-                  const Kernel::Line_3&l2); 
+    returns `true`, if `l1` and `l2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Line_3&l1,
+                  const Kernel::Line_3&l2);
 
   /*!
-    returns `true`, if `h1` and `h2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Plane_3&h1, 
-                  const Kernel::Plane_3&h2); 
+    returns `true`, if `h1` and `h2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Plane_3&h1,
+                  const Kernel::Plane_3&h2);
 
   /*!
-    returns `true`, if `r1` and `r2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Ray_3&r1, 
-                  const Kernel::Ray_3&r2); 
+    returns `true`, if `r1` and `r2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Ray_3&r1,
+                  const Kernel::Ray_3&r2);
 
   /*!
-    returns `true`, if `s1` and `s2` are parallel or if one 
-    of those (or both) is degenerate. 
-  */ 
-  bool operator()(const Kernel::Segment_3&s1, 
-                  const Kernel::Segment_3&s2); 
+    returns `true`, if `s1` and `s2` are parallel or if one
+    of those (or both) is degenerate.
+  */
+  bool operator()(const Kernel::Segment_3&s1,
+                  const Kernel::Segment_3&s2);
 
 
   /// @}
@@ -253,7 +253,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `are_strictly_ordered_along_line_grp`
 
@@ -267,14 +267,14 @@ public:
 
 
   /*!
-    returns `true`, iff the three points are collinear and 
-    `q` lies strictly between `p` and `r`. 
-    Note that `false` is returned, if `q==p` or 
-    `q==r`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, iff the three points are collinear and
+    `q` lies strictly between `p` and `r`.
+    Note that `false` is returned, if `q==p` or
+    `q==r`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
 
   /// @}
@@ -285,7 +285,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
 \sa `are_strictly_ordered_along_line_grp`
 
@@ -298,14 +298,14 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff the three points are collinear and 
-    `q` lies strictly between `p` and `r`. 
-    Note that `false` is returned, if `q==p` or 
-    `q==r`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns `true`, iff the three points are collinear and
+    `q` lies strictly between `p` and `r`.
+    Note that `false` is returned, if `q==p` or
+    `q==r`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
   /// @}
 
@@ -315,29 +315,29 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
- \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred. 
+ \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred.
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Object` 
-  \sa `Kernel::Object_2` 
-  \sa `Kernel::Intersect_2` 
+  \sa `CGAL::Object`
+  \sa `Kernel::Object_2`
+  \sa `Kernel::Intersect_2`
 
 */
 class Assign_2 {
 public:
- 
+
   /// \name Operations
   /// A model of this concept must provide:
   /// @{
 
   /*!
-    assigns `o` to `t` if `o` 
-    was constructed from an object of type `T`. 
-    Returns `true`, if the assignment was possible. 
-  */ 
-  template <class T> 
-  bool operator()(T& t, const Kernel::Object_2&o); 
+    assigns `o` to `t` if `o`
+    was constructed from an object of type `T`.
+    Returns `true`, if the assignment was possible.
+  */
+  template <class T>
+  bool operator()(T& t, const Kernel::Object_2&o);
 
 
   /// @}
@@ -348,12 +348,12 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
- \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred. 
-  \sa `CGAL::Object` 
-  \sa `Kernel::Object_3` 
-  \sa `Kernel::Intersect_3` 
+ \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred.
+  \sa `CGAL::Object`
+  \sa `Kernel::Object_3`
+  \sa `Kernel::Intersect_3`
 
 */
 class Assign_3 {
@@ -364,12 +364,12 @@ public:
   /// @{
 
   /*!
-    assigns `o` to `t` if `o` 
-    was constructed from an object of type `T`. 
-    Returns `true`, if the assignment was possible. 
-  */ 
-  template <class T> 
-  bool operator()(T& t, const Kernel::Object_3&o); 
+    assigns `o` to `t` if `o`
+    was constructed from an object of type `T`.
+    Returns `true`, if the assignment was possible.
+  */
+  template <class T>
+  bool operator()(T& t, const Kernel::Object_3&o);
 
   /// @}
 
@@ -379,11 +379,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
 
 */
 class BoundedSide_2 {
@@ -394,31 +394,31 @@ public:
   /// @{
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to 
-    circle `c`. 
-  */ 
-  Bounded_side operator()(const Kernel::Circle_2&c, 
-                          const Kernel::Point_2&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to
+    circle `c`.
+  */
+  Bounded_side operator()(const Kernel::Circle_2&c,
+                          const Kernel::Point_2&p);
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to 
-    triangle `t`. 
-  */ 
-  Bounded_side operator()(const Kernel::Triangle_2& t, 
-                          const Kernel::Point_2&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to
+    triangle `t`.
+  */
+  Bounded_side operator()(const Kernel::Triangle_2& t,
+                          const Kernel::Point_2&p);
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to 
-    rectangle `r`. 
-  */ 
-  Bounded_side operator()(const Kernel::Iso_rectangle_2& r, 
-                          const Kernel::Point_2&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is relative to
+    rectangle `r`.
+  */
+  Bounded_side operator()(const Kernel::Iso_rectangle_2& r,
+                          const Kernel::Point_2&p);
 
   /// @}
 
@@ -428,11 +428,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class BoundedSide_3 {
@@ -443,31 +443,31 @@ public:
   /// @{
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with 
-    respect to sphere `s`. 
-  */ 
-  Bounded_side operator()(const Kernel::Sphere_3& s, 
-                          const Kernel::Point_3&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with
+    respect to sphere `s`.
+  */
+  Bounded_side operator()(const Kernel::Sphere_3& s,
+                          const Kernel::Point_3&p);
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with 
-    respect to tetrahedron `t`. 
-  */ 
-  Bounded_side operator()(const Kernel::Tetrahedron_3& t, 
-                          const Kernel::Point_3&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with
+    respect to tetrahedron `t`.
+  */
+  Bounded_side operator()(const Kernel::Tetrahedron_3& t,
+                          const Kernel::Point_3&p);
 
   /*!
-    returns either \ref CGAL::ON_UNBOUNDED_SIDE, 
-    \ref CGAL::ON_BOUNDED_SIDE, or the constant 
-    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with 
-  respect to iso-cuboid `c`. 
-  */ 
-  Bounded_side operator()(const Kernel::Iso_cuboid_3& c, 
-                          const Kernel::Point_3&p); 
+    returns either \ref CGAL::ON_UNBOUNDED_SIDE,
+    \ref CGAL::ON_BOUNDED_SIDE, or the constant
+    \ref CGAL::ON_BOUNDARY, depending on where point `p` is with
+  respect to iso-cuboid `c`.
+  */
+  Bounded_side operator()(const Kernel::Iso_cuboid_3& c,
+                          const Kernel::Point_3&p);
 
 
   /// @}
@@ -478,14 +478,14 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  A type representing an iterator to the Cartesian coordinates of a point 
-  in two dimensions. 
+  A type representing an iterator to the Cartesian coordinates of a point
+  in two dimensions.
 
   \cgalRefines CopyConstructible
   \cgalRefines Assignable
   \cgalRefines DefaultConstructible
 
-  \sa `Kernel::ConstructCartesianConstIterator_2` 
+  \sa `Kernel::ConstructCartesianConstIterator_2`
 
 */
 class CartesianConstIterator_2 {
@@ -497,14 +497,14 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  A type representing an iterator to the Cartesian coordinates of a point 
-  in three dimensions. 
+  A type representing an iterator to the Cartesian coordinates of a point
+  in three dimensions.
 
   \cgalRefines CopyConstructible
   \cgalRefines Assignable
   \cgalRefines DefaultConstructible
 
-  \sa `Kernel::ConstructCartesianConstIterator_3` 
+  \sa `Kernel::ConstructCartesianConstIterator_3`
 
 */
 class CartesianConstIterator_3 {
@@ -516,7 +516,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_are_ordered_along_line_grp`
 
@@ -529,12 +529,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff `q` lies between `p` 
-    and `r`. \pre `p, q` and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, iff `q` lies between `p`
+    and `r`. \pre `p, q` and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
 
   /// @}
@@ -545,7 +545,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_are_ordered_along_line_grp`
 
@@ -558,12 +558,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff `q` lies between `p` 
-    and `r`. \pre `p, q` and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns `true`, iff `q` lies between `p`
+    and `r`. \pre `p, q` and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
   /// @}
 
@@ -573,7 +573,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_are_strictly_ordered_along_line_grp`
 
@@ -586,12 +586,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff `q` lies strictly between 
-    `p` and `r`. \pre `p, q` and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, iff `q` lies strictly between
+    `p` and `r`. \pre `p, q` and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
 
   /// @}
@@ -602,7 +602,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_are_strictly_ordered_along_line_grp`
 
@@ -615,12 +615,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff `q` lies strictly between 
-    `p` and `r`. \pre `p, q` and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns `true`, iff `q` lies strictly between
+    `p` and `r`. \pre `p, q` and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
 
   /// @}
@@ -631,10 +631,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class CollinearHasOn_2 {
@@ -645,18 +645,18 @@ public:
   /// @{
 
   /*!
-    checks if point `p` is on `r`. 
-    \pre `p` is on the supporting line of `r`. 
-  */ 
-  bool operator()(const Kernel::Ray_2& r, 
-                  const Kernel::Point_2&p); 
+    checks if point `p` is on `r`.
+    \pre `p` is on the supporting line of `r`.
+  */
+  bool operator()(const Kernel::Ray_2& r,
+                  const Kernel::Point_2&p);
 
   /*!
-    checks if point `p` is on `s`. 
-    \pre `p` is on the supporting line of `s`. 
-  */ 
-  bool operator()(const Kernel::Segment_2& s, 
-                  const Kernel::Point_2&p); 
+    checks if point `p` is on `s`.
+    \pre `p` is on the supporting line of `s`.
+  */
+  bool operator()(const Kernel::Segment_2& s,
+                  const Kernel::Point_2&p);
 
   /// @}
 
@@ -666,7 +666,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_grp`
 
@@ -679,11 +679,11 @@ public:
   /// @{
 
   /*!
-    returns `true`, if `p`, `q`, and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, if `p`, `q`, and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
   /// @}
 
@@ -693,7 +693,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `collinear_grp`
 
@@ -706,11 +706,11 @@ public:
   /// @{
 
   /*!
-    returns `true`, if `p`, `q`, and `r` are collinear. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns `true`, if `p`, `q`, and `r` are collinear.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
   /// @}
 
@@ -720,7 +720,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
 */
 class CompareAngleWithXAxis_2 {
@@ -731,12 +731,12 @@ public:
   /// @{
 
   /*!
-    compares 
-  the angles between the positive \f$ x\f$-axis and the directions in 
-  counterclockwise order. 
-  */ 
-  Comparison_result operator()(const 
-                               Kernel::Direction_2& d, const Kernel::Direction_2& e); 
+    compares
+  the angles between the positive \f$ x\f$-axis and the directions in
+  counterclockwise order.
+  */
+  Comparison_result operator()(const
+                               Kernel::Direction_2& d, const Kernel::Direction_2& e);
 
 
   /// @}
@@ -756,62 +756,62 @@ public:
   /// @{
 
   /*!
-    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where 
-  \f$ \theta_1\f$ is the dihedral angle, in \f$ [0, \pi]\f$, of the tetrahedron 
-  \f$ (a_1, b_1, c_1, d_1)\f$ at the edge `(a_1, b_1)`, and \f$ \theta_2\f$ is 
-  the angle in \f$ [0, \pi]\f$ such that \f$ cos(\theta_2) = cosine\f$. 
-  The result is the same as `operator()(b1-a1, c1-a1, d1-a1, cosine)`. 
-  \pre `a_1`, `b_1`, `c_1` are not collinear, and `a_1`, `b_1`, `d_1` are not collinear. 
-  */ 
-  Comparison_result operator()(const K::Point_3& a1, 
-                               const K::Point_3& b1, 
-                               const K::Point_3& c1, 
-                               const K::Point_3& d1, 
-                               const K::FT& cosine); 
+    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where
+  \f$ \theta_1\f$ is the dihedral angle, in \f$ [0, \pi]\f$, of the tetrahedron
+  \f$ (a_1, b_1, c_1, d_1)\f$ at the edge `(a_1, b_1)`, and \f$ \theta_2\f$ is
+  the angle in \f$ [0, \pi]\f$ such that \f$ cos(\theta_2) = cosine\f$.
+  The result is the same as `operator()(b1-a1, c1-a1, d1-a1, cosine)`.
+  \pre `a_1`, `b_1`, `c_1` are not collinear, and `a_1`, `b_1`, `d_1` are not collinear.
+  */
+  Comparison_result operator()(const K::Point_3& a1,
+                               const K::Point_3& b1,
+                               const K::Point_3& c1,
+                               const K::Point_3& d1,
+                               const K::FT& cosine);
 
   /*!
-    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where 
-    \f$ \theta_i\f$ is the dihedral angle in the tetrahedron `(a_i, b_i, 
-    c_i, d_i)` at the edge `(a_i, b_i)`. These two angles are computed 
-    in \f$ [0, \pi]\f$. 
-    The result is the same as `operator()(b1-a1, c1-a1, d1-a1, b2-a2, c2-a2, d2-a2)`. 
-    \pre For \f$ i \in\{1,2\}\f$, `a_i`, `b_i`, `c_i` are not collinear, and `a_i`, `b_i`, `d_i` are not collinear. 
-  */ 
-  Comparison_result operator()(const K::Point_3& a1, 
-                               const K::Point_3& b1, 
-                               const K::Point_3& c1, 
-                               const K::Point_3& d1, 
-                               const K::Point_3& a2, 
-                               const K::Point_3& b2, 
-                               const K::Point_3& c2, 
-                               const K::Point_3& d2); 
+    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where
+    \f$ \theta_i\f$ is the dihedral angle in the tetrahedron `(a_i, b_i,
+    c_i, d_i)` at the edge `(a_i, b_i)`. These two angles are computed
+    in \f$ [0, \pi]\f$.
+    The result is the same as `operator()(b1-a1, c1-a1, d1-a1, b2-a2, c2-a2, d2-a2)`.
+    \pre For \f$ i \in\{1,2\}\f$, `a_i`, `b_i`, `c_i` are not collinear, and `a_i`, `b_i`, `d_i` are not collinear.
+  */
+  Comparison_result operator()(const K::Point_3& a1,
+                               const K::Point_3& b1,
+                               const K::Point_3& c1,
+                               const K::Point_3& d1,
+                               const K::Point_3& a2,
+                               const K::Point_3& b2,
+                               const K::Point_3& c2,
+                               const K::Point_3& d2);
 
   /*!
-    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where 
-    \f$ \theta_1\f$ is the dihedral angle, in \f$ [0, \pi]\f$, between the 
-    vectorial planes defined by `(u_1, v_1)` and `(u_1, w_1)`, and 
-    \f$ \theta_2\f$ is the angle in \f$ [0, \pi]\f$ such that \f$ cos(\theta_2) = 
-    cosine\f$. 
-    \pre `u_1` and `v_1` are not collinear, and `u_1` and `w_1` are not collinear. 
-  */ 
-  Comparison_result operator()(const K::Vector_3& u1, 
-                               const K::Vector_3& v1, 
-                               const K::Vector_3& w1, 
-                               const K::FT& cosine); 
+    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where
+    \f$ \theta_1\f$ is the dihedral angle, in \f$ [0, \pi]\f$, between the
+    vectorial planes defined by `(u_1, v_1)` and `(u_1, w_1)`, and
+    \f$ \theta_2\f$ is the angle in \f$ [0, \pi]\f$ such that \f$ cos(\theta_2) =
+    cosine\f$.
+    \pre `u_1` and `v_1` are not collinear, and `u_1` and `w_1` are not collinear.
+  */
+  Comparison_result operator()(const K::Vector_3& u1,
+                               const K::Vector_3& v1,
+                               const K::Vector_3& w1,
+                               const K::FT& cosine);
 
   /*!
-    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where 
-    \f$ \theta_i\f$ is the dihedral angle between the vectorial planes 
-    defined by `(u_i, v_i)` and `(u_i, w_i)`. These two angles are 
-    computed in \f$ [0, \pi]\f$. 
-    \pre For \f$ i \in\{1,2\}\f$, `u_i` and `v_i` are not collinear, and `u_i` and `w_i` are not collinear. 
-  */ 
-  Comparison_result operator()(const K::Vector_3& u1, 
-                               const K::Vector_3& v1, 
-                               const K::Vector_3& w1, 
-                               const K::Vector_3& u2, 
-                               const K::Vector_3& v2, 
-                               const K::Vector_3& w2); 
+    compares the dihedral angles \f$ \theta_1\f$ and \f$ \theta_2\f$, where
+    \f$ \theta_i\f$ is the dihedral angle between the vectorial planes
+    defined by `(u_i, v_i)` and `(u_i, w_i)`. These two angles are
+    computed in \f$ [0, \pi]\f$.
+    \pre For \f$ i \in\{1,2\}\f$, `u_i` and `v_i` are not collinear, and `u_i` and `w_i` are not collinear.
+  */
+  Comparison_result operator()(const K::Vector_3& u1,
+                               const K::Vector_3& v1,
+                               const K::Vector_3& w1,
+                               const K::Vector_3& u2,
+                               const K::Vector_3& v2,
+                               const K::Vector_3& w2);
 
   /// @}
 
@@ -821,7 +821,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \sa `Kernel::CompareSquaredDistance_2` 
+  \sa `Kernel::CompareSquaredDistance_2`
   \sa `compare_distance_to_point_grp`
   \sa `compare_squared_distance_grp`
 
@@ -830,43 +830,43 @@ public:
 */
 class CompareDistance_2 {
 public:
-  
+
   /// \name Operations
   /// A model of this concept must provide:
   /// @{
 
   /*!
-    compares the squared distance between `obj1` and `obj2` to 
+    compares the squared distance between `obj1` and `obj2` to
     the squared distance between `obj1` and `obj3`,
-    for all triples of types `Type1`, `Type2` and`Type3` 
-    in the following set of types: 
+    for all triples of types `Type1`, `Type2` and`Type3`
+    in the following set of types:
 
-    - `Kernel::Point_2` 
-    - `Kernel::Line_2` 
-    - `Kernel::Ray_2` 
-    - `Kernel::Segment_2` 
-    - `Kernel::Triangle_2` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Type3& obj3); 
+    - `Kernel::Point_2`
+    - `Kernel::Line_2`
+    - `Kernel::Ray_2`
+    - `Kernel::Segment_2`
+    - `Kernel::Triangle_2`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Type3& obj3);
 
   /*!
-    compares the squared distance between `obj1` and `obj2` to 
-    the squared distance between `obj3` and `obj4`, 
-    for all tuples of types `Type1`, `Type2`, `Type3` 
-    and `Type4` in the following set of types: 
+    compares the squared distance between `obj1` and `obj2` to
+    the squared distance between `obj3` and `obj4`,
+    for all tuples of types `Type1`, `Type2`, `Type3`
+    and `Type4` in the following set of types:
 
-    - `Kernel::Point_2` 
-    - `Kernel::Line_2` 
-    - `Kernel::Ray_2` 
-    - `Kernel::Segment_2` 
-    - `Kernel::Triangle_2` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Type3& obj3, 
-                               const Type4& obj4); 
+    - `Kernel::Point_2`
+    - `Kernel::Line_2`
+    - `Kernel::Ray_2`
+    - `Kernel::Segment_2`
+    - `Kernel::Triangle_2`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Type3& obj3,
+                               const Type4& obj4);
 
   /// @}
 
@@ -876,9 +876,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::CompareSquaredDistance_3` 
+  \sa `Kernel::CompareSquaredDistance_3`
   \sa `compare_distance_to_point_grp`
   \sa `compare_squared_distance_grp`
 
@@ -891,33 +891,33 @@ public:
   /// @{
 
   /*!
-    compares the squared distance between `obj1` and `obj2` to 
-    the squared distance between `obj1` and `obj3`, for all triples of types `Type1`, `Type2` and `Type3` 
-    in the following set of types: 
-    - `Kernel::Point_3` 
-    - `Kernel::Line_3` 
-    - `Kernel::Ray_3` 
-    - `Kernel::Segment_3` 
-    - `Kernel::Plane_3` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Type3& obj3); 
+    compares the squared distance between `obj1` and `obj2` to
+    the squared distance between `obj1` and `obj3`, for all triples of types `Type1`, `Type2` and `Type3`
+    in the following set of types:
+    - `Kernel::Point_3`
+    - `Kernel::Line_3`
+    - `Kernel::Ray_3`
+    - `Kernel::Segment_3`
+    - `Kernel::Plane_3`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Type3& obj3);
 
   /*!
-    compares the squared distance between `obj1` and `obj2` to 
-    the squared distance between `obj3` and `obj4`, for all tuples of types `Type1`, `Type2`, `Type3` 
-    and `Type4` in the following set of types: 
-    - `Kernel::Point_3` 
-    - `Kernel::Line_3` 
-    - `Kernel::Ray_3` 
-    - `Kernel::Segment_3` 
-    - `Kernel::Plane_3` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Type3& obj3, 
-                               const Type4& obj4); 
+    compares the squared distance between `obj1` and `obj2` to
+    the squared distance between `obj3` and `obj4`, for all tuples of types `Type1`, `Type2`, `Type3`
+    and `Type4` in the following set of types:
+    - `Kernel::Point_3`
+    - `Kernel::Line_3`
+    - `Kernel::Ray_3`
+    - `Kernel::Segment_3`
+    - `Kernel::Plane_3`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Type3& obj3,
+                               const Type4& obj4);
 
   /// @}
 
@@ -927,7 +927,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `CGAL::Weighted_point_2<Kernel>`
   \sa `ComputePowerProduct_2` for the definition of power distance.
@@ -954,9 +954,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Weighted_point_3<Kernel>` 
+  \sa `CGAL::Weighted_point_3<Kernel>`
   \sa `ComputePowerProduct_3` for the definition of power distance.
 */
 class ComparePowerDistance_3
@@ -980,7 +980,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_slopes_grp`
 
@@ -994,18 +994,18 @@ public:
 
 
   /*!
-    compares the slopes of the lines `l1` and `l2` 
-  */ 
-  Comparison_result operator()(const Kernel::Line_2& l1, 
-                               const Kernel::Line_2& l2); 
+    compares the slopes of the lines `l1` and `l2`
+  */
+  Comparison_result operator()(const Kernel::Line_2& l1,
+                               const Kernel::Line_2& l2);
 
   /*!
     compares the slopes of the segments `s1` and `s2`,
     where the slope is the variation of the `y`-coordinate
-    from the left to the right endpoint of the segments. 
-  */ 
-  Comparison_result operator()(const Kernel::Segment_2& s1, 
-                               const Kernel::Segment_2& s2); 
+    from the left to the right endpoint of the segments.
+  */
+  Comparison_result operator()(const Kernel::Segment_2& s1,
+                               const Kernel::Segment_2& s2);
 
   /// @}
 
@@ -1016,7 +1016,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_slopes_grp`
 
@@ -1031,14 +1031,14 @@ public:
 
   /*!
     compares the slopes of the segments `(p,q)` and `(r,s)`,
-    where the slope is the variation of the `z`-coordinate 
+    where the slope is the variation of the `z`-coordinate
     from the first to the second point of the segment divided
     by the length of the segment.
-  */ 
-  Comparison_result operator()(const Kernel::Point_3& p, 
+  */
+  Comparison_result operator()(const Kernel::Point_3& p,
                                const Kernel::Point_3& q,
-                               const Kernel::Point_3& r, 
-                               const Kernel::Point_3& s); 
+                               const Kernel::Point_3& r,
+                               const Kernel::Point_3& s);
 
 
   /// @}
@@ -1051,7 +1051,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `compare_distance_to_point_grp`
   \sa `compare_squared_distance_grp`
@@ -1065,19 +1065,19 @@ public:
   /// @{
 
   /*!
-    compares the squared distance between the two geometrical objects 
-    `obj1` and `obj2` to the value `d2`, where the types `Type1` and `Type2` can be any of the 
-    following: 
+    compares the squared distance between the two geometrical objects
+    `obj1` and `obj2` to the value `d2`, where the types `Type1` and `Type2` can be any of the
+    following:
 
-    - `Kernel::Point_2` 
-    - `Kernel::Line_2` 
-    - `Kernel::Ray_2` 
-    - `Kernel::Segment_2` 
-    - `Kernel::Triangle_2` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Kernel::FT&d2); 
+    - `Kernel::Point_2`
+    - `Kernel::Line_2`
+    - `Kernel::Ray_2`
+    - `Kernel::Segment_2`
+    - `Kernel::Triangle_2`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Kernel::FT&d2);
 
   /// @}
 
@@ -1087,9 +1087,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::CompareDistance_3` 
+  \sa `Kernel::CompareDistance_3`
   \sa `compare_distance_to_point_grp`
   \sa `compare_squared_distance_grp`
 
@@ -1102,18 +1102,18 @@ public:
   /// @{
 
   /*!
-    compares the squared distance between the two geometrical objects 
-    `obj1` and `obj2` to the value `d2`, for all pairs `Type1` and `Type2`, where 
-    the types `Type1` and `Type2` can be any of the following: 
-    - `Kernel::Point_3` 
-    - `Kernel::Line_3` 
-    - `Kernel::Ray_3` 
-    - `Kernel::Segment_3` 
-    - `Kernel::Plane_3` 
-  */ 
-  Comparison_result operator()(const Type1& obj1, 
-                               const Type2& obj2, 
-                               const Kernel::FT&d2); 
+    compares the squared distance between the two geometrical objects
+    `obj1` and `obj2` to the value `d2`, for all pairs `Type1` and `Type2`, where
+    the types `Type1` and `Type2` can be any of the following:
+    - `Kernel::Point_3`
+    - `Kernel::Line_3`
+    - `Kernel::Ray_3`
+    - `Kernel::Segment_3`
+    - `Kernel::Plane_3`
+  */
+  Comparison_result operator()(const Type1& obj1,
+                               const Type2& obj2,
+                               const Kernel::FT&d2);
 
   /// @}
 
@@ -1123,7 +1123,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `compare_squared_radius_grp`
 
@@ -1136,39 +1136,39 @@ public:
   /// @{
 
   /*!
-    compares the squared radius of the sphere of radius 0 centered 
-    at `p` to `sr`. 
-    This returns the opposite sign of `sr`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3& p, 
-                               const Kernel::FT& sr); 
+    compares the squared radius of the sphere of radius 0 centered
+    at `p` to `sr`.
+    This returns the opposite sign of `sr`.
+  */
+  Comparison_result operator()(const Kernel::Point_3& p,
+                               const Kernel::FT& sr);
 
   /*!
-    compares the squared radius of the sphere defined by the 
-    points `p` and `q` to `sr`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q, 
-                               const Kernel::FT& sr); 
+    compares the squared radius of the sphere defined by the
+    points `p` and `q` to `sr`.
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q,
+                               const Kernel::FT& sr);
 
   /*!
-    compares the squared radius of the sphere defined by the 
-    points `p`, `q`, and `r` to `sr`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q, 
-                               const Kernel::Point_3&r, 
-                               const Kernel::FT& sr); 
+    compares the squared radius of the sphere defined by the
+    points `p`, `q`, and `r` to `sr`.
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q,
+                               const Kernel::Point_3&r,
+                               const Kernel::FT& sr);
 
   /*!
-    compares the squared radius of the sphere defined by the 
-    points `p`, `q`, `r`, and `s` to `sr`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q, 
-                               const Kernel::Point_3&r, 
-                               const Kernel::Point_3&s, 
-                               const Kernel::FT& sr); 
+    compares the squared radius of the sphere defined by the
+    points `p`, `q`, `r`, and `s` to `sr`.
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q,
+                               const Kernel::Point_3&r,
+                               const Kernel::Point_3&s,
+                               const Kernel::FT& sr);
 
 
   /// @}
@@ -1224,7 +1224,7 @@ public:
   \image html compare_x_at_y.png
   \image latex compare_x_at_y.png
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `compare_x_at_y_grp`
 
@@ -1237,45 +1237,45 @@ public:
   /// @{
 
   /*!
-    compares the \f$ x\f$-coordinates of `p` and the horizontal projection 
+    compares the \f$ x\f$-coordinates of `p` and the horizontal projection
     of `p` on `h`. See Figure \ref fig-compare_x_at_y_2 (a).
 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &h); 
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &h);
 
   /*!
-    compares the \f$ x\f$-coordinates of the horizontal projection 
+    compares the \f$ x\f$-coordinates of the horizontal projection
     of `p` on `h1` and on `h2`.
     See Figure \ref fig-compare_x_at_y_2 (b).
 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /*!
-    Let `p` be the intersection of lines `l1` and `l2`. 
-    This function compares the \f$ x\f$-coordinates of `p` and 
+    Let `p` be the intersection of lines `l1` and `l2`.
+    This function compares the \f$ x\f$-coordinates of `p` and
     the horizontal projection of `p` on `h`.
 
     See Figure \ref fig-compare_x_at_y_2 (c).
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h);
 
   /*!
-    Let `p` be the intersection of lines `l1` and `l2`. This 
-    function compares the \f$ x\f$-coordinates of the horizontal projection of 
+    Let `p` be the intersection of lines `l1` and `l2`. This
+    function compares the \f$ x\f$-coordinates of the horizontal projection of
     `p` on `h1` and on `h2`.
 
     See Figure \ref fig-compare_x_at_y_2 (d)).
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /// @}
 
@@ -1285,7 +1285,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_xyz_grp`
 
@@ -1298,13 +1298,13 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian coordinates of points `p` and 
-    `q` lexicographically in \f$ xyz\f$ order: first 
-    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates 
-    are compared. If they are equal, \f$ z\f$-coordinates are compared. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q); 
+    Compares the Cartesian coordinates of points `p` and
+    `q` lexicographically in \f$ xyz\f$ order: first
+    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates
+    are compared. If they are equal, \f$ z\f$-coordinates are compared.
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q);
 
   /// @}
 
@@ -1314,10 +1314,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_xy_grp`
-  \sa `Kernel::CompareYX_2` 
+  \sa `Kernel::CompareYX_2`
 
 */
 class CompareXY_2 {
@@ -1328,13 +1328,13 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian coordinates of points `p` and 
-    `q` lexicographically in \f$ xy\f$ order: first 
-    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates 
-    are compared. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2&p, 
-                               const Kernel::Point_2&q); 
+    Compares the Cartesian coordinates of points `p` and
+    `q` lexicographically in \f$ xy\f$ order: first
+    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates
+    are compared.
+  */
+  Comparison_result operator()(const Kernel::Point_2&p,
+                               const Kernel::Point_2&q);
 
   /// @}
 
@@ -1344,7 +1344,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_xy_grp`
 
@@ -1358,13 +1358,13 @@ public:
 
 
   /*!
-    Compares the Cartesian coordinates of points `p` and 
-    `q` lexicographically in \f$ xy\f$ order: first 
-    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates 
-    are compared. 
-    */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q); 
+    Compares the Cartesian coordinates of points `p` and
+    `q` lexicographically in \f$ xy\f$ order: first
+    \f$ x\f$-coordinates are compared, if they are equal, \f$ y\f$-coordinates
+    are compared.
+    */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q);
 
   /// @}
 
@@ -1378,7 +1378,7 @@ public:
   \image html compare1.png
   \image latex compare1.png
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_x_grp`
 
@@ -1391,40 +1391,40 @@ public:
   /// @{
 
   /*!
-    compares the Cartesian \f$ x\f$-coordinates of points `p` and `q` 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2&p, 
-                               const Kernel::Point_2&q); 
+    compares the Cartesian \f$ x\f$-coordinates of points `p` and `q`
+  */
+  Comparison_result operator()(const Kernel::Point_2&p,
+                               const Kernel::Point_2&q);
 
   /*!
-    compares the \f$ x\f$-coordinates of `p` and the intersection 
+    compares the \f$ x\f$-coordinates of `p` and the intersection
     of lines `l1` and `l2`.
     See Figure \ref fig-compare12 (a).
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2); 
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2);
 
   /*!
-    compares the `x`-coordinates of the intersection of line `l` 
+    compares the `x`-coordinates of the intersection of line `l`
     with line `h1` and with line `h2`.
 
     See Figure \ref fig-compare12 (b).
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /*!
-    compares the \f$ x\f$-coordinates of the intersection of lines `l1` 
+    compares the \f$ x\f$-coordinates of the intersection of lines `l1`
     and `l2` and the intersection of lines `h1` and `h2`.
 
     See Figure \ref fig-compare12 (c).
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /// @}
 
@@ -1434,7 +1434,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_x_grp`
 
@@ -1447,11 +1447,11 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian \f$ x\f$-coordinates of points `p` and 
-    `q` 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q); 
+    Compares the Cartesian \f$ x\f$-coordinates of points `p` and
+    `q`
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q);
 
 
   /// @}
@@ -1465,7 +1465,7 @@ public:
   \image html compare2.png
   \image latex compare2.png
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \anchor fig-compare2
   \sa `compare_y_at_x_grp`
@@ -1479,70 +1479,70 @@ public:
   /// @{
 
   /*!
-    compares the \f$ y\f$-coordinates of `p` and the vertical projection 
+    compares the \f$ y\f$-coordinates of `p` and the vertical projection
     of `p` on `h`. See Figure \ref fig-compare2 (e).
-    \pre `h` is not vertical. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &h); 
+    \pre `h` is not vertical.
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &h);
 
   /*!
-    This function compares the `y`-coordinates of the vertical projection 
+    This function compares the `y`-coordinates of the vertical projection
     of `p` on `h1` and on `h2`. See Figure \ref fig-compare2 (e).
-    \pre `h1` and `h2` are not vertical. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+    \pre `h1` and `h2` are not vertical.
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /*!
-    Let `p` be the intersection of lines `l1` and `l2`. 
-    This function compares the \f$ y\f$-coordinates of `p` and 
+    Let `p` be the intersection of lines `l1` and `l2`.
+    This function compares the \f$ y\f$-coordinates of `p` and
     the vertical projection of `p` on `h`.
     See (Figure \ref fig-compare2 (f)).
-    \pre `l1`, `l2` intersect and `h` is not vertical. 
+    \pre `l1`, `l2` intersect and `h` is not vertical.
 
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h);
 
   /*!
-    Let `p` be the intersection of lines `l1` and `l2`. This function 
-    compares the `y`-coordinates of the vertical projection of `p` on 
+    Let `p` be the intersection of lines `l1` and `l2`. This function
+    compares the `y`-coordinates of the vertical projection of `p` on
     `h1` and on `h2`.
     See (Figure \ref fig-compare2 (g)).
-    \pre `l1` and `l2` intersect; `h1` and `h2` are not vertical. 
+    \pre `l1` and `l2` intersect; `h1` and `h2` are not vertical.
 
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
-
-  /*!
-  compares the `y`-coordinates of `p` and the vertical projection 
-  of `p` on `s`. If `s` is vertical, then return 
-  \ref CGAL::EQUAL when `p` lies on `s`, \ref CGAL::SMALLER when `p` lies 
-  under s, and \ref CGAL::LARGER otherwise. 
-
-  \pre `p` is within the x range of `s`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Segment_2 &s); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /*!
-    This function compares the \f$ y\f$-coordinates of the vertical projection 
-    of `p` on `s1` and on `s2`. If `s1` or `s2` 
-    is vertical, then return \ref CGAL::EQUAL if they intersect, otherwise return 
-    \ref CGAL::SMALLER if `s1` lies below `s2`, and return \ref CGAL::LARGER 
-    otherwise. 
+  compares the `y`-coordinates of `p` and the vertical projection
+  of `p` on `s`. If `s` is vertical, then return
+  \ref CGAL::EQUAL when `p` lies on `s`, \ref CGAL::SMALLER when `p` lies
+  under s, and \ref CGAL::LARGER otherwise.
 
-    \pre `p` is within the x range of `s1` and `s2`. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Segment_2 &s1, 
-                               const Kernel::Segment_2 &s2); 
+  \pre `p` is within the x range of `s`.
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Segment_2 &s);
+
+  /*!
+    This function compares the \f$ y\f$-coordinates of the vertical projection
+    of `p` on `s1` and on `s2`. If `s1` or `s2`
+    is vertical, then return \ref CGAL::EQUAL if they intersect, otherwise return
+    \ref CGAL::SMALLER if `s1` lies below `s2`, and return \ref CGAL::LARGER
+    otherwise.
+
+    \pre `p` is within the x range of `s1` and `s2`.
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Segment_2 &s1,
+                               const Kernel::Segment_2 &s2);
 
   /// @}
 
@@ -1552,10 +1552,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_yx_grp`
-  \sa `Kernel::CompareXY_2` 
+  \sa `Kernel::CompareXY_2`
 
 */
 class CompareYX_2 {
@@ -1566,13 +1566,13 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian coordinates of points `p` and 
-    `q` lexicographically in \f$ yx\f$ order: first 
-    \f$ y\f$-coordinates are compared, if they are equal, \f$ x\f$-coordinates 
-    are compared. 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2&p, 
-                               const Kernel::Point_2&q); 
+    Compares the Cartesian coordinates of points `p` and
+    `q` lexicographically in \f$ yx\f$ order: first
+    \f$ y\f$-coordinates are compared, if they are equal, \f$ x\f$-coordinates
+    are compared.
+  */
+  Comparison_result operator()(const Kernel::Point_2&p,
+                               const Kernel::Point_2&q);
 
   /// @}
 
@@ -1586,7 +1586,7 @@ public:
   \image html compare1.png
   \image latex compare1.png
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_y_grp`
 
@@ -1599,42 +1599,42 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian \f$ y\f$-coordinates of points `p` and 
-    `q` 
-  */ 
-  Comparison_result operator()(const Kernel::Point_2&p, 
-                               const Kernel::Point_2&q); 
+    Compares the Cartesian \f$ y\f$-coordinates of points `p` and
+    `q`
+  */
+  Comparison_result operator()(const Kernel::Point_2&p,
+                               const Kernel::Point_2&q);
 
   /*!
-    compares the \f$ y\f$-coordinates of `p` and the 
+    compares the \f$ y\f$-coordinates of `p` and the
     intersection of lines `l1` and `l2`.
 
     See Figure \ref fig-compare14 (a).
-  */ 
-  Comparison_result operator()(const Kernel::Point_2 &p, 
-                               const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2); 
+  */
+  Comparison_result operator()(const Kernel::Point_2 &p,
+                               const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2);
 
   /*!
-    compares the \f$ y\f$-coordinates of the intersection of line `l` 
+    compares the \f$ y\f$-coordinates of the intersection of line `l`
     with line `h1` and with line `h2`.
 
     See Figure \ref fig-compare14 (b).
   */
-  Comparison_result operator()(const Kernel::Line_2 &l, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  Comparison_result operator()(const Kernel::Line_2 &l,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
   /*!
-    compares the \f$ y\f$-coordinates of the intersection of lines `l1` 
+    compares the \f$ y\f$-coordinates of the intersection of lines `l1`
     and `l2` and the intersection of lines `h1` and `h2`.
 
     See Figure \ref fig-compare14 (c).
-  */ 
-  Comparison_result operator()(const Kernel::Line_2 &l1, 
-                               const Kernel::Line_2 &l2, 
-                               const Kernel::Line_2 &h1, 
-                               const Kernel::Line_2 &h2); 
+  */
+  Comparison_result operator()(const Kernel::Line_2 &l1,
+                               const Kernel::Line_2 &l2,
+                               const Kernel::Line_2 &h1,
+                               const Kernel::Line_2 &h2);
 
 
   /// @}
@@ -1645,7 +1645,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_y_grp`
 
@@ -1658,11 +1658,11 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian \f$ y\f$-coordinates of points `p` and 
-    `q` 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q); 
+    Compares the Cartesian \f$ y\f$-coordinates of points `p` and
+    `q`
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q);
 
   /// @}
 
@@ -1672,7 +1672,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_z_grp`
 
@@ -1685,11 +1685,11 @@ public:
   /// @{
 
   /*!
-    Compares the Cartesian \f$ z\f$-coordinates of points `p` and 
-    `q` 
-  */ 
-  Comparison_result operator()(const Kernel::Point_3&p, 
-                               const Kernel::Point_3&q); 
+    Compares the Cartesian \f$ z\f$-coordinates of points `p` and
+    `q`
+  */
+  Comparison_result operator()(const Kernel::Point_3&p,
+                               const Kernel::Point_3&q);
 
 
   /// @}
@@ -1700,7 +1700,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeA_2 {
@@ -1711,9 +1711,9 @@ public:
   /// @{
 
   /*!
-    returns the coefficient `a` of the line with equation `ax +by + c = 0`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Line_2& l) const; 
+    returns the coefficient `a` of the line with equation `ax +by + c = 0`.
+  */
+  Kernel::FT operator()(const Kernel::Line_2& l) const;
 
   /// @}
 
@@ -1746,7 +1746,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
 
   \cgalRefines AdaptableFunctor
 
@@ -1759,15 +1759,15 @@ public:
   /// @{
 
   /*!
-    returns an approximation of the area of `c`. 
-  */ 
-  double operator()(const Kernel::Circle_3& c); 
+    returns an approximation of the area of `c`.
+  */
+  double operator()(const Kernel::Circle_3& c);
 
   /// @}
 
 }; /* end Kernel::ComputeApproximateArea_3 */
 
-  
+
 /*!
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
@@ -1789,7 +1789,7 @@ public:
   */
   Kernel::FT operator()(const Kernel::Vector_3& u,
                         const Kernel::Vector_3& v) const;
-  
+
   /*!
     returns an approximation of the angle between `p-q` and `r-q`.
     The angle is given in degrees.
@@ -1802,7 +1802,7 @@ public:
   /// @}
 
 }; /* end Kernel::ComputeApproximateAngle_3 */
-  
+
 
 /*!
   \ingroup PkgKernel23ConceptsFunctionObjects
@@ -1838,9 +1838,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
 
 */
 class ComputeApproximateSquaredLength_3 {
@@ -1851,9 +1851,9 @@ public:
   /// @{
 
   /*!
-    returns an approximation of the squared length (i.e.\ perimeter) of `c`. 
-  */ 
-  double operator()(const Kernel::Circle_3& c); 
+    returns an approximation of the squared length (i.e.\ perimeter) of `c`.
+  */
+  double operator()(const Kernel::Circle_3& c);
 
   /// @}
 
@@ -1863,9 +1863,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
 
 */
 class ComputeAreaDividedByPi_3 {
@@ -1876,9 +1876,9 @@ public:
   /// @{
 
   /*!
-    returns the area of `c`, divided by \f$ \pi\f$. 
-  */ 
-  Kernel::FT operator()(const Kernel::Circle_3& c); 
+    returns the area of `c`, divided by \f$ \pi\f$.
+  */
+  Kernel::FT operator()(const Kernel::Circle_3& c);
 
   /// @}
 
@@ -1888,10 +1888,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-\sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+\sa `CGAL::Triangle_2<Kernel>`
 
 */
 class ComputeArea_2 {
@@ -1902,22 +1902,22 @@ public:
   /// @{
 
   /*!
-    returns the signed area of the triangle defined by the points `p`, 
-    `q` and `r`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p, 
-                        const Kernel::Point_2& q, 
-                        const Kernel::Point_2& r); 
+    returns the signed area of the triangle defined by the points `p`,
+    `q` and `r`.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p,
+                        const Kernel::Point_2& q,
+                        const Kernel::Point_2& r);
 
   /*!
-    returns the area of `r`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r); 
+    returns the area of `r`.
+  */
+  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r);
 
   /*!
-    returns the signed area of `t`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Triangle_2& t); 
+    returns the signed area of `t`.
+  */
+  Kernel::FT operator()(const Kernel::Triangle_2& t);
 
   /// @}
 
@@ -1927,9 +1927,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class ComputeArea_3 {
@@ -1940,18 +1940,18 @@ public:
   /// @{
 
   /*!
-    returns the area of  `t`. This requires that `Kernel::FT` 
-    supports the `sqrt` operation. 
-  */ 
-  Kernel::FT operator()(const Kernel::Triangle_3& t); 
+    returns the area of  `t`. This requires that `Kernel::FT`
+    supports the `sqrt` operation.
+  */
+  Kernel::FT operator()(const Kernel::Triangle_3& t);
 
   /*!
-    returns the area of the triangle `p`, `q`, `r`. 
-    This requires that `Kernel::FT` supports the `sqrt` operation. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p, 
-                        const Kernel::Point_3& q, 
-                        const Kernel::Point_3& r); 
+    returns the area of the triangle `p`, `q`, `r`.
+    This requires that `Kernel::FT` supports the `sqrt` operation.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p,
+                        const Kernel::Point_3& q,
+                        const Kernel::Point_3& r);
 
   /// @}
 
@@ -1961,7 +1961,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeB_2 {
@@ -1972,9 +1972,9 @@ public:
   /// @{
 
   /*!
-    returns the coefficient `b` of the line with equation `ax +by + c = 0`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Line_2& l) const; 
+    returns the coefficient `b` of the line with equation `ax +by + c = 0`.
+  */
+  Kernel::FT operator()(const Kernel::Line_2& l) const;
 
   /// @}
 
@@ -2009,7 +2009,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeC_2 {
@@ -2020,9 +2020,9 @@ public:
   /// @{
 
   /*!
-    returns the coefficient `c` of the line with equation `ax +by + c = 0`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Line_2& l) const; 
+    returns the coefficient `c` of the line with equation `ax +by + c = 0`.
+  */
+  Kernel::FT operator()(const Kernel::Line_2& l) const;
 
   /// @}
 
@@ -2081,9 +2081,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
   \sa `determinant_grp`
 
 */
@@ -2095,10 +2095,10 @@ public:
   /// @{
 
   /*!
-    returns the determinant of the two vectors `v` and `w`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v, 
-                        const Kernel::Vector_2& w); 
+    returns the determinant of the two vectors `v` and `w`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v,
+                        const Kernel::Vector_2& w);
 
   /// @}
 
@@ -2108,9 +2108,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
   \sa `determinant_grp`
 
 */
@@ -2122,11 +2122,11 @@ public:
   /// @{
 
   /*!
-    returns the determinant of the three vectors `u`, `v` and `w`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& u, 
-                        const Kernel::Vector_3& v, 
-                        const Kernel::Vector_3& w); 
+    returns the determinant of the three vectors `u`, `v` and `w`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& u,
+                        const Kernel::Vector_3& v,
+                        const Kernel::Vector_3& w);
 
 
   /// @}
@@ -2139,7 +2139,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeDx_2 {
@@ -2151,9 +2151,9 @@ public:
 
 
   /*!
-    returns an \f$ x\f$-coordinate of the direction. 
-  */ 
-  Kernel::FT operator()(const Kernel::Direction_2& d) const; 
+    returns an \f$ x\f$-coordinate of the direction.
+  */
+  Kernel::FT operator()(const Kernel::Direction_2& d) const;
 
   /// @}
 
@@ -2187,7 +2187,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeDy_2 {
@@ -2198,9 +2198,9 @@ public:
   /// @{
 
   /*!
-    returns an \f$ y\f$-coordinate of the direction. 
-  */ 
-  Kernel::FT operator()(const Kernel::Direction_2& d) const; 
+    returns an \f$ y\f$-coordinate of the direction.
+  */
+  Kernel::FT operator()(const Kernel::Direction_2& d) const;
 
   /// @}
 
@@ -2210,7 +2210,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeDy_3 {
@@ -2221,9 +2221,9 @@ public:
   /// @{
 
   /*!
-    returns an \f$ y\f$-coordinate of the direction. 
-  */ 
-  Kernel::FT operator()(const Kernel::Direction_3& d) const; 
+    returns an \f$ y\f$-coordinate of the direction.
+  */
+  Kernel::FT operator()(const Kernel::Direction_3& d) const;
 
   /// @}
 
@@ -2233,7 +2233,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeDz_3 {
@@ -2244,9 +2244,9 @@ public:
   /// @{
 
   /*!
-    returns an \f$ z\f$-coordinate of the direction. 
-  */ 
-  Kernel::FT operator()(const Kernel::Direction_3& d) const; 
+    returns an \f$ z\f$-coordinate of the direction.
+  */
+  Kernel::FT operator()(const Kernel::Direction_3& d) const;
 
   /// @}
 
@@ -2256,7 +2256,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeHx_2 {
@@ -2267,14 +2267,14 @@ public:
   /// @{
 
   /*!
-    returns the homogeneous \f$ x\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p) const; 
+    returns the homogeneous \f$ x\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p) const;
 
   /*!
-    returns the homogeneous \f$ x\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v) const; 
+    returns the homogeneous \f$ x\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v) const;
 
   /// @}
 
@@ -2312,7 +2312,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeHy_2 {
@@ -2323,14 +2323,14 @@ public:
   /// @{
 
   /*!
-    returns the homogeneous \f$ y\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p) const; 
+    returns the homogeneous \f$ y\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p) const;
 
   /*!
-    returns the homogeneous \f$ y\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v) const; 
+    returns the homogeneous \f$ y\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v) const;
 
   /// @}
 
@@ -2386,7 +2386,7 @@ public:
   /*!
     returns the homogenizing coordinate of the vector.
   */
-  Kernel::FT operator()(const Kernel::Vector_2& v) const; 
+  Kernel::FT operator()(const Kernel::Vector_2& v) const;
 
   /// @}
 
@@ -2415,7 +2415,7 @@ public:
   /*!
     returns the homogenizing coordinate of the vector.
   */
-  Kernel::FT operator()(const Kernel::Vector_3& v) const; 
+  Kernel::FT operator()(const Kernel::Vector_3& v) const;
 
   /// @}
 
@@ -2443,7 +2443,7 @@ public:
   /*!
     returns the homogeneous \f$ z\f$-coordinate of the vector.
   */
-  Kernel::FT operator()(const Kernel::Vector_3& v) const; 
+  Kernel::FT operator()(const Kernel::Vector_3& v) const;
 
   /// @}
 
@@ -2467,8 +2467,8 @@ public:
 
   /*!
     returns the squared radius of the sphere centered in `t`
-    and orthogonal to the sphere orthogonal to `p`, `q`, `r` ,and `s`. 
-  */ 
+    and orthogonal to the sphere orthogonal to `p`, `q`, `r` ,and `s`.
+  */
   Kernel::FT operator()(const Kernel::Weighted_point_3& p,
                         const Kernel::Weighted_point_3& q,
                         const Kernel::Weighted_point_3& r,
@@ -2536,12 +2536,12 @@ public:
   /// @{
 
   /*!
-    returns the power product of `pw` and `qw`. 
-    Let\f$ {p}^{(w)}=(p,w_p), p\in\mathbb{R}^3, w_p\in\mathbb{R}\f$ and 
-    \f$ {q}^{(w)}=(q,w_q), q\in\mathbb{R}^3, w_q\in\mathbb{R}\f$ be two weighted points. 
-    
-    The <I>power product</I>, also called <i>power distance</i> 
-    between \f$ {p}^{(w)}\f$ and \f$ {q}^{(w)}\f$ is defined as 
+    returns the power product of `pw` and `qw`.
+    Let\f$ {p}^{(w)}=(p,w_p), p\in\mathbb{R}^3, w_p\in\mathbb{R}\f$ and
+    \f$ {q}^{(w)}=(q,w_q), q\in\mathbb{R}^3, w_q\in\mathbb{R}\f$ be two weighted points.
+
+    The <I>power product</I>, also called <i>power distance</i>
+    between \f$ {p}^{(w)}\f$ and \f$ {q}^{(w)}\f$ is defined as
     \f[ \Pi({p}^{(w)},{q}^{(w)}) = {\|{p-q}\|^2-w_p-w_q} \f]
     where \f$ \|{p-q}\|\f$ is the Euclidean distance between \f$ p\f$ and \f$ q\f$.
 
@@ -2549,16 +2549,16 @@ public:
     The weighted points \f$ {p}^{(w)}\f$ and \f$ {q}^{(w)}\f$
     are said to be <I>orthogonal</I> iff \f$ \Pi{({p}^{(w)},{q}^{(w)})}
     = 0\f$.
-    
+
     Four weighted points have, in 3D, a unique common orthogonal weighted point
     called the <I>power sphere</I>. The weighted point orthogonal to
     three weighted points in the plane defined by these three points is
     called the <I>power circle</I>. The
     <I>power segment</I> will denote the weighted point orthogonal to
     two weighted points on the line defined by these two points.
-  */ 
-  Kernel::FT operator()(const Kernel::Weighted_point_3& pw, 
-                        const Kernel::Weighted_point_3& qw) const; 
+  */
+  Kernel::FT operator()(const Kernel::Weighted_point_3& pw,
+                        const Kernel::Weighted_point_3& qw) const;
 
   /// @}
 }; /* end Kernel::ComputePowerProduct_3 */
@@ -2615,7 +2615,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
   \sa scalar_product_grp
 
   \cgalRefines `AdaptableFunctor` (with two arguments)
@@ -2629,10 +2629,10 @@ public:
   /// @{
 
   /*!
-    returns the scalar (inner) product of the two vectors `v` and `w`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v, 
-                        const Kernel::Vector_2& w); 
+    returns the scalar (inner) product of the two vectors `v` and `w`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v,
+                        const Kernel::Vector_2& w);
 
   /// @}
 
@@ -2642,10 +2642,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `CGAL::Vector_3<Kernel>`
-  \sa scalar_product_grp 
+  \sa scalar_product_grp
 
 */
 class ComputeScalarProduct_3 {
@@ -2656,10 +2656,10 @@ public:
   /// @{
 
   /*!
-    returns the scalar (inner) product of the two vectors `v` and `w`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& v, 
-                        const Kernel::Vector_3& w); 
+    returns the scalar (inner) product of the two vectors `v` and `w`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& v,
+                        const Kernel::Vector_3& w);
 
 
   /// @}
@@ -2670,9 +2670,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class ComputeSquaredArea_3 {
@@ -2683,16 +2683,16 @@ public:
   /// @{
 
   /*!
-    returns the square of the area of `t`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Triangle_3& t); 
+    returns the square of the area of `t`.
+  */
+  Kernel::FT operator()(const Kernel::Triangle_3& t);
 
   /*!
-    returns the square of the area of the triangle `p`, `q`, `r`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p, 
-                        const Kernel::Point_3& q, 
-                        const Kernel::Point_3& r); 
+    returns the square of the area of the triangle `p`, `q`, `r`.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p,
+                        const Kernel::Point_3& q,
+                        const Kernel::Point_3& r);
 
   /// @}
 
@@ -2702,7 +2702,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `squared_distance_grp`
 
@@ -2715,19 +2715,19 @@ public:
   /// @{
 
   /*!
-    returns the squared distance between two geometrical objects of type 
-    for all pairs `Type1` and `Type2`, where  the types `Type1` and `Type2` can be any of the 
-    following: 
+    returns the squared distance between two geometrical objects of type
+    for all pairs `Type1` and `Type2`, where  the types `Type1` and `Type2` can be any of the
+    following:
 
-    - `Kernel::Point_2` 
-    - `Kernel::Line_2` 
-    - `Kernel::Ray_2` 
-    - `Kernel::Segment_2` 
-    - `Kernel::Triangle_2` 
+    - `Kernel::Point_2`
+    - `Kernel::Line_2`
+    - `Kernel::Ray_2`
+    - `Kernel::Segment_2`
+    - `Kernel::Triangle_2`
 
     as well as any combination of `Kernel::Point_2` and `Kernel::Weighted_point_2`
-  */ 
-  Kernel::FT operator()(Type1 obj1, Type2 obj2); 
+  */
+  Kernel::FT operator()(Type1 obj1, Type2 obj2);
 
   /// @}
 
@@ -2737,7 +2737,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `squared_distance_grp`
 
@@ -2750,20 +2750,20 @@ public:
   /// @{
 
   /*!
-    returns the squared distance between two geometrical objects of type 
-    `Type1` and `Type2`, for all pairs `Type1` and `Type2`, where 
-    the types `Type1` and `Type2` can be any of the 
-    following: 
+    returns the squared distance between two geometrical objects of type
+    `Type1` and `Type2`, for all pairs `Type1` and `Type2`, where
+    the types `Type1` and `Type2` can be any of the
+    following:
 
-    - `Kernel::Point_3` 
-    - `Kernel::Line_3` 
-    - `Kernel::Ray_3` 
-    - `Kernel::Segment_3` 
-    - `Kernel::Plane_3` 
+    - `Kernel::Point_3`
+    - `Kernel::Line_3`
+    - `Kernel::Ray_3`
+    - `Kernel::Segment_3`
+    - `Kernel::Plane_3`
 
     as well as any combination of `Kernel::Point_3` and `Kernel::Weighted_point_3`
-  */ 
-  Kernel::FT operator()(Type1 obj1, Type2 obj2); 
+  */
+  Kernel::FT operator()(Type1 obj1, Type2 obj2);
 
   /// @}
 
@@ -2773,9 +2773,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
 
 */
 class ComputeSquaredLengthDividedByPiSquare_3 {
@@ -2786,9 +2786,9 @@ public:
   /// @{
 
   /*!
-    returns the squared length of `c`, divided by \f$ \pi^2\f$. 
-  */ 
-  Kernel::FT operator()(const Kernel::Circle_3& c); 
+    returns the squared length of `c`, divided by \f$ \pi^2\f$.
+  */
+  Kernel::FT operator()(const Kernel::Circle_3& c);
 
 
   /// @}
@@ -2799,10 +2799,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Vector_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ComputeSquaredLength_2 {
@@ -2813,14 +2813,14 @@ public:
   /// @{
 
   /*!
-    returns the squared length of `v`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v); 
+    returns the squared length of `v`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v);
 
   /*!
-    returns the squared length of `s`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Segment_2& s); 
+    returns the squared length of `s`.
+  */
+  Kernel::FT operator()(const Kernel::Segment_2& s);
 
   /// @}
 
@@ -2830,10 +2830,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Vector_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ComputeSquaredLength_3 {
@@ -2844,14 +2844,14 @@ public:
   /// @{
 
   /*!
-    returns the squared length of `v`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& v); 
+    returns the squared length of `v`.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& v);
 
   /*!
-    returns the squared length of `s`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Segment_3& s); 
+    returns the squared length of `s`.
+  */
+  Kernel::FT operator()(const Kernel::Segment_3& s);
 
   /// @}
 
@@ -2861,9 +2861,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
   \sa `squared_radius_grp`
 
 */
@@ -2875,29 +2875,29 @@ public:
   /// @{
 
   /*!
-    returns the squared radius of `c`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Circle_2& c); 
+    returns the squared radius of `c`.
+  */
+  Kernel::FT operator()(const Kernel::Circle_2& c);
 
   /*!
-    returns the squared radius of the circle passing through `p`, `q` 
-    and `r`. \pre `p, q` and `r` are not collinear. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p, 
-                        const Kernel::Point_2& q, 
-                        const Kernel::Point_2& r); 
+    returns the squared radius of the circle passing through `p`, `q`
+    and `r`. \pre `p, q` and `r` are not collinear.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p,
+                        const Kernel::Point_2& q,
+                        const Kernel::Point_2& r);
 
   /*!
-    returns the squared radius of the smallest circle passing through `p`, 
-    and `q`, i.e.\ one fourth of the squared distance between `p` and `q`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p, 
-                        const Kernel::Point_2& q); 
+    returns the squared radius of the smallest circle passing through `p`,
+    and `q`, i.e.\ one fourth of the squared distance between `p` and `q`.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p,
+                        const Kernel::Point_2& q);
 
   /*!
-    returns the squared radius of the smallest circle passing through `p`, i.e.\ \f$ 0\f$. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p); 
+    returns the squared radius of the smallest circle passing through `p`, i.e.\ \f$ 0\f$.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p);
 
 
   /// @}
@@ -2908,10 +2908,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Circle_3<Kernel>`
   \sa `squared_radius_grp`
 
 */
@@ -2924,43 +2924,43 @@ public:
 
 
   /*!
-    returns the squared radius of `s`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Sphere_3& s); 
+    returns the squared radius of `s`.
+  */
+  Kernel::FT operator()(const Kernel::Sphere_3& s);
 
   /*!
-    returns the squared radius of `c`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Circle_3& c); 
+    returns the squared radius of `c`.
+  */
+  Kernel::FT operator()(const Kernel::Circle_3& c);
 
   /*!
-    returns the squared radius of the sphere passing through `p`, `q`, `r` 
-    and `s`. \pre `p, q, r` and `s` are not coplanar. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p, 
-                        const Kernel::Point_3& q, 
-                        const Kernel::Point_3& r, 
-                        const Kernel::Point_3& s); 
+    returns the squared radius of the sphere passing through `p`, `q`, `r`
+    and `s`. \pre `p, q, r` and `s` are not coplanar.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p,
+                        const Kernel::Point_3& q,
+                        const Kernel::Point_3& r,
+                        const Kernel::Point_3& s);
 
   /*!
-    returns the squared radius of the sphere passing through `p`, `q` and 
-  `r`, and whose center is in the plane defined by these three points. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p, 
-                        const Kernel::Point_3& q, 
-                        const Kernel::Point_3& r); 
+    returns the squared radius of the sphere passing through `p`, `q` and
+  `r`, and whose center is in the plane defined by these three points.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p,
+                        const Kernel::Point_3& q,
+                        const Kernel::Point_3& r);
 
   /*!
-    returns the squared radius of the smallest circle passing through `p`, 
-    and `q`, i.e.\ one fourth of the squared distance between `p` and `q`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p, 
-                        const Kernel::Point_3& q); 
+    returns the squared radius of the smallest circle passing through `p`,
+    and `q`, i.e.\ one fourth of the squared distance between `p` and `q`.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p,
+                        const Kernel::Point_3& q);
 
   /*!
-    returns the squared radius of the smallest circle passing through `p`, i.e.\ \f$ 0\f$. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p); 
+    returns the squared radius of the smallest circle passing through `p`, i.e.\ \f$ 0\f$.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p);
 
 
   /// @}
@@ -3042,10 +3042,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class ComputeVolume_3 {
@@ -3057,23 +3057,23 @@ public:
 
 
   /*!
-    returns the volume of `c`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_cuboid_3& c); 
+    returns the volume of `c`.
+  */
+  Kernel::FT operator()(const Kernel::Iso_cuboid_3& c);
 
   /*!
-    returns the signed volume of `t`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Tetrahedron_3& t); 
+    returns the signed volume of `t`.
+  */
+  Kernel::FT operator()(const Kernel::Tetrahedron_3& t);
 
   /*!
-    returns the signed volume of the tetrahedron defined by the four 
-    points `p0`, `p1`, `p2`, `p3`. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p0, 
-                        const Kernel::Point_3& p1, 
-                        const Kernel::Point_3& p2, 
-                        const Kernel::Point_3& p3); 
+    returns the signed volume of the tetrahedron defined by the four
+    points `p0`, `p1`, `p2`, `p3`.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p0,
+                        const Kernel::Point_3& p1,
+                        const Kernel::Point_3& p2,
+                        const Kernel::Point_3& p3);
 
 
   /// @}
@@ -3086,7 +3086,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeWeight_2 {
@@ -3099,7 +3099,7 @@ public:
   /*!
     returns the weight of the weighted point.
   */
-  Kernel::FT operator()(const Kernel::WeightedPoint_2& p) const; 
+  Kernel::FT operator()(const Kernel::WeightedPoint_2& p) const;
 
 }; /* end Kernel::ComputeWeight_2 */
 
@@ -3107,7 +3107,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeWeight_3 {
@@ -3120,7 +3120,7 @@ public:
   /*!
     returns the weight of the weighted point.
   */
-  Kernel::FT operator()(const Kernel::WeightedPoint_3& p) const; 
+  Kernel::FT operator()(const Kernel::WeightedPoint_3& p) const;
 
 }; /* end Kernel::ComputeWeight_3 */
 
@@ -3130,7 +3130,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeX_2 {
@@ -3141,14 +3141,14 @@ public:
   /// @{
 
   /*!
-    returns the \f$ x\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p) const; 
+    returns the \f$ x\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p) const;
 
   /*!
-    returns the \f$ x\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v) const; 
+    returns the \f$ x\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v) const;
 
 
   /// @}
@@ -3159,7 +3159,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeX_3 {
@@ -3170,14 +3170,14 @@ public:
   /// @{
 
   /*!
-    returns the \f$ x\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p) const; 
+    returns the \f$ x\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p) const;
 
   /*!
-    returns the \f$ x\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& v) const; 
+    returns the \f$ x\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& v) const;
 
   /// @}
 
@@ -3187,7 +3187,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeXmax_2 {
@@ -3198,9 +3198,9 @@ public:
   /// @{
 
   /*!
-    returns the largest \f$ x\f$-coordinate of the iso-rectangle. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const; 
+    returns the largest \f$ x\f$-coordinate of the iso-rectangle.
+  */
+  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const;
 
   /// @}
 
@@ -3233,7 +3233,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeXmin_2 {
@@ -3244,9 +3244,9 @@ public:
   /// @{
 
   /*!
-    returns the smallest \f$ x\f$-coordinate of the iso-rectangle. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const; 
+    returns the smallest \f$ x\f$-coordinate of the iso-rectangle.
+  */
+  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const;
 
   /// @}
 
@@ -3256,7 +3256,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeXmin_3 {
@@ -3267,9 +3267,9 @@ public:
   /// @{
 
   /*!
-    returns the smallest \f$ x\f$-coordinate of the iso-cuboid. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_cuboid_3& r) const; 
+    returns the smallest \f$ x\f$-coordinate of the iso-cuboid.
+  */
+  Kernel::FT operator()(const Kernel::Iso_cuboid_3& r) const;
 
   /// @}
 
@@ -3292,12 +3292,12 @@ public:
   /// @{
 
   /*!
-    returns the \f$ y\f$-coordinate of the point at `l` with 
-    given \f$ x\f$-coordinate. 
-    \pre `l` is not vertical. 
-  */ 
-  Kernel::FT operator()(const Kernel::Line_2& l, 
-                        const Kernel::FT &x) const; 
+    returns the \f$ y\f$-coordinate of the point at `l` with
+    given \f$ x\f$-coordinate.
+    \pre `l` is not vertical.
+  */
+  Kernel::FT operator()(const Kernel::Line_2& l,
+                        const Kernel::FT &x) const;
 
   // @}
 
@@ -3307,7 +3307,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeY_2 {
@@ -3318,14 +3318,14 @@ public:
   /// @{
 
   /*!
-    returns the \f$ y\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_2& p) const; 
+    returns the \f$ y\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_2& p) const;
 
   /*!
-    returns the \f$ y\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_2& v) const; 
+    returns the \f$ y\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_2& v) const;
 
   /// @}
 
@@ -3335,7 +3335,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeY_3 {
@@ -3346,14 +3346,14 @@ public:
   /// @{
 
   /*!
-    returns the \f$ y\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p) const; 
+    returns the \f$ y\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p) const;
 
   /*!
-    returns the \f$ y\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& v) const; 
+    returns the \f$ y\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& v) const;
 
   /// @}
 
@@ -3363,7 +3363,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeYmax_2 {
@@ -3374,9 +3374,9 @@ public:
   /// @{
 
   /*!
-    returns the largest \f$ y\f$-coordinate of the iso-rectangle. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const; 
+    returns the largest \f$ y\f$-coordinate of the iso-rectangle.
+  */
+  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const;
 
   /// @}
 
@@ -3409,7 +3409,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeYmin_2 {
@@ -3420,9 +3420,9 @@ public:
   /// @{
 
   /*!
-    returns the smallest \f$ y\f$-coordinate of the iso-rectangle. 
-  */ 
-  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const; 
+    returns the smallest \f$ y\f$-coordinate of the iso-rectangle.
+  */
+  Kernel::FT operator()(const Kernel::Iso_rectangle_2& r) const;
 
 }; /* end Kernel::ComputeYmin_2 */
 
@@ -3451,7 +3451,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` 
+  \cgalRefines `AdaptableFunctor`
 
 */
 class ComputeZ_3 {
@@ -3462,14 +3462,14 @@ public:
   /// @{
 
   /*!
-    returns the \f$ z\f$-coordinate of the point. 
-  */ 
-  Kernel::FT operator()(const Kernel::Point_3& p) const; 
+    returns the \f$ z\f$-coordinate of the point.
+  */
+  Kernel::FT operator()(const Kernel::Point_3& p) const;
 
   /*!
-    returns the \f$ z\f$-coordinate of the vector. 
-  */ 
-  Kernel::FT operator()(const Kernel::Vector_3& v) const; 
+    returns the \f$ z\f$-coordinate of the vector.
+  */
+  Kernel::FT operator()(const Kernel::Vector_3& v) const;
 
   /// @}
 
@@ -3520,9 +3520,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::ConstructCentroid_2` 
+  \sa `Kernel::ConstructCentroid_2`
   \sa `centroid_grp`
   \sa `barycenter_grp`
 
@@ -3536,58 +3536,58 @@ public:
 
 
   /*!
-    compute the barycenter of the points `p1` and `p2` with corresponding 
-    weights `w1` and `1-w1`. 
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2); 
+    compute the barycenter of the points `p1` and `p2` with corresponding
+    weights `w1` and `1-w1`.
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2);
 
   /*!
-    compute the barycenter of the points `p1` and `p2` with corresponding 
-    weights `w1` and `w2`. \pre `w1+w2 != 0`. 
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2, const Kernel::FT&w2); 
+    compute the barycenter of the points `p1` and `p2` with corresponding
+    weights `w1` and `w2`. \pre `w1+w2 != 0`.
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2, const Kernel::FT&w2);
 
   /*!
-    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding 
-    weights `w1`, `w2` and `1-w1-w2`. 
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2, const Kernel::FT&w2, 
-              const Kernel::Point_2& p3); 
+    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding
+    weights `w1`, `w2` and `1-w1-w2`.
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2, const Kernel::FT&w2,
+              const Kernel::Point_2& p3);
 
   /*!
-    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding 
+    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding
     weights `w1`, `w2` and `w3`. \pre `w1+w2+w3 != 0`.
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2, const Kernel::FT&w2, 
-              const Kernel::Point_2& p3, const Kernel::FT&w3); 
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2, const Kernel::FT&w2,
+              const Kernel::Point_2& p3, const Kernel::FT&w3);
 
   /*!
-    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding 
-    weights `w1`, `w2`, `w3` and `1-w1-w2-w3`. 
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2, const Kernel::FT&w2, 
-              const Kernel::Point_2& p3, const Kernel::FT&w3, 
-              const Kernel::Point_2& p4); 
+    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding
+    weights `w1`, `w2`, `w3` and `1-w1-w2-w3`.
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2, const Kernel::FT&w2,
+              const Kernel::Point_2& p3, const Kernel::FT&w3,
+              const Kernel::Point_2& p4);
 
   /*!
-    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding 
+    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding
     weights `w1`, `w2`, `w3` and `w4`. \pre `1+w2+w3+w4 != 0.`
-  */ 
-  Kernel::Point_2 
-  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1, 
-              const Kernel::Point_2& p2, const Kernel::FT&w2, 
-              const Kernel::Point_2& p3, const Kernel::FT&w3, 
-              const Kernel::Point_2& p4, const Kernel::FT&w4); 
+  */
+  Kernel::Point_2
+  operator()( const Kernel::Point_2& p1, const Kernel::FT&w1,
+              const Kernel::Point_2& p2, const Kernel::FT&w2,
+              const Kernel::Point_2& p3, const Kernel::FT&w3,
+              const Kernel::Point_2& p4, const Kernel::FT&w4);
 
   /// @}
 
@@ -3597,9 +3597,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::ConstructCentroid_3` 
+  \sa `Kernel::ConstructCentroid_3`
   \sa `centroid_grp`
   \sa `barycenter_grp`
 
@@ -3613,58 +3613,58 @@ public:
 
 
   /*!
-    compute the barycenter of the points `p1` and `p2` with corresponding 
-    weights `w1` and `1-w1`. 
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2); 
+    compute the barycenter of the points `p1` and `p2` with corresponding
+    weights `w1` and `1-w1`.
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2);
 
   /*!
-    compute the barycenter of the points `p1` and `p2` with corresponding 
+    compute the barycenter of the points `p1` and `p2` with corresponding
     weights `w1` and `w2`. \pre `w1+w2 != 0`.
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2, const Kernel::FT&w2); 
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2, const Kernel::FT&w2);
 
   /*!
-    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding 
-    weights `w1`, `w2` and `1-w1-w2`. 
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2, const Kernel::FT&w2, 
-              const Kernel::Point_3& p3); 
+    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding
+    weights `w1`, `w2` and `1-w1-w2`.
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2, const Kernel::FT&w2,
+              const Kernel::Point_3& p3);
 
   /*!
-    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding 
+    compute the barycenter of the points `p1`, `p2` and `p3` with corresponding
     weights `w1`, `w2` and `w3`. \pre `w1+w2+w3 != 0`.
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2, const Kernel::FT&w2, 
-              const Kernel::Point_3& p3, const Kernel::FT&w3); 
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2, const Kernel::FT&w2,
+              const Kernel::Point_3& p3, const Kernel::FT&w3);
 
   /*!
-    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding 
-    weights `w1`, `w2`, `w3` and `1-w1-w2-w3`. 
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2, const Kernel::FT&w2, 
-              const Kernel::Point_3& p3, const Kernel::FT&w3, 
-              const Kernel::Point_3& p4); 
+    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding
+    weights `w1`, `w2`, `w3` and `1-w1-w2-w3`.
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2, const Kernel::FT&w2,
+              const Kernel::Point_3& p3, const Kernel::FT&w3,
+              const Kernel::Point_3& p4);
 
   /*!
-    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding 
-    weights `w1`, `w2`, `w3` and `w4`. \pre `w1+w2+w3+w4 != 0`. 
-  */ 
-  Kernel::Point_3 
-  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1, 
-              const Kernel::Point_3& p2, const Kernel::FT&w2, 
-              const Kernel::Point_3& p3, const Kernel::FT&w3, 
-              const Kernel::Point_3& p4, const Kernel::FT&w4); 
+    compute the barycenter of the points `p1`, `p2`, `p3` and `p4` with corresponding
+    weights `w1`, `w2`, `w3` and `w4`. \pre `w1+w2+w3+w4 != 0`.
+  */
+  Kernel::Point_3
+  operator()( const Kernel::Point_3& p1, const Kernel::FT&w1,
+              const Kernel::Point_3& p2, const Kernel::FT&w2,
+              const Kernel::Point_3& p3, const Kernel::FT&w3,
+              const Kernel::Point_3& p4, const Kernel::FT&w4);
 
 
   /// @}
@@ -3675,9 +3675,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructBaseVector_3 {
@@ -3688,14 +3688,14 @@ public:
   /// @{
 
   /*!
-    when `index` == 1, returns a vector `b1` that is orthogonal to the 
-    normal `n` to plane `h`; when `index` == 2, returns a vector 
-    `b2` that is orthogonal to `n` and `b1` and such that 
-    for an arbitrary point `p` on the plane `h`, the orientation of 
-    `p`, `p + b1`, `p + b2`, and `p + n` is positive. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Plane_3& h, 
-                              int index); 
+    when `index` == 1, returns a vector `b1` that is orthogonal to the
+    normal `n` to plane `h`; when `index` == 2, returns a vector
+    `b2` that is orthogonal to `n` and `b1` and such that
+    for an arbitrary point `p` on the plane `h`, the orientation of
+    `p`, `p + b1`, `p + b2`, and `p + n` is positive.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Plane_3& h,
+                              int index);
 
   /// @}
 
@@ -3705,7 +3705,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
 */
 class ConstructBbox_2 {
@@ -3716,34 +3716,34 @@ public:
   /// @{
 
   /*!
-    returns a bounding box of `p`. 
-  */ 
-  CGAL::Bbox_2 operator()(const Kernel::Point_2 
-                          &p); 
+    returns a bounding box of `p`.
+  */
+  CGAL::Bbox_2 operator()(const Kernel::Point_2
+                          &p);
 
   /*!
-    returns a bounding box of `s`. 
-  */ 
-  CGAL::Bbox_2 operator()(const Kernel::Segment_2 
-                          &s); 
+    returns a bounding box of `s`.
+  */
+  CGAL::Bbox_2 operator()(const Kernel::Segment_2
+                          &s);
 
   /*!
-    returns a bounding box of `t`. 
-  */ 
-  CGAL::Bbox_2 operator()(const Kernel::Triangle_2 
-                          &t); 
+    returns a bounding box of `t`.
+  */
+  CGAL::Bbox_2 operator()(const Kernel::Triangle_2
+                          &t);
 
   /*!
-    returns a bounding box of `i`. 
-  */ 
-  CGAL::Bbox_2 operator()(const Kernel::Iso_rectangle_2 
-                          &i); 
+    returns a bounding box of `i`.
+  */
+  CGAL::Bbox_2 operator()(const Kernel::Iso_rectangle_2
+                          &i);
 
   /*!
-    returns a bounding box of `c`. 
-  */ 
-  CGAL::Bbox_2 operator()(const Kernel::Circle_2 
-                          &c); 
+    returns a bounding box of `c`.
+  */
+  CGAL::Bbox_2 operator()(const Kernel::Circle_2
+                          &c);
 
   /// @}
 
@@ -3753,7 +3753,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
 */
 class ConstructBbox_3 {
@@ -3764,46 +3764,46 @@ public:
   /// @{
 
   /*!
-    returns a bounding box of `c`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Circle_3 
-                          &c); 
+    returns a bounding box of `c`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Circle_3
+                          &c);
 
   /*!
-    returns a bounding box of `p`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Point_3 
-                          &p); 
+    returns a bounding box of `p`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Point_3
+                          &p);
 
   /*!
-    returns a bounding box of `s`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Segment_3 
-                          &s); 
+    returns a bounding box of `s`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Segment_3
+                          &s);
 
   /*!
-    returns a bounding box of `t`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Triangle_3 
-                          &t); 
+    returns a bounding box of `t`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Triangle_3
+                          &t);
 
   /*!
-    returns a bounding box of `t`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Tetrahedron_3 
-                          &t); 
+    returns a bounding box of `t`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Tetrahedron_3
+                          &t);
 
   /*!
-    returns a bounding box of `i`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Iso_Cuboid_3 
-                          &i); 
+    returns a bounding box of `i`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Iso_Cuboid_3
+                          &i);
 
   /*!
-    returns a bounding box of `s`. 
-  */ 
-  CGAL::Bbox_3 operator()(const Kernel::Sphere_3 
-                          &s); 
+    returns a bounding box of `s`.
+  */
+  CGAL::Bbox_3 operator()(const Kernel::Sphere_3
+                          &s);
 
   /// @}
 
@@ -3826,26 +3826,26 @@ public:
   /// @{
 
   /*!
-    constructs the bisector of `p` and `q`. 
-    The bisector is oriented in such a way that `p` lies on its 
-    positive side. \pre `p` and `q` are not equal. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Point_2&p, 
-                            const Kernel::Point_2&q ); 
+    constructs the bisector of `p` and `q`.
+    The bisector is oriented in such a way that `p` lies on its
+    positive side. \pre `p` and `q` are not equal.
+  */
+  Kernel::Line_2 operator()(const Kernel::Point_2&p,
+                            const Kernel::Point_2&q );
 
   /*!
-    constructs the bisector of the two lines `l1` and `l2`. 
-    In the general case, the bisector has the direction of the vector which 
-    is the sum of the normalized directions of the two lines, and which passes 
-    through the intersection of `l1` and `l2`. 
-    If `l1` and `l2` are parallel, then the bisector is defined as the line 
-    which has the same direction as `l1`, and which is at the same distance 
-    from `l1` and `l2`. 
-    This function requires that `Kernel::RT` supports the `sqrt()` 
-    operation. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Line_2&l1, 
-                            const Kernel::Line_2&l2); 
+    constructs the bisector of the two lines `l1` and `l2`.
+    In the general case, the bisector has the direction of the vector which
+    is the sum of the normalized directions of the two lines, and which passes
+    through the intersection of `l1` and `l2`.
+    If `l1` and `l2` are parallel, then the bisector is defined as the line
+    which has the same direction as `l1`, and which is at the same distance
+    from `l1` and `l2`.
+    This function requires that `Kernel::RT` supports the `sqrt()`
+    operation.
+  */
+  Kernel::Line_2 operator()(const Kernel::Line_2&l1,
+                            const Kernel::Line_2&l2);
 
   /// @}
 
@@ -3855,7 +3855,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `bisector_grp`
 
@@ -3869,26 +3869,26 @@ public:
 
 
   /*!
-    constructs the bisector plane of `p` and `q`. 
-    The bisector is oriented in such a way that `p` lies on its 
-    positive side. \pre `p` and `q` are not equal. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q ); 
+    constructs the bisector plane of `p` and `q`.
+    The bisector is oriented in such a way that `p` lies on its
+    positive side. \pre `p` and `q` are not equal.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q );
 
   /*!
-    constructs the bisector of the two planes `h1` and `h2`. 
-    In the general case, the bisector has a normal vector which has the same 
-    direction as the sum of the normalized normal vectors of the two planes, and 
-    passes through the intersection of `h1` and `h2`. 
-    If `h1` and `h2` are parallel, then the bisector is defined as the 
+    constructs the bisector of the two planes `h1` and `h2`.
+    In the general case, the bisector has a normal vector which has the same
+    direction as the sum of the normalized normal vectors of the two planes, and
+    passes through the intersection of `h1` and `h2`.
+    If `h1` and `h2` are parallel, then the bisector is defined as the
     plane which has the same oriented normal vector as `h1`, and which is at
-    the same distance from `h1` and `h2`. 
-    This function requires that `Kernel::RT` supports the `sqrt()` 
-    operation. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Plane_3&h1, 
-                             const Kernel::Plane_3&h2); 
+    the same distance from `h1` and `h2`.
+    This function requires that `Kernel::RT` supports the `sqrt()`
+    operation.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Plane_3&h1,
+                             const Kernel::Plane_3&h2);
 
 
   /// @}
@@ -3899,9 +3899,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `Kernel::CartesianConstIterator_2` 
+  \sa `Kernel::CartesianConstIterator_2`
 
 */
 class ConstructCartesianConstIterator_2 {
@@ -3913,28 +3913,28 @@ public:
 
 
   /*!
-    returns an iterator on the 0'th Cartesian coordinate of `p`. 
-  */ 
-  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Point_2 
-                                                &p); 
+    returns an iterator on the 0'th Cartesian coordinate of `p`.
+  */
+  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Point_2
+                                                &p);
 
   /*!
-    returns the past the end iterator of the Cartesian coordinates of `p`. 
-  */ 
-  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Point_2 
-                                                &p, int); 
+    returns the past the end iterator of the Cartesian coordinates of `p`.
+  */
+  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Point_2
+                                                &p, int);
 
   /*!
-    returns an iterator on the 0'th Cartesian coordinate of `v`. 
-  */ 
-  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Vector_2 
-                                                &v); 
+    returns an iterator on the 0'th Cartesian coordinate of `v`.
+  */
+  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Vector_2
+                                                &v);
 
   /*!
-    returns the past the end iterator of the Cartesian coordinates of `v`. 
-  */ 
-  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Vector_2 
-                                                &v, int); 
+    returns the past the end iterator of the Cartesian coordinates of `v`.
+  */
+  Kernel::Cartesian_const_iterator_2 operator()(const Kernel::Vector_2
+                                                &v, int);
 
 
   /// @}
@@ -3945,9 +3945,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `Kernel::CartesianConstIterator_3` 
+  \sa `Kernel::CartesianConstIterator_3`
 
 */
 class ConstructCartesianConstIterator_3 {
@@ -3958,28 +3958,28 @@ public:
   /// @{
 
   /*!
-    returns an iterator on the 0'th Cartesian coordinate of `p`. 
-  */ 
-  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Point_3 
-                                                &p); 
+    returns an iterator on the 0'th Cartesian coordinate of `p`.
+  */
+  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Point_3
+                                                &p);
 
   /*!
-    returns the past the end iterator of the Cartesian coordinates of `p`. 
-  */ 
-  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Point_3 
-                                                &p, int); 
+    returns the past the end iterator of the Cartesian coordinates of `p`.
+  */
+  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Point_3
+                                                &p, int);
 
   /*!
-    returns an iterator on the 0'th Cartesian coordinate of `v`. 
-  */ 
-  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Vector_3 
-                                                &v); 
+    returns an iterator on the 0'th Cartesian coordinate of `v`.
+  */
+  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Vector_3
+                                                &v);
 
   /*!
-    returns the past the end iterator of the Cartesian coordinates of `v`. 
-  */ 
-  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Vector_3 
-                                                &v, int); 
+    returns the past the end iterator of the Cartesian coordinates of `v`.
+  */
+  Kernel::Cartesian_const_iterator_3 operator()(const Kernel::Vector_3
+                                                &v, int);
 
   /// @}
 
@@ -3989,9 +3989,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with one argument) 
+\cgalRefines `AdaptableFunctor` (with one argument)
 
-\sa `CGAL::Circle_2<Kernel>` 
+\sa `CGAL::Circle_2<Kernel>`
 
 */
 class ConstructCenter_2 {
@@ -4002,9 +4002,9 @@ public:
   /// @{
 
   /*!
-    compute the center of the circle `c`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Circle_2 & c); 
+    compute the center of the circle `c`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Circle_2 & c);
 
   /// @}
 
@@ -4014,10 +4014,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Circle_3<Kernel>`
 
 */
 class ConstructCenter_3 {
@@ -4028,14 +4028,14 @@ public:
   /// @{
 
   /*!
-    compute the center of the sphere `s`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Sphere_3 & s); 
+    compute the center of the sphere `s`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Sphere_3 & s);
 
   /*!
-    compute the center of the circle `c`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Circle_3 & c); 
+    compute the center of the circle `c`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Circle_3 & c);
 
 
   /// @}
@@ -4046,9 +4046,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::ConstructBarycenter_2` 
+  \sa `Kernel::ConstructBarycenter_2`
   \sa `centroid_grp`
   \sa `barycenter_grp`
 
@@ -4061,24 +4061,24 @@ public:
   /// @{
 
   /*!
-    compute the centroid of the points `p`, `q`, and `r`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2&p, 
-                             const Kernel::Point_2&q, 
-                             const Kernel::Point_2&r); 
+    compute the centroid of the points `p`, `q`, and `r`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2&p,
+                             const Kernel::Point_2&q,
+                             const Kernel::Point_2&r);
 
   /*!
-    compute the centroid of the points `p`, `q`, `r` and `s`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2&p, 
-                             const Kernel::Point_2&q, 
-                             const Kernel::Point_2&r, 
-                             const Kernel::Point_2&s); 
+    compute the centroid of the points `p`, `q`, `r` and `s`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2&p,
+                             const Kernel::Point_2&q,
+                             const Kernel::Point_2&r,
+                             const Kernel::Point_2&s);
 
   /*!
-    compute the centroid of the triangle `t`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Triangle_2&t); 
+    compute the centroid of the triangle `t`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Triangle_2&t);
 
   /// @}
 
@@ -4088,9 +4088,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `Kernel::ConstructBarycenter_3` 
+  \sa `Kernel::ConstructBarycenter_3`
   \sa `centroid_grp`
   \sa `barycenter_grp`
 
@@ -4103,29 +4103,29 @@ public:
   /// @{
 
   /*!
-    compute the centroid of the points `p`, `q`, and `r`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q, 
-                             const Kernel::Point_3&r); 
+    compute the centroid of the points `p`, `q`, and `r`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q,
+                             const Kernel::Point_3&r);
 
   /*!
-    compute the centroid of the points `p`, `q`, `r` and `s`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q, 
-                             const Kernel::Point_3&r, 
-                             const Kernel::Point_3&s); 
+    compute the centroid of the points `p`, `q`, `r` and `s`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q,
+                             const Kernel::Point_3&r,
+                             const Kernel::Point_3&s);
 
   /*!
-    compute the centroid of the triangle `t`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Triangle_3&t); 
+    compute the centroid of the triangle `t`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Triangle_3&t);
 
   /*!
-    compute the centroid of the tetrahedron `t`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Tetrahedron_3&t); 
+    compute the centroid of the tetrahedron `t`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Tetrahedron_3&t);
 
   /// @}
 
@@ -4135,9 +4135,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
 
 */
 class ConstructCircle_2 {
@@ -4149,53 +4149,53 @@ public:
 
   /*!
 
-    introduces a variable of type `Kernel::Circle_2`. 
-    It is initialized to the circle with center `center`, 
-    squared radius `squared_radius` and orientation 
-    `orientation`. 
-    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR, and further, `squared_radius` \f$ \geq\f$ 0. 
-  */ 
-  Kernel::Circle_2 operator()( Kernel::Point_2 const& center, 
-                               Kernel::FT const& squared_radius, 
-                               Orientation const& orientation 
-                               = COUNTERCLOCKWISE); 
+    introduces a variable of type `Kernel::Circle_2`.
+    It is initialized to the circle with center `center`,
+    squared radius `squared_radius` and orientation
+    `orientation`.
+    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR, and further, `squared_radius` \f$ \geq\f$ 0.
+  */
+  Kernel::Circle_2 operator()( Kernel::Point_2 const& center,
+                               Kernel::FT const& squared_radius,
+                               Orientation const& orientation
+                               = COUNTERCLOCKWISE);
 
   /*!
 
-    introduces a variable of type `Kernel::Circle_2`. 
-    It is initialized to the unique circle which passes through 
-    the points `p`, `q` and `r`. The orientation of 
-    the circle is the orientation of the point triple `p`, 
-    `q`, `r`. 
-    \pre `p`, `q`, and `r` are not collinear. 
-  */ 
-  Kernel::Circle_2 operator()( Kernel::Point_2 const& p, 
-                               Kernel::Point_2 const& q, 
-                               Kernel::Point_2 const& r); 
+    introduces a variable of type `Kernel::Circle_2`.
+    It is initialized to the unique circle which passes through
+    the points `p`, `q` and `r`. The orientation of
+    the circle is the orientation of the point triple `p`,
+    `q`, `r`.
+    \pre `p`, `q`, and `r` are not collinear.
+  */
+  Kernel::Circle_2 operator()( Kernel::Point_2 const& p,
+                               Kernel::Point_2 const& q,
+                               Kernel::Point_2 const& r);
 
   /*!
 
-    introduces a variable of type `Kernel::Circle_2`. 
-    It is initialized to the circle with diameter `pq` 
-    and orientation `orientation`. 
-    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR. 
-  */ 
-  Kernel::Circle_2 operator()( Kernel::Point_2 const& p, 
-                               Kernel::Point_2 const& q, 
-                               Orientation const& orientation 
-                               = COUNTERCLOCKWISE); 
+    introduces a variable of type `Kernel::Circle_2`.
+    It is initialized to the circle with diameter `pq`
+    and orientation `orientation`.
+    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR.
+  */
+  Kernel::Circle_2 operator()( Kernel::Point_2 const& p,
+                               Kernel::Point_2 const& q,
+                               Orientation const& orientation
+                               = COUNTERCLOCKWISE);
 
   /*!
 
-    introduces a variable of type `Kernel::Circle_2`. 
-    It is initialized to the circle with center `center`, squared 
-    radius zero and orientation `orientation`. 
-    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR. 
-    \post .`is_degenerate()` = `true`. 
-  */ 
-  Kernel::Circle_2 operator()( Kernel::Point_2 const& center, 
-                               Orientation const& orientation 
-                               = COUNTERCLOCKWISE); 
+    introduces a variable of type `Kernel::Circle_2`.
+    It is initialized to the circle with center `center`, squared
+    radius zero and orientation `orientation`.
+    \pre `orientation` \f$ \neq\f$ \ref CGAL::COLLINEAR.
+    \post .`is_degenerate()` = `true`.
+  */
+  Kernel::Circle_2 operator()( Kernel::Point_2 const& center,
+                               Orientation const& orientation
+                               = COUNTERCLOCKWISE);
 
 
   /// @}
@@ -4206,9 +4206,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Circle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
 
 */
 class ConstructCircle_3 {
@@ -4219,66 +4219,66 @@ public:
   /// @{
 
   /*!
-    introduces a variable of type `Kernel::Circle_3`. 
-    It is initialized to the circle with center `center`, 
-    and squared radius `sq_r` in the plane `plane`. 
-    \pre `center` lies in `plane` and 		`sq_r` \f$ \geq\f$ 0. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Point_3 const& center, 
-    Kernel::FT const& sq_r, 
-    Kernel::Plane_3 const& plane); 
+    introduces a variable of type `Kernel::Circle_3`.
+    It is initialized to the circle with center `center`,
+    and squared radius `sq_r` in the plane `plane`.
+    \pre `center` lies in `plane` and                 `sq_r` \f$ \geq\f$ 0.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Point_3 const& center,
+    Kernel::FT const& sq_r,
+    Kernel::Plane_3 const& plane);
 
   /*!
-    introduces a variable of type `Kernel::Circle_3`. 
-    It is initialized to the circle with center `center`, 
-    and squared radius `sq_r` in the plane 
-    containing `center` and normal to `n`. 
-    \pre `sq_r` \f$ \geq\f$ 0. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Point_3 const& center, 
-    Kernel::FT const& sq_r, 
-    Kernel::Vector_3 const& n); 
+    introduces a variable of type `Kernel::Circle_3`.
+    It is initialized to the circle with center `center`,
+    and squared radius `sq_r` in the plane
+    containing `center` and normal to `n`.
+    \pre `sq_r` \f$ \geq\f$ 0.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Point_3 const& center,
+    Kernel::FT const& sq_r,
+    Kernel::Vector_3 const& n);
 
   /*!
-    introduces a variable of type `Kernel::Point_3`. 
-    It is initialized to the circle passing through the three points. 
-    \pre The three points are not collinear. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Point_3 const& p, 
-    Kernel::Point_3 const& q, 
-    Kernel::Point_3 const& r); 
+    introduces a variable of type `Kernel::Point_3`.
+    It is initialized to the circle passing through the three points.
+    \pre The three points are not collinear.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Point_3 const& p,
+    Kernel::Point_3 const& q,
+    Kernel::Point_3 const& r);
 
   /*!
-    introduces a variable of type `Kernel::Circle_3`. 
-    It is initialized to the circle along which the two spheres intersect. 
-    \pre The two spheres intersect along a circle. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Sphere_3 const& sphere1, 
-    Kernel::Sphere_3 const& sphere2); 
+    introduces a variable of type `Kernel::Circle_3`.
+    It is initialized to the circle along which the two spheres intersect.
+    \pre The two spheres intersect along a circle.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Sphere_3 const& sphere1,
+    Kernel::Sphere_3 const& sphere2);
 
   /*!
-    introduces a variable of type `Kernel::Circle_3`. 
-    It is initialized to the circle along which the sphere and the 
-    plane intersect. 
-    \pre The sphere and the plane intersect along a circle. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Sphere_3 const& sphere, 
-    Kernel::Plane_3 const& plane); 
+    introduces a variable of type `Kernel::Circle_3`.
+    It is initialized to the circle along which the sphere and the
+    plane intersect.
+    \pre The sphere and the plane intersect along a circle.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Sphere_3 const& sphere,
+    Kernel::Plane_3 const& plane);
 
   /*!
-    introduces a variable of type `Kernel::Circle_3`. 
-    It is initialized to the circle along which the sphere and the 
-    plane intersect. 
-    \pre The sphere and the plane intersect along a circle. 
-  */ 
-  Kernel::Circle_3 operator() 
-  ( Kernel::Plane_3 const& plane, 
-    Kernel::Sphere_3 const& sphere); 
+    introduces a variable of type `Kernel::Circle_3`.
+    It is initialized to the circle along which the sphere and the
+    plane intersect.
+    \pre The sphere and the plane intersect along a circle.
+  */
+  Kernel::Circle_3 operator()
+  ( Kernel::Plane_3 const& plane,
+    Kernel::Sphere_3 const& sphere);
 
   /// @}
 
@@ -4288,7 +4288,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `circumcenter_grp`
 
@@ -4301,24 +4301,24 @@ public:
   /// @{
 
   /*!
-    compute the center of the smallest circle passing through the points `p` and `q`. Note : this is the same as `Kernel::ConstructMidpoint_2`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2&p, 
-                             const Kernel::Point_2&q); 
+    compute the center of the smallest circle passing through the points `p` and `q`. Note : this is the same as `Kernel::ConstructMidpoint_2`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2&p,
+                             const Kernel::Point_2&q);
 
   /*!
-    compute the center of the circle passing through the points `p`, `q`, and `r`. 
-    \pre `p`, `q`, and `r` are not collinear. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2&p, 
-                             const Kernel::Point_2&q, 
-                             const Kernel::Point_2&r); 
+    compute the center of the circle passing through the points `p`, `q`, and `r`.
+    \pre `p`, `q`, and `r` are not collinear.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2&p,
+                             const Kernel::Point_2&q,
+                             const Kernel::Point_2&r);
 
   /*!
-    compute the center of the circle passing through the three vertices of `t`. 
-    \pre `t` is not degenerate. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Triangle_2&t); 
+    compute the center of the circle passing through the three vertices of `t`.
+    \pre `t` is not degenerate.
+  */
+  Kernel::Point_2 operator()(const Kernel::Triangle_2&t);
 
   ///@}
 
@@ -4328,7 +4328,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `circumcenter_grp`
 
@@ -4341,40 +4341,40 @@ public:
   /// @{
 
   /*!
-    compute the center of the smallest circle passing through the points `p` and 
-    `q`. Note : this is the same as `Kernel::ConstructMidpoint_3`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q); 
+    compute the center of the smallest circle passing through the points `p` and
+    `q`. Note : this is the same as `Kernel::ConstructMidpoint_3`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q);
 
   /*!
-    compute the center of the sphere passing through the points `p`, `q`, `r`, 
-    and `s`. \pre `p`, `q`, `r`, and `s` are not coplanar. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q, 
-                             const Kernel::Point_3&r, 
-                             const Kernel::Point_3&s); 
+    compute the center of the sphere passing through the points `p`, `q`, `r`,
+    and `s`. \pre `p`, `q`, `r`, and `s` are not coplanar.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q,
+                             const Kernel::Point_3&r,
+                             const Kernel::Point_3&s);
 
   /*!
-    compute the center of the sphere passing through the vertices of `t`. 
-    \pre `t` is not degenerate. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Tetrahedron_3&t); 
+    compute the center of the sphere passing through the vertices of `t`.
+    \pre `t` is not degenerate.
+  */
+  Kernel::Point_3 operator()(const Kernel::Tetrahedron_3&t);
 
   /*!
-    compute the center of the circle passing through the points `p`, `q` and `r`. 
-    \pre `p`, `q` and `r` are not collinear. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3&p, 
-                             const Kernel::Point_3&q, 
-                             const Kernel::Point_3&r); 
+    compute the center of the circle passing through the points `p`, `q` and `r`.
+    \pre `p`, `q` and `r` are not collinear.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3&p,
+                             const Kernel::Point_3&q,
+                             const Kernel::Point_3&r);
 
   /*!
-    compute the center of the circle passing through the vertices of `t`. 
-    \pre `t` is not degenerate. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Triangle_3&t); 
+    compute the center of the circle passing through the vertices of `t`.
+    \pre `t` is not degenerate.
+  */
+  Kernel::Point_3 operator()(const Kernel::Triangle_3&t);
 
   /// @}
 
@@ -4384,7 +4384,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `cross_product_grp`
   \sa `determinant_grp`
@@ -4399,9 +4399,9 @@ public:
 
   /*!
     computes the cross product of `v` and `w`.
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v, 
-                              const Kernel::Vector_3 &w); 
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v,
+                              const Kernel::Vector_3 &w);
 
   /// @}
 
@@ -4411,9 +4411,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class ConstructDifferenceOfVectors_2 {
@@ -4424,10 +4424,10 @@ public:
   /// @{
 
   /*!
-    introduces the vector `v1 - v2`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v1, 
-                              const Kernel::Vector_2 &v2); 
+    introduces the vector `v1 - v2`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v1,
+                              const Kernel::Vector_2 &v2);
 
   /// @}
 
@@ -4437,9 +4437,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
 
 */
 class ConstructDifferenceOfVectors_3 {
@@ -4450,10 +4450,10 @@ public:
   /// @{
 
   /*!
-    introduces the vector `v1 - v2`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v1, 
-                              const Kernel::Vector_3 &v2); 
+    introduces the vector `v1 - v2`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v1,
+                              const Kernel::Vector_3 &v2);
 
 
   /// @}
@@ -4464,9 +4464,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Direction_2<Kernel>` 
+  \sa `CGAL::Direction_2<Kernel>`
 
 */
 class ConstructDirection_2 {
@@ -4477,24 +4477,24 @@ public:
   /// @{
 
   /*!
-    introduces the direction of vector `v`. 
-  */ 
-  Kernel::Direction_2 operator()(const Kernel::Vector_2 &v); 
+    introduces the direction of vector `v`.
+  */
+  Kernel::Direction_2 operator()(const Kernel::Vector_2 &v);
 
   /*!
-    introduces the direction of line `l`. 
-  */ 
-  Kernel::Direction_2 operator()(const Kernel::Line_2 &l); 
+    introduces the direction of line `l`.
+  */
+  Kernel::Direction_2 operator()(const Kernel::Line_2 &l);
 
   /*!
-    introduces the direction of ray `r`. 
-  */ 
-  Kernel::Direction_2 operator()(const Kernel::Ray_2 &r); 
+    introduces the direction of ray `r`.
+  */
+  Kernel::Direction_2 operator()(const Kernel::Ray_2 &r);
 
   /*!
-    introduces the direction of segment `s`. 
-  */ 
-  Kernel::Direction_2 operator()(const Kernel::Segment_2 &s); 
+    introduces the direction of segment `s`.
+  */
+  Kernel::Direction_2 operator()(const Kernel::Segment_2 &s);
 
 
   /// @}
@@ -4505,9 +4505,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Direction_3<Kernel>` 
+  \sa `CGAL::Direction_3<Kernel>`
 
 */
 class ConstructDirection_3 {
@@ -4518,25 +4518,25 @@ public:
   /// @{
 
   /*!
-    introduces a direction initialized with the 
-    direction of vector `v`. 
-  */ 
-  Kernel::Direction_3 operator()(const Kernel::Vector_3 &v); 
+    introduces a direction initialized with the
+    direction of vector `v`.
+  */
+  Kernel::Direction_3 operator()(const Kernel::Vector_3 &v);
 
   /*!
-    introduces the direction of line `l`. 
-  */ 
-  Kernel::Direction_3 operator()(const Kernel::Line_3 &l); 
+    introduces the direction of line `l`.
+  */
+  Kernel::Direction_3 operator()(const Kernel::Line_3 &l);
 
   /*!
-    introduces the direction of ray `r`. 
-  */ 
-  Kernel::Direction_3 operator()(const Kernel::Ray_3 &r); 
+    introduces the direction of ray `r`.
+  */
+  Kernel::Direction_3 operator()(const Kernel::Ray_3 &r);
 
   /*!
-    introduces the direction of segment `s`. 
-  */ 
-  Kernel::Direction_3 operator()(const Kernel::Segment_3 &s); 
+    introduces the direction of segment `s`.
+  */
+  Kernel::Direction_3 operator()(const Kernel::Segment_3 &s);
 
   /// @}
 
@@ -4546,9 +4546,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class ConstructDividedVector_2 {
@@ -4559,10 +4559,10 @@ public:
   /// @{
 
   /*!
-    introduces the vector `v/s`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v, 
-                              const Kernel::RT s); 
+    introduces the vector `v/s`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v,
+                              const Kernel::RT s);
 
   /// @}
 
@@ -4572,9 +4572,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
 
 */
 class ConstructDividedVector_3 {
@@ -4585,10 +4585,10 @@ public:
   /// @{
 
   /*!
-    introduces the vector `v/s`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v, 
-                              const Kernel::RT s); 
+    introduces the vector `v/s`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v,
+                              const Kernel::RT s);
 
   /// @}
 
@@ -4598,7 +4598,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `equidistant_line_grp`
 
@@ -4611,13 +4611,13 @@ public:
   /// @{
 
   /*!
-    constructs the line which is at the same distance from the three points 
-    `p`, `q` and `r`. 
-    \pre `p`, `q` and `r` are not collinear. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Point_3&p, 
-                            const Kernel::Point_3&q, 
-                            const Kernel::Point_3&r ); 
+    constructs the line which is at the same distance from the three points
+    `p`, `q` and `r`.
+    \pre `p`, `q` and `r` are not collinear.
+  */
+  Kernel::Line_3 operator()(const Kernel::Point_3&p,
+                            const Kernel::Point_3&q,
+                            const Kernel::Point_3&r );
 
   /// @}
 
@@ -4627,9 +4627,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with two arguments) 
+\cgalRefines `AdaptableFunctor` (with two arguments)
 
-\sa `CGAL::Iso_cuboid_3<Kernel>` 
+\sa `CGAL::Iso_cuboid_3<Kernel>`
 
 */
 class ConstructIsoCuboid_3 {
@@ -4640,39 +4640,39 @@ public:
   /// @{
 
   /*!
-    introduces an iso-oriented cuboid with diagonal 
-    opposite vertices `p` and `q` such that `p` is the 
-    lexicographically smallest point in the cuboid. 
-  */ 
-  Kernel::Iso_cuboid_3 operator()(const Kernel::Point_3 &p, 
-                                  const Kernel::Point_3 &q); 
+    introduces an iso-oriented cuboid with diagonal
+    opposite vertices `p` and `q` such that `p` is the
+    lexicographically smallest point in the cuboid.
+  */
+  Kernel::Iso_cuboid_3 operator()(const Kernel::Point_3 &p,
+                                  const Kernel::Point_3 &q);
 
   /*!
-    introduces an iso-oriented cuboid with diagonal 
-    opposite vertices `p` and `q`. The `int` argument value is 
-    only used to distinguish the two overloaded functions. 
-    \pre `p.x()<=q.x()`, `p.y()<=q.y()` and `p.z()<=q.z()`. 
-  */ 
-  Kernel::Iso_cuboid_3 operator()(const Kernel::Point_3 &p, 
-                                  const Kernel::Point_3 &q, 
-                                  int); 
+    introduces an iso-oriented cuboid with diagonal
+    opposite vertices `p` and `q`. The `int` argument value is
+    only used to distinguish the two overloaded functions.
+    \pre `p.x()<=q.x()`, `p.y()<=q.y()` and `p.z()<=q.z()`.
+  */
+  Kernel::Iso_cuboid_3 operator()(const Kernel::Point_3 &p,
+                                  const Kernel::Point_3 &q,
+                                  int);
 
   /*!
-    introduces an iso-oriented cuboid `fo` whose 
-    minimal \f$ x\f$ coordinate is the one of `left`, the 
-    maximal \f$ x\f$ coordinate is the one of `right`, the 
-    minimal \f$ y\f$ coordinate is the one of `bottom`, the 
-    maximal \f$ y\f$ coordinate is the one of `top`, the 
-    minimal \f$ z\f$ coordinate is the one of `far`, the 
-    maximal \f$ z\f$ coordinate is the one of `close`. 
-  */ 
-  Kernel::Iso_cuboid_3 
-  operator()(const Kernel::Point_3 &left, 
-             const Kernel::Point_3 &right, 
-             const Kernel::Point_3 &bottom, 
-             const Kernel::Point_3 &top, 
-             const Kernel::Point_3 &far, 
-             const Kernel::Point_3 &close); 
+    introduces an iso-oriented cuboid `fo` whose
+    minimal \f$ x\f$ coordinate is the one of `left`, the
+    maximal \f$ x\f$ coordinate is the one of `right`, the
+    minimal \f$ y\f$ coordinate is the one of `bottom`, the
+    maximal \f$ y\f$ coordinate is the one of `top`, the
+    minimal \f$ z\f$ coordinate is the one of `far`, the
+    maximal \f$ z\f$ coordinate is the one of `close`.
+  */
+  Kernel::Iso_cuboid_3
+  operator()(const Kernel::Point_3 &left,
+             const Kernel::Point_3 &right,
+             const Kernel::Point_3 &bottom,
+             const Kernel::Point_3 &top,
+             const Kernel::Point_3 &far,
+             const Kernel::Point_3 &close);
 
   /// @}
 
@@ -4682,9 +4682,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
 
 */
 class ConstructIsoRectangle_2 {
@@ -4696,35 +4696,35 @@ public:
 
 
   /*!
-    introduces an iso-oriented rectangle with diagonal 
-    opposite vertices `p` and `q` such that `p` is the 
-    lexicographically smallest point in the rectangle. 
-  */ 
-  Kernel::Iso_rectangle_2 operator()(const Kernel::Point_2 &p, 
-                                     const Kernel::Point_2 &q); 
+    introduces an iso-oriented rectangle with diagonal
+    opposite vertices `p` and `q` such that `p` is the
+    lexicographically smallest point in the rectangle.
+  */
+  Kernel::Iso_rectangle_2 operator()(const Kernel::Point_2 &p,
+                                     const Kernel::Point_2 &q);
 
   /*!
-    introduces an iso-oriented rectangle with diagonal 
-    opposite vertices `p` and `q`. The `int` argument value is 
-  only used to distinguish the two overloaded functions. 
-  \pre `p.x()<=q.x()` and `p.y()<=q.y()`. 
-  */ 
-  Kernel::Iso_rectangle_2 operator()(const Kernel::Point_2 &p, 
-                                     const Kernel::Point_2 &q, 
-                                     int); 
+    introduces an iso-oriented rectangle with diagonal
+    opposite vertices `p` and `q`. The `int` argument value is
+  only used to distinguish the two overloaded functions.
+  \pre `p.x()<=q.x()` and `p.y()<=q.y()`.
+  */
+  Kernel::Iso_rectangle_2 operator()(const Kernel::Point_2 &p,
+                                     const Kernel::Point_2 &q,
+                                     int);
 
   /*!
-    introduces an iso-oriented rectangle `fo` whose 
-    minimal \f$ x\f$ coordinate is the one of `left`, the 
-    maximal \f$ x\f$ coordinate is the one of `right`, the 
-    minimal \f$ y\f$ coordinate is the one of `bottom`, the 
-    maximal \f$ y\f$ coordinate is the one of `top`. 
-  */ 
-  Kernel::Iso_rectangle_2 
-  operator()(const Kernel::Point_2 &left, 
-             const Kernel::Point_2 &right, 
-             const Kernel::Point_2 &bottom, 
-             const Kernel::Point_2 &top); 
+    introduces an iso-oriented rectangle `fo` whose
+    minimal \f$ x\f$ coordinate is the one of `left`, the
+    maximal \f$ x\f$ coordinate is the one of `right`, the
+    minimal \f$ y\f$ coordinate is the one of `bottom`, the
+    maximal \f$ y\f$ coordinate is the one of `top`.
+  */
+  Kernel::Iso_rectangle_2
+  operator()(const Kernel::Point_2 &left,
+             const Kernel::Point_2 &right,
+             const Kernel::Point_2 &bottom,
+             const Kernel::Point_2 &top);
 
 
   /// @}
@@ -4735,9 +4735,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructLiftedPoint_3 {
@@ -4748,11 +4748,11 @@ public:
   /// @{
 
   /*!
-    returns a point `q` on plane `h`, such that the projection of 
-    this point onto the \f$ xy\f$-plane is `p`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Plane_3& h, 
-                             const Kernel::Point_2& p); 
+    returns a point `q` on plane `h`, such that the projection of
+    this point onto the \f$ xy\f$-plane is `p`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Plane_3& h,
+                             const Kernel::Point_2& p);
 
   /// @}
 
@@ -4762,9 +4762,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
 
 */
 class ConstructLine_2 {
@@ -4775,37 +4775,37 @@ public:
   /// @{
 
   /*!
-    introduces a line passing through the points `p` and `q`. 
-    Line is directed from `p` to `q`. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Point_2 &p, 
-                            const Kernel::Point_2 &q); 
+    introduces a line passing through the points `p` and `q`.
+    Line is directed from `p` to `q`.
+  */
+  Kernel::Line_2 operator()(const Kernel::Point_2 &p,
+                            const Kernel::Point_2 &q);
 
   /*!
-    introduces a line passing through point `p` with 
-    direction `d`. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Point_2 &p, 
-                            const Kernel::Direction_2&d); 
+    introduces a line passing through point `p` with
+    direction `d`.
+  */
+  Kernel::Line_2 operator()(const Kernel::Point_2 &p,
+                            const Kernel::Direction_2&d);
 
   /*!
-    introduces a line passing through point `p` and 
-    oriented by `v`. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Point_2 &p, 
-                            const Kernel::Vector_2&v); 
+    introduces a line passing through point `p` and
+    oriented by `v`.
+  */
+  Kernel::Line_2 operator()(const Kernel::Point_2 &p,
+                            const Kernel::Vector_2&v);
 
   /*!
-    introduces a line supporting the segment `s`, 
-    oriented from source to target. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Segment_2 &s); 
+    introduces a line supporting the segment `s`,
+    oriented from source to target.
+  */
+  Kernel::Line_2 operator()(const Kernel::Segment_2 &s);
 
   /*!
-    introduces a line supporting the ray `r`, 
-    with same orientation. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Ray_2 &r); 
+    introduces a line supporting the ray `r`,
+    with same orientation.
+  */
+  Kernel::Line_2 operator()(const Kernel::Ray_2 &r);
 
   /// @}
 
@@ -4815,9 +4815,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_3<Kernel>` 
+  \sa `CGAL::Line_3<Kernel>`
 
 */
 class ConstructLine_3 {
@@ -4828,37 +4828,37 @@ public:
   /// @{
 
   /*!
-    introduces a line passing through the points `p` and `q`. 
-    Line is directed from `p` to `q`. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Point_3 &p, 
-                            const Kernel::Point_3 &q); 
+    introduces a line passing through the points `p` and `q`.
+    Line is directed from `p` to `q`.
+  */
+  Kernel::Line_3 operator()(const Kernel::Point_3 &p,
+                            const Kernel::Point_3 &q);
 
   /*!
-    introduces a line passing through point `p` and 
-    oriented by `v`. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Point_3 &p, 
-                            const Kernel::Vector_3&v); 
+    introduces a line passing through point `p` and
+    oriented by `v`.
+  */
+  Kernel::Line_3 operator()(const Kernel::Point_3 &p,
+                            const Kernel::Vector_3&v);
 
   /*!
-    introduces a line passing through point `p` with 
-    direction `d`. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Point_3 &p, 
-                            const Kernel::Direction_3&d); 
+    introduces a line passing through point `p` with
+    direction `d`.
+  */
+  Kernel::Line_3 operator()(const Kernel::Point_3 &p,
+                            const Kernel::Direction_3&d);
 
   /*!
-    returns the line supporting the segment `s`, 
-    oriented from source to target. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Segment_3 &s); 
+    returns the line supporting the segment `s`,
+    oriented from source to target.
+  */
+  Kernel::Line_3 operator()(const Kernel::Segment_3 &s);
 
   /*!
-    returns the line supporting the ray `r`, with the 
-    same orientation. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Ray_3 &r); 
+    returns the line supporting the ray `r`, with the
+    same orientation.
+  */
+  Kernel::Line_3 operator()(const Kernel::Ray_3 &r);
 
 
   /// @}
@@ -4869,10 +4869,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructMaxVertex_2 {
@@ -4883,18 +4883,18 @@ public:
   /// @{
 
   /*!
-    returns the vertex of 
-    `r` with lexicographically largest coordinates. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Iso_rectangle_2 &r); 
+    returns the vertex of
+    `r` with lexicographically largest coordinates.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Iso_rectangle_2 &r);
 
   /*!
-    returns the vertex of 
-    `s` with lexicographically largest coordinates. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Segment_2 &s); 
+    returns the vertex of
+    `s` with lexicographically largest coordinates.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Segment_2 &s);
 
   /// @}
 
@@ -4904,10 +4904,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ConstructMaxVertex_3 {
@@ -4918,18 +4918,18 @@ public:
   /// @{
 
   /*!
-    returns the vertex of 
-    `c` with lexicographically largest coordinates. 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Iso_cuboid_3 &c); 
+    returns the vertex of
+    `c` with lexicographically largest coordinates.
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Iso_cuboid_3 &c);
 
   /*!
-    returns the vertex of 
-    `s` with lexicographically largest coordinates. 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Segment_3 &s); 
+    returns the vertex of
+    `s` with lexicographically largest coordinates.
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Segment_3 &s);
 
 
   /// @}
@@ -4940,7 +4940,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `midpoint_grp`
 
@@ -4953,10 +4953,10 @@ public:
   /// @{
 
   /*!
-    computes the midpoint of the segment `pq`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2& p, 
-                             const Kernel::Point_2& q ); 
+    computes the midpoint of the segment `pq`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2& p,
+                             const Kernel::Point_2& q );
 
   /// @}
 
@@ -4966,7 +4966,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `midpoint_grp`
 
@@ -4979,10 +4979,10 @@ public:
   /// @{
 
   /*!
-    computes the midpoint of the segment `pq`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3& p, 
-                             const Kernel::Point_3& q ); 
+    computes the midpoint of the segment `pq`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3& p,
+                             const Kernel::Point_3& q );
 
 
   /// @}
@@ -4993,10 +4993,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructMinVertex_2 {
@@ -5007,18 +5007,18 @@ public:
   /// @{
 
   /*!
-    returns the vertex of 
-    `r` with lexicographically smallest coordinates. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Iso_rectangle_2 &r); 
+    returns the vertex of
+    `r` with lexicographically smallest coordinates.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Iso_rectangle_2 &r);
 
   /*!
-    returns the vertex of 
-    `s` with lexicographically smallest coordinates. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Segment_2 &s); 
+    returns the vertex of
+    `s` with lexicographically smallest coordinates.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Segment_2 &s);
 
   /// @}
 
@@ -5028,10 +5028,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ConstructMinVertex_3 {
@@ -5042,18 +5042,18 @@ public:
   /// @{
 
   /*!
-    returns the vertex of 
-    `c` with lexicographically smallest coordinates. 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Iso_cuboid_3 &c); 
+    returns the vertex of
+    `c` with lexicographically smallest coordinates.
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Iso_cuboid_3 &c);
 
   /*!
-    returns the vertex of 
-    `s` with lexicographically smallest coordinates. 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Segment_3 &s); 
+    returns the vertex of
+    `s` with lexicographically smallest coordinates.
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Segment_3 &s);
 
   /// @}
 
@@ -5063,7 +5063,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `normal_grp`
   \sa `unit_normal_grp`
@@ -5078,11 +5078,11 @@ public:
 
 
   /*!
-    computes the normal of the vectors `q-p` and `r-p`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Point_3& p, 
-                              const Kernel::Point_3& q, 
-                              const Kernel::Point_3& r ); 
+    computes the normal of the vectors `q-p` and `r-p`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Point_3& p,
+                              const Kernel::Point_3& q,
+                              const Kernel::Point_3& r );
 
 
   /// @}
@@ -5093,15 +5093,15 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred. 
+  \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred.
 
-  \sa `CGAL::Object` 
-  \sa `Kernel::Assign_2` 
-  \sa `Kernel::Assign_3` 
-  \sa `Kernel::Object_2` 
-  \sa `Kernel::Object_3` 
+  \sa `CGAL::Object`
+  \sa `Kernel::Assign_2`
+  \sa `Kernel::Assign_3`
+  \sa `Kernel::Object_2`
+  \sa `Kernel::Object_3`
 
 */
 class ConstructObject_2 {
@@ -5112,10 +5112,10 @@ public:
   /// @{
 
   /*!
-    constructs an object that contains `t` and returns it. 
-  */ 
-  template <class T> 
-  Object_2 operator()(const T& t); 
+    constructs an object that contains `t` and returns it.
+  */
+  template <class T>
+  Object_2 operator()(const T& t);
 
   /// @}
 
@@ -5125,14 +5125,14 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
- \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred. 
-  \sa `CGAL::Object` 
-  \sa `Kernel::Assign_2` 
-  \sa `Kernel::Assign_3` 
-  \sa `Kernel::Object_2` 
-  \sa `Kernel::Object_3` 
+ \deprecated This class is deprecated since \cgal 4.3 and type safe ways should be preferred.
+  \sa `CGAL::Object`
+  \sa `Kernel::Assign_2`
+  \sa `Kernel::Assign_3`
+  \sa `Kernel::Object_2`
+  \sa `Kernel::Object_3`
 
 */
 class ConstructObject_3 {
@@ -5143,10 +5143,10 @@ public:
   /// @{
 
   /*!
-    constructs an object that contains `t` and returns it. 
-  */ 
-  template <class T> 
-  Object_3 operator()(const T& t); 
+    constructs an object that contains `t` and returns it.
+  */
+  template <class T>
+  Object_3 operator()(const T& t);
 
 
   /// @}
@@ -5157,9 +5157,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
 
 */
 class ConstructOppositeCircle_2 {
@@ -5170,10 +5170,10 @@ public:
   /// @{
 
   /*!
-    returns the circle with the same center and squared radius as 
-    `c`, but with opposite orientation. 
-  */ 
-  Kernel::Circle_2 operator()(const Kernel::Circle_2& c); 
+    returns the circle with the same center and squared radius as
+    `c`, but with opposite orientation.
+  */
+  Kernel::Circle_2 operator()(const Kernel::Circle_2& c);
 
   /// @}
 
@@ -5183,9 +5183,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-\sa `CGAL::Direction_2<Kernel>` 
+\sa `CGAL::Direction_2<Kernel>`
 
 */
 class ConstructOppositeDirection_2 {
@@ -5196,10 +5196,10 @@ public:
   /// @{
 
   /*!
-    returns the direction opposite to `d`. 
-  */ 
-  Kernel::Direction_2 operator()(const 
-                                 Kernel::Direction_2& d); 
+    returns the direction opposite to `d`.
+  */
+  Kernel::Direction_2 operator()(const
+                                 Kernel::Direction_2& d);
 
 
   /// @}
@@ -5210,9 +5210,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Direction_3<Kernel>` 
+  \sa `CGAL::Direction_3<Kernel>`
 
 */
 class ConstructOppositeDirection_3 {
@@ -5223,10 +5223,10 @@ public:
   /// @{
 
   /*!
-    returns the direction opposite to `d`. 
-  */ 
-  Kernel::Direction_3 operator()(const 
-                                 Kernel::Direction_3& d); 
+    returns the direction opposite to `d`.
+  */
+  Kernel::Direction_3 operator()(const
+                                 Kernel::Direction_3& d);
 
 
   /// @}
@@ -5237,9 +5237,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Line_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
 
 */
 class ConstructOppositeLine_2 {
@@ -5251,10 +5251,10 @@ public:
 
 
   /*!
-    returns the line representing the same set of points as `l`, 
-    but with opposite direction. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Line_2& l); 
+    returns the line representing the same set of points as `l`,
+    but with opposite direction.
+  */
+  Kernel::Line_2 operator()(const Kernel::Line_2& l);
 
 
   /// @}
@@ -5265,9 +5265,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Line_3<Kernel>` 
+  \sa `CGAL::Line_3<Kernel>`
 
 */
 class ConstructOppositeLine_3 {
@@ -5278,10 +5278,10 @@ public:
   /// @{
 
   /*!
-    returns the line representing the same set of points as `l`, 
-    but with opposite direction. 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Line_3& l); 
+    returns the line representing the same set of points as `l`,
+    but with opposite direction.
+  */
+  Kernel::Line_3 operator()(const Kernel::Line_3& l);
 
   /// @}
 
@@ -5291,9 +5291,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructOppositePlane_3 {
@@ -5304,10 +5304,10 @@ public:
   /// @{
 
   /*!
-    returns the plane representing the same set of points as `p`, 
-    but with opposite orientation. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Plane_3& p); 
+    returns the plane representing the same set of points as `p`,
+    but with opposite orientation.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Plane_3& p);
 
   /// @}
 
@@ -5317,9 +5317,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Ray_2<Kernel>` 
+  \sa `CGAL::Ray_2<Kernel>`
 
 */
 class ConstructOppositeRay_2 {
@@ -5330,9 +5330,9 @@ public:
   /// @{
 
   /*!
-    returns the ray with the same source as `r`, but in opposite direction. 
-  */ 
-  Kernel::Ray_2 operator()(const Kernel::Ray_2& r); 
+    returns the ray with the same source as `r`, but in opposite direction.
+  */
+  Kernel::Ray_2 operator()(const Kernel::Ray_2& r);
 
   /// @}
 
@@ -5342,9 +5342,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Ray_3<Kernel>` 
+  \sa `CGAL::Ray_3<Kernel>`
 
 */
 class ConstructOppositeRay_3 {
@@ -5355,9 +5355,9 @@ public:
   /// @{
 
   /*!
-    returns the ray with the same source as `r`, but in opposite direction. 
-  */ 
-  Kernel::Ray_3 operator()(const Kernel::Ray_3& r); 
+    returns the ray with the same source as `r`, but in opposite direction.
+  */
+  Kernel::Ray_3 operator()(const Kernel::Ray_3& r);
 
 
   /// @}
@@ -5368,9 +5368,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructOppositeSegment_2 {
@@ -5381,10 +5381,10 @@ public:
   /// @{
 
   /*!
-    returns the segment representing the same set of points as `s`, 
-    but with opposite orientation. 
-  */ 
-  Kernel::Segment_2 operator()(const Kernel::Segment_2& s); 
+    returns the segment representing the same set of points as `s`,
+    but with opposite orientation.
+  */
+  Kernel::Segment_2 operator()(const Kernel::Segment_2& s);
 
   /// @}
 
@@ -5394,9 +5394,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ConstructOppositeSegment_3 {
@@ -5408,10 +5408,10 @@ public:
 
 
   /*!
-    returns the segment representing the same set of points as `s`, 
-    but with opposite orientation. 
-  */ 
-  Kernel::Segment_3 operator()(const Kernel::Segment_3& s); 
+    returns the segment representing the same set of points as `s`,
+    but with opposite orientation.
+  */
+  Kernel::Segment_3 operator()(const Kernel::Segment_3& s);
 
 
   /// @}
@@ -5422,9 +5422,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Sphere_3<Kernel>` 
+  \sa `CGAL::Sphere_3<Kernel>`
 
 */
 class ConstructOppositeSphere_3 {
@@ -5435,10 +5435,10 @@ public:
   /// @{
 
   /*!
-    returns the sphere with the same center and squared radius as 
-    `s`, but with opposite orientation. 
-  */ 
-  Kernel::Sphere_3 operator()(const Kernel::Sphere_3& s); 
+    returns the sphere with the same center and squared radius as
+    `s`, but with opposite orientation.
+  */
+  Kernel::Sphere_3 operator()(const Kernel::Sphere_3& s);
 
   /// @}
 
@@ -5448,9 +5448,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class ConstructOppositeTriangle_2 {
@@ -5461,11 +5461,11 @@ public:
   /// @{
 
   /*!
-    returns the triangle with opposite orientation to `t` 
-    (this flips the positive and the negative side, but 
-    not bounded and unbounded side). 
-  */ 
-  Kernel::Triangle_2 operator()(const Kernel::Triangle_2& t); 
+    returns the triangle with opposite orientation to `t`
+    (this flips the positive and the negative side, but
+    not bounded and unbounded side).
+  */
+  Kernel::Triangle_2 operator()(const Kernel::Triangle_2& t);
 
 
   /// @}
@@ -5476,9 +5476,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class ConstructOppositeVector_2 {
@@ -5489,9 +5489,9 @@ public:
   /// @{
 
   /*!
-    returns the vector `-v`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2& v); 
+    returns the vector `-v`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2& v);
 
   /// @}
 
@@ -5501,9 +5501,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with one argument) 
+\cgalRefines `AdaptableFunctor` (with one argument)
 
-\sa `CGAL::Vector_3<Kernel>` 
+\sa `CGAL::Vector_3<Kernel>`
 
 */
 class ConstructOppositeVector_3 {
@@ -5515,9 +5515,9 @@ public:
 
 
   /*!
-    returns the vector `-v`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3& v); 
+    returns the vector `-v`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3& v);
 
   /// @}
 
@@ -5527,10 +5527,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `Kernel::ConstructCrossProductVector_3` 
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `Kernel::ConstructCrossProductVector_3`
 
 */
 class ConstructOrthogonalVector_3 {
@@ -5541,18 +5541,18 @@ public:
   /// @{
 
   /*!
-    returns a vector that is orthogonal to the plane `p` and directed 
-    to the positive side of `p`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Plane_3& p); 
+    returns a vector that is orthogonal to the plane `p` and directed
+    to the positive side of `p`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Plane_3& p);
 
   /*!
-    returns a vector that is orthogonal to the plane defined by 
-    `Kernel::ConstructPlane_3()(p, q, r)` and directed 
-    to the positive side of this plane. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Point_3& p, 
-                              const Kernel::Point_3& q, const Kernel::Point_3& r); 
+    returns a vector that is orthogonal to the plane defined by
+    `Kernel::ConstructPlane_3()(p, q, r)` and directed
+    to the positive side of this plane.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Point_3& p,
+                              const Kernel::Point_3& q, const Kernel::Point_3& r);
 
 
   /// @}
@@ -5563,9 +5563,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Direction_2<Kernel>` 
+  \sa `CGAL::Direction_2<Kernel>`
 
 */
 class ConstructPerpendicularDirection_2 {
@@ -5576,13 +5576,13 @@ public:
   /// @{
 
   /*!
-    introduces a direction orthogonal to `d`. If `o` is 
-    \ref CGAL::CLOCKWISE, `d` is rotated clockwise; if `o` is 
-    \ref CGAL::COUNTERCLOCKWISE, `d` is rotated counterclockwise. 
-    \pre `o` is not \ref CGAL::COLLINEAR. 
-  */ 
-  Kernel::Direction_2 operator()(const Kernel::Direction_2& d, 
-                                 Orientation o); 
+    introduces a direction orthogonal to `d`. If `o` is
+    \ref CGAL::CLOCKWISE, `d` is rotated clockwise; if `o` is
+    \ref CGAL::COUNTERCLOCKWISE, `d` is rotated counterclockwise.
+    \pre `o` is not \ref CGAL::COLLINEAR.
+  */
+  Kernel::Direction_2 operator()(const Kernel::Direction_2& d,
+                                 Orientation o);
 
 
   /// @}
@@ -5593,9 +5593,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
 
 */
 class ConstructPerpendicularLine_2 {
@@ -5606,12 +5606,12 @@ public:
   /// @{
 
   /*!
-    returns the line perpendicular to `l` and passing through `p`, 
-    where the direction is the direction of `l` rotated 
-    counterclockwise by 90 degrees. 
-  */ 
-  Kernel::Line_2 operator()(const Kernel::Line_2& l, 
-                            const Kernel::Point_2& p); 
+    returns the line perpendicular to `l` and passing through `p`,
+    where the direction is the direction of `l` rotated
+    counterclockwise by 90 degrees.
+  */
+  Kernel::Line_2 operator()(const Kernel::Line_2& l,
+                            const Kernel::Point_2& p);
 
   /// @}
 
@@ -5621,9 +5621,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructPerpendicularLine_3 {
@@ -5635,12 +5635,12 @@ public:
 
 
   /*!
-    returns the line that is perpendicular to `pl` and that 
-    passes through point `p`. The line is oriented from 
-    the negative to the positive side of `pl` 
-  */ 
-  Kernel::Line_3 operator()(const Kernel::Plane_3& pl, 
-                            const Kernel::Point_3& p); 
+    returns the line that is perpendicular to `pl` and that
+    passes through point `p`. The line is oriented from
+    the negative to the positive side of `pl`
+  */
+  Kernel::Line_3 operator()(const Kernel::Plane_3& pl,
+                            const Kernel::Point_3& p);
 
 
   /// @}
@@ -5651,9 +5651,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructPerpendicularPlane_3 {
@@ -5664,12 +5664,12 @@ public:
   /// @{
 
   /*!
-    returns the plane perpendicular to `l` passing through `p`, 
-    such that the normal direction of the plane coincides with the direction of 
-  the line. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Line_3& l, 
-                             const Kernel::Point_3& p); 
+    returns the plane perpendicular to `l` passing through `p`,
+    such that the normal direction of the plane coincides with the direction of
+  the line.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Line_3& l,
+                             const Kernel::Point_3& p);
 
   /// @}
 
@@ -5679,9 +5679,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class ConstructPerpendicularVector_2 {
@@ -5693,13 +5693,13 @@ public:
 
 
   /*!
-    returns `v` rotated clockwise by 90 degrees, if `o` is 
-    \ref CGAL::CLOCKWISE, and rotated counterclockwise otherwise. 
-    \pre `o` is not \ref CGAL::COLLINEAR. 
+    returns `v` rotated clockwise by 90 degrees, if `o` is
+    \ref CGAL::CLOCKWISE, and rotated counterclockwise otherwise.
+    \pre `o` is not \ref CGAL::COLLINEAR.
 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2& v, 
-                              Orientation o); 
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2& v,
+                              Orientation o);
 
 
   /// @}
@@ -5710,9 +5710,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructPlane_3 {
@@ -5723,65 +5723,65 @@ public:
   /// @{
 
   /*!
-    creates a plane defined by the equation 
-    \f$ a\, x +b\, y +c\, z + d = 0\f$. 
-    Notice that it is degenerate if \f$ a = b = c = 0\f$. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::RT &a, 
-                             const Kernel::RT &b, 
-                             const Kernel::RT &c, 
-                             const Kernel::RT &d); 
+    creates a plane defined by the equation
+    \f$ a\, x +b\, y +c\, z + d = 0\f$.
+    Notice that it is degenerate if \f$ a = b = c = 0\f$.
+  */
+  Kernel::Plane_3 operator()(const Kernel::RT &a,
+                             const Kernel::RT &b,
+                             const Kernel::RT &c,
+                             const Kernel::RT &d);
 
   /*!
-    creates a plane passing through the points `p`, 
-    `q` and `r`. The plane is oriented such that `p`, 
-    `q` and `r` are oriented in a positive sense 
-    (that is counterclockwise) when seen from the positive side of the plane. 
-    Notice that it is degenerate if the points are collinear. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Point_3 &p, 
-                             const Kernel::Point_3 &q, 
-                             const Kernel::Point_3 &r); 
+    creates a plane passing through the points `p`,
+    `q` and `r`. The plane is oriented such that `p`,
+    `q` and `r` are oriented in a positive sense
+    (that is counterclockwise) when seen from the positive side of the plane.
+    Notice that it is degenerate if the points are collinear.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Point_3 &p,
+                             const Kernel::Point_3 &q,
+                             const Kernel::Point_3 &r);
 
   /*!
-    introduces a plane that passes through point `p` and 
-    that has as an orthogonal direction equal to `d`. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Point_3 &p, 
-                             const Kernel::Direction_3&d); 
+    introduces a plane that passes through point `p` and
+    that has as an orthogonal direction equal to `d`.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Point_3 &p,
+                             const Kernel::Direction_3&d);
 
   /*!
-    introduces a plane that passes through point `p` and 
-    that is orthogonal to `v`. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Point_3 &p, 
-                             const Kernel::Vector_3 &v); 
+    introduces a plane that passes through point `p` and
+    that is orthogonal to `v`.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Point_3 &p,
+                             const Kernel::Vector_3 &v);
 
   /*!
-    introduces a plane that is defined through the three points 
-    `l.point(0)`, `l.point(1)` and `p`. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Line_3 &l, 
-                             const Kernel::Point_3 &p); 
+    introduces a plane that is defined through the three points
+    `l.point(0)`, `l.point(1)` and `p`.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Line_3 &l,
+                             const Kernel::Point_3 &p);
 
   /*!
-    introduces a plane that is defined through the three points 
-    `r.point(0)`, `r.point(1)` and `p`. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Ray_3 &r, 
-                             const Kernel::Point_3 &p); 
+    introduces a plane that is defined through the three points
+    `r.point(0)`, `r.point(1)` and `p`.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Ray_3 &r,
+                             const Kernel::Point_3 &p);
 
   /*!
-    introduces a plane that is defined through the three points 
-    `s.source()`, `s.target()` and `p`. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Segment_3 &s, 
-                             const Kernel::Point_3 &p); 
+    introduces a plane that is defined through the three points
+    `s.source()`, `s.target()` and `p`.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Segment_3 &s,
+                             const Kernel::Point_3 &p);
 
   /*!
-    introduces a plane that is defined as the plane containing the circle. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Circle_3 &c); 
+    introduces a plane that is defined as the plane containing the circle.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Circle_3 &c);
 
   /// @}
 
@@ -5791,11 +5791,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructPointOn_2 {
@@ -5806,30 +5806,30 @@ public:
   /// @{
 
   /*!
-    returns an arbitrary point on `l`. It holds 
-    `point(i) == point(j)`, iff `i==j`. 
-    Furthermore, is directed from `point(i)` 
-    to `point(j)`, for all `i < j`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Line_2& l, 
-                             int i); 
+    returns an arbitrary point on `l`. It holds
+    `point(i) == point(j)`, iff `i==j`.
+    Furthermore, is directed from `point(i)`
+    to `point(j)`, for all `i < j`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Line_2& l,
+                             int i);
 
   /*!
-    returns a point on `r`. `point(0)` is the source, 
-    `point(i)`, with `i>0`, is different from the 
-    source. \pre `i>= 0`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Ray_2& r, 
-                             int i); 
+    returns a point on `r`. `point(0)` is the source,
+    `point(i)`, with `i>0`, is different from the
+    source. \pre `i>= 0`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Ray_2& r,
+                             int i);
 
   /*!
-    returns source or target of `s`: `point(0)` returns 
-    the source of `s`, `point(1)` returns the target of `s`. 
-    The parameter `i` is taken modulo 2, which gives 
-    easy access to the other end point. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Segment_2& s, 
-                             int i); 
+    returns source or target of `s`: `point(0)` returns
+    the source of `s`, `point(1)` returns the target of `s`.
+    The parameter `i` is taken modulo 2, which gives
+    easy access to the other end point.
+  */
+  Kernel::Point_2 operator()(const Kernel::Segment_2& s,
+                             int i);
 
 
   /// @}
@@ -5840,12 +5840,12 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_3<Kernel>` 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Ray_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Line_3<Kernel>`
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Ray_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ConstructPointOn_3 {
@@ -5856,35 +5856,35 @@ public:
   /// @{
 
   /*!
-    returns an arbitrary point on `l`. It holds 
-    `point(i) == point(j)`, iff `i==j`. 
-    Furthermore, is directed from `point(i)` 
-    to `point(j)`, for all `i < j`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Line_3& l, 
-                             int i); 
+    returns an arbitrary point on `l`. It holds
+    `point(i) == point(j)`, iff `i==j`.
+    Furthermore, is directed from `point(i)`
+    to `point(j)`, for all `i < j`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Line_3& l,
+                             int i);
 
   /*!
-    returns an arbitrary point on `h`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Plane_3& h); 
+    returns an arbitrary point on `h`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Plane_3& h);
 
   /*!
-    returns a point on `r`. `point(0)` is the source, 
-    `point(i)`, with `i>0`, is different from the 
-    source. \pre `i >= 0`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Ray_3& r, 
-                             int i); 
+    returns a point on `r`. `point(0)` is the source,
+    `point(i)`, with `i>0`, is different from the
+    source. \pre `i >= 0`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Ray_3& r,
+                             int i);
 
   /*!
-    returns source or target of `s`: `point(0)` returns 
-    the source of `s`, `point(1)` returns the target of `s`. 
-  The parameter `i` is taken modulo 2, which gives 
-  easy access to the other end point. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Segment_3& s, 
-                             int i); 
+    returns source or target of `s`: `point(0)` returns
+    the source of `s`, `point(1)` returns the target of `s`.
+  The parameter `i` is taken modulo 2, which gives
+  easy access to the other end point.
+  */
+  Kernel::Point_3 operator()(const Kernel::Segment_3& s,
+                             int i);
 
   /// @}
 
@@ -5894,9 +5894,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Point_2<Kernel>` 
+  \sa `CGAL::Point_2<Kernel>`
 
 */
 class ConstructPoint_2 {
@@ -5908,14 +5908,14 @@ public:
 
 
   /*!
-    introduces a variable with Cartesian coordinates 
-    \f$ (0,0)\f$. 
-  */ 
-  Kernel::Point_2 operator()(const CGAL::Origin &CGAL::ORIGIN); 
+    introduces a variable with Cartesian coordinates
+    \f$ (0,0)\f$.
+  */
+  Kernel::Point_2 operator()(const CGAL::Origin &CGAL::ORIGIN);
 
  /*!
-    extracts the bare point from the weighted point. 
-  */ 
+    extracts the bare point from the weighted point.
+  */
   Kernel::Point_2 operator()(const Kernel::Weighted_point_2& wp);
 
   ///@}
@@ -5926,9 +5926,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Point_3<Kernel>` 
+  \sa `CGAL::Point_3<Kernel>`
 
 */
 class ConstructPoint_3 {
@@ -5939,13 +5939,13 @@ public:
   /// @{
 
   /*!
-    introduces a point with Cartesian coordinates\f$ (0,0,0)\f$. 
-  */ 
-  Kernel::Point_3 operator()(const CGAL::Origin &CGAL::ORIGIN); 
+    introduces a point with Cartesian coordinates\f$ (0,0,0)\f$.
+  */
+  Kernel::Point_3 operator()(const CGAL::Origin &CGAL::ORIGIN);
 
  /*!
-    extracts the bare point from the weighted point. 
-  */ 
+    extracts the bare point from the weighted point.
+  */
   Kernel::Point_3 operator()(const Kernel::Weighted_point_3& wp);
 
   ///@}
@@ -5956,9 +5956,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
 
 */
 class ConstructProjectedPoint_2 {
@@ -5969,10 +5969,10 @@ public:
   /// @{
 
   /*!
-    returns the orthogonal projection of `p` onto `l`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Line_2& l, 
-                             const Kernel::Point_2& p); 
+    returns the orthogonal projection of `p` onto `l`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Line_2& l,
+                             const Kernel::Point_2& p);
 
   /// @}
 
@@ -5982,10 +5982,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_3<Kernel>` 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Line_3<Kernel>`
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructProjectedPoint_3 {
@@ -5996,23 +5996,23 @@ public:
   /// @{
 
   /*!
-    returns the orthogonal projection of `p` onto `l`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Line_3& l, 
-                             const Kernel::Point_3& p); 
+    returns the orthogonal projection of `p` onto `l`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Line_3& l,
+                             const Kernel::Point_3& p);
 
   /*!
-    returns the orthogonal projection of `p` onto `h`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Plane_3& h, 
-                             const Kernel::Point_3& p); 
+    returns the orthogonal projection of `p` onto `h`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Plane_3& h,
+                             const Kernel::Point_3& p);
 
   /*!
     returns the point of `s` that is the closest to `p`.
   */
   Kernel::Point_3 operator()(const Kernel::Segment_3& s,
                              const Kernel::Point_3& p);
-  
+
   /*!
     returns the point of `r` that is the closest to `p`.
   */
@@ -6033,9 +6033,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
 
 */
 class ConstructProjectedXYPoint_2 {
@@ -6046,12 +6046,12 @@ public:
   /// @{
 
   /*!
-    returns the image point of the projection of `p` under an affine 
-    transformation, which maps `h` onto the \f$ xy\f$-plane, with the 
-    \f$ z\f$-coordinate removed. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Plane_3& h, 
-                             const Kernel::Point_3& p); 
+    returns the image point of the projection of `p` under an affine
+    transformation, which maps `h` onto the \f$ xy\f$-plane, with the
+    \f$ z\f$-coordinate removed.
+  */
+  Kernel::Point_2 operator()(const Kernel::Plane_3& h,
+                             const Kernel::Point_3& p);
 
   /// @}
 
@@ -6063,9 +6063,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Weighted_point_2<Kernel>` 
+  \sa `CGAL::Weighted_point_2<Kernel>`
 
 */
 class ConstructRadicalAxis_2
@@ -6076,8 +6076,8 @@ public:
   /// @{
 
   /*!
-    returns the radical line of the weighted points. 
-  */ 
+    returns the radical line of the weighted points.
+  */
   Kernel::Line_2 operator()(const Kernel::Weighted_point_2& wp1,
                             const Kernel::Weighted_point_2& wp2);
   /// @}
@@ -6088,9 +6088,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
 
 */
 class ConstructRadicalLine_2 {
@@ -6101,12 +6101,12 @@ public:
   /// @{
 
   /*!
-    returns the radical line of the circles. 
-    \pre The two circles don't have the same center. 
-  */ 
-  Kernel::Line_2 operator() 
-  (const Kernel::Circle_2& c1, 
-   const Kernel::Circle_2& c2); 
+    returns the radical line of the circles.
+    \pre The two circles don't have the same center.
+  */
+  Kernel::Line_2 operator()
+  (const Kernel::Circle_2& c1,
+   const Kernel::Circle_2& c2);
 
 
   /// @}
@@ -6117,9 +6117,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two argument) 
+  \cgalRefines `AdaptableFunctor` (with two argument)
 
-  \sa `CGAL::Sphere_3<Kernel>` 
+  \sa `CGAL::Sphere_3<Kernel>`
 
 */
 class ConstructRadicalPlane_3 {
@@ -6130,12 +6130,12 @@ public:
   /// @{
 
   /*!
-    returns the radical plane of the spheres. 
-    \pre The two spheres don't have the same center. 
-  */ 
-  Kernel::Plane_3 operator() 
-  (const Kernel::Sphere_3& sphere1, 
-   const Kernel::Sphere_3& sphere2); 
+    returns the radical plane of the spheres.
+    \pre The two spheres don't have the same center.
+  */
+  Kernel::Plane_3 operator()
+  (const Kernel::Sphere_3& sphere1,
+   const Kernel::Sphere_3& sphere2);
 
   /// @}
 
@@ -6145,9 +6145,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Ray_2<Kernel>` 
+  \sa `CGAL::Ray_2<Kernel>`
 
 */
 class ConstructRay_2 {
@@ -6158,32 +6158,32 @@ public:
   /// @{
 
   /*!
-    introduces a ray 
-    with source `p` and passing through point `q`. 
-  */ 
-  Kernel::Ray_2 operator()(const Kernel::Point_2 &p, 
-                           const Kernel::Point_2 &q); 
+    introduces a ray
+    with source `p` and passing through point `q`.
+  */
+  Kernel::Ray_2 operator()(const Kernel::Point_2 &p,
+                           const Kernel::Point_2 &q);
 
   /*!
-    introduces a ray starting at source `p` with 
-    the direction given by `v`. 
-  */ 
-  Kernel::Ray_2 operator()(const Kernel::Point_2 &p, 
-                           const Kernel::Vector_2 &v); 
+    introduces a ray starting at source `p` with
+    the direction given by `v`.
+  */
+  Kernel::Ray_2 operator()(const Kernel::Point_2 &p,
+                           const Kernel::Vector_2 &v);
 
   /*!
-    introduces a ray starting at source `p` with 
-    direction `d`. 
-  */ 
-  Kernel::Ray_2 operator()(const Kernel::Point_2 &p, 
-                           const Kernel::Direction_2 &d); 
+    introduces a ray starting at source `p` with
+    direction `d`.
+  */
+  Kernel::Ray_2 operator()(const Kernel::Point_2 &p,
+                           const Kernel::Direction_2 &d);
 
   /*!
-    introduces a ray starting at source `p` with 
-    the same direction as `l`. 
-  */ 
-  Kernel::Ray_2 operator()(const Kernel::Point_2 &p, 
-                           const Kernel::Line_2 &l); 
+    introduces a ray starting at source `p` with
+    the same direction as `l`.
+  */
+  Kernel::Ray_2 operator()(const Kernel::Point_2 &p,
+                           const Kernel::Line_2 &l);
 
   ///@}
 
@@ -6193,9 +6193,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Ray_3<Kernel>` 
+  \sa `CGAL::Ray_3<Kernel>`
 
 */
 class ConstructRay_3 {
@@ -6206,32 +6206,32 @@ public:
   /// @{
 
   /*!
-    introduces a ray 
-    with source `p` and passing through point `q`. 
-  */ 
-  Kernel::Ray_3 operator()(const Kernel::Point_3 &p, 
-                           const Kernel::Point_3 &q); 
+    introduces a ray
+    with source `p` and passing through point `q`.
+  */
+  Kernel::Ray_3 operator()(const Kernel::Point_3 &p,
+                           const Kernel::Point_3 &q);
 
   /*!
-    introduces a ray with source `p` and with 
-    the direction given by `v`. 
-  */ 
-  Kernel::Ray_3 operator()(const Kernel::Point_3 &p, 
-                           const Kernel::Vector_3 &v); 
+    introduces a ray with source `p` and with
+    the direction given by `v`.
+  */
+  Kernel::Ray_3 operator()(const Kernel::Point_3 &p,
+                           const Kernel::Vector_3 &v);
 
   /*!
-    introduces a ray with source `p` and with 
-    direction `d`. 
-  */ 
-  Kernel::Ray_3 operator()(const Kernel::Point_3 &p, 
-                           const Kernel::Direction_3 &d); 
+    introduces a ray with source `p` and with
+    direction `d`.
+  */
+  Kernel::Ray_3 operator()(const Kernel::Point_3 &p,
+                           const Kernel::Direction_3 &d);
 
   /*!
-    introduces a ray with source `p` and with 
-    the same direction as `l`. 
-  */ 
-  Kernel::Ray_3 operator()(const Kernel::Point_3 &p, 
-                           const Kernel::Line_3 &l); 
+    introduces a ray with source `p` and with
+    the same direction as `l`.
+  */
+  Kernel::Ray_3 operator()(const Kernel::Point_3 &p,
+                           const Kernel::Line_3 &l);
 
   /// @}
 
@@ -6241,9 +6241,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 */
 class ConstructScaledVector_2 {
 public:
@@ -6253,14 +6253,14 @@ public:
   /// @{
 
   /*!
-    produces the vector `v` scaled by a factor `scale`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v, const Kernel::RT& scale); 
+    produces the vector `v` scaled by a factor `scale`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v, const Kernel::RT& scale);
 
   /*!
-    produces the vector `v` scaled by a factor `scale`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v, const Kernel::FT& scale); 
+    produces the vector `v` scaled by a factor `scale`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v, const Kernel::FT& scale);
 
   /// @}
 
@@ -6270,9 +6270,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
 
 */
 class ConstructScaledVector_3 {
@@ -6283,16 +6283,16 @@ public:
   /// @{
 
   /*!
-    produces the vector `v` scaled by a factor `scale`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v, 
-                              const Kernel::RT& scale); 
+    produces the vector `v` scaled by a factor `scale`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v,
+                              const Kernel::RT& scale);
 
   /*!
-    produces the vector `v` scaled by a factor `scale`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v, 
-                              const Kernel::FT& scale); 
+    produces the vector `v` scaled by a factor `scale`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v,
+                              const Kernel::FT& scale);
 
 
   /// @}
@@ -6303,9 +6303,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Ray_2<Kernel>` 
+  \sa `CGAL::Ray_2<Kernel>`
 
 */
 class ConstructSecondPoint_2 {
@@ -6316,11 +6316,11 @@ public:
   /// @{
 
   /*!
-    returns a point different from the source on 
-    the ray `r`. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Ray_2 &r); 
+    returns a point different from the source on
+    the ray `r`.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Ray_2 &r);
 
 
   /// @}
@@ -6359,9 +6359,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructSegment_2 {
@@ -6372,11 +6372,11 @@ public:
   /// @{
 
   /*!
-    introduces a segment with source `p` 
-    and target `q`. The segment is directed from the source towards 
-  the target. 
-  */ 
-  Kernel::Segment_2 operator()(const Kernel::Point_2 &p, const Kernel::Point_2 &q); 
+    introduces a segment with source `p`
+    and target `q`. The segment is directed from the source towards
+  the target.
+  */
+  Kernel::Segment_2 operator()(const Kernel::Point_2 &p, const Kernel::Point_2 &q);
 
   /// @}
 
@@ -6386,9 +6386,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Segment_3<Kernel>` 
+  \sa `CGAL::Segment_3<Kernel>`
 
 */
 class ConstructSegment_3 {
@@ -6399,11 +6399,11 @@ public:
   /// @{
 
   /*!
-    introduces a segment with source `p` 
-    and target `q`. It is directed from the source towards 
-    the target. 
-  */ 
-  Kernel::Segment_3 operator()(const Kernel::Point_3 &p, const Kernel::Point_3 &q); 
+    introduces a segment with source `p`
+    and target `q`. It is directed from the source towards
+    the target.
+  */
+  Kernel::Segment_3 operator()(const Kernel::Point_3 &p, const Kernel::Point_3 &q);
 
   /// @}
 
@@ -6413,10 +6413,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Segment_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
+  \sa `CGAL::Segment_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
 
 */
 class ConstructSource_2 {
@@ -6427,18 +6427,18 @@ public:
   /// @{
 
   /*!
-    returns the source of 
-    the segment `s`. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Segment_2 &s); 
+    returns the source of
+    the segment `s`.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Segment_2 &s);
 
   /*!
-    returns the source of 
-    the ray `r`. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Ray_2 &r); 
+    returns the source of
+    the ray `r`.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Ray_2 &r);
 
 
   /// @}
@@ -6485,9 +6485,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
-  \sa `CGAL::Sphere_3<Kernel>` 
+  \sa `CGAL::Sphere_3<Kernel>`
 
 */
 class ConstructSphere_3 {
@@ -6498,60 +6498,60 @@ public:
   /// @{
 
   /*!
-    introduces a sphere initialized to the sphere with center `center`, 
-    squared radius `squared_radius` and orientation 
-    `orientation`. 
-    \pre `orientation` \f$ \neq\f$ \ref CGAL::COPLANAR, and furthermore, `squared_radius` \f$ \geq\f$ 0. 
-  */ 
-  Kernel::Sphere_3 operator()(const Kernel::Point_3 & center, 
-                              const Kernel::FT & squared_radius, 
-                              const Orientation & orientation = COUNTERCLOCKWISE); 
+    introduces a sphere initialized to the sphere with center `center`,
+    squared radius `squared_radius` and orientation
+    `orientation`.
+    \pre `orientation` \f$ \neq\f$ \ref CGAL::COPLANAR, and furthermore, `squared_radius` \f$ \geq\f$ 0.
+  */
+  Kernel::Sphere_3 operator()(const Kernel::Point_3 & center,
+                              const Kernel::FT & squared_radius,
+                              const Orientation & orientation = COUNTERCLOCKWISE);
 
   /*!
-    introduces a sphere initialized to the unique sphere which passes 
-    through the points `p`, `q`, `r` and `s`. The 
-    orientation of the sphere is the orientation of the point quadruple 
-    `p`, `q`, `r`, `s`. 
-    \pre `p`, `q`, `r`, and `s` are not coplanar. 
-  */ 
-  Kernel::Sphere_3 operator()( const Kernel::Point_3 & p, 
-                               const Kernel::Point_3 & q, 
-                               const Kernel::Point_3 & r, 
-                               const Kernel::Point_3 & s); 
+    introduces a sphere initialized to the unique sphere which passes
+    through the points `p`, `q`, `r` and `s`. The
+    orientation of the sphere is the orientation of the point quadruple
+    `p`, `q`, `r`, `s`.
+    \pre `p`, `q`, `r`, and `s` are not coplanar.
+  */
+  Kernel::Sphere_3 operator()( const Kernel::Point_3 & p,
+                               const Kernel::Point_3 & q,
+                               const Kernel::Point_3 & r,
+                               const Kernel::Point_3 & s);
 
   /*!
-    introduces a sphere initialized to the smallest sphere which passes 
-    through the points `p`, `q`, and `r`. The orientation of 
-    the sphere is `o`. \pre `o` is not \ref CGAL::COPLANAR. 
-  */ 
-  Kernel::Sphere_3 operator()(const Kernel::Point_3 & p, 
-                              const Kernel::Point_3 & q, 
-                              const Kernel::Point_3 & r, 
-                              const Orientation& o = COUNTERCLOCKWISE); 
+    introduces a sphere initialized to the smallest sphere which passes
+    through the points `p`, `q`, and `r`. The orientation of
+    the sphere is `o`. \pre `o` is not \ref CGAL::COPLANAR.
+  */
+  Kernel::Sphere_3 operator()(const Kernel::Point_3 & p,
+                              const Kernel::Point_3 & q,
+                              const Kernel::Point_3 & r,
+                              const Orientation& o = COUNTERCLOCKWISE);
 
   /*!
-    introduces a sphere initialized to the smallest sphere which passes 
-    through the points `p` and `q`. The orientation of 
-    the sphere is `o`. \pre `o` is not \ref CGAL::COPLANAR. 
-  */ 
-  Kernel::Sphere_3 operator()(const Kernel::Point_3 & p, 
-                              const Kernel::Point_3 & q, 
-                              const Orientation & o = COUNTERCLOCKWISE); 
+    introduces a sphere initialized to the smallest sphere which passes
+    through the points `p` and `q`. The orientation of
+    the sphere is `o`. \pre `o` is not \ref CGAL::COPLANAR.
+  */
+  Kernel::Sphere_3 operator()(const Kernel::Point_3 & p,
+                              const Kernel::Point_3 & q,
+                              const Orientation & o = COUNTERCLOCKWISE);
 
   /*!
-    introduces a sphere `s` initialized to the sphere with center 
-    `center`, squared radius zero and orientation `orientation`. 
-    \pre `orientation` \f$ \neq\f$ \ref CGAL::COPLANAR. 
-    \post `s.is_degenerate()` = `true`. 
-  */ 
-  Kernel::Sphere_3 operator()( const Kernel::Point_3 & center, 
-                               const Orientation & orientation = COUNTERCLOCKWISE); 
+    introduces a sphere `s` initialized to the sphere with center
+    `center`, squared radius zero and orientation `orientation`.
+    \pre `orientation` \f$ \neq\f$ \ref CGAL::COPLANAR.
+    \post `s.is_degenerate()` = `true`.
+  */
+  Kernel::Sphere_3 operator()( const Kernel::Point_3 & center,
+                               const Orientation & orientation = COUNTERCLOCKWISE);
 
   /*!
-    introduces a sphere initialized to the diametral sphere of 
-    the circle. 
-  */ 
-  Kernel::Sphere_3 operator()( const Kernel::Circle_3 &c); 
+    introduces a sphere initialized to the diametral sphere of
+    the circle.
+  */
+  Kernel::Sphere_3 operator()( const Kernel::Circle_3 &c);
 
   /// @}
 
@@ -6561,9 +6561,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class ConstructSumOfVectors_2 {
@@ -6575,10 +6575,10 @@ public:
 
 
   /*!
-    introduces the vector `v1 + v2`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v1, 
-                              const Kernel::Vector_2 &v2); 
+    introduces the vector `v1 + v2`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Vector_2 &v1,
+                              const Kernel::Vector_2 &v2);
 
 
   /// @}
@@ -6589,9 +6589,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Vector_3<Kernel>`
 
 */
 class ConstructSumOfVectors_3 {
@@ -6602,10 +6602,10 @@ public:
   /// @{
 
   /*!
-    introduces the vector `v1 + v2`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v1, 
-                              const Kernel::Vector_3 &v2); 
+    introduces the vector `v1 + v2`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Vector_3 &v1,
+                              const Kernel::Vector_3 &v2);
 
   /// @}
 
@@ -6615,9 +6615,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class ConstructSupportingPlane_3 {
@@ -6628,9 +6628,9 @@ public:
   /// @{
 
   /*!
-    returns the supporting plane of `t`, with same orientation. 
-  */ 
-  Kernel::Plane_3 operator()(const Kernel::Triangle_3& t); 
+    returns the supporting plane of `t`, with same orientation.
+  */
+  Kernel::Plane_3 operator()(const Kernel::Triangle_3& t);
 
   ///@}
 
@@ -6640,9 +6640,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class ConstructTarget_2 {
@@ -6653,11 +6653,11 @@ public:
   /// @{
 
   /*!
-    returns the target of 
-    the segment `s`. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Segment_2 &s); 
+    returns the target of
+    the segment `s`.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Segment_2 &s);
 
   /// @}
 
@@ -6694,9 +6694,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class ConstructTetrahedron_3 {
@@ -6707,12 +6707,12 @@ public:
   /// @{
 
   /*!
-    introduces a tetrahedron with vertices `p_0`, `p_1`, `p_2` and `p_3`. 
-  */ 
-  Kernel::Tetrahedron_3 operator()(const Kernel::Point_3 &p0, 
-                                   const Kernel::Point_3 &p1, 
-                                   const Kernel::Point_3 &p2, 
-                                   const Kernel::Point_3 &p3); 
+    introduces a tetrahedron with vertices `p_0`, `p_1`, `p_2` and `p_3`.
+  */
+  Kernel::Tetrahedron_3 operator()(const Kernel::Point_3 &p0,
+                                   const Kernel::Point_3 &p1,
+                                   const Kernel::Point_3 &p2,
+                                   const Kernel::Point_3 &p3);
 
   /// @}
 
@@ -6722,9 +6722,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Point_2<Kernel>` 
+  \sa `CGAL::Point_2<Kernel>`
 
 */
 class ConstructTranslatedPoint_2 {
@@ -6736,18 +6736,18 @@ public:
 
 
   /*!
-    returns the point obtained by translating `p` by the vector 
-    `v`. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Point_2& p, 
-                             const Kernel::Vector_2& v); 
+    returns the point obtained by translating `p` by the vector
+    `v`.
+  */
+  Kernel::Point_2 operator()(const Kernel::Point_2& p,
+                             const Kernel::Vector_2& v);
 
   /*!
-    returns the point obtained by translating a point at the origin by the vector 
-    `v`. 
-  */ 
-  Kernel::Point_2 operator()(const CGAL::Origin& o, 
-                             const Kernel::Vector_2& v); 
+    returns the point obtained by translating a point at the origin by the vector
+    `v`.
+  */
+  Kernel::Point_2 operator()(const CGAL::Origin& o,
+                             const Kernel::Vector_2& v);
 
 
   /// @}
@@ -6758,9 +6758,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Point_3<Kernel>` 
+  \sa `CGAL::Point_3<Kernel>`
 
 */
 class ConstructTranslatedPoint_3 {
@@ -6772,18 +6772,18 @@ public:
 
 
   /*!
-    returns the point obtained by translating `p` by the vector 
-    `v`. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Point_3& p, 
-                             const Kernel::Vector_3& v); 
+    returns the point obtained by translating `p` by the vector
+    `v`.
+  */
+  Kernel::Point_3 operator()(const Kernel::Point_3& p,
+                             const Kernel::Vector_3& v);
 
   /*!
-    returns the point obtained by translating a point at the origin by the vector 
-    `v`. 
-  */ 
-  Kernel::Point_3 operator()(const Origin& o, 
-                             const Kernel::Vector_3& v); 
+    returns the point obtained by translating a point at the origin by the vector
+    `v`.
+  */
+  Kernel::Point_3 operator()(const Origin& o,
+                             const Kernel::Vector_3& v);
 
 
   /// @}
@@ -6794,9 +6794,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class ConstructTriangle_2 {
@@ -6807,11 +6807,11 @@ public:
   /// @{
 
   /*!
-    introduces a triangle with vertices `p`, `q` and `r`. 
-  */ 
-  Kernel::Triangle_2 operator()(const Kernel::Point_2 &p, 
-                                const Kernel::Point_2 &q, 
-                                const Kernel::Point_2 &r); 
+    introduces a triangle with vertices `p`, `q` and `r`.
+  */
+  Kernel::Triangle_2 operator()(const Kernel::Point_2 &p,
+                                const Kernel::Point_2 &q,
+                                const Kernel::Point_2 &r);
 
   /// @}
 
@@ -6821,9 +6821,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class ConstructTriangle_3 {
@@ -6835,11 +6835,11 @@ public:
 
 
   /*!
-    introduces a triangle with vertices `p`, `q` and `r`. 
-  */ 
-  Kernel::Triangle_3 operator()(const Kernel::Point_3 &p, 
-                                const Kernel::Point_3 &q, 
-                                const Kernel::Point_3 &r); 
+    introduces a triangle with vertices `p`, `q` and `r`.
+  */
+  Kernel::Triangle_3 operator()(const Kernel::Point_3 &p,
+                                const Kernel::Point_3 &q,
+                                const Kernel::Point_3 &r);
 
 
   /// @}
@@ -6850,7 +6850,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with three arguments) 
+\cgalRefines `AdaptableFunctor` (with three arguments)
 
 \sa `normal_grp`
 \sa `unit_normal_grp`
@@ -6864,12 +6864,12 @@ public:
   /// @{
 
   /*!
-    computes the unit normal of the vectors`q-p` and `r-p`. 
-    This requires that `Kernel::FT` supports the `sqrt` operation. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Point_3& p, 
-                              const Kernel::Point_3& q, 
-                              const Kernel::Point_3& r ); 
+    computes the unit normal of the vectors`q-p` and `r-p`.
+    This requires that `Kernel::FT` supports the `sqrt` operation.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Point_3& p,
+                              const Kernel::Point_3& q,
+                              const Kernel::Point_3& r );
 
 
   /// @}
@@ -6880,10 +6880,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_2<Kernel>` 
-  \sa `Kernel::ConstructScaledVector_2` 
+  \sa `CGAL::Vector_2<Kernel>`
+  \sa `Kernel::ConstructScaledVector_2`
 
 */
 class ConstructVector_2 {
@@ -6895,42 +6895,42 @@ public:
 
 
   /*!
-    introduces the vector `b-a`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Point_2 &a, 
-                              const Kernel::Point_2 &b); 
+    introduces the vector `b-a`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Point_2 &a,
+                              const Kernel::Point_2 &b);
 
   /*!
-    introduces the vector `b`. 
-  */ 
-  Kernel::Vector_2 operator()(const CGAL::Origin &o, 
-                              const Kernel::Point_2 &b); 
+    introduces the vector `b`.
+  */
+  Kernel::Vector_2 operator()(const CGAL::Origin &o,
+                              const Kernel::Point_2 &b);
 
   /*!
-    introduces the vector `-a`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Point_2 &a, 
-                              const CGAL::Origin &o); 
+    introduces the vector `-a`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Point_2 &a,
+                              const CGAL::Origin &o);
 
   /*!
-    introduces the vector `s.target()-s.source()`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Segment_2 &s); 
+    introduces the vector `s.target()-s.source()`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Segment_2 &s);
 
   /*!
-    introduces a vector having the same direction as `r`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Ray_2 &r); 
+    introduces a vector having the same direction as `r`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Ray_2 &r);
 
   /*!
-    introduces a vector having the same direction as `l`. 
-  */ 
-  Kernel::Vector_2 operator()(const Kernel::Line_2 &l); 
+    introduces a vector having the same direction as `l`.
+  */
+  Kernel::Vector_2 operator()(const Kernel::Line_2 &l);
 
   /*!
-    introduces a null vector. 
-  */ 
-  Kernel::Vector_2 operator()(const Null_vector &NULL_VECTOR); 
+    introduces a null vector.
+  */
+  Kernel::Vector_2 operator()(const Null_vector &NULL_VECTOR);
 
   /// @}
 
@@ -6940,10 +6940,10 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Vector_3<Kernel>` 
-  \sa `Kernel::ConstructScaledVector_3` 
+  \sa `CGAL::Vector_3<Kernel>`
+  \sa `Kernel::ConstructScaledVector_3`
 
 */
 class ConstructVector_3 {
@@ -6954,42 +6954,42 @@ public:
   /// @{
 
   /*!
-    introduces the vector `b-a`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Point_3 &a, 
-                              const Kernel::Point_3 &b); 
+    introduces the vector `b-a`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Point_3 &a,
+                              const Kernel::Point_3 &b);
 
   /*!
-    introduces the vector `b`. 
-  */ 
-  Kernel::Vector_3 operator()(const CGAL::Origin &o, 
-                              const Kernel::Point_3 &b); 
+    introduces the vector `b`.
+  */
+  Kernel::Vector_3 operator()(const CGAL::Origin &o,
+                              const Kernel::Point_3 &b);
 
   /*!
-    introduces the vector `-a`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Point_3 &a, 
-                              const CGAL::Origin &o); 
+    introduces the vector `-a`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Point_3 &a,
+                              const CGAL::Origin &o);
 
   /*!
-    introduces the vector `s.target()-s.source()`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Segment_3 &s); 
+    introduces the vector `s.target()-s.source()`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Segment_3 &s);
 
   /*!
-    introduces a vector having the same direction as `r`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Ray_3 &r); 
+    introduces a vector having the same direction as `r`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Ray_3 &r);
 
   /*!
-    introduces a vector having the same direction as `l`. 
-  */ 
-  Kernel::Vector_3 operator()(const Kernel::Line_3 &l); 
+    introduces a vector having the same direction as `l`.
+  */
+  Kernel::Vector_3 operator()(const Kernel::Line_3 &l);
 
   /*!
-    introduces a null vector. 
-  */ 
-  Kernel::Vector_3 operator()(const Null_vector &NULL_VECTOR); 
+    introduces a null vector.
+  */
+  Kernel::Vector_3 operator()(const Null_vector &NULL_VECTOR);
 
 
   /// @}
@@ -7000,11 +7000,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class ConstructVertex_2 {
@@ -7016,27 +7016,27 @@ public:
 
 
   /*!
-    returns source or target of `s`: `fo``(s,0)` 
-    returns the source of `s`, `fo``(s,1)` returns the target 
-    of `s`. The parameter `i` is taken modulo 2. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Segment_2 
-                             &s, int i); 
+    returns source or target of `s`: `fo``(s,0)`
+    returns the source of `s`, `fo``(s,1)` returns the target
+    of `s`. The parameter `i` is taken modulo 2.
+  */
+  Kernel::Point_2 operator()(const Kernel::Segment_2
+                             &s, int i);
 
   /*!
-    returns the i'th vertex of 
-    `r` in counterclockwise order, starting with the lower left 
-    vertex. The parameter `i` is taken modulo 4. 
-  */ 
-  Kernel::Point_2 operator()(const 
-                             Kernel::Iso_rectangle_2 &r, int i); 
+    returns the i'th vertex of
+    `r` in counterclockwise order, starting with the lower left
+    vertex. The parameter `i` is taken modulo 4.
+  */
+  Kernel::Point_2 operator()(const
+                             Kernel::Iso_rectangle_2 &r, int i);
 
   /*!
-    returns the i'th vertex of `t`. The parameter 
-    `i` is taken modulo 3. 
-  */ 
-  Kernel::Point_2 operator()(const Kernel::Triangle_2 
-                             &t, int i); 
+    returns the i'th vertex of `t`. The parameter
+    `i` is taken modulo 3.
+  */
+  Kernel::Point_2 operator()(const Kernel::Triangle_2
+                             &t, int i);
 
   /// @}
 
@@ -7049,12 +7049,12 @@ public:
 \image html IsoCuboid.png
 \image latex IsoCuboid.png
 
-\cgalRefines `AdaptableFunctor` (with two arguments) 
+\cgalRefines `AdaptableFunctor` (with two arguments)
 
-\sa `CGAL::Iso_cuboid_3<Kernel>` 
-\sa `CGAL::Segment_3<Kernel>` 
-\sa `CGAL::Tetrahedron_3<Kernel>` 
-\sa `CGAL::Triangle_3<Kernel>` 
+\sa `CGAL::Iso_cuboid_3<Kernel>`
+\sa `CGAL::Segment_3<Kernel>`
+\sa `CGAL::Tetrahedron_3<Kernel>`
+\sa `CGAL::Triangle_3<Kernel>`
 
 */
 class ConstructVertex_3 {
@@ -7065,35 +7065,35 @@ public:
   /// @{
 
   /*!
-    returns source or target of `s`: `fo``(s,0)` 
-    returns the source of `s`, `fo``(s,1)` returns the target 
-    of `s`. The parameter `i` is taken modulo 2. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Segment_3 
-                             &s, int i); 
+    returns source or target of `s`: `fo``(s,0)`
+    returns the source of `s`, `fo``(s,1)` returns the target
+    of `s`. The parameter `i` is taken modulo 2.
+  */
+  Kernel::Point_3 operator()(const Kernel::Segment_3
+                             &s, int i);
 
   /*!
-    returns the i'th vertex of 
-    `c`, as indicated in the figure below. The parameter `i` is 
-    taken modulo 8. 
+    returns the i'th vertex of
+    `c`, as indicated in the figure below. The parameter `i` is
+    taken modulo 8.
 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Iso_cuboid_3 &c, int i); 
-
-  /*!
-    returns the i'th vertex of `t`. The parameter 
-    `i` is taken modulo 3. 
-  */ 
-  Kernel::Point_3 operator()(const Kernel::Triangle_3 
-                             &t, int i); 
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Iso_cuboid_3 &c, int i);
 
   /*!
-    returns the i'th vertex of 
-    `t`. The parameter `i` is taken modulo 4. 
-  */ 
-  Kernel::Point_3 operator()(const 
-                             Kernel::Tetrahedron_3 &t, int i); 
+    returns the i'th vertex of `t`. The parameter
+    `i` is taken modulo 3.
+  */
+  Kernel::Point_3 operator()(const Kernel::Triangle_3
+                             &t, int i);
+
+  /*!
+    returns the i'th vertex of
+    `t`. The parameter `i` is taken modulo 4.
+  */
+  Kernel::Point_3 operator()(const
+                             Kernel::Tetrahedron_3 &t, int i);
 
   /// @}
 
@@ -7103,9 +7103,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with two arguments) 
+\cgalRefines `AdaptableFunctor` (with two arguments)
 
-\sa `CGAL::Weighted_point_2<Kernel>` 
+\sa `CGAL::Weighted_point_2<Kernel>`
 
 */
 class ConstructWeightedCircumcenter_2
@@ -7117,8 +7117,8 @@ public:
   /// @{
 
   /*!
-    constructs the point which is the center of the smallest orthogonal circle to the input weighted points. 
-  */ 
+    constructs the point which is the center of the smallest orthogonal circle to the input weighted points.
+  */
   Kernel::Point_2 operator()(const Kernel::Weighted_point_2& p,
                              const Kernel::Weighted_point_2& q,
                              const Kernel::Weighted_point_2& s);
@@ -7129,9 +7129,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
 \cgalConcept
 
-\cgalRefines `AdaptableFunctor` (with two arguments) 
+\cgalRefines `AdaptableFunctor` (with two arguments)
 
-\sa `CGAL::Weighted_point_3<Kernel>` 
+\sa `CGAL::Weighted_point_3<Kernel>`
 
 */
 class ConstructWeightedCircumcenter_3
@@ -7142,8 +7142,8 @@ public:
   /// @{
 
   /*!
-    constructs the point which is the center of the smallest orthogonal sphere to the input weighted points. 
-  */ 
+    constructs the point which is the center of the smallest orthogonal sphere to the input weighted points.
+  */
   Kernel::Point_3 operator()(const Kernel::Weighted_point_3& p,
                              const Kernel::Weighted_point_3& q,
                              const Kernel::Weighted_point_3& r,
@@ -7230,7 +7230,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `coplanar_orientation_grp`
 
@@ -7246,17 +7246,17 @@ public:
     If `p`, `q`, and `s` are collinear, then \ref CGAL::COLLINEAR is returned.
 
     If not, let `P` be the plane defined by the points `p`, `q`,
-    and `r`. Note that the order defines the orientation of 
+    and `r`. Note that the order defines the orientation of
     `P`. If `P` and the plane defined by `p`, `q`, and `s`
     have the same orientation, then \ref CGAL::POSITIVE is returned;
     otherwise \ref CGAL::NEGATIVE is returned.
 
-    \pre `p`, `q`, `r`, and `s` are coplanar and `p`, `q`, and `r` are not collinear. 
-  */ 
-  Orientation operator()(const Kernel::Point_3&p, 
-                         const Kernel::Point_3&q, 
-                         const Kernel::Point_3&r, 
-                         const Kernel::Point_3&s); 
+    \pre `p`, `q`, `r`, and `s` are coplanar and `p`, `q`, and `r` are not collinear.
+  */
+  Orientation operator()(const Kernel::Point_3&p,
+                         const Kernel::Point_3&q,
+                         const Kernel::Point_3&r,
+                         const Kernel::Point_3&s);
 
   /*!
     If `p`, `q`, and `r` are collinear, then \ref CGAL::COLLINEAR is returned.
@@ -7267,9 +7267,9 @@ public:
     However, we guarantee that all calls to this predicate over 3 points in `P`
     will return a coherent orientation if considered as a 2D orientation in `P`.
   */
-  Orientation operator()(const Kernel::Point_3&p, 
-                         const Kernel::Point_3&q, 
-                         const Kernel::Point_3&r); 
+  Orientation operator()(const Kernel::Point_3&p,
+                         const Kernel::Point_3&q,
+                         const Kernel::Point_3&r);
 
 
   /// @}
@@ -7285,7 +7285,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `coplanar_side_of_bounded_circle_grp`
 
@@ -7298,14 +7298,14 @@ public:
   /// @{
 
   /*!
-    returns the bounded side of the circle defined 
-    by `p`, `q`, and `r` on which `s` lies. 
-    \pre `p`, `q`, `r`, and `s` are coplanar and `p`, `q`, and `r` are not collinear. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_3&p, 
-                          const Kernel::Point_3&q, 
-                          const Kernel::Point_3&r, 
-                          const Kernel::Point_3&s); 
+    returns the bounded side of the circle defined
+    by `p`, `q`, and `r` on which `s` lies.
+    \pre `p`, `q`, `r`, and `s` are coplanar and `p`, `q`, and `r` are not collinear.
+  */
+  Bounded_side operator()(const Kernel::Point_3&p,
+                          const Kernel::Point_3&q,
+                          const Kernel::Point_3&r,
+                          const Kernel::Point_3&s);
 
   /// @}
 
@@ -7315,7 +7315,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `coplanar_grp`
 
@@ -7328,12 +7328,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, if `p`, `q`, `r`, and `s` are coplanar. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r, 
-                  const Kernel::Point_3&s); 
+    returns `true`, if `p`, `q`, `r`, and `s` are coplanar.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r,
+                  const Kernel::Point_3&s);
 
   /// @}
 
@@ -7343,9 +7343,9 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
-  \sa `CGAL::Direction_2<Kernel>` 
+  \sa `CGAL::Direction_2<Kernel>`
 
 */
 class CounterclockwiseInBetween_2 {
@@ -7357,15 +7357,15 @@ public:
 
 
   /*!
-    returns `true` iff `d` is not equal to `d1`, and 
-    while rotating counterclockwise starting at `d1`, 
-    `d` is reached strictly before `d2` is reached. 
-    Note that true is returned if `d1` == `d2`, unless 
-    also `d` == `d1`. 
-  */ 
-  bool operator()(const Kernel::Direction_2&d, 
-                  const Kernel::Direction_2&d1, 
-                  const Kernel::Direction_2&d2); 
+    returns `true` iff `d` is not equal to `d1`, and
+    while rotating counterclockwise starting at `d1`,
+    `d` is reached strictly before `d2` is reached.
+    Note that true is returned if `d1` == `d2`, unless
+    also `d` == `d1`.
+  */
+  bool operator()(const Kernel::Direction_2&d,
+                  const Kernel::Direction_2&d1,
+                  const Kernel::Direction_2&d2);
 
 
   /// @}
@@ -7376,7 +7376,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `do_intersect_grp`
 
@@ -7390,20 +7390,20 @@ public:
 
 
   /*!
-    determines if two geometrical objects of type 
-    `Type1` and `Type2` intersect or not, for all pairs `Type1` and `Type2`, where 
-    the types `Type1` and `Type2` can be any of the 
-    following: 
+    determines if two geometrical objects of type
+    `Type1` and `Type2` intersect or not, for all pairs `Type1` and `Type2`, where
+    the types `Type1` and `Type2` can be any of the
+    following:
 
-    - `Kernel::Point_2` 
-    - `Kernel::Line_2` 
-    - `Kernel::Ray_2` 
-    - `Kernel::Segment_2` 
-    - `Kernel::Triangle_2` 
-    - `Kernel::Iso_rectangle_2` 
+    - `Kernel::Point_2`
+    - `Kernel::Line_2`
+    - `Kernel::Ray_2`
+    - `Kernel::Segment_2`
+    - `Kernel::Triangle_2`
+    - `Kernel::Iso_rectangle_2`
 
-  */ 
-  bool operator()(Type1 obj1, Type2 obj2); 
+  */
+  bool operator()(Type1 obj1, Type2 obj2);
 
   /// @}
 
@@ -7413,7 +7413,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `do_intersect_grp`
 
@@ -7426,27 +7426,27 @@ public:
   /// @{
 
   /*!
-    determines if two geometrical objects of type 
-    `Type1` and `Type2` intersect or not, for all pairs `Type1` and `Type2`, where 
-    the types `Type1` and 
-    `Type2` can be any of the following: 
+    determines if two geometrical objects of type
+    `Type1` and `Type2` intersect or not, for all pairs `Type1` and `Type2`, where
+    the types `Type1` and
+    `Type2` can be any of the following:
 
     - `Kernel::Point_2`
-    - `Kernel::Plane_3` 
-    - `Kernel::Line_3` 
-    - `Kernel::Ray_3` 
-    - `Kernel::Segment_3` 
-    - `Kernel::Triangle_3` 
-    - `CGAL::Bbox_3` 
+    - `Kernel::Plane_3`
+    - `Kernel::Line_3`
+    - `Kernel::Ray_3`
+    - `Kernel::Segment_3`
+    - `Kernel::Triangle_3`
+    - `CGAL::Bbox_3`
 
-    and also for `Type1` and `Type2` of respective types 
+    and also for `Type1` and `Type2` of respective types
 
-    - `Kernel::Triangle_3` and `Kernel::Tetrahedron_3` 
-    - `Kernel::Plane_3` and `Kernel::Sphere_3` (or the contrary) 
-    - `Kernel::Sphere_3` and `Kernel::Sphere_3`. 
+    - `Kernel::Triangle_3` and `Kernel::Tetrahedron_3`
+    - `Kernel::Plane_3` and `Kernel::Sphere_3` (or the contrary)
+    - `Kernel::Sphere_3` and `Kernel::Sphere_3`.
 
-  */ 
-  bool operator()(Type1 obj1, Type2 obj2); 
+  */
+  bool operator()(Type1 obj1, Type2 obj2);
 
   /// @}
 
@@ -7456,7 +7456,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_xy_grp`
 
@@ -7470,11 +7470,11 @@ public:
 
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate 
-    and the same Cartesian \f$ y\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate
+    and the same Cartesian \f$ y\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -7484,7 +7484,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `x_equal_grp`
 
@@ -7497,10 +7497,10 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
   /// @}
 
@@ -7510,7 +7510,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
 \sa `x_equal_grp`
 
@@ -7523,10 +7523,10 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ x\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -7536,7 +7536,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `y_equal_grp`
 
@@ -7549,10 +7549,10 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ y\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ y\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
   /// @}
 
@@ -7562,7 +7562,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `y_equal_grp`
 
@@ -7575,10 +7575,10 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ y\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ y\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -7588,7 +7588,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `z_equal_grp`
 
@@ -7601,10 +7601,10 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` and `q` have the same Cartesian \f$ z\f$-coordinate. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff `p` and `q` have the same Cartesian \f$ z\f$-coordinate.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -7614,80 +7614,80 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Direction_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Point_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
-  \sa `CGAL::Vector_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Direction_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Point_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
+  \sa `CGAL::Vector_2<Kernel>`
 
 */
 class Equal_2 {
 public:
 
   /// \name Operations
-  /// A model of this concept must provide the following operations. For each of 
-  /// them, it returns `true` iff `x` and `y` are equal. 
+  /// A model of this concept must provide the following operations. For each of
+  /// them, it returns `true` iff `x` and `y` are equal.
   /// @{
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Point_2& x, 
-                  const Kernel::Point_2& y); 
+   */
+  bool operator()(const Kernel::Point_2& x,
+                  const Kernel::Point_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Vector_2& x, 
-                  const Kernel::Vector_2& y); 
+   */
+  bool operator()(const Kernel::Vector_2& x,
+                  const Kernel::Vector_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Direction_2& x, 
-                  const Kernel::Direction_2& y); 
+   */
+  bool operator()(const Kernel::Direction_2& x,
+                  const Kernel::Direction_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Line_2& x, 
-                  const Kernel::Line_2& y); 
+   */
+  bool operator()(const Kernel::Line_2& x,
+                  const Kernel::Line_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Ray_2& x, 
-                  const Kernel::Ray_2& y); 
+   */
+  bool operator()(const Kernel::Ray_2& x,
+                  const Kernel::Ray_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Segment_2& x, 
-                  const Kernel::Segment_2& y); 
+   */
+  bool operator()(const Kernel::Segment_2& x,
+                  const Kernel::Segment_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Circle_2& x, 
-                  const Kernel::Circle_2& y); 
+   */
+  bool operator()(const Kernel::Circle_2& x,
+                  const Kernel::Circle_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Triangle_2& x, 
-                  const Kernel::Triangle_2& y); 
+   */
+  bool operator()(const Kernel::Triangle_2& x,
+                  const Kernel::Triangle_2& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Iso_rectangle_2& x, 
-                  const Kernel::Iso_rectangle_2& y); 
+   */
+  bool operator()(const Kernel::Iso_rectangle_2& x,
+                  const Kernel::Iso_rectangle_2& y);
 
   /// @}
 
@@ -7697,101 +7697,101 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Direction_3<Kernel>` 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Line_3<Kernel>` 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Point_3<Kernel>` 
-  \sa `CGAL::Ray_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
-  \sa `CGAL::Triangle_3<Kernel>` 
-  \sa `CGAL::Vector_3<Kernel>` 
+  \sa `CGAL::Direction_3<Kernel>`
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Line_3<Kernel>`
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Point_3<Kernel>`
+  \sa `CGAL::Ray_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
+  \sa `CGAL::Triangle_3<Kernel>`
+  \sa `CGAL::Vector_3<Kernel>`
 
 */
 class Equal_3 {
 public:
 
   /// \name Operations
-  /// A model of this concept must provide the following operations. For each of 
-  /// them, it returns `true` iff `x` and `y` are equal. 
+  /// A model of this concept must provide the following operations. For each of
+  /// them, it returns `true` iff `x` and `y` are equal.
   /// @{
 
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Point_3& x, 
-                  const Kernel::Point_3& y); 
+   */
+  bool operator()(const Kernel::Point_3& x,
+                  const Kernel::Point_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Vector_3& x, 
-                  const Kernel::Vector_3& y); 
+   */
+  bool operator()(const Kernel::Vector_3& x,
+                  const Kernel::Vector_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Direction_3& x, 
-                  const Kernel::Direction_3& y); 
+   */
+  bool operator()(const Kernel::Direction_3& x,
+                  const Kernel::Direction_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Line_3& x, 
-                  const Kernel::Line_3& y); 
+   */
+  bool operator()(const Kernel::Line_3& x,
+                  const Kernel::Line_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Plane_3& x, 
-                  const Kernel::Plane_3& y); 
+   */
+  bool operator()(const Kernel::Plane_3& x,
+                  const Kernel::Plane_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Ray_3& x, 
-                  const Kernel::Ray_3& y); 
+   */
+  bool operator()(const Kernel::Ray_3& x,
+                  const Kernel::Ray_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Segment_3& x, 
-                  const Kernel::Segment_3& y); 
+   */
+  bool operator()(const Kernel::Segment_3& x,
+                  const Kernel::Segment_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Circle_3& x, 
-                  const Kernel::Circle_3& y); 
+   */
+  bool operator()(const Kernel::Circle_3& x,
+                  const Kernel::Circle_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Sphere_3& x, 
-                  const Kernel::Sphere_3& y); 
+   */
+  bool operator()(const Kernel::Sphere_3& x,
+                  const Kernel::Sphere_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Triangle_3& x, 
-                  const Kernel::Triangle_3& y); 
+   */
+  bool operator()(const Kernel::Triangle_3& x,
+                  const Kernel::Triangle_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Tetrahedron_3& x, 
-                  const Kernel::Tetrahedron_3& y); 
+   */
+  bool operator()(const Kernel::Tetrahedron_3& x,
+                  const Kernel::Tetrahedron_3& y);
 
   /*!
 
-   */ 
-  bool operator()(const Kernel::Iso_cuboid_3& x, 
-                  const Kernel::Iso_cuboid_3& y); 
+   */
+  bool operator()(const Kernel::Iso_cuboid_3& x,
+                  const Kernel::Iso_cuboid_3& y);
 
   /// @}
 
@@ -7801,11 +7801,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
   \sa `::Kernel::HasOnBoundedSide_2`
   \sa `::Kernel::HasOnUnboundedSide_2`
   \sa `::Kernel::BoundedSide_2`
@@ -7819,22 +7819,22 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the boundary of `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_2&c, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the boundary of `c`.
+  */
+  bool operator()(const Kernel::Circle_2&c,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the boundary of `i`. 
-  */ 
-  bool operator()(const Kernel::Iso_rectangle_2&i, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the boundary of `i`.
+  */
+  bool operator()(const Kernel::Iso_rectangle_2&i,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the boundary of `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&t, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the boundary of `t`.
+  */
+  bool operator()(const Kernel::Triangle_2&t,
+                  const Kernel::Point_2&p);
 
 
   /// @}
@@ -7845,11 +7845,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
   \sa `::Kernel::HasOnBoundedSide_3`
   \sa `::Kernel::HasOnUnboundedSide_3`
   \sa `::Kernel::BoundedSide_3`
@@ -7863,22 +7863,22 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the boundary of `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the boundary of `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the boundary of `t`. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the boundary of `t`.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&t,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the boundary of `c`. 
-  */ 
-  bool operator()(const Kernel::Iso_cuboid_3&c, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the boundary of `c`.
+  */
+  bool operator()(const Kernel::Iso_cuboid_3&c,
+                  const Kernel::Point_3&p);
 
   /// @}
 
@@ -7888,11 +7888,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
   \sa `::Kernel::HasOnUnboundedSide_2`
   \sa `::Kernel::HasOnBoundary_2`
   \sa `::Kernel::BoundedSide_2`
@@ -7906,22 +7906,22 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the bounded side of `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_2&c, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the bounded side of `c`.
+  */
+  bool operator()(const Kernel::Circle_2&c,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the bounded side of `i`. 
-  */ 
-  bool operator()(const Kernel::Iso_rectangle_2&i, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the bounded side of `i`.
+  */
+  bool operator()(const Kernel::Iso_rectangle_2&i,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the bounded side of `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&t, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the bounded side of `t`.
+  */
+  bool operator()(const Kernel::Triangle_2&t,
+                  const Kernel::Point_2&p);
 
   /// @}
 
@@ -7931,11 +7931,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
   \sa `::Kernel::HasOnUnboundedSide_3`
   \sa `::Kernel::HasOnBoundary_3`
   \sa `::Kernel::BoundedSide_3`
@@ -7949,22 +7949,22 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the bounded side of `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the bounded side of `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the bounded side of `t`. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the bounded side of `t`.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&t,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the bounded side of `c`. 
-  */ 
-  bool operator()(const Kernel::Iso_cuboid_3&c, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the bounded side of `c`.
+  */
+  bool operator()(const Kernel::Iso_cuboid_3&c,
+                  const Kernel::Point_3&p);
 
   /*!
     returns true iff the line segment `ab` is inside the union of the
@@ -7983,11 +7983,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class HasOnNegativeSide_2 {
@@ -7999,23 +7999,23 @@ public:
 
 
   /*!
-    returns true iff `p` lies on the negative side of `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_2&c, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the negative side of `c`.
+  */
+  bool operator()(const Kernel::Circle_2&c,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the negative side of `l` 
-    (`l` is considered a half-space). 
-  */ 
-  bool operator()(const Kernel::Line_2&l, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the negative side of `l`
+    (`l` is considered a half-space).
+  */
+  bool operator()(const Kernel::Line_2&l,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the negative side of `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&t, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the negative side of `t`.
+  */
+  bool operator()(const Kernel::Triangle_2&t,
+                  const Kernel::Point_2&p);
 
   /// @}
 
@@ -8025,11 +8025,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class HasOnNegativeSide_3 {
@@ -8040,23 +8040,23 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the negative side of `h` 
-    (`h` is considered a half-space). 
-  */ 
-  bool operator()(const Kernel::Plane_3&h, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the negative side of `h`
+    (`h` is considered a half-space).
+  */
+  bool operator()(const Kernel::Plane_3&h,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the negative side of `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the negative side of `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the negative side of `t`. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the negative side of `t`.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&t,
+                  const Kernel::Point_3&p);
 
   /// @}
 
@@ -8066,11 +8066,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class HasOnPositiveSide_2 {
@@ -8081,23 +8081,23 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the positive side of `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_2&c, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the positive side of `c`.
+  */
+  bool operator()(const Kernel::Circle_2&c,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the positive side of `l` 
-    (`l` is considered a half-space). 
-  */ 
-  bool operator()(const Kernel::Line_2&l, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the positive side of `l`
+    (`l` is considered a half-space).
+  */
+  bool operator()(const Kernel::Line_2&l,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the positive side of `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&t, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the positive side of `t`.
+  */
+  bool operator()(const Kernel::Triangle_2&t,
+                  const Kernel::Point_2&p);
 
   /// @}
 
@@ -8107,11 +8107,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class HasOnPositiveSide_3 {
@@ -8122,23 +8122,23 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the positive side of `h` 
-    (`h` is considered a half-space). 
-  */ 
-  bool operator()(const Kernel::Plane_3&h, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the positive side of `h`
+    (`h` is considered a half-space).
+  */
+  bool operator()(const Kernel::Plane_3&h,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the positive side of `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the positive side of `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the positive side of `t`. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the positive side of `t`.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&t,
+                  const Kernel::Point_3&p);
 
   /// @}
 
@@ -8148,11 +8148,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
   \sa `::Kernel::HasOnBoundedSide_2`
   \sa `::Kernel::HasOnBoundary_2`
   \sa `::Kernel::BoundedSide_2`
@@ -8167,22 +8167,22 @@ public:
 
 
   /*!
-    returns true iff `p` lies on the unbounded side of `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_2&c, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the unbounded side of `c`.
+  */
+  bool operator()(const Kernel::Circle_2&c,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the unbounded side of `i`. 
-  */ 
-  bool operator()(const Kernel::Iso_rectangle_2&i, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the unbounded side of `i`.
+  */
+  bool operator()(const Kernel::Iso_rectangle_2&i,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on the unbounded side of `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&t, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on the unbounded side of `t`.
+  */
+  bool operator()(const Kernel::Triangle_2&t,
+                  const Kernel::Point_2&p);
 
 
   /// @}
@@ -8193,11 +8193,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
   \sa `::Kernel::HasOnBoundedSide_3`
   \sa `::Kernel::HasOnBoundary_3`
   \sa `::Kernel::BoundedSide_3`
@@ -8211,22 +8211,22 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on the unbounded side of `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the unbounded side of `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the unbounded side of `t`. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the unbounded side of `t`.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&t,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on the unbounded side of `c`. 
-  */ 
-  bool operator()(const Kernel::Iso_cuboid_3&c, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on the unbounded side of `c`.
+  */
+  bool operator()(const Kernel::Iso_cuboid_3&c,
+                  const Kernel::Point_3&p);
 
 
   /// @}
@@ -8237,11 +8237,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class HasOn_2 {
@@ -8253,22 +8253,22 @@ public:
 
 
   /*!
-    returns true iff `p` lies on `l`. 
-  */ 
-  bool operator()(const Kernel::Line_2&l, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on `l`.
+  */
+  bool operator()(const Kernel::Line_2&l,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on `r`. 
-  */ 
-  bool operator()(const Kernel::Ray_2&r, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on `r`.
+  */
+  bool operator()(const Kernel::Ray_2&r,
+                  const Kernel::Point_2&p);
 
   /*!
-    returns true iff `p` lies on `s`. 
-  */ 
-  bool operator()(const Kernel::Segment_2&s, 
-                  const Kernel::Point_2&p); 
+    returns true iff `p` lies on `s`.
+  */
+  bool operator()(const Kernel::Segment_2&s,
+                  const Kernel::Point_2&p);
 
   /// @}
 
@@ -8278,16 +8278,16 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_3<Kernel>` 
-  \sa `CGAL::Line_3<Kernel>` 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Point_3<Kernel>` 
-  \sa `CGAL::Ray_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
+  \sa `CGAL::Line_3<Kernel>`
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Point_3<Kernel>`
+  \sa `CGAL::Ray_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class HasOn_3 {
@@ -8298,64 +8298,64 @@ public:
   /// @{
 
   /*!
-    returns true iff `p` lies on `c`. 
-  */ 
-  bool operator()(const Kernel::Circle_3&c, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `c`.
+  */
+  bool operator()(const Kernel::Circle_3&c,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on `l`. 
-  */ 
-  bool operator()(const Kernel::Line_3&l, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `l`.
+  */
+  bool operator()(const Kernel::Line_3&l,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on `r`. 
-  */ 
-  bool operator()(const Kernel::Ray_3&r, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `r`.
+  */
+  bool operator()(const Kernel::Ray_3&r,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on `s`. 
-  */ 
-  bool operator()(const Kernel::Segment_3&s, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `s`.
+  */
+  bool operator()(const Kernel::Segment_3&s,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `p` lies on `pl`. 
-  */ 
-  bool operator()(const Kernel::Plane_3&pl, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `pl`.
+  */
+  bool operator()(const Kernel::Plane_3&pl,
+                  const Kernel::Point_3&p);
 
   /*!
-    returns true iff `l` lies on `pl`. 
-  */ 
-  bool operator()(const Kernel::Plane_3&pl, 
-                  const Kernel::Line_3&l); 
+    returns true iff `l` lies on `pl`.
+  */
+  bool operator()(const Kernel::Plane_3&pl,
+                  const Kernel::Line_3&l);
 
   /*!
-    returns true iff `c` lies on `pl`. 
-  */ 
-  bool operator()(const Kernel::Plane_3&pl, 
-                  const Kernel::Circle_3&c); 
+    returns true iff `c` lies on `pl`.
+  */
+  bool operator()(const Kernel::Plane_3&pl,
+                  const Kernel::Circle_3&c);
 
   /*!
-    returns true iff `c` lies on `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Point_3&c); 
+    returns true iff `c` lies on `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Point_3&c);
 
   /*!
-    returns true iff `c` lies on `s`. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&s, 
-                  const Kernel::Circle_3&c); 
+    returns true iff `c` lies on `s`.
+  */
+  bool operator()(const Kernel::Sphere_3&s,
+                  const Kernel::Circle_3&c);
 
   /*!
-    returns true iff `p` lies on `t`. 
-  */ 
-  bool operator()(const Kernel::Triangle_3&t, 
-                  const Kernel::Point_3&p); 
+    returns true iff `p` lies on `t`.
+  */
+  bool operator()(const Kernel::Triangle_3&t,
+                  const Kernel::Point_3&p);
 
   /// @}
 
@@ -8365,7 +8365,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa \link intersection_grp `CGAL::intersection()` \endlink
   \sa `CGAL::cpp11::result_of`
@@ -8373,18 +8373,18 @@ public:
 */
 class Intersect_2 {
 public:
-  
+
   /// \name Operations
   /// A model of this concept must provide:
   /// @{
 
   /*!
-    computes the intersection region of two geometrical objects of type 
+    computes the intersection region of two geometrical objects of type
     `Type1` and `Type2`, for all pairs `Type1` and `Type2`.
     For details see the reference manual page for \link intersection_grp `CGAL::intersection()` \endlink.
-  */ 
+  */
   CGAL::cpp11::result_of<Kernel::Intersect_2(Type1, Type2)>::type
-  operator()(Type1 obj1, Type2 obj2); 
+  operator()(Type1 obj1, Type2 obj2);
 
   /// @}
 
@@ -8394,7 +8394,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two or three arguments) 
+  \cgalRefines `AdaptableFunctor` (with two or three arguments)
 
   \sa intersection_linear_grp
   \sa `CGAL::cpp11::result_of`
@@ -8408,14 +8408,14 @@ public:
   /// @{
 
   /*!
-    computes the intersection region of two geometrical 
-    objects of type `Type1` and `Type2`. 
+    computes the intersection region of two geometrical
+    objects of type `Type1` and `Type2`.
     For details see the reference manual page for \ref intersection_linear_grp.
-  */ 
-  CGAL::cpp11::result_of<Kernel::Intersect_3(Type1, Type2)>::type 
- operator()(Type1 obj1, Type2 obj2); 
+  */
+  CGAL::cpp11::result_of<Kernel::Intersect_3(Type1, Type2)>::type
+ operator()(Type1 obj1, Type2 obj2);
 
- 
+
 
   /// @}
 
@@ -8425,14 +8425,14 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Iso_rectangle_2<Kernel>` 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Iso_rectangle_2<Kernel>`
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class IsDegenerate_2 {
@@ -8443,34 +8443,34 @@ public:
   /// @{
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Circle_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Circle_2&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Iso_rectangle_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Iso_rectangle_2&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Line_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Line_2&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Ray_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Ray_2&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Segment_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Segment_2&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Triangle_2&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Triangle_2&o);
 
   /// @}
 
@@ -8480,18 +8480,18 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Circle_3<Kernel>` 
-  \sa `CGAL::Iso_cuboid_3<Kernel>` 
-  \sa `CGAL::Line_3<Kernel>` 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Point_3<Kernel>` 
-  \sa `CGAL::Ray_3<Kernel>` 
-  \sa `CGAL::Segment_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
-  \sa `CGAL::Triangle_3<Kernel>` 
+  \sa `CGAL::Circle_3<Kernel>`
+  \sa `CGAL::Iso_cuboid_3<Kernel>`
+  \sa `CGAL::Line_3<Kernel>`
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Point_3<Kernel>`
+  \sa `CGAL::Ray_3<Kernel>`
+  \sa `CGAL::Segment_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
+  \sa `CGAL::Triangle_3<Kernel>`
 
 */
 class IsDegenerate_3 {
@@ -8502,49 +8502,49 @@ public:
   /// @{
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Circle_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Circle_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Iso_cuboid_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Iso_cuboid_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Line_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Line_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Plane_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Plane_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Ray_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Ray_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Segment_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Segment_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Sphere_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Sphere_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Tetrahedron_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Tetrahedron_3&o);
 
   /*!
-    returns true iff `o` is degenerate. 
-  */ 
-  bool operator()(const Kernel::Triangle_3&o); 
+    returns true iff `o` is degenerate.
+  */
+  bool operator()(const Kernel::Triangle_3&o);
 
   /// @}
 
@@ -8554,11 +8554,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class IsHorizontal_2 {
@@ -8569,19 +8569,19 @@ public:
   /// @{
 
   /*!
-    returns true iff `o` is horizontal. 
-  */ 
-  bool operator()(const Kernel::Line_2&o); 
+    returns true iff `o` is horizontal.
+  */
+  bool operator()(const Kernel::Line_2&o);
 
   /*!
-    returns true iff `o` is horizontal. 
-  */ 
-  bool operator()(const Kernel::Ray_2&o); 
+    returns true iff `o` is horizontal.
+  */
+  bool operator()(const Kernel::Ray_2&o);
 
   /*!
-    returns true iff `o` is horizontal. 
-  */ 
-  bool operator()(const Kernel::Segment_2&o); 
+    returns true iff `o` is horizontal.
+  */
+  bool operator()(const Kernel::Segment_2&o);
 
   /// @}
 
@@ -8591,11 +8591,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with one argument) 
+  \cgalRefines `AdaptableFunctor` (with one argument)
 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Ray_2<Kernel>` 
-  \sa `CGAL::Segment_2<Kernel>` 
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Ray_2<Kernel>`
+  \sa `CGAL::Segment_2<Kernel>`
 
 */
 class IsVertical_2 {
@@ -8607,19 +8607,19 @@ public:
 
 
   /*!
-    returns true iff `o` is vertical. 
-  */ 
-  bool operator()(const Kernel::Line_2&o); 
+    returns true iff `o` is vertical.
+  */
+  bool operator()(const Kernel::Line_2&o);
 
   /*!
-    returns true iff `o` is vertical. 
-  */ 
-  bool operator()(const Kernel::Ray_2&o); 
+    returns true iff `o` is vertical.
+  */
+  bool operator()(const Kernel::Ray_2&o);
 
   /*!
-    returns true iff `o` is vertical. 
-  */ 
-  bool operator()(const Kernel::Segment_2&o); 
+    returns true iff `o` is vertical.
+  */
+  bool operator()(const Kernel::Segment_2&o);
 
 
   /// @}
@@ -8630,7 +8630,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `left_turn_grp`
 
@@ -8643,12 +8643,12 @@ public:
   /// @{
 
   /*!
-    returns `true`, iff the three points `p`, `q` 
-    and `r` form a left turn. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns `true`, iff the three points `p`, `q`
+    and `r` form a left turn.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
   /// @}
 
@@ -8658,7 +8658,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `has_smaller_distance_to_point_grp`
 
@@ -8671,12 +8671,12 @@ public:
   /// @{
 
   /*!
-    returns true iff the distance of `q` to `p` is 
-    smaller than the distance of `r` to `p`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns true iff the distance of `q` to `p` is
+    smaller than the distance of `r` to `p`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
 
   /// @}
@@ -8687,7 +8687,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `has_smaller_distance_to_point_grp`
 
@@ -8700,12 +8700,12 @@ public:
   /// @{
 
   /*!
-    returns true iff the distance of `q` to `p` is 
-    smaller than the distance of `r` to `p`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q, 
-                  const Kernel::Point_3&r); 
+    returns true iff the distance of `q` to `p` is
+    smaller than the distance of `r` to `p`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q,
+                  const Kernel::Point_3&r);
 
   /// @}
 
@@ -8715,7 +8715,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
 */
 class LessRotateCCW_2 {
@@ -8727,16 +8727,16 @@ public:
 
 
   /*!
-    returns true iff the three points `p`, `q` 
-    and `r` form a left turn or if they are collinear and 
-    the distance of `q` to `p` is 
-    larger than the distance of `r` to `p`, where `p` is the point 
-    passed to the object at construction. 
-    \pre `p` does not lie in the interior of the segment `rq`, i.e.\ `p` is an extreme point with respect to \f$ \{p,q,r\}\f$. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q, 
-                  const Kernel::Point_2&r); 
+    returns true iff the three points `p`, `q`
+    and `r` form a left turn or if they are collinear and
+    the distance of `q` to `p` is
+    larger than the distance of `r` to `p`, where `p` is the point
+    passed to the object at construction.
+    \pre `p` does not lie in the interior of the segment `rq`, i.e.\ `p` is an extreme point with respect to \f$ \{p,q,r\}\f$.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q,
+                  const Kernel::Point_2&r);
 
   /// @}
 
@@ -8760,25 +8760,25 @@ public:
 
   /*!
 
-    returns `true` if the signed distance from `p` and the oriented line `l` 
-    is smaller than the signed distance of `q` and `l`. 
+    returns `true` if the signed distance from `p` and the oriented line `l`
+    is smaller than the signed distance of `q` and `l`.
 
-  */ 
-  bool operator()(const Kernel::Line_2& l, 
-                  const Kernel::Point_2& p, 
-                  const Kernel::Point_2& q); 
+  */
+  bool operator()(const Kernel::Line_2& l,
+                  const Kernel::Point_2& p,
+                  const Kernel::Point_2& q);
 
   /*!
 
-    returns `true` if the signed distance from `r` and the oriented line `l` 
-    defined by `p` and `q` is smaller than the signed distance of `s` and `l`. 
-    \pre `p != q`. 
+    returns `true` if the signed distance from `r` and the oriented line `l`
+    defined by `p` and `q` is smaller than the signed distance of `s` and `l`.
+    \pre `p != q`.
 
-  */ 
-  bool operator()(const Kernel::Point_2& p, 
-                  const Kernel::Point_2& q, 
-                  const Kernel::Point_2&r, 
-                  const Kernel::Point_2&s); 
+  */
+  bool operator()(const Kernel::Point_2& p,
+                  const Kernel::Point_2& q,
+                  const Kernel::Point_2&r,
+                  const Kernel::Point_2&s);
 
   /// @}
 
@@ -8788,7 +8788,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `has_smaller_signed_distance_to_plane_grp`
 
@@ -8801,24 +8801,24 @@ public:
   /// @{
 
   /*!
-    returns true, iff the signed distance from point `q` to plane 
-    `p` is smaller than the signed distance from point `r` to `p`. 
-  */ 
-  bool operator()(const Kernel::Plane_3& p, 
-                  const Kernel::Point_3& q, 
-                  const Kernel::Point_3& r); 
+    returns true, iff the signed distance from point `q` to plane
+    `p` is smaller than the signed distance from point `r` to `p`.
+  */
+  bool operator()(const Kernel::Plane_3& p,
+                  const Kernel::Point_3& q,
+                  const Kernel::Point_3& r);
 
   /*!
-    returns true, iff the signed distance from point `q` to the plane 
-    `p` defined by `p1, p2, p3` is smaller than the signed distance 
-    from point `r` to `p`. 
-    \pre `p, q`, and `r` are not collinear. 
-  */ 
-  bool operator()(const Kernel::Point_3& p1, 
-                  const Kernel::Point_3& p2, 
-                  const Kernel::Point_3& p3, 
-                  const Kernel::Point_3& q, 
-                  const Kernel::Point_3& r); 
+    returns true, iff the signed distance from point `q` to the plane
+    `p` defined by `p1, p2, p3` is smaller than the signed distance
+    from point `r` to `p`.
+    \pre `p, q`, and `r` are not collinear.
+  */
+  bool operator()(const Kernel::Point_3& p1,
+                  const Kernel::Point_3& p2,
+                  const Kernel::Point_3& p3,
+                  const Kernel::Point_3& q,
+                  const Kernel::Point_3& r);
 
   /// @}
 
@@ -8828,7 +8828,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `lexicographically_xyz_smaller_grp`
 
@@ -8841,14 +8841,14 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the 
-    \f$ x\f$-coordinate of `q` or if the are the same and 
-    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`, or, 
-    if both \f$ x\f$- and \f$ y\f$- coordinate are identical and 
-    the \f$ z\f$-coordinate of `p` is smaller than the \f$ z\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the
+    \f$ x\f$-coordinate of `q` or if the are the same and
+    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`, or,
+    if both \f$ x\f$- and \f$ y\f$- coordinate are identical and
+    the \f$ z\f$-coordinate of `p` is smaller than the \f$ z\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -8858,7 +8858,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `lexicographically_xy_smaller_grp`
 
@@ -8871,12 +8871,12 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the 
-    \f$ x\f$-coordinate of `q` or if the are the same and 
-    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the
+    \f$ x\f$-coordinate of `q` or if the are the same and
+    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
 
   /// @}
@@ -8887,7 +8887,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_xy_grp`
 
@@ -8900,12 +8900,12 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the 
-    \f$ x\f$-coordinate of `q` or if the are the same and 
-    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the
+    \f$ x\f$-coordinate of `q` or if the are the same and
+    the \f$ y\f$-coordinate of `p` is smaller than the \f$ y\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -8915,7 +8915,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_x_grp`
 
@@ -8929,11 +8929,11 @@ public:
 
 
   /*!
-    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the 
-    \f$ x\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the
+    \f$ x\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
   /// @}
 
@@ -8943,7 +8943,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_x_grp`
 
@@ -8956,11 +8956,11 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the 
-    \f$ x\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff the \f$ x\f$-coordinate of `p` is smaller than the
+    \f$ x\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -8970,7 +8970,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_yx_grp`
 
@@ -8983,12 +8983,12 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the 
-    \f$ y\f$-coordinate of `q` or if the are the same and 
-    the \f$ x\f$-coordinate of `p` is smaller than the \f$ x\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the
+    \f$ y\f$-coordinate of `q` or if the are the same and
+    the \f$ x\f$-coordinate of `p` is smaller than the \f$ x\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
   /// @}
 
@@ -8998,7 +8998,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_y_grp`
 
@@ -9011,11 +9011,11 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the 
-    \f$ y\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_2&p, 
-                  const Kernel::Point_2&q); 
+    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the
+    \f$ y\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_2&p,
+                  const Kernel::Point_2&q);
 
   ///@}
 
@@ -9025,7 +9025,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
   \sa `compare_y_grp`
 
@@ -9038,11 +9038,11 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the 
-    \f$ y\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff the \f$ y\f$-coordinate of `p` is smaller than the
+    \f$ y\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -9063,11 +9063,11 @@ public:
   /// @{
 
   /*!
-    returns true iff the \f$ z\f$-coordinate of `p` is smaller than the 
-    \f$ z\f$-coordinate of `q`. 
-  */ 
-  bool operator()(const Kernel::Point_3&p, 
-                  const Kernel::Point_3&q); 
+    returns true iff the \f$ z\f$-coordinate of `p` is smaller than the
+    \f$ z\f$-coordinate of `q`.
+  */
+  bool operator()(const Kernel::Point_3&p,
+                  const Kernel::Point_3&q);
 
   /// @}
 
@@ -9078,7 +9078,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with three arguments) 
+  \cgalRefines `AdaptableFunctor` (with three arguments)
 
   \sa `orientation_grp`
 
@@ -9091,22 +9091,22 @@ public:
   /// @{
 
   /*!
-    returns \ref CGAL::LEFT_TURN, if `r` lies to the left of the oriented 
-    line `l` defined by `p` and `q`, returns \ref CGAL::RIGHT_TURN if `r` 
-    lies to the right of `l`, and returns \ref CGAL::COLLINEAR if `r` lies 
-    on `l`. 
-  */ 
-  Orientation operator()(const Kernel::Point_2&p, 
-                         const Kernel::Point_2&q, 
-                         const Kernel::Point_2&r); 
+    returns \ref CGAL::LEFT_TURN, if `r` lies to the left of the oriented
+    line `l` defined by `p` and `q`, returns \ref CGAL::RIGHT_TURN if `r`
+    lies to the right of `l`, and returns \ref CGAL::COLLINEAR if `r` lies
+    on `l`.
+  */
+  Orientation operator()(const Kernel::Point_2&p,
+                         const Kernel::Point_2&q,
+                         const Kernel::Point_2&r);
 
   /*!
-    returns \ref CGAL::LEFT_TURN if `u` and `v` form a left turn, 
-    returns \ref CGAL::RIGHT_TURN if `u` and `v` form a right turn, 
-    and returns \ref CGAL::COLLINEAR if `u` and `v` are collinear. 
-    */ 
-  Orientation operator()(const Kernel::Vector_2&u, 
-                         const Kernel::Vector_2&v); 
+    returns \ref CGAL::LEFT_TURN if `u` and `v` form a left turn,
+    returns \ref CGAL::RIGHT_TURN if `u` and `v` form a right turn,
+    and returns \ref CGAL::COLLINEAR if `u` and `v` are collinear.
+    */
+  Orientation operator()(const Kernel::Vector_2&u,
+                         const Kernel::Vector_2&v);
 
 
   /// @}
@@ -9117,7 +9117,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `orientation_grp`
 
@@ -9130,29 +9130,29 @@ public:
   /// @{
 
   /*!
-    returns \ref CGAL::POSITIVE, if `s` lies on the positive side of the oriented 
-    plane `h` defined by `p`, `q`, and `r`, returns \ref CGAL::NEGATIVE if `s` 
-    lies on the negative side of `h`, and returns \ref CGAL::COPLANAR if `s` lies 
-    on `h`. 
-  */ 
-  Orientation operator()(const Kernel::Point_3&p, 
-                         const Kernel::Point_3&q, 
-                         const Kernel::Point_3&r, 
-                         const Kernel::Point_3&s); 
+    returns \ref CGAL::POSITIVE, if `s` lies on the positive side of the oriented
+    plane `h` defined by `p`, `q`, and `r`, returns \ref CGAL::NEGATIVE if `s`
+    lies on the negative side of `h`, and returns \ref CGAL::COPLANAR if `s` lies
+    on `h`.
+  */
+  Orientation operator()(const Kernel::Point_3&p,
+                         const Kernel::Point_3&q,
+                         const Kernel::Point_3&r,
+                         const Kernel::Point_3&s);
 
   /*!
-    returns \ref CGAL::POSITIVE if `u`, `v` and `w` are positively oriented, 
-    returns \ref CGAL::NEGATIVE if `u`, `v` and `w` are negatively oriented, 
-    and returns \ref CGAL::COPLANAR if `u`, `v` and `w` are coplanar. 
-  */ 
-  Orientation operator()(const Kernel::Vector_3&u, 
-                         const Kernel::Vector_3&v, 
-                         const Kernel::Vector_3&w); 
+    returns \ref CGAL::POSITIVE if `u`, `v` and `w` are positively oriented,
+    returns \ref CGAL::NEGATIVE if `u`, `v` and `w` are negatively oriented,
+    and returns \ref CGAL::COPLANAR if `u`, `v` and `w` are coplanar.
+  */
+  Orientation operator()(const Kernel::Vector_3&u,
+                         const Kernel::Vector_3&v,
+                         const Kernel::Vector_3&w);
 
   /*!
-    returns the orientation of the sphere `s`. 
-  */ 
-  Orientation operator()(const Kernel::Sphere_3&s); 
+    returns the orientation of the sphere `s`.
+  */
+  Orientation operator()(const Kernel::Sphere_3&s);
 
 
   /// @}
@@ -9163,11 +9163,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Circle_2<Kernel>` 
-  \sa `CGAL::Line_2<Kernel>` 
-  \sa `CGAL::Triangle_2<Kernel>` 
+  \sa `CGAL::Circle_2<Kernel>`
+  \sa `CGAL::Line_2<Kernel>`
+  \sa `CGAL::Triangle_2<Kernel>`
 
 */
 class OrientedSide_2 {
@@ -9179,28 +9179,28 @@ public:
 
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented circle `c`. 
-  */ 
-  Oriented_side operator()(const Kernel::Circle_2&c, 
-                           const Kernel::Point_2&p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented circle `c`.
+  */
+  Oriented_side operator()(const Kernel::Circle_2&c,
+                           const Kernel::Point_2&p);
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented line `l`. 
-  */ 
-  Oriented_side operator()(const Kernel::Line_2&l, 
-                           const Kernel::Point_2&p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented line `l`.
+  */
+  Oriented_side operator()(const Kernel::Line_2&l,
+                           const Kernel::Point_2&p);
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented triangle `t`. 
-  */ 
-  Oriented_side operator()(const Kernel::Triangle_2&t, 
-                           const Kernel::Point_2&p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented triangle `t`.
+  */
+  Oriented_side operator()(const Kernel::Triangle_2&t,
+                           const Kernel::Point_2&p);
 
   /// @}
 
@@ -9210,11 +9210,11 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with two arguments) 
+  \cgalRefines `AdaptableFunctor` (with two arguments)
 
-  \sa `CGAL::Plane_3<Kernel>` 
-  \sa `CGAL::Sphere_3<Kernel>` 
-  \sa `CGAL::Tetrahedron_3<Kernel>` 
+  \sa `CGAL::Plane_3<Kernel>`
+  \sa `CGAL::Sphere_3<Kernel>`
+  \sa `CGAL::Tetrahedron_3<Kernel>`
 
 */
 class OrientedSide_3 {
@@ -9225,28 +9225,28 @@ public:
   /// @{
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented plane `h`. 
-  */ 
-  Oriented_side operator()(const Kernel::Plane_3&h, 
-                           const Kernel::Point_3&p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented plane `h`.
+  */
+  Oriented_side operator()(const Kernel::Plane_3&h,
+                           const Kernel::Point_3&p);
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented tetrahedron `t`. 
-  */ 
-  Oriented_side operator()(const Kernel::Tetrahedron_3&t, 
-                           const Kernel::Point_3&p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the constant \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented tetrahedron `t`.
+  */
+  Oriented_side operator()(const Kernel::Tetrahedron_3&t,
+                           const Kernel::Point_3&p);
 
   /*!
-    returns \ref CGAL::ON_ORIENTED_BOUNDARY, 
-    \ref CGAL::ON_NEGATIVE_SIDE, or the \ref CGAL::ON_POSITIVE_SIDE, 
-    depending on the position of `p` relative to the oriented sphere `s`. 
-  */ 
-  Oriented_side operator()(const Kernel::Sphere_3& s, 
-                           const Kernel::Point_3& p); 
+    returns \ref CGAL::ON_ORIENTED_BOUNDARY,
+    \ref CGAL::ON_NEGATIVE_SIDE, or the \ref CGAL::ON_POSITIVE_SIDE,
+    depending on the position of `p` relative to the oriented sphere `s`.
+  */
+  Oriented_side operator()(const Kernel::Sphere_3& s,
+                           const Kernel::Point_3& p);
 
 
   /// @}
@@ -9491,7 +9491,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `side_of_bounded_circle_grp`
 
@@ -9505,23 +9505,23 @@ public:
 
 
   /*!
-    returns the relative position of point `t` 
-    to the circle defined by `p`, `q` and `r`. The order 
-    of the points `p`, `q` and `r` does not matter. 
-    \pre `p, q` and `r` are not collinear. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_2&p, 
-                          const Kernel::Point_2&q, 
-                          const Kernel::Point_2&r, 
-                          const Kernel::Point_2&t); 
+    returns the relative position of point `t`
+    to the circle defined by `p`, `q` and `r`. The order
+    of the points `p`, `q` and `r` does not matter.
+    \pre `p, q` and `r` are not collinear.
+  */
+  Bounded_side operator()(const Kernel::Point_2&p,
+                          const Kernel::Point_2&q,
+                          const Kernel::Point_2&r,
+                          const Kernel::Point_2&t);
 
   /*!
-    returns the position of the point `t` relative to the circle 
-    that has `pq` as its diameter. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_2&p, 
-                          const Kernel::Point_2&q, 
-                          const Kernel::Point_2&t); 
+    returns the position of the point `t` relative to the circle
+    that has `pq` as its diameter.
+  */
+  Bounded_side operator()(const Kernel::Point_2&p,
+                          const Kernel::Point_2&q,
+                          const Kernel::Point_2&t);
 
   /// @}
 
@@ -9531,7 +9531,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with five arguments) 
+  \cgalRefines `AdaptableFunctor` (with five arguments)
 
   \sa `side_of_bounded_sphere_grp`
 
@@ -9545,34 +9545,34 @@ public:
 
 
   /*!
-    returns the relative position of point `t` 
-    to the sphere defined by `p`, `q`, `r`, and `s`. The order 
-    of the points `p`, `q`, `r`, and `s` does not matter. 
-    \pre `p, q, r` and `s` are not coplanar. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_3&p, 
-                          const Kernel::Point_3&q, 
-                          const Kernel::Point_3&r, 
-                          const Kernel::Point_3&s, 
-                          const Kernel::Point_3&t); 
+    returns the relative position of point `t`
+    to the sphere defined by `p`, `q`, `r`, and `s`. The order
+    of the points `p`, `q`, `r`, and `s` does not matter.
+    \pre `p, q, r` and `s` are not coplanar.
+  */
+  Bounded_side operator()(const Kernel::Point_3&p,
+                          const Kernel::Point_3&q,
+                          const Kernel::Point_3&r,
+                          const Kernel::Point_3&s,
+                          const Kernel::Point_3&t);
 
   /*!
-    returns the position of the point `t` relative to the sphere 
-    passing through `p`, `q`, and `r` and whose center is in the plane defined 
-    by these three points. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_3&p, 
-                          const Kernel::Point_3&q, 
-                          const Kernel::Point_3&r, 
-                          const Kernel::Point_3&t); 
+    returns the position of the point `t` relative to the sphere
+    passing through `p`, `q`, and `r` and whose center is in the plane defined
+    by these three points.
+  */
+  Bounded_side operator()(const Kernel::Point_3&p,
+                          const Kernel::Point_3&q,
+                          const Kernel::Point_3&r,
+                          const Kernel::Point_3&t);
 
   /*!
-    returns the position of the point `t` relative to the sphere 
-    that has `pq` as its diameter. 
-  */ 
-  Bounded_side operator()(const Kernel::Point_3&p, 
-                          const Kernel::Point_3&q, 
-                          const Kernel::Point_3&t); 
+    returns the position of the point `t` relative to the sphere
+    that has `pq` as its diameter.
+  */
+  Bounded_side operator()(const Kernel::Point_3&p,
+                          const Kernel::Point_3&q,
+                          const Kernel::Point_3&t);
 
 
   /// @}
@@ -9583,7 +9583,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with four arguments) 
+  \cgalRefines `AdaptableFunctor` (with four arguments)
 
   \sa `side_of_oriented_circle_grp`
 
@@ -9597,22 +9597,22 @@ public:
 
 
   /*!
-    returns the relative position of point `t` 
-    to the oriented circle defined by `p`, `q` and `r`. 
-    The order of the points `p`, `q` and `r` is important, 
-    since it determines the orientation of the implicitly 
-    constructed circle. 
+    returns the relative position of point `t`
+    to the oriented circle defined by `p`, `q` and `r`.
+    The order of the points `p`, `q` and `r` is important,
+    since it determines the orientation of the implicitly
+    constructed circle.
 
-    If `p`, `q` and `r` are collinear, the circle degenerates in a line. 
-    \ref CGAL::ON_ORIENTED_BOUNDARY is returned if `t` is also collinear or if two 
-    points are identical, 
-    otherwise, `side_of_oriented_circle(r, q, t, p)` is returned. 
+    If `p`, `q` and `r` are collinear, the circle degenerates in a line.
+    \ref CGAL::ON_ORIENTED_BOUNDARY is returned if `t` is also collinear or if two
+    points are identical,
+    otherwise, `side_of_oriented_circle(r, q, t, p)` is returned.
 
-  */ 
-  Oriented_side operator()(const Kernel::Point_2&p, 
-                           const Kernel::Point_2&q, 
-                           const Kernel::Point_2&r, 
-                           const Kernel::Point_2&t); 
+  */
+  Oriented_side operator()(const Kernel::Point_2&p,
+                           const Kernel::Point_2&q,
+                           const Kernel::Point_2&r,
+                           const Kernel::Point_2&t);
 
 
   /// @}
@@ -9623,7 +9623,7 @@ public:
   \ingroup PkgKernel23ConceptsFunctionObjects
   \cgalConcept
 
-  \cgalRefines `AdaptableFunctor` (with five arguments) 
+  \cgalRefines `AdaptableFunctor` (with five arguments)
 
   \sa `side_of_oriented_sphere_grp`
 
@@ -9636,25 +9636,25 @@ public:
   /// @{
 
   /*!
-    returns the relative position of point `t` 
-    to the oriented sphere defined by `p`, `q`, `r` and `s`. 
-    The order of the points `p`, `q`, `r`, and `s` is important, 
-    since it determines the orientation of the implicitly 
-    constructed sphere. If the points `p`, `q`, `r` and `s` 
-    are positive oriented, positive side is the bounded interior 
-    of the sphere. 
+    returns the relative position of point `t`
+    to the oriented sphere defined by `p`, `q`, `r` and `s`.
+    The order of the points `p`, `q`, `r`, and `s` is important,
+    since it determines the orientation of the implicitly
+    constructed sphere. If the points `p`, `q`, `r` and `s`
+    are positive oriented, positive side is the bounded interior
+    of the sphere.
 
-    In case of degeneracies, \ref CGAL::ON_ORIENTED_BOUNDARY is returned 
-    if all points are coplanar. Otherwise, there is a cyclic permutation of the five points 
-    that puts four non coplanar points first, it is used to answer the predicate: 
-    e.g. `side_of_oriented_sphere(q, r, s, t, p)` is returned if `q`, `r`, `s`, 
-    and `t` are non coplanar. 
-  */ 
-  Oriented_side operator()(const Kernel::Point_3&p, 
-                           const Kernel::Point_3&q, 
-                           const Kernel::Point_3&r, 
-                           const Kernel::Point_3&s, 
-                           const Kernel::Point_3&t); 
+    In case of degeneracies, \ref CGAL::ON_ORIENTED_BOUNDARY is returned
+    if all points are coplanar. Otherwise, there is a cyclic permutation of the five points
+    that puts four non coplanar points first, it is used to answer the predicate:
+    e.g. `side_of_oriented_sphere(q, r, s, t, p)` is returned if `q`, `r`, `s`,
+    and `t` are non coplanar.
+  */
+  Oriented_side operator()(const Kernel::Point_3&p,
+                           const Kernel::Point_3&q,
+                           const Kernel::Point_3&r,
+                           const Kernel::Point_3&s,
+                           const Kernel::Point_3&t);
 
 
   /// @}

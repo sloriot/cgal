@@ -25,7 +25,7 @@ const double epsilon = 0.001;
 
 struct randomint {
   randomint() ;
-  int	get() const { return sequence[cur]; }
+  int        get() const { return sequence[cur]; }
   int next() { cur = (cur+1)%11; return get();}
 private:
   int sequence[11];
@@ -71,78 +71,78 @@ struct Test {
   template < typename Type >
   bool approx_equal_nt(const Type &t1, const Type &t2)
   {
-	if (t1 == t2)
-		return true;
-	if (CGAL::abs(t1 - t2) / (CGAL::max)(CGAL::abs(t1), CGAL::abs(t2)) < epsilon)
-		return true;
-	std::cout << " Approximate comparison failed between : " << t1 << "  and  " << t2 << "\n";
-	return false;
+        if (t1 == t2)
+                return true;
+        if (CGAL::abs(t1 - t2) / (CGAL::max)(CGAL::abs(t1), CGAL::abs(t2)) < epsilon)
+                return true;
+        std::cout << " Approximate comparison failed between : " << t1 << "  and  " << t2 << "\n";
+        return false;
   }
 
   template < typename Type >
   bool approx_equal(const Type&t1, const Type&t2)
   {
-	return t1 == t2;
-	// we need approx equal to check approx kernels, but maybe we should only test with exact kernels
-	// (approx kernels were useful before, when the text output was checked by diff ?)
-	// idea : test containment with intervals ?  or use some "epsilon double"?
-	// I need to convert the text output to exact rationals in the source...
-	// Well, for now the current scheme works.
+        return t1 == t2;
+        // we need approx equal to check approx kernels, but maybe we should only test with exact kernels
+        // (approx kernels were useful before, when the text output was checked by diff ?)
+        // idea : test containment with intervals ?  or use some "epsilon double"?
+        // I need to convert the text output to exact rationals in the source...
+        // Well, for now the current scheme works.
   }
 
   bool approx_equal(const P & p, const P & q)
   {
-	return approx_equal_nt(p.x(), q.x()) && approx_equal_nt(p.y(), q.y());
+        return approx_equal_nt(p.x(), q.x()) && approx_equal_nt(p.y(), q.y());
   }
 
   bool approx_equal(const Pol & p, const Pol & q)
   {
-	if (p.size() != q.size())
-		return false;
-	for(typename Pol::const_iterator itp = p.begin(), itq = q.begin(); itp != p.end(); ++itp, ++itq)
-		if (!approx_equal(*itp, *itq))
-			return false;
-	return true;
+        if (p.size() != q.size())
+                return false;
+        for(typename Pol::const_iterator itp = p.begin(), itq = q.begin(); itp != p.end(); ++itp, ++itq)
+                if (!approx_equal(*itp, *itq))
+                        return false;
+        return true;
   }
 
   template < typename O1, typename O2>
   void check_no_intersection(const O1& o1, const O2& o2)
   {
-	assert(!CGAL::do_intersect(o1, o2));
-	assert(!CGAL::do_intersect(o2, o1));
+        assert(!CGAL::do_intersect(o1, o2));
+        assert(!CGAL::do_intersect(o2, o1));
         assert(!CGAL::intersection(o2, o1));
-    
-	//check with the functors
-	typename CGAL::Kernel_traits<O1>::Kernel::Do_intersect_2 do_2;
-	typename CGAL::Kernel_traits<O1>::Kernel::Intersect_2 i_2;
-	assert(!do_2(o1, o2));
+
+        //check with the functors
+        typename CGAL::Kernel_traits<O1>::Kernel::Do_intersect_2 do_2;
+        typename CGAL::Kernel_traits<O1>::Kernel::Intersect_2 i_2;
+        assert(!do_2(o1, o2));
         assert(!i_2(o1, o2));
-	assert(!do_2(o2, o1));
+        assert(!do_2(o2, o1));
         assert(!i_2(o2, o1));
   }
 
   template < typename Res, typename O1, typename O2 >
   void check_intersection(const O1& o1, const O2& o2)
   {
-	Res tmp;
-	assert(CGAL::do_intersect(o1, o2));
-	assert(CGAL::assign(tmp, CGAL::intersection(o1, o2)));
-	assert(CGAL::do_intersect(o2, o1));
-	assert(CGAL::assign(tmp, CGAL::intersection(o2, o1)));
+        Res tmp;
+        assert(CGAL::do_intersect(o1, o2));
+        assert(CGAL::assign(tmp, CGAL::intersection(o1, o2)));
+        assert(CGAL::do_intersect(o2, o1));
+        assert(CGAL::assign(tmp, CGAL::intersection(o2, o1)));
   }
 
   template < typename Res, typename O1, typename O2 >
   void check_intersection(const O1& o1, const O2& o2, const Res& result, bool do_opposite=true)
   {
-	Res tmp;
-	assert(CGAL::do_intersect(o1, o2));
-	assert(CGAL::assign(tmp, CGAL::intersection(o1, o2)));
-	assert(approx_equal(tmp, result));
-	if (do_opposite) {
-	  assert(CGAL::do_intersect(o2, o1));
-	  assert(CGAL::assign(tmp, CGAL::intersection(o2, o1)));
-	  assert(approx_equal(tmp, result));
-	}
+        Res tmp;
+        assert(CGAL::do_intersect(o1, o2));
+        assert(CGAL::assign(tmp, CGAL::intersection(o1, o2)));
+        assert(approx_equal(tmp, result));
+        if (do_opposite) {
+          assert(CGAL::do_intersect(o2, o1));
+          assert(CGAL::assign(tmp, CGAL::intersection(o2, o1)));
+          assert(approx_equal(tmp, result));
+        }
   }
 
 
@@ -162,14 +162,14 @@ struct Test {
     check_intersection(c,p,p,true);
     assert(do_intersect(r,c));
   }
-  
+
   void L_L()
   {
     std::cout << "Line - Line\n";
     check_intersection     (L(p(0, 0), p(10, 0)), L(p(1,7), p(1,-2)), P(1,0));
     check_intersection     (L(p(0,-1), p(10, 0)), L(p(2,1), p(8,-6)), P(3.42105,-0.657895));
     check_intersection<L>  (L(p(0, 0), p(10, 0)), L(p(1,0), p(8, 0)));
-    
+
 check_no_intersection  (L(p(0, 0), p(10,10)), L(p(8,7), p(1, 0)));
     check_intersection<L>  (L(p(0, 0), p(10, 0)), L(p(8,0), p(1, 0)));
   }
@@ -344,7 +344,7 @@ check_no_intersection  (L(p(0, 0), p(10,10)), L(p(8,7), p(1, 0)));
     check_intersection<P>(Rec(p( 0,  0), p(1, 1)), T(p(    0,  0), p(  -1,   0), p(0,  -1)));
     check_intersection<Pol>(Rec(p( 100,  100), p(200, 200)), T(p(150, 50), p(250, 170), p(50, 170)));
   }
-  
+
   void run()
   {
     std::cout << "2D Intersection tests\n";
@@ -372,7 +372,7 @@ check_no_intersection  (L(p(0, 0), p(10,10)), L(p(8,7), p(1, 0)));
 
 int main()
 {
-	Test< CGAL::Simple_cartesian<double>   >().run();
-	Test< CGAL::Homogeneous<double> >().run();
-	// TODO : test more kernels.
+        Test< CGAL::Simple_cartesian<double>   >().run();
+        Test< CGAL::Homogeneous<double> >().run();
+        // TODO : test more kernels.
 }

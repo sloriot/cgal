@@ -68,16 +68,16 @@ public:
   };
   std::vector<std::size_t> neighbors;
   /// \endcond
-  
+
 private:
   const ItemRange* m_range;
   ItemMap m_item_map;
-  
+
   std::vector<std::size_t> m_inliers;
   mutable CGAL::Bbox_3 m_bounding_box;
   int m_training;
   int m_label;
-  
+
 public:
 
   /// \name Constructor
@@ -105,7 +105,7 @@ public:
     \brief Clears the cluster.
   */
   void clear () { m_inliers.clear(); }
-  
+
   /*!
     \brief Inserts element of index `idx` in the cluster.
   */
@@ -115,7 +115,7 @@ public:
 
   /// \name Access
   /// @{
-  
+
   /*!
     \brief Returns the number of items in the cluster.
   */
@@ -125,7 +125,7 @@ public:
     \brief Returns the index (in the input range) of the i^{th} element of the cluster.
   */
   std::size_t index (std::size_t i) const { return m_inliers[i]; }
-  
+
   /*!
     \brief Returns the i^{th} item of the cluster.
   */
@@ -160,17 +160,17 @@ public:
     \brief Returns the input classification value used for training.
   */
   int training() const { return m_training; }
-  
+
   /*!
     \brief Returns a reference to the input classification value used for training.
   */
   int& training() { return m_training; }
-  
+
   /*!
     \brief Returns the output classification value.
   */
   int label() const { return m_label; }
-  
+
   /*!
     \brief Returns a reference to the output classification value.
   */
@@ -217,12 +217,12 @@ std::size_t create_clusters_from_indices (const ItemRange& range,
   {
     int c = int(get (index_map, idx));
     if (c == -1)
-      continue;  
+      continue;
     if (std::size_t(c) >= clusters.size())
       clusters.resize (c + 1, Cluster<ItemRange, ItemMap>(range, item_map));
     clusters[std::size_t(c)].insert (idx);
   }
-  
+
   return clusters.size();
 }
 

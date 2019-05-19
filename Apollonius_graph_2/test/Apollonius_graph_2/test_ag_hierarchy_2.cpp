@@ -44,8 +44,8 @@ int main()
     assert( ifs_hierarchy );
 
     std::cout << "testing the Apollonius graph hierarchy class..."
-	      << std::flush;
-    bool hierarchy_ok = 
+              << std::flush;
+    bool hierarchy_ok =
       CGAL::test_hierarchy_algo<Kernel,Method_tag,
       std::ifstream>(ifs_hierarchy);
 
@@ -65,8 +65,8 @@ int main()
     assert( ifs_hierarchy );
 
     std::cout << "testing the Apollonius graph hierarchy class"
-	      << " with filtered traits..." << std::flush;
-    bool hierarchy_ok = 
+              << " with filtered traits..." << std::flush;
+    bool hierarchy_ok =
       CGAL::test_filtered_traits_hierarchy_algo<CK,Method_tag,EK,
       Method_tag,std::ifstream>(ifs_hierarchy);
 
