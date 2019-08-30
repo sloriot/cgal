@@ -155,6 +155,7 @@ void No_intersection_surface_sweep_2<Vis>::_sweep()
                 while (eventIter1 != m_queue->end()) {
                   print_text("* ");
                   PrintEvent(*eventIter1);
+                  std::cout << " " <<*eventIter1;
                   print_eol();
                   eventIter1++;
                 })

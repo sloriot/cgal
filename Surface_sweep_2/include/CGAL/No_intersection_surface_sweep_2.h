@@ -1,3 +1,7 @@
+//~ #define CGAL_SS_VERBOSE 1
+
+
+
 // Copyright (c) 2006,2007,2009,2010,2011 Tel-Aviv University (Israel).
 // All rights reserved.
 //

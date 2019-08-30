@@ -85,6 +85,7 @@ public:
   /*! Add a subcurve to the container of left curves. */
   void add_curve_to_left(Subcurve* curve)
   {
+    //~ std::cout << "\n@@@@@@@@@@@@@ add_curve_to_left " << curve << " " << this->point() << "\n";
     // Look for the subcurve.
     bool curve_added = false;
     std::vector<Subcurve_iterator> left_curves_to_remove;
@@ -133,6 +134,7 @@ public:
   std::pair<bool, Subcurve_iterator>
   add_curve_to_right(Subcurve* curve, const Gt2* tr)
   {
+    //~ std::cout << "\n~~~~~~~~~~~~~ add_curve_to_right " << curve << " [" << this->point() << "]~~~~~~~~~~~~~\n";
     if (! this->has_right_curves()) {
       this->push_back_curve_to_right(curve);
       return (std::make_pair(false, this->right_curves_begin()));
@@ -184,10 +186,11 @@ public:
   /*! Remove a curve from the set of left curves. */
   void remove_curve_from_left(Subcurve* curve)
   {
+        //~ std::cout << "\n@@@@@@@@@@@@@ remove_curve_from_left " << curve << " " << this->point() << "\n";
     for (Subcurve_iterator iter = this->left_curves_begin();
          iter != this->left_curves_end(); ++iter)
     {
-      if ((curve == *iter) || curve->are_all_leaves_contained(*iter)) {
+      if ((curve == *iter)/*  || curve->are_all_leaves_contained(*iter) */) {
         this->left_curves_erase(iter);
         return;
       }
