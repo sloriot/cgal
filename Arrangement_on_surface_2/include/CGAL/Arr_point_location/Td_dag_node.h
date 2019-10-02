@@ -151,6 +151,7 @@ protected:
     //d'tor
     ~Node()
     {
+      std::cout << "~Node\n";
       boost::apply_visitor(clear_neighbors_visitor(), m_data);
     }
 

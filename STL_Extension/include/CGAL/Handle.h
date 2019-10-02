@@ -42,6 +42,23 @@ class Rep
     int      count;
 };
 
+  struct TOTO
+  {
+    int& n;
+    TOTO(int& n):n(n)
+    {
+      ++n;
+      assert( n < 20);
+      
+      for (int i=0; i<n; ++i) std::cout << "*";
+      std::cout << "~Handle()" << std::endl;
+    }
+    ~TOTO()
+    {
+      --n;
+    }
+  };
+
 class Handle
 {
   public:
@@ -60,6 +77,9 @@ class Handle
 
     ~Handle()
     {
+      std::cout << PTR << std::endl;
+      static int n=-1;
+      TOTO toto(n);
 	if ( PTR && (--PTR->count == 0))
 	    delete PTR;
     }

@@ -2,7 +2,7 @@
 // Answering vertical ray-shooting queries.
 
 #include <CGAL/Cartesian.h>
-#include <CGAL/MP_Float.h>
+#include <CGAL/Gmpq.h>
 #include <CGAL/Arr_segment_traits_2.h>
 #include <CGAL/Arrangement_2.h>
 #include <CGAL/Arr_walk_along_line_point_location.h>
@@ -10,7 +10,7 @@
 
 #include "point_location_utils.h"
 
-typedef CGAL::MP_Float                                          Number_type;
+typedef CGAL::Gmpq                                          Number_type;
 typedef CGAL::Cartesian<Number_type>                            Kernel;
 typedef CGAL::Arr_segment_traits_2<Kernel>                      Traits_2;
 typedef Traits_2::Point_2                                       Point_2;

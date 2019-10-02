@@ -60,6 +60,11 @@ class Td_active_trapezoid : public Handle
 {
 public:
   
+  ~Td_active_trapezoid()
+  {
+    std::cout << "delete " << this->PTR << std::endl;
+  }
+
   //type of traits class
   typedef Td_traits_                                   Traits;
   
@@ -262,7 +267,7 @@ public:
        Traits::empty_he_handle(),
        Traits::empty_he_handle(),
        Td_map_item(0), Td_map_item(0) , Td_map_item(0) , Td_map_item(0), nullptr);
-   
+   std::cout << "Td_active_trapezoid1 " << PTR << std::endl;
     //m_dag_node = 0;
   }
 
@@ -278,6 +283,7 @@ public:
     PTR = new Data (l, r, b, t, (lb) ? *lb : Td_map_item(0), (lt) ? *lt : Td_map_item(0),
                    (rb) ? *rb : Td_map_item(0), (rt) ? *rt : Td_map_item(0), node);
     //m_dag_node = node;
+    std::cout << "Td_active_trapezoid2 " << PTR << std::endl;
   }
  
   

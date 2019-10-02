@@ -805,6 +805,8 @@ void Polyhedron_demo_parameterization_plugin::parameterize(const Parameterizatio
       std::cout << "Parameterize (ARAP)..." << std::endl;
       FT lambda = 10000; // a big value to ensure the parameterization is ARAP (and not ASAP)
       typedef SMP::ARAP_parameterizer_3<Seam_mesh> Parameterizer;
+std::cout << "2 " << get( get(boost::vertex_point, sMesh), source(bhd, sMesh))
+           << " " << get( get(boost::vertex_point, sMesh), target(bhd, sMesh)) << "\n";
       status = SMP::parameterize(sMesh, Parameterizer(lambda), bhd, uv_pm);
       break;
     }

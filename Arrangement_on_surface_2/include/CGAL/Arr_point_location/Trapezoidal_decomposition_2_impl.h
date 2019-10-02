@@ -1478,7 +1478,10 @@ Trapezoidal_decomposition_2<Td_traits>::insert(Halfedge_const_handle he)
   CGAL_precondition(!traits->equal_curve_end_2_object()(ce1, ce2));
 
   Locate_type lt1;
+int n;
+std::cout << "BEFORE\n";
   Td_map_item item1;
+std::cout << "AFTER\n";
 
 #ifndef CGAL_NO_TRAPEZOIDAL_DECOMPOSITION_2_OPTIMIZATION
   locate_optimization(ce1, item1, lt1);
@@ -1625,6 +1628,9 @@ Trapezoidal_decomposition_2<Td_traits>::insert(Halfedge_const_handle he)
             << is_valid(*m_dag_root) << std::endl;
 #endif
 
+  
+  std::cout << "READY to get out\n";
+  
   return old_e;
 }
 

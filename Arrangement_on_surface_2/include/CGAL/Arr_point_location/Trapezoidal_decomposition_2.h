@@ -1454,7 +1454,9 @@ public:
         }
 
         he_cst = *it;
+std::cout << "==calling insert==\n";
         insert(he_cst);
+std::cout << "==================\n";
       }
       if (it != end)
         continue;

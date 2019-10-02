@@ -1,5 +1,10 @@
 #include <CGAL/Arr_point_location_result.h>
-
+#include <CGAL/point_generators_2.h>
+#include <CGAL/function_objects.h>
+#include <CGAL/point_generators_2.h>
+#include <CGAL/random_polygon_2.h>
+#include <CGAL/Random.h>
+#include <CGAL/algorithm.h>
 //-----------------------------------------------------------------------------
 // Print the result of a point-location query.
 //
@@ -135,16 +140,19 @@ void construct_segments_arr(Arrangement_& arr)
   typedef Arrangement_                                Arrangement_2;
   typedef typename Arrangement_2::Point_2             Point_2;
   typedef typename Arrangement_2::X_monotone_curve_2  Segment_2;
-  typedef typename Arrangement_2::Halfedge_handle     Halfedge_handle;
-
-  Point_2    p0(3,2), p1(0,3), p2(2,5), p3(4,5), p4(6,3), p5(3,0);
-  Segment_2  s1(p1, p2), s2(p2, p3), s3(p3, p4), s4(p4, p5), s5(p5, p1);
-
-  arr.insert_in_face_interior(p0, arr.unbounded_face());
-
-  Halfedge_handle e1 = arr.insert_in_face_interior(s1, arr.unbounded_face());
-  Halfedge_handle e2 = arr.insert_from_left_vertex(s2, e1->target());
-  Halfedge_handle e3 = arr.insert_from_left_vertex(s3, e2->target());
-  Halfedge_handle e4 = arr.insert_from_right_vertex(s4, e3->target());
-  arr.insert_at_vertices(s5, e4->target(), e1->source());
+  typedef typename Arrangement_2::Halfedge_handle     Halfedge_handle;  
+  typedef CGAL::Creator_uniform_2<double, Point_2>             Creator;
+  typedef CGAL::Random_points_in_square_2<Point_2, Creator> Point_generator;
+  
+  int N = 100;
+  std::vector<Point_2> points;
+  points.reserve(2*N);
+  CGAL::copy_n_unique(Point_generator(10), 2*N,std::back_inserter(points));
+  
+  std::vector<Segment_2> segments;
+  segments.reserve(N);
+  for (int i=0;i<N; ++i)
+    segments.push_back(Segment_2(points[2*i], points[2*i+1]));
+  
+  insert(arr, segments.begin(), segments.end());
 }
