@@ -8,7 +8,8 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // https://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
-// Copyright (c) 2007-2015  GeometryFactory (France).  All rights reserved.
+// Copyright (c) 2007-2015  GeometryFactory (France).
+// All rights reserved.
 //
 // $URL$
 // $Id$

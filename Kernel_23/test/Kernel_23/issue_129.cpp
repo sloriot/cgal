@@ -1,4 +1,5 @@
-// Copyright (c) 2015 GeometryFactory (France). All rights reserved.
+// Copyright (c) 2015 GeometryFactory (France).
+// All rights reserved.
 // All rights reserved.
 //
 // Licensees holding a valid commercial license may use this file in

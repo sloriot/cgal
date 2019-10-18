@@ -1,4 +1,5 @@
-// Copyright (c) 2012 GeometryFactory (France). All rights reserved.
+// Copyright (c) 2012 GeometryFactory (France).
+// All rights reserved.
 // All rights reserved.
 //
 // $URL$

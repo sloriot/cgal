@@ -1,4 +1,5 @@
-// Copyright (c) 2017  GeometryFactory (France). All rights reserved.
+// Copyright (c) 2017  GeometryFactory (France).
+// All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org).
 // You can redistribute it and/or modify it under the terms of the GNU
