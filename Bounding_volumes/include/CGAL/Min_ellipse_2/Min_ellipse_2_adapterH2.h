@@ -1,5 +1,6 @@
 // Copyright (c) 1997-2001  
-// ETH Zurich (Switzerland).  All rights reserved.
+// ETH Zurich (Switzerland).
+// All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org).
 // You can redistribute it and/or modify it under the terms of the GNU
