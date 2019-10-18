@@ -1,4 +1,5 @@
-// Copyright (c) 2010 Inria Lorraine (France). All rights reserved.
+// Copyright (c) 2010 Inria Lorraine (France).
+// All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as

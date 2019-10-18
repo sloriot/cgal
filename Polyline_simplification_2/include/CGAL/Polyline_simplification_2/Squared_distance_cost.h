@@ -1,4 +1,5 @@
-// Copyright (c) 2012 Geometry Factory. All rights reserved.
+// Copyright (c) 2012 Geometry Factory.
+// All rights reserved.
 // All rights reserved.
 //
 // $URL$
