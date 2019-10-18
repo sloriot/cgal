@@ -1,7 +1,7 @@
 /****************************************************************************
  * Core Library Version 1.7, August 2004                                     
  * Copyright (c) 1995-2004 Exact Computation Project                         
- * All rights reserved.                                                      
+ * All rights reserved.
  *                                                                           
  * This file is part of CGAL (www.cgal.org).                
  * You can redistribute it and/or modify it under the terms of the GNU       
