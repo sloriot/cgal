@@ -1596,11 +1596,11 @@ subdivide(const Map* M0, const Map* M1,
           input_points.insert(L.back().source());
         } else {
 	 CGAL_NEF_TRACEN("once around " << e->source()->point());
+          input_points.insert(e->source()->point());
           Seg_pair p = two_segments(PI[i],e);
           L.push_back(p.first);
           L.push_back(p.second);
           From[--L.end()] = From[--(--L.end())] = Seg_info(e,i);
-          //@TODO Shall we do something here?
         }
       } else {
 	CGAL_NEF_TRACEN("normal segment " << e->source()->point());
