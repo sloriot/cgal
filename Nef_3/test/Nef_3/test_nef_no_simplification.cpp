@@ -70,10 +70,6 @@ void test1()
   Nef_polyhedron_3 nef2(poly, true);
   assert( nef2.number_of_vertices()==4 );
   Nef_polyhedron_3 nef_union = nef1.join(nef2, false);
-
-  std::ofstream output("data/no_simpl/out1.nef3");
-  output << nef_union;
-  output.close();
   
   assert(nef_union.number_of_vertices() == 11);
 }
@@ -121,6 +117,96 @@ void test2()
   assert(nef_union.number_of_vertices() == 5532);
 }
 
+void test3()
+{
+  const std::string input1 =
+"OFF\n\
+8 12 0\n\
+1844 0 2700\n\
+0 0 2700\n\
+0 -150 2700\n\
+1844 -150 2700\n\
+1844 -150 0\n\
+1844 0 0\n\
+0 -150 0\n\
+0 0 0\n\
+3  0 1 2\n\
+3  0 2 3\n\
+3  4 5 0\n\
+3  4 0 3\n\
+3  6 4 3\n\
+3  6 3 2\n\
+3  7 6 2\n\
+3  7 2 1\n\
+3  5 7 1\n\
+3  5 1 0\n\
+3  5 4 6\n\
+3  5 6 7";
+
+  const std::string input2 =
+"OFF\n\
+6 8 0\n\
+620 1200 1200\n\
+780 0 1200\n\
+644 1200 1200\n\
+644 1200 220\n\
+620 1200 220\n\
+780 0 220\n\
+3  0 1 2\n\
+3  3 4 0\n\
+3  3 0 2\n\
+3  5 3 2\n\
+3  5 2 1\n\
+3  4 5 0\n\
+3  5 1 0\n\
+3  4 3 5";
+
+  const std::string input3 =
+"OFF\n\
+8 12 0\n\
+645 1200 1223\n\
+762 0 1223\n\
+1844 1200 1223\n\
+1844 0 1223\n\
+1844 1200 300\n\
+645 1200 300\n\
+1844 0 300\n\
+762 0 300\n\
+3  0 1 2\n\
+3  1 3 2\n\
+3  4 5 0\n\
+3  4 0 2\n\
+3  6 4 2\n\
+3  6 2 3\n\
+3  7 6 3\n\
+3  7 3 1\n\
+3  5 7 1\n\
+3  5 1 0\n\
+3  5 4 7\n\
+3  4 6 7";
+
+  Polyhedron_3 poly1, poly2, poly3;
+  std::stringstream ss;
+  ss << input1;
+  ss >> poly1;
+  ss = std::stringstream();
+  ss << input2;
+  ss >> poly2;
+  ss = std::stringstream();
+  ss << input3;
+  ss >> poly3;
+  ss = std::stringstream();
+
+  Nef_polyhedron_3 nef1(poly1, false);
+  Nef_polyhedron_3 nef2(poly2, false);
+  Nef_polyhedron_3 nef3(poly3, false);
+
+  Nef_polyhedron_3 diff1 = nef1.difference(nef2, false);
+  Nef_polyhedron_3 diff2 = diff1.difference(nef3, false);
+
+  assert(diff2.number_of_vertices() == 19);
+}
+
 
 int main()
 {
@@ -139,5 +225,7 @@ int main()
   test1();
   std::cout << "Running test2()\n";
   test2();
+  std::cout << "Running test3()\n";
+  test3();
   return 0;  
 }
