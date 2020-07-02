@@ -148,7 +148,7 @@ class Rational
     friend std::ostream& operator << ( std::ostream& os, Rational<NT> const& rat )
     {
       if ( ! CGAL_NTS is_zero(rat.d()) )
-           return os << n2str(rat.n()/rat.d());
+           return os << rat.n()/rat.d();
       else return os << "INF_RATIONAL" ;
     }
 

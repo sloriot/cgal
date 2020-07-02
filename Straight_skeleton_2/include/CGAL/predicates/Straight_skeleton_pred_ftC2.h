@@ -315,10 +315,10 @@ inline Uncertain<bool> is_edge_facing_offset_lines_isecC2 ( intrusive_ptr< Trise
 // Testing its validity amounts to determining if the split point is inside the closed offset segment instead of
 // the two open rays before and after the offset segment endpoints.
 // The offset edge is bounded by its previous and next adjacent edges at the time of the event. Thus, the bisectors
-// of this edge and its previous/next adjacent edges (at the time of the event) detemine the offset vertices that
+// of this edge and its previous/next adjacent edges (at the time of the event) determine the offset vertices that
 // bound the opposite edge.
 // If the opposite edge is 'e' and its previous/next edges are "preve"/"nexte" then the split point is inside the offset
-// egde if it is NOT to the positive side of [preve,e] *and* NOT to the negative side o [e,nexte].
+// egde if it is NOT to the positive side of [preve,e] *and* NOT to the negative side of [e,nexte].
 // (so this predicate answer half the question, at one and other side independenty).
 // If the split point is exacty over any of this bisectors then the split point ocurres exactly and one (or both) endpoints
 // of the opposite edge (so it is a pseudo-split event since the opposite edge is not itself split in two halfeves)

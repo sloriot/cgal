@@ -260,7 +260,7 @@ void Straight_skeleton_builder_2<Gt,Ss,V>::CollectNewEvents( Vertex_handle aNode
   // inmediately previous polygon in the number of vertices.
   //
   // If 2 vertex wavefronts sharing a common edge collide, the event is called an edge event. At the time of the event, the current
-  // polygon doex not have the common edge anynmore, and the two vertices become one. This new 'skeleton' vertex generates a new
+  // polygon does not have the common edge anynmore, and the two vertices become one. This new 'skeleton' vertex generates a new
   // vertex wavefront which can further collide with other wavefronts, producing for instance, more edge events.
   //
   // If a refex vertex wavefront collide with an edge wavefront, the event is called a split event. At the time of the event, the current

@@ -228,7 +228,7 @@ Rational<FT> squared_distance_from_point_to_lineC2( FT const& px, FT const& py, 
 // NOTE: If the collinearity cannot be determined reliably, a null trisegment is returned.
 //
 template<class K>
-intrusive_ptr< Trisegment_2<K> > construct_trisegment ( Segment_2<K> const& e0
+boost::intrusive_ptr< Trisegment_2<K> > construct_trisegment ( Segment_2<K> const& e0
                                                       , Segment_2<K> const& e1
                                                       , Segment_2<K> const& e2
                                                       )
@@ -261,7 +261,7 @@ intrusive_ptr< Trisegment_2<K> > construct_trisegment ( Segment_2<K> const& e0
 // NOTE: The segments (e0,e1,e2) are stored in the argument as the trisegment st.event()
 //
 template<class K>
-optional< Rational< typename K::FT> > compute_normal_offset_lines_isec_timeC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Rational< typename K::FT> > compute_normal_offset_lines_isec_timeC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   typedef typename K::FT  FT ;
 
@@ -383,7 +383,7 @@ optional< Point_2<K> > compute_oriented_midpoint ( Segment_2<K> const& e0, Segme
 // If you request the point of such degenerate pseudo seed the oriented midpoint bettwen e0 and e2 is returned.
 //
 template<class K>
-optional< Point_2<K> > compute_seed_pointC2 ( intrusive_ptr< Trisegment_2<K> > const& tri, typename Trisegment_2<K>::SEED_ID sid )
+optional< Point_2<K> > compute_seed_pointC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri, typename Trisegment_2<K>::SEED_ID sid )
 {
   optional< Point_2<K> > p ;
 
@@ -418,7 +418,7 @@ optional< Point_2<K> > compute_seed_pointC2 ( intrusive_ptr< Trisegment_2<K> > c
 // of the degenerate seed.
 // A normal collinearity occurs when e0,e1 or e1,e2 are collinear.
 template<class K>
-optional< Point_2<K> > compute_degenerate_seed_pointC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Point_2<K> > compute_degenerate_seed_pointC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   return compute_seed_pointC2( tri, tri->degenerate_seed_id() ) ;
 }
@@ -434,7 +434,7 @@ optional< Point_2<K> > compute_degenerate_seed_pointC2 ( intrusive_ptr< Trisegme
 // POSTCONDITION: In case of overflow an empty optional is returned.
 //
 template<class K>
-optional< Rational< typename K::FT> > compute_degenerate_offset_lines_isec_timeC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Rational< typename K::FT> > compute_degenerate_offset_lines_isec_timeC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   typedef typename K::FT FT ;
 
@@ -551,13 +551,13 @@ optional< Rational< typename K::FT > > compute_offset_lines_isec_timeC2 ( boost:
 //
 // PRECONDITIONS:
 // None of e0, e1 and e2 are collinear (but two of them can be parallel)
-// The line coefficients must be normalized: a�+b�==1 and (a,b) being the leftward normal vector
+// The line coefficients must be normalized: a²+b²==1 and (a,b) being the leftward normal vector
 // The offsets at a certain distance do intersect in a single point.
 //
 // POSTCONDITION: In case of overflow an empty optional is returned.
 //
 template<class K>
-optional< Point_2<K> > construct_normal_offset_lines_isecC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Point_2<K> > construct_normal_offset_lines_isecC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   typedef typename K::FT  FT ;
 
@@ -616,7 +616,7 @@ optional< Point_2<K> > construct_normal_offset_lines_isecC2 ( intrusive_ptr< Tri
 // POSTCONDITION: In case of overflow an empty optional is returned.
 //
 template<class K>
-optional< Point_2<K> > construct_degenerate_offset_lines_isecC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Point_2<K> > construct_degenerate_offset_lines_isecC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   typedef typename K::FT FT ;
 
@@ -676,7 +676,7 @@ optional< Point_2<K> > construct_degenerate_offset_lines_isecC2 ( intrusive_ptr<
 // Calls the appropiate function depending on the collinearity of the edges.
 //
 template<class K>
-optional< Point_2<K> > construct_offset_lines_isecC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Point_2<K> > construct_offset_lines_isecC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   CGAL_precondition ( tri->collinearity() != TRISEGMENT_COLLINEARITY_ALL ) ;
 
