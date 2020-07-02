@@ -523,12 +523,25 @@ optional< Rational< typename K::FT> > compute_degenerate_offset_lines_isec_timeC
 // Calls the appropiate function depending on the collinearity of the edges.
 //
 template<class K>
-optional< Rational< typename K::FT > > compute_offset_lines_isec_timeC2 ( intrusive_ptr< Trisegment_2<K> > const& tri )
+optional< Rational< typename K::FT > > compute_offset_lines_isec_timeC2_impl ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
 {
   CGAL_precondition ( tri->collinearity() != TRISEGMENT_COLLINEARITY_ALL ) ;
 
   return tri->collinearity() == TRISEGMENT_COLLINEARITY_NONE ? compute_normal_offset_lines_isec_timeC2    (tri)
                                                              : compute_degenerate_offset_lines_isec_timeC2(tri);
+}
+
+template<class K>
+optional< Rational< typename K::FT > > compute_offset_lines_isec_timeC2 ( boost::intrusive_ptr< Trisegment_2<K> > const& tri )
+{
+  CGAL_assertion( tri.get() != nullptr );
+
+  if (tri->has_cache())
+    return tri->time();
+  boost::optional< Rational< typename K::FT > > res = compute_offset_lines_isec_timeC2_impl(tri);
+  tri->set_cache(res);
+
+  return res;
 }
 
 

@@ -223,6 +223,14 @@ public:
     }
   }
 
+  bool has_cache() const { return mHasCache; }
+  void set_cache(const boost::optional<Rational< typename K::FT > >& time) const
+  {
+    mTime=time;
+    mHasCache=true;
+  }
+  boost::optional<Rational< typename K::FT > > time() const { CGAL_assertion(mHasCache); return mTime; }
+
   static Trisegment_2 null() { return Self_ptr() ; }
 
   Trisegment_collinearity collinearity() const { return mCollinearity ; }
@@ -294,6 +302,8 @@ private :
   Segment_2               mE[3];
   Trisegment_collinearity mCollinearity ;
   unsigned                mCSIdx, mNCSIdx ;
+  mutable optional< Rational< typename K::FT > > mTime = boost::none;
+  mutable bool mHasCache = false;
 
   Self_ptr mChildL ;
   Self_ptr mChildR ;
