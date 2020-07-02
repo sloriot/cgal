@@ -58,7 +58,7 @@ OutputForwardIterator filter_collinear_points(InputForwardIterator first,
                                               InputForwardIterator beyond,
                                               OutputForwardIterator out,
                                               const typename K::FT tolerance =
-                                                std::numeric_limits<typename K::FT>::epsilon())
+                                                std::numeric_limits<double>::epsilon())
 {
   CGAL_precondition(std::distance(first, beyond) >= 3);
 
