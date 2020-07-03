@@ -321,17 +321,16 @@ private :
     GetVertexData(aV).mTriedge = aTriedge ;
   }
 
-  Segment_2 CreateSegment ( Halfedge_const_handle aH ) const
+  const Segment_2& CreateSegment ( Halfedge_const_handle aH ) const
   {
-    Point_2 s = aH->opposite()->vertex()->point() ;
-    Point_2 t = aH->vertex()->point() ;
-    return K().construct_segment_2_object()(s,t);
+    CGAL_assertion(aH->id()%2==0);
+    return mSegmentCache[aH->id()/2];
   }
 
   Vector_2 CreateVector ( Halfedge_const_handle aH ) const
   {
-    Point_2 s = aH->opposite()->vertex()->point() ;
-    Point_2 t = aH->vertex()->point() ;
+    const Point_2& s = aH->opposite()->vertex()->point() ;
+    const Point_2& t = aH->vertex()->point() ;
     return K().construct_vector_2_object()(s,t);
   }
 
@@ -754,6 +753,8 @@ private:
   int mStepID   ;
 
   boost::optional<FT> mMaxTime ;
+  std::vector<Segment_2> mSegmentCache;
+
 
   PQ mPQ ;
 
@@ -857,6 +858,12 @@ private :
                              << "CW  Border: E" << lFirstCCWBorder->opposite()->id()
                              << ' ' << lFirstVertex->point() << " -> " << lPrevVertex ->point()
                              );
+
+    // cache segments
+    mSegmentCache.reserve( mContourHalfedges.size() );
+    for (Halfedge_handle h : mContourHalfedges)
+      mSegmentCache.push_back( K().construct_segment_2_object()(h->opposite()->vertex()->point(), h->vertex()->point()) );
+
 
     mVisitor.on_contour_edge_entered(lFirstCCWBorder);
   }
