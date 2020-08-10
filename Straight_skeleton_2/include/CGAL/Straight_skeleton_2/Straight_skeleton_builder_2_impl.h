@@ -1304,9 +1304,13 @@ void Straight_skeleton_builder_2<Gt,Ss,V>::HandleSplitOrPseudoSplitEvent( EventP
 template<class Gt, class Ss, class V>
 void Straight_skeleton_builder_2<Gt,Ss,V>::InsertNextSplitEventInPQ( Vertex_handle v )
 {
-  EventPtr lSplitEvent = PopNextSplitEvent(v);
-  if ( !!lSplitEvent )
-    InsertEventInPQ(lSplitEvent);
+//  while (!GetVertexData(v).mSplitEvents.empty())
+//  {
+    EventPtr lSplitEvent = PopNextSplitEvent(v);
+//    if (!lSplitEvent) continue;
+    if ( !!lSplitEvent )
+      InsertEventInPQ(lSplitEvent);
+//  }
 }
 
 template<class Gt, class Ss, class V>

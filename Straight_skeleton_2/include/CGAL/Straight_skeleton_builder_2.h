@@ -265,7 +265,7 @@ private :
     int               mPrevInLAV ;
     int               mNextInLAV ;
     bool              mNextSplitEventInMainPQ;
-    PQ                mSplitEvents ;
+    PQ                mSplitEvents ; // TODO replace with a std::vector + std::sort
     Triedge           mTriedge ; // Here, E0,E1 corresponds to the vertex (unlike *event* triedges)
     Trisegment_2_ptr  mTrisegment ; // Skeleton nodes cache the full trisegment tree that defines the originating event
   } ;
@@ -329,6 +329,7 @@ private :
     return K().construct_segment_2_object()(s,t);
   }
 
+  // TODO: see if really needed and if yes use caching
   Vector_2 CreateVector ( Halfedge_const_handle aH ) const
   {
     Point_2 s = aH->opposite()->vertex()->point() ;
@@ -336,6 +337,7 @@ private :
     return K().construct_vector_2_object()(s,t);
   }
 
+  // TODO: see if really needed and if yes use caching
   Direction_2 CreateDirection ( Halfedge_const_handle aH ) const
   {
     return K().construct_direction_2_object()( CreateVector(aH) );
@@ -459,7 +461,7 @@ private :
   {
     EventPtr rEvent ;
     Vertex_data& lData = GetVertexData(aV) ;
-    if ( !lData.mNextSplitEventInMainPQ )
+    if ( !lData.mNextSplitEventInMainPQ ) // TO BE COMMENTED for Mael's patch
     {
       PQ& lPQ = lData.mSplitEvents ;
       if ( !lPQ.empty() )
@@ -870,7 +872,7 @@ private :
 
   bool CanSafelyIgnoreSplitEventImpl(const EventPtr& lEvent, const boost::optional<FT>& bound, boost::mpl::bool_<true>)
   {
-    return Traits::can_safely_ignore_split_event(lEvent, bound);
+    return mTraits.can_safely_ignore_split_event(lEvent, bound);
   }
 
   bool CanSafelyIgnoreSplitEvent(const EventPtr& lEvent, const boost::optional<FT>& bound)
@@ -890,7 +892,7 @@ private :
                                                         Halfedge_handle_vector_iterator contour_halfedges_end,
                                                         boost::mpl::bool_<true>)
   {
-    return Traits::upper_bound_for_valid_split_events(lPrev, aNode, lNext, contour_halfedges_begin, contour_halfedges_end);
+    return mTraits.upper_bound_for_valid_split_events(lPrev, aNode, lNext, contour_halfedges_begin, contour_halfedges_end);
   }
 
   boost::optional<FT>
