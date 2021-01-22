@@ -112,7 +112,6 @@ unsigned int intersect(const Mesh& P, const Mesh& Q) {
 
 int main(int argc, char* argv[])
 {
-  Mesh P, Q;
   std::string P_name = argc==1?"data/knot1.off" : argv[1];
   std::string Q_name = argc<3 ?"data/elephant.off" : argv[2];
   if(argc < 3) {
@@ -121,7 +120,7 @@ int main(int argc, char* argv[])
   }
 
   Mesh P, Q;
-  if(!CGAL::read_polygon_mesh(P_name, P) || !CGAL::read_polygon_mesh(Q_name], Q))
+  if(!CGAL::read_polygon_mesh(P_name, P) || !CGAL::read_polygon_mesh(Q_name, Q))
   {
     std::cerr << "Invalid input files." << std::endl;
     return EXIT_FAILURE;
