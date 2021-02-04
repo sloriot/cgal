@@ -67,7 +67,7 @@ void test_mesh(const char* filename)
 
 int main(int argc, char* argv[])
 {
-  const char* filename = (argc > 1) ? argv[1] : "data/quad.off";
+  const char* filename = (argc > 1) ? argv[1] : CGAL::data_file_path("test/Polygon_mesh_processing/quad.off");
   test_mesh<SMesh>(filename);
   test_mesh<Polyhedron>(filename);
   return 0;

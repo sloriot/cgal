@@ -303,15 +303,15 @@ void test_points_LAS(const std::string& s)
 
 int main()
 {
-  test_XYZ("data/read_test/ok_2.xyz");
-  test_OFF("data/read_test/ok_1.off");
-  test_PLY("data/read_test/simple_ascii.ply");
-  test_PLY("data/read_test/simple.ply");
+  test_XYZ(CGAL::data_file_path("test/Point_set_processing_3/ok_2.xyz"));
+  test_OFF(CGAL::data_file_path("test/Point_set_processing_3/ok_1.off"));
+  test_PLY(CGAL::data_file_path("test/Point_set_processing_3/simple_ascii.ply"));
+  test_PLY(CGAL::data_file_path("test/Point_set_processing_3/simple.ply"));
 
-  test_points_XYZ("data/read_test/ok_2.xyz");
-  test_points_OFF("data/read_test/ok_1.off");
-  test_points_PLY("data/read_test/simple_ascii.ply");
-  test_points_PLY("data/read_test/simple.ply");
+  test_points_XYZ(CGAL::data_file_path("test/Point_set_processing_3/ok_2.xyz"));
+  test_points_OFF(CGAL::data_file_path("test/Point_set_processing_3/ok_1.off"));
+  test_points_PLY(CGAL::data_file_path("test/Point_set_processing_3/simple_ascii.ply"));
+  test_points_PLY(CGAL::data_file_path("test/Point_set_processing_3/simple.ply"));
 
 #ifdef CGAL_LINKED_WITH_LASLIB
   test_LAS("data/read_test/pig_points.las");

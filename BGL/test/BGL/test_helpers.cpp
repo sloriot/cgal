@@ -118,11 +118,11 @@ void test_generators()
   typedef typename boost::graph_traits<Mesh>::face_descriptor      face_descriptor;
 
   //                                  triangle  quad    tetra   hexa
-  test<Mesh>("data/triangle.off",     true,     false,  false,  false );
-  test<Mesh>("data/quad.off",         false,    true,   false,  false );
-  test<Mesh>("data/tetrahedron.off",  false,    false,  true,   false );
-  test<Mesh>("data/cube.off",         false,    false,  false,  false );
-  test<Mesh>("data/cube-quads.off",   false,    false,  false,  true );
+  test<Mesh>(CGAL::data_file_path("test/BGL/triangle.off"),     true,     false,  false,  false );
+  test<Mesh>(CGAL::data_file_path("test/BGL/quad.off"),         false,    true,   false,  false );
+  test<Mesh>(CGAL::data_file_path("test/BGL/tetrahedron.off"),  false,    false,  true,   false );
+  test<Mesh>(CGAL::data_file_path("meshes/cube.off"),         false,    false,  false,  false );
+  test<Mesh>(CGAL::data_file_path("test/BGL/cube-quads.off"),   false,    false,  false,  true );
 
   Point_3 a(0,0,0), b(1,0,0), c(1,1,0), d(0,1,0);
   Point_3 aa(0,0,1), bb(1,0,1), cc(1,1,1), dd(0,1,1);

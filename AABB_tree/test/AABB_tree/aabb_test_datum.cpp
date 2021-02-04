@@ -36,7 +36,7 @@ typedef CGAL::AABB_tree<Traits4> Tree4;
 int main(void)
 {
   Mesh m;
-  std::ifstream in("data/cube.off");
+  std::ifstream in(CGAL::data_file_path("test/AABB_tree/cube.off"));
   if(in)
     in >> m;
   else{

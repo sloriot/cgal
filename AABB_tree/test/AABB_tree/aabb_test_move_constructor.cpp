@@ -120,11 +120,11 @@ public:
     static CGAL::Surface_mesh<CGAL::Point_3<CGAL::Epick>> m2 = {};
     static bool mesh_loaded = false;
     if (!mesh_loaded) {
-      std::ifstream in("data/cube.off");
+      std::ifstream in(CGAL::data_file_path("test/AABB_tree/cube.off"));
       assert(in);
       in >> m1;
       in.close();
-      in.open("data/tetrahedron.off");
+      in.open(CGAL::data_file_path("meshes/tetrahedron.off"));
       assert(in);
       in >> m2;
       in.close();

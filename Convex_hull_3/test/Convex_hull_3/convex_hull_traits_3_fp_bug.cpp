@@ -14,7 +14,7 @@ int main()
 {
   K::Point_3 p;
   std::set<K::Point_3> pointset;
-  std::ifstream input("convex_hull_traits_3_fp_bug.xyz");
+  std::ifstream input(CGAL::data_file_path("test/Convex_hull_3/convex_hull_traits_3_fp_bug.xyz"));
 
   assert(input);
   while ( input >> p )

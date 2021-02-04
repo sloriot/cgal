@@ -107,7 +107,7 @@ void test_simple_saddle_vertex_mesh()
   Traits::Construct_triangle_3_along_segment_2_flattening flatten_triangle_3_along_segment_2(traits.construct_triangle_3_along_segment_2_flattening_object());
   Traits::Construct_barycentric_coordinates construct_barycentric_coordinates(traits.construct_barycentric_coordinates_object());
 
-  std::ifstream inFile("data/saddle_vertex_mesh.off");
+  std::ifstream inFile(CGAL::data_file_path("test/Surface_mesh_shortest_path/saddle_vertex_mesh.off"));
 
   Polyhedron_3 P;
 
@@ -356,7 +356,7 @@ void test_boundary_mesh()
     }
   } construct_barycenter_in_triangle_3(construct_barycenter_3);
 
-  std::ifstream inFile("data/boundary_mesh.off");
+  std::ifstream inFile(CGAL::data_file_path("test/Surface_mesh_shortest_path/boundary_mesh.off"));
 
   Polyhedron_3 P;
 

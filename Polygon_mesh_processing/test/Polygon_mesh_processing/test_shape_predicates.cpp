@@ -138,10 +138,10 @@ void test_needles_and_caps(const char* fname)
 
 int main()
 {
-  check_edge_degeneracy("data_degeneracies/degtri_edge.off");
-  check_triangle_face_degeneracy("data_degeneracies/degtri_four.off");
+  check_edge_degeneracy(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_edge.off"));
+  check_triangle_face_degeneracy(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_four.off"));
 
-  test_needles_and_caps("data_degeneracies/caps_and_needles.off");
+  test_needles_and_caps(CGAL::data_file_path("test/Polygon_mesh_processing/caps_and_needles.off"));
 
   return EXIT_SUCCESS;
 }

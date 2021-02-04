@@ -232,10 +232,10 @@ int main()
   test_3_points();
   test_up_to_3_extreme_points();
   test_3_collinear();
-  test_triangulated_cube("data/cube_meshed.off");
-  test_coplanar_points("data/coplanar_points.xyz");
+  test_triangulated_cube(CGAL::data_file_path("meshes/cube_meshed.off"));
+  test_coplanar_points(CGAL::data_file_path("test/Convex_hull_3/coplanar_points.xyz"));
   test_equal_points();
-  test_extreme_vertices("data/cross.off");
+  test_extreme_vertices(CGAL::data_file_path("meshes/cross.off"));
 
   return 0;
 }

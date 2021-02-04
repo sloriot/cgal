@@ -56,21 +56,21 @@ void further_tests()
   typedef std::vector<int>                                            Polygon_type_2;
   typedef std::basic_string<int>                                      Polygon_type_3;
 
-  read<Point_type_1, Polygon_type_1>("data/cube.stl", 8, 12, true);
-  read<Point_type_1, Polygon_type_2>("data/triangle.stl", 3, 1);
+  read<Point_type_1, Polygon_type_1>(CGAL::data_file_path("test/Stream_support/cube.stl"), 8, 12, true);
+  read<Point_type_1, Polygon_type_2>(CGAL::data_file_path("test/Stream_support/triangle.stl"), 3, 1);
 
-  read<Point_type_1, Polygon_type_3>("data/ascii-tetrahedron.stl", 4, 4);
-  read<Point_type_2, Polygon_type_1>("data/binary-tetrahedron-nice-header.stl", 4, 4, true);
-  read<Point_type_2, Polygon_type_2>("data/binary-tetrahedron-non-standard-header-1.stl", 4, 4, true);
-  read<Point_type_2, Polygon_type_3>("data/binary-tetrahedron-non-standard-header-2.stl", 4, 4, true);
-  read<Point_type_3, Polygon_type_1>("data/binary-tetrahedron-non-standard-header-3.stl", 4, 4, true);
-  read<Point_type_3, Polygon_type_2>("data/binary-tetrahedron-non-standard-header-4.stl", 4, 4, true);
-  read<Point_type_3, Polygon_type_3>("data/binary-tetrahedron-non-standard-header-5.stl", 4, 4, true);
+  read<Point_type_1, Polygon_type_3>(CGAL::data_file_path("test/Stream_support/ascii-tetrahedron.stl"), 4, 4);
+  read<Point_type_2, Polygon_type_1>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-nice-header.stl"), 4, 4, true);
+  read<Point_type_2, Polygon_type_2>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-non-standard-header-1.stl"), 4, 4, true);
+  read<Point_type_2, Polygon_type_3>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-non-standard-header-2.stl"), 4, 4, true);
+  read<Point_type_3, Polygon_type_1>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-non-standard-header-3.stl"), 4, 4, true);
+  read<Point_type_3, Polygon_type_2>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-non-standard-header-4.stl"), 4, 4, true);
+  read<Point_type_3, Polygon_type_3>(CGAL::data_file_path("test/Stream_support/binary-tetrahedron-non-standard-header-5.stl"), 4, 4, true);
 }
 
 int main(int argc, char** argv)
 {
-  const char* stl_file = (argc > 1) ? argv[1] : "data/ascii-tetrahedron.stl";
+  const char* stl_file = (argc > 1) ? argv[1] : CGAL::data_file_path("test/Stream_support/ascii-tetrahedron.stl");
 
   std::vector<Point> points;
   std::vector<Face> polygons;

@@ -40,8 +40,8 @@ int main(int argc, char** argv)
 {
   if (argc==1)
   {
-    test_merge_duplicated_vertices_in_boundary_cycles("data/merge_points.off", 43);
-    test_merge_duplicated_vertices_in_boundary_cycles("data/merge_points_2.off", 62);
+    test_merge_duplicated_vertices_in_boundary_cycles(CGAL::data_file_path("test/Polygon_mesh_processing/merge_points.off"), 43);
+    test_merge_duplicated_vertices_in_boundary_cycles(CGAL::data_file_path("test/Polygon_mesh_processing/merge_points_2.off"), 62);
   }
   else
   {

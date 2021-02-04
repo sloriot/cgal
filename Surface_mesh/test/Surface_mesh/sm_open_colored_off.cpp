@@ -16,13 +16,13 @@ void OpenOFF(int i)
   switch(i)
   {
    case 1:
-     path = "test1.off";
+     path = CGAL::data_file_path("meshes/mesh_with_colors.off");
      break;
   case 2:
-    path = "test2.off";
+    path = CGAL::data_file_path("test/Surface_mesh/test2.off");
     break;
   case 3:
-    path = "test3.off";
+    path = CGAL::data_file_path("test/Surface_mesh/test3.off");
     break;
   }
   std::ifstream in(path.c_str());

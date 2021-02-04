@@ -166,7 +166,7 @@ void test_bgl_OFF(const char* filename)
     VertexColorMap vcm = get(CGAL::dynamic_vertex_property_t<CGAL::Color>(), fg);
     FaceColorMap fcm = get(CGAL::dynamic_face_property_t<CGAL::Color>(), fg);
 
-    ok = CGAL::read_OFF("data/mesh_with_colors.off", fg, CGAL::parameters::vertex_color_map(vcm)
+    ok = CGAL::read_OFF(CGAL::data_file_path("meshes/mesh_with_colors.off"), fg, CGAL::parameters::vertex_color_map(vcm)
                                                                           .face_color_map(fcm));
     assert(ok);
     assert(num_vertices(fg) == 8 && num_faces(fg) == 4);
@@ -221,7 +221,7 @@ void test_bgl_OFF(const char* filename)
     CGAL::clear(fg);
     VertexNormalMap vnm = get(CGAL::dynamic_vertex_property_t<Vector>(), fg);
 
-    ok = CGAL::read_OFF("data/mesh_with_normals.off", fg, CGAL::parameters::vertex_normal_map(vnm));
+    ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/mesh_with_normals.off"), fg, CGAL::parameters::vertex_normal_map(vnm));
     assert(ok);
 
     for(const auto v : vertices(fg))
@@ -264,7 +264,7 @@ void test_bgl_OFF(const char* filename)
   // STCNOFF
   {
     CGAL::clear(fg);
-    std::ifstream is("data/full.off", std::ios::binary);
+    std::ifstream is(CGAL::data_file_path("test/BGL/full.off"), std::ios::binary);
 
     VertexNormalMap vnm2 = get(CGAL::dynamic_vertex_property_t<Vector>(), fg);
     VertexColorMap vcm2 = get(CGAL::dynamic_vertex_property_t<CGAL::Color>(), fg);
@@ -289,7 +289,7 @@ void test_bgl_OFF(const char* filename)
     fg.clear();
     is.close();
 
-    is.open("data/full.off");
+    is.open(CGAL::data_file_path("test/BGL/full.off"));
     VertexNormalMap vnm = get(CGAL::dynamic_vertex_property_t<Vector>(), fg);
     VertexColorMap vcm = get(CGAL::dynamic_vertex_property_t<CGAL::Color>(), fg);
     VertexTextureMap vtm = get(CGAL::dynamic_vertex_property_t<Point_2>(), fg);
@@ -375,13 +375,13 @@ void test_bgl_OFF(const char* filename)
   std::cerr << " ########### Error text is expected to follow." << std::endl;
   ok = CGAL::read_OFF("data/mesh_that_doesnt_exist.off", fg);
   assert(!ok);
-  ok = CGAL::read_OFF("data/invalid_cut.off", fg); // cut in half
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_cut.off"), fg); // cut in half
   assert(!ok);
-  ok = CGAL::read_OFF("data/invalid_nv.off", fg); // wrong number of points
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_nv.off"), fg); // wrong number of points
   assert(!ok);
-  ok = CGAL::read_OFF("data/sphere.obj", fg);
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/sphere.obj"), fg);
   assert(!ok);
-  ok = CGAL::read_OFF("data/pig.stl", fg);
+  ok = CGAL::read_OFF(CGAL::data_file_path("meshes/pig.stl"), fg);
   assert(!ok);
   std::cerr << " ########### No more error text from here." << std::endl;
 }
@@ -396,7 +396,7 @@ void test_bgl_OBJ(const std::string filename)
   std::ifstream is(filename);
   bool ok = CGAL::read_OBJ(is, fg, CGAL::parameters::verbose(true));
   assert(ok);
-  assert(filename != "data/sphere.obj" || (num_vertices(fg) == 272 && num_faces(fg) == 540));
+  assert(filename != CGAL::data_file_path("test/BGL/sphere.obj") || (num_vertices(fg) == 272 && num_faces(fg) == 540));
 
   // write with OBJ
   {
@@ -423,7 +423,7 @@ void test_bgl_OBJ(const std::string filename)
 
   // Test NPs
   CGAL::clear(fg);
-  ok = CGAL::read_OBJ("data/sphere.obj", fg);
+  ok = CGAL::read_OBJ(CGAL::data_file_path("test/BGL/sphere.obj"), fg);
   assert(ok);
   assert(num_vertices(fg) == 272 && num_faces(fg) == 540);
 
@@ -455,11 +455,11 @@ void test_bgl_OBJ(const std::string filename)
   std::cerr << " ########### Error text is expected to follow." << std::endl;
   ok = CGAL::read_OBJ("data/mesh_that_doesnt_exist.obj", fg);
   assert(!ok);
-  ok = CGAL::read_OBJ("data/invalid_cut.obj", fg); // invalid vertex ids
+  ok = CGAL::read_OBJ(CGAL::data_file_path("test/BGL/invalid_cut.obj"), fg); // invalid vertex ids
   assert(!ok);
-  ok = CGAL::read_OBJ("data/genus3.off", fg); // wrong extension
+  ok = CGAL::read_OBJ(CGAL::data_file_path("test/BGL/genus3.off"), fg); // wrong extension
   assert(!ok);
-  ok = CGAL::read_OBJ("data/pig.stl", fg);
+  ok = CGAL::read_OBJ(CGAL::data_file_path("meshes/pig.stl"), fg);
   assert(!ok);
   std::cerr << " ########### No more error text from here." << std::endl;
 }
@@ -475,7 +475,7 @@ void test_bgl_PLY(const std::string filename,
   bool ok = CGAL::read_PLY(is, fg, CGAL::parameters::use_binary_mode(false));
   is.close();
   assert(ok);
-  assert(filename != "data/colored_tetra.ply" || (num_vertices(fg) == 4 && num_faces(fg) == 4));
+  assert(filename != CGAL::data_file_path("meshes/colored_tetra.ply") || (num_vertices(fg) == 4 && num_faces(fg) == 4));
    if(!binary)
    {
      fg.clear();
@@ -483,7 +483,7 @@ void test_bgl_PLY(const std::string filename,
      bool ok = CGAL::read_PLY(is, fg, CGAL::parameters::use_binary_mode(false));
      is.close();
      assert(ok);
-     assert(filename != "data/colored_tetra.ply" || (num_vertices(fg) == 4 && num_faces(fg) == 4));
+     assert(filename != CGAL::data_file_path("meshes/colored_tetra.ply") || (num_vertices(fg) == 4 && num_faces(fg) == 4));
    }
 
   // write with PLY
@@ -520,7 +520,7 @@ void test_bgl_PLY(const std::string filename,
   VertexColorMap vcm = get(CGAL::dynamic_vertex_property_t<CGAL::Color>(), fg);
   FaceColorMap fcm = get(CGAL::dynamic_face_property_t<CGAL::Color>(), fg);
 
-  std::ifstream is_c("data/colored_tetra.ply"); // ASCII
+  std::ifstream is_c(CGAL::data_file_path("meshes/colored_tetra.ply")); // ASCII
   ok = CGAL::read_PLY(is_c, fg, CGAL::parameters::vertex_color_map(vcm)
                                                  .face_color_map(fcm));
   assert(ok);
@@ -597,15 +597,15 @@ void test_bgl_PLY(const std::string filename,
   std::cerr << " ########### Error text is expected to follow." << std::endl;
   ok = CGAL::read_PLY("data/mesh_that_doesnt_exist.ply", fg);
   assert(!ok);
-  ok = CGAL::read_PLY("data/invalid_cut.ply", fg); // cut in half
+  ok = CGAL::read_PLY(CGAL::data_file_path("test/BGL/invalid_cut.ply"), fg); // cut in half
   assert(!ok);
-  ok = CGAL::read_PLY("data/invalid_nv.ply", fg); // broken formatting
+  ok = CGAL::read_PLY(CGAL::data_file_path("test/BGL/invalid_nv.ply"), fg); // broken formatting
   assert(!ok);
-  ok = CGAL::read_PLY("data/binary_cut.ply", fg); // broken binary
+  ok = CGAL::read_PLY(CGAL::data_file_path("test/BGL/binary_cut.ply"), fg); // broken binary
   assert(!ok);
-  ok = CGAL::read_PLY("data/cube.off", fg);
+  ok = CGAL::read_PLY(CGAL::data_file_path("meshes/cube.off"), fg);
   assert(!ok);
-  ok = CGAL::read_PLY("data/pig.stl", fg);
+  ok = CGAL::read_PLY(CGAL::data_file_path("meshes/pig.stl"), fg);
   assert(!ok);
   std::cerr << " ########### No more error text from here." << std::endl;
 }
@@ -661,8 +661,8 @@ void test_bgl_STL(const std::string filename)
   CGAL::set_mode(is, CGAL::IO::BINARY);
   ok = CGAL::read_STL(is, fg, CGAL::parameters::vertex_point_map(cvpm));
   assert(ok);
-  assert(filename != "data/pig.stl" || (num_vertices(fg) == 8642 && num_faces(fg) == 16848));
-  assert(filename != "data/pig.stl" || cpoints.size() == 8642);
+  assert(filename != CGAL::data_file_path("meshes/pig.stl") || (num_vertices(fg) == 8642 && num_faces(fg) == 16848));
+  assert(filename != CGAL::data_file_path("meshes/pig.stl") || cpoints.size() == 8642);
 
   // write with STL
   {
@@ -690,13 +690,13 @@ void test_bgl_STL(const std::string filename)
   std::cerr << " ########### Error text is expected to follow." << std::endl;
   ok = CGAL::read_STL("data/mesh_that_doesnt_exist.stl", fg);
   assert(!ok);
-  ok = CGAL::read_STL("data/invalid_cut.stl", fg); // cut in half
+  ok = CGAL::read_STL(CGAL::data_file_path("test/BGL/invalid_cut.stl"), fg); // cut in half
   assert(!ok);
-  ok = CGAL::read_STL("data/invalid_header.stl", fg); // missing solid
+  ok = CGAL::read_STL(CGAL::data_file_path("test/BGL/invalid_header.stl"), fg); // missing solid
   assert(!ok);
-  ok = CGAL::read_STL("data/sphere.obj", fg);
+  ok = CGAL::read_STL(CGAL::data_file_path("test/BGL/sphere.obj"), fg);
   assert(!ok);
-  ok = CGAL::read_STL("data/full.off", fg);
+  ok = CGAL::read_STL(CGAL::data_file_path("test/BGL/full.off"), fg);
   assert(!ok);
   std::cerr << " ########### No more error text from here." << std::endl;
 }
@@ -771,9 +771,9 @@ void test_bgl_GOCAD(const char* filename)
   assert(!ok);
   ok = CGAL::read_GOCAD("data/invalid_header.ts", fg); // missing header
   assert(!ok);
-  ok = CGAL::read_GOCAD("data/sphere.obj", fg);
+  ok = CGAL::read_GOCAD(CGAL::data_file_path("test/BGL/sphere.obj"), fg);
   assert(!ok);
-  ok = CGAL::read_GOCAD("data/full.off", fg);
+  ok = CGAL::read_GOCAD(CGAL::data_file_path("test/BGL/full.off"), fg);
   assert(!ok);
   std::cerr << " ########### No more error text from here." << std::endl;
 }
@@ -890,9 +890,9 @@ void test_bgl_VTP(const char* filename,
   assert(!ok);
   ok = CGAL::read_VTP("data/wrong_nb_points.vtp", fg); // wrong number of points
   assert(!ok);
-  ok = CGAL::read_VTP("data/sphere.obj", fg);
+  ok = CGAL::read_VTP(CGAL::data_file_path("test/BGL/sphere.obj"), fg);
   assert(!ok);
-  ok = CGAL::read_VTP("data/full.off", fg);
+  ok = CGAL::read_VTP(CGAL::data_file_path("test/BGL/full.off"), fg);
   assert(!ok);
   ok = CGAL::read_VTP("corrupted_bin.vtp", fg);
   assert(!ok);
@@ -905,29 +905,29 @@ int main(int argc, char** argv)
 {
   // OFF
 
-  const char* off_file = (argc > 1) ? argv[1] : "data/prim.off";
+  const char* off_file = (argc > 1) ? argv[1] : CGAL::data_file_path("meshes/prim.off");
 
   test_bgl_OFF<Polyhedron, Kernel>(off_file);
   Polyhedron fg;
-  bool ok = CGAL::read_OFF("data/invalid_header.off", fg); // wrong header (NOFF but no normals)
+  bool ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_header.off"), fg); // wrong header (NOFF but no normals)
   assert(ok);
 
   test_bgl_OFF<SM, Kernel>(off_file);
   SM sm;
-  ok = CGAL::read_OFF("data/invalid_header.off", sm); // wrong header (NOFF but no normals)
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_header.off"), sm); // wrong header (NOFF but no normals)
   assert(!ok);
   test_bgl_OFF<LCC, Kernel>(off_file);
   LCC lcc;
-  ok = CGAL::read_OFF("data/invalid_header.off", lcc); // wrong header (NOFF but no normals)
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_header.off"), lcc); // wrong header (NOFF but no normals)
   assert(!ok);
 #ifdef CGAL_USE_OPENMESH
   test_bgl_OFF<OMesh, EPICK>(off_file);
   OMesh om;
-  ok = CGAL::read_OFF("data/invalid_header.off", om); // wrong header (NOFF but no normals)
+  ok = CGAL::read_OFF(CGAL::data_file_path("test/BGL/invalid_header.off"), om); // wrong header (NOFF but no normals)
   assert(!ok);
 #endif
   // OBJ
-  const char* obj_file = (argc > 2) ? argv[2] : "data/sphere.obj";
+  const char* obj_file = (argc > 2) ? argv[2] : CGAL::data_file_path("test/BGL/sphere.obj");
   test_bgl_OBJ<Polyhedron, Kernel>(obj_file);
   test_bgl_OBJ<SM, Kernel>(obj_file);
   test_bgl_OBJ<LCC, Kernel>(obj_file);
@@ -936,16 +936,16 @@ int main(int argc, char** argv)
 #endif
 
   // PLY
-  const char* ply_file_ascii = (argc > 3) ? argv[3] : "data/colored_tetra.ply";
+  const char* ply_file_ascii = (argc > 3) ? argv[3] : CGAL::data_file_path("meshes/colored_tetra.ply");
   test_bgl_PLY<Polyhedron>(ply_file_ascii, false);
   test_bgl_PLY<SM>(ply_file_ascii, false);
 
-  const char* ply_file = (argc > 3) ? argv[3] : "data/colored_tetra.ply";
+  const char* ply_file = (argc > 3) ? argv[3] : CGAL::data_file_path("meshes/colored_tetra.ply");
   test_bgl_PLY<Polyhedron>(ply_file, true);
   test_bgl_PLY<SM>(ply_file, true);
 
   // STL
-  const char* stl_file = (argc > 4) ? argv[4] : "data/pig.stl";
+  const char* stl_file = (argc > 4) ? argv[4] : CGAL::data_file_path("meshes/pig.stl");
   test_bgl_STL<Polyhedron>(stl_file);
   test_bgl_STL<SM>(stl_file);
   test_bgl_STL<LCC>(stl_file);

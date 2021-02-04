@@ -28,7 +28,7 @@ operator<<(std::ostream& os, const Facet& f)
 int main()
 {
   Polyhedron polyhedron;
-  std::ifstream in("data/planar.xyz");
+  std::ifstream in(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   std::vector<Point_3> points;
   std::vector<Facet> facets;
 

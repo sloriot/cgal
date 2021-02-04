@@ -17,7 +17,7 @@ typedef boost::graph_traits<Dual>::in_edge_iterator in_edge_iterator;
 
 int main()
 {
-  std::ifstream in("data/primal.off");
+  std::ifstream in(CGAL::data_file_path("test/BGL/primal.off"));
   Mesh primal;
   in >> primal;
 

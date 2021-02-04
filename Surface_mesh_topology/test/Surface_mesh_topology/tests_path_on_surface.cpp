@@ -14,7 +14,7 @@ bool test_constructions()
 {
   bool res=true;
   SM sm;
-  std::ifstream in("data/cylinder-with-two-borders.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/cylinder-with-two-borders.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/cylinder-with-two-borders.off"<<std::endl;
@@ -59,7 +59,7 @@ bool test_random_path()
 {
   SM sm;
   bool res=true;
-  std::ifstream in("data/rond_point_saucisse.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/rond_point_saucisse.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/rond_point_saucisse.off"<<std::endl;

@@ -39,7 +39,7 @@ typedef SMS::Bounded_distance_placement<Placement, Tree>      Filtered_placement
 int main(int argc, char** argv)
 {
   Surface ref_mesh;
-  std::ifstream is(argc > 1 ? argv[1] : "data/helmet.off");
+  std::ifstream is(argc > 1 ? argv[1] : CGAL::data_file_path("test/Surface_mesh_simplification/helmet.off"));
   is >> ref_mesh;
 
   SMS::Count_stop_predicate<Surface> stop(num_halfedges(ref_mesh)/10);

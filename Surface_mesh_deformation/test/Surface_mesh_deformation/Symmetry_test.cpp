@@ -18,7 +18,7 @@ typedef CGAL::Surface_mesh_deformation<Polyhedron, CGAL::Default, CGAL::Default,
 int main()
 {
   Polyhedron mesh_1;
-  read_to_polyhedron("data/square.off", mesh_1);
+  read_to_polyhedron(CGAL::data_file_path("test/Surface_mesh_deformation/square.off"), mesh_1);
   Polyhedron mesh_2 = mesh_1;
 
   init_indices(mesh_1);

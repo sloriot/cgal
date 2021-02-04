@@ -197,7 +197,7 @@ bool test(const char* filename, std::size_t nbedges, double length, std::size_t 
   LCC_CM lcc_cm;
   load_lcc(lcc_cm, filename);
   if (!test_one_data_structure(lcc_cm, nbedges, length, nbfaces,
-                               std::string(filename)=="data/double-torus-2-b.off"))
+                               std::string(filename)==CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-b.off")))
   {
     std::cout<<"[ERROR] for Linear_cell_complex_for_combinatorial_map."<<std::endl;
     res=false;
@@ -208,7 +208,7 @@ bool test(const char* filename, std::size_t nbedges, double length, std::size_t 
   LCC_GM lcc_gm;
   load_lcc(lcc_gm, filename);
   if (!test_one_data_structure(lcc_gm, nbedges, length, nbfaces,
-                               std::string(filename)=="data/double-torus-2-b.off"))
+                               std::string(filename)==CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-b.off")))
   {
     std::cout<<"[ERROR] for Linear_cell_complex_for_generalized_map."<<std::endl;
     res=false;
@@ -219,7 +219,7 @@ bool test(const char* filename, std::size_t nbedges, double length, std::size_t 
   SM sm;
   load_sm(sm, filename);
   if (!test_one_data_structure(sm, nbedges, length, nbfaces,
-                               std::string(filename)=="data/double-torus-2-b.off"))
+                               std::string(filename)==CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-b.off")))
   {
     std::cout<<"[ERROR] for Surface_mesh."<<std::endl;
     res=false;
@@ -230,7 +230,7 @@ bool test(const char* filename, std::size_t nbedges, double length, std::size_t 
   Poly poly;
   load_sm(poly, filename);
   if (!test_one_data_structure(poly, nbedges, length, nbfaces,
-                               std::string(filename)=="data/double-torus-2-b.off"))
+                               std::string(filename)==CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-b.off")))
   {
     std::cout<<"[ERROR] for Polyhedron_3."<<std::endl;
     res=false;
@@ -245,10 +245,10 @@ int main()
   bool res=true;
   std::cout<<"[BEGIN] Test shortest cycle non contractible "<<std::flush;
 
-  if (!test("data/double-torus-2-a.off", 6, 5.41404, 6))
+  if (!test(CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-a.off"), 6, 5.41404, 6))
   { std::cout<<"[ERROR] for data/double-torus-2-a.off."<<std::endl; res=false; }
 
-  if (!test("data/double-torus-2-b.off", 12, 5.41404, 6))
+  if (!test(CGAL::data_file_path("test/Surface_mesh_topology/double-torus-2-b.off"), 12, 5.41404, 6))
   { std::cout<<"[ERROR] for data/double-torus-2.off."<<std::endl; res=false; }
 
   // if (!test("data/double-torus-2-c.off", 24, 5.41404, 6))

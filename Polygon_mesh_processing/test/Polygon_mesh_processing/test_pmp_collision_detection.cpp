@@ -76,11 +76,11 @@ void test_intersections(Index index, const char* type)
 {
   std::cout << "test_intersections<"<<type<<">()" << std::endl;
   TriangleMesh tm1, tm2, tm3;
-  std::ifstream input("data/small_spheres.off");
+  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/small_spheres.off"));
   assert(input);
   input >> tm1;
   input.close();
-  input.open("data/blobby.off");
+  input.open(CGAL::data_file_path("meshes/blobby.off"));
   assert(input);
   input >> tm2;
   input.close();

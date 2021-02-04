@@ -41,7 +41,7 @@ collapse_edge_test()
   typedef typename boost::graph_traits<Mesh>:: vertex_descriptor vertex_descriptor;
   typedef typename boost::graph_traits<Mesh>:: halfedge_descriptor halfedge_descriptor;
 
-  const std::string fname = "data/flat_hexahedron.off";
+  const std::string fname = CGAL::data_file_path("test/BGL/flat_hexahedron.off");
   Mesh m;
   if(!CGAL::read_OFF(fname, m))
     std::cout << "Error reading file: " << fname << std::endl;

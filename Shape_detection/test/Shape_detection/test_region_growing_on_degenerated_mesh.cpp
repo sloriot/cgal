@@ -38,7 +38,7 @@ bool test_region_growing_on_degenerated_mesh(int argc, char *argv[]) {
   const std::size_t min_region_size    = 5;
 
   // Load data.
-  std::ifstream in(argc > 1 ? argv[1] : "data/degenerated.off");
+  std::ifstream in(argc > 1 ? argv[1] : CGAL::data_file_path("test/Shape_detection/degenerated.off"));
   CGAL::set_ascii_mode(in);
 
   if (!in) {

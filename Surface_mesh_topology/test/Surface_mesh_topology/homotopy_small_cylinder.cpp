@@ -28,7 +28,7 @@ void create_path_2(Path_on_surface<SM>& p)
 int main()
 {
   SM sm;
-  std::ifstream in("data/cylinder-2-borders-12darts.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/cylinder-2-borders-12darts.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/cylinder-2-borders-12darts.off"<<std::endl;

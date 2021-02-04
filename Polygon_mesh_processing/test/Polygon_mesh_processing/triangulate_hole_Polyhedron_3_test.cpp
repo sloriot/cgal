@@ -338,7 +338,7 @@ void test_triangulate_refine_and_fair_hole_compile() {
 void generate_elephant_with_hole()
 {
   Polyhedron poly;
-  read_poly("data/elephant.off", poly);
+  read_poly(CGAL::data_file_path("meshes/elephant.off"), poly);
   int i=0;
   for(Facet_handle fd : faces(poly))
     if (++i==229)
@@ -365,7 +365,7 @@ int main()
   std::vector<std::string> input_files;
   input_files.push_back("elephant_triangle_hole.off");
   input_files.push_back("elephant_quad_hole.off");
-  input_files.push_back("data/mech-holes-shark.off");
+  input_files.push_back(CGAL::data_file_path("meshes/mech-holes-shark.off"));
 
   for(std::vector<std::string>::iterator it = input_files.begin(); it != input_files.end(); ++it)
   {
@@ -379,8 +379,8 @@ int main()
     std::cout << "------------------------------------------------" << std::endl;
   }
 
-  test_triangulate_hole_should_be_no_output("data/non_manifold_vertex.off");
-  test_triangulate_hole_should_be_no_output("data/two_tris_collinear.off");
+  test_triangulate_hole_should_be_no_output(CGAL::data_file_path("test/Polygon_mesh_processing/non_manifold_vertex.off"));
+  test_triangulate_hole_should_be_no_output(CGAL::data_file_path("test/Polygon_mesh_processing/two_tris_collinear.off"));
 
   test_triangulate_refine_and_fair_hole_compile();
   std::cout << "All Done!" << std::endl;

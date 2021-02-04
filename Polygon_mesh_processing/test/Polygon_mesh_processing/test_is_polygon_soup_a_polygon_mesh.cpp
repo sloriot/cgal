@@ -129,25 +129,25 @@ void test_polygon_soup(std::string fname, bool expected)
 
 int main()
 {
-  test_polygon_soup<SC>("data_polygon_soup/bad_cube.off", false);
-  test_polygon_soup<Epec>("data_polygon_soup/bad_cube.off", false);
-  test_polygon_soup<SC>("data_polygon_soup/isolated_singular_vertex_one_cc.off", false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/bad_cube.off"), false);
+  test_polygon_soup<Epec>(CGAL::data_file_path("test/Polygon_mesh_processing/bad_cube.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/isolated_singular_vertex_one_cc.off"), false);
 
-  test_polygon_soup<SC>("data_polygon_soup/isolated_vertices.off", false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/isolated_vertices.off"), false);
 
-  test_polygon_soup<SC>("data_polygon_soup/nm_vertex_and_edge.off", false);
-  test_polygon_soup<SC>("data_polygon_soup/one_duplicated_edge.off", false);
-  test_polygon_soup<SC>("data_polygon_soup/one_duplicated_edge_sharing_vertex.off", false);
-  test_polygon_soup<SC>("data_polygon_soup/partial_overlap.off", false);
-  test_polygon_soup<SC>("data_polygon_soup/incompatible_orientation.off", false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/nm_vertex_and_edge.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/one_duplicated_edge.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/one_duplicated_edge_sharing_vertex.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/partial_overlap.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/incompatible_orientation.off"), false);
 
-  test_polygon_soup<SC>("data/blobby_3cc.off", true);
-  test_polygon_soup<SC>("data/elephant.off", true);
-  test_polygon_soup<SC>("data/joint_refined.off", true);
-  test_polygon_soup<SC>("data/mech-holes-shark.off", true);
-  test_polygon_soup<SC>("data/non_manifold_vertex.off", false);
-  test_polygon_soup<SC>("data/two_tris_collinear.off", true);
-  test_polygon_soup<SC>("data/U.off", true);
+  test_polygon_soup<SC>(CGAL::data_file_path("meshes/blobby_3cc.off"), true);
+  test_polygon_soup<SC>(CGAL::data_file_path("meshes/elephant.off"), true);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off"), true);
+  test_polygon_soup<SC>(CGAL::data_file_path("meshes/mech-holes-shark.off"), true);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/non_manifold_vertex.off"), false);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/two_tris_collinear.off"), true);
+  test_polygon_soup<SC>(CGAL::data_file_path("test/Polygon_mesh_processing/U.off"), true);
 
   return EXIT_SUCCESS;
 }

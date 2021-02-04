@@ -157,7 +157,7 @@ Main(int argc, char* argv[])
 #endif
 
   const char* filename = (argc > 1) ? argv[1]
-    : "data/joint_refined.off";
+    : CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off");
   std::ifstream input(filename);
 
   Mesh m;
@@ -184,7 +184,7 @@ Main(int argc, char* argv[])
   if(!facets.empty())
   {
     std::cout << "Input is self intersecting. STOP" << std::endl;
-    if (strcmp(filename, "data/joint_refined.off") == 0)
+    if (strcmp(filename, CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off")) == 0)
       assert(false);
     return;
   }
@@ -247,7 +247,7 @@ Main(int argc, char* argv[])
     out.close();
   }
   //this test should make the precondition fail
-  test_precondition("data/joint_refined.off",
+  test_precondition(CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off"),
     "data/joint-patch-toolargeconstraints.selection.txt");
 }
 };

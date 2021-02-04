@@ -56,7 +56,7 @@ struct Polyhedron_tester : public Tester<K>
     // Data generation
     //-------------------------------------------------------
     Polyhedron polyhedron;
-    std::ifstream input("data/sphere.off");
+    std::ifstream input(CGAL::data_file_path("test/Mesh_3/sphere.off"));
     input >> polyhedron;
     input.close();
 

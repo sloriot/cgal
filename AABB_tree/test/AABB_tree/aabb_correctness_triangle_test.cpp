@@ -38,7 +38,7 @@ int test()
   // load polyhedron
   typedef CGAL::Polyhedron_3<K> Polyhedron;
   Polyhedron polyhedron;
-  std::ifstream ifs("data/tetrahedron.off");
+  std::ifstream ifs(CGAL::data_file_path("meshes/tetrahedron.off"));
   ifs >> polyhedron;
 
   // construct tree from facets

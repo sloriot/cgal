@@ -39,7 +39,7 @@ bool test_region_growing_on_cube(int argc, char *argv[]) {
   const std::size_t min_region_size    = 1;
 
   // Load data.
-  std::ifstream in(argc > 1 ? argv[1] : "data/cube.off");
+  std::ifstream in(argc > 1 ? argv[1] : CGAL::data_file_path("test/Shape_detection/cube.off"));
   CGAL::set_ascii_mode(in);
 
   if (!in) {

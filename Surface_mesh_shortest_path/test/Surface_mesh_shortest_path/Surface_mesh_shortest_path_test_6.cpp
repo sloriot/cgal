@@ -18,7 +18,7 @@ typedef Graph_traits::face_iterator face_iterator;
 int main()
 {
   CGAL::Surface_mesh<Kernel::Point_3> mesh;
-  std::ifstream input("data/test_mesh_6.off");
+  std::ifstream input(CGAL::data_file_path("test/Surface_mesh_shortest_path/test_mesh_6.off"));
   input >> mesh;
   input.close();
 

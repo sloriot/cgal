@@ -48,7 +48,7 @@ void create_path_3(Path_on_surface<SM>& p)
 int main()
 {
   SM sm;
-  std::ifstream in("data/rond_point_saucisse.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/rond_point_saucisse.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/rond_point_saucisse.off"<<std::endl;

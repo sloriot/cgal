@@ -35,7 +35,7 @@ typedef S_Tree::Primitive_id S_Primitive_id;
 int main()
 {
   CGAL::Surface_mesh<CGAL::Point_3<CGAL::Epick> > m1, m2;
-  std::ifstream in("data/cube.off");
+  std::ifstream in(CGAL::data_file_path("test/AABB_tree/cube.off"));
   if(in)
     in >> m1;
   else{
@@ -43,7 +43,7 @@ int main()
     return 1;
   }
   in.close();
-  in.open("data/tetrahedron.off");
+  in.open(CGAL::data_file_path("meshes/tetrahedron.off"));
   if(in)
     in >> m2;
   else{

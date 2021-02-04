@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 
   // First test ----------------------------------------------------------------
   bool expected = false;
-  const char* filename = (argc > 1) ? argv[1] : "data/elephant.off";
+  const char* filename = (argc > 1) ? argv[1] : CGAL::data_file_path("meshes/elephant.off");
   if(argc > 1) {
     assert(argc > 2);
     std::stringstream ss(argv[2]);
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 
   // Second test ---------------------------------------------------------------
   expected = true;
-  filename = (argc > 3) ? argv[3] : "data/mannequin-devil.off";
+  filename = (argc > 3) ? argv[3] : CGAL::data_file_path("meshes/mannequin-devil.off");
   if(argc > 3) {
     assert(argc > 4);
     std::stringstream ss(argv[4]);
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 
   // Third test ----------------------------------------------------------------
   expected = true;
-  filename = (argc > 5) ? argv[5] : "data/overlapping_triangles.off";
+  filename = (argc > 5) ? argv[5] : CGAL::data_file_path("test/Polygon_mesh_processing/overlapping_triangles.off");
   if(argc > 5) {
     assert(argc > 6);
     std::stringstream ss(argv[6]);

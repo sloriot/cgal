@@ -49,18 +49,18 @@ bool read_ply(std::string s,
 int main()
 {
   std::cerr << "### There should be three errors following this line...\n";
-  assert(! read("data/read_test/bug_1.xyz"));
-  assert(! read("data/read_test/bug_2.xyz"));
-  assert(! read("data/read_test/bug_3.xyz"));
+  assert(! read(CGAL::data_file_path("test/Point_set_processing_3/bug_1.xyz")));
+  assert(! read(CGAL::data_file_path("test/Point_set_processing_3/bug_2.xyz")));
+  assert(! read(CGAL::data_file_path("test/Point_set_processing_3/bug_3.xyz")));
   std::cerr << "### ... Done. Now, there should not be any error.\n";
 
-  assert(read("data/read_test/ok_1.xyz"));
-  assert(read("data/read_test/ok_2.xyz"));
-  assert(read("data/read_test/ok_3.xyz"));
+  assert(read(CGAL::data_file_path("test/Point_set_processing_3/ok_1.xyz")));
+  assert(read(CGAL::data_file_path("test/Point_set_processing_3/ok_2.xyz")));
+  assert(read(CGAL::data_file_path("test/Point_set_processing_3/ok_3.xyz")));
 
   std::vector<PointVectorPair> pv_pairs;
 
-  read("data/read_test/ok_2.xyz", pv_pairs);
+  read(CGAL::data_file_path("test/Point_set_processing_3/ok_2.xyz"), pv_pairs);
   assert(pv_pairs.size() == 4);
   assert(pv_pairs[0] == std::make_pair(Point_3(2,3,4), Vector_3(4,4,2)));
   assert(pv_pairs[1] == std::make_pair(Point_3(3,4,6), Vector_3(0,0,0)));
@@ -69,7 +69,7 @@ int main()
 
   pv_pairs.clear();
 
-  assert(read_off("data/read_test/ok_1.off", pv_pairs));
+  assert(read_off(CGAL::data_file_path("test/Point_set_processing_3/ok_1.off"), pv_pairs));
   assert(pv_pairs.size() == 4);
   assert(pv_pairs[0] == std::make_pair(Point_3(3,2,0), Vector_3(1,2,3)));
   assert(pv_pairs[1] == std::make_pair(Point_3(1,2,3), Vector_3(0,0,0)));
@@ -77,19 +77,19 @@ int main()
   assert(pv_pairs[3] == std::make_pair(Point_3(7,8,9), Vector_3(0,0,0)));
 
   pv_pairs.clear ();
-  assert(read_ply("data/read_test/simple.ply", pv_pairs));
+  assert(read_ply(CGAL::data_file_path("test/Point_set_processing_3/simple.ply"), pv_pairs));
   assert(pv_pairs[0] == std::make_pair(Point_3(1,1,1), Vector_3(2,2,2)));
   assert(pv_pairs[1] == std::make_pair(Point_3(3,3,3), Vector_3(4,4,4)));
   assert(pv_pairs[2] == std::make_pair(Point_3(5,5,5), Vector_3(6,6,6)));
 
   pv_pairs.clear ();
-  assert(read_ply("data/read_test/simple_ascii.ply", pv_pairs));
+  assert(read_ply(CGAL::data_file_path("test/Point_set_processing_3/simple_ascii.ply"), pv_pairs));
   assert(pv_pairs[0] == std::make_pair(Point_3(1,1,1), Vector_3(2,2,2)));
   assert(pv_pairs[1] == std::make_pair(Point_3(3,3,3), Vector_3(4,4,4)));
   assert(pv_pairs[2] == std::make_pair(Point_3(5,5,5), Vector_3(6,6,6)));
 
   pv_pairs.clear ();
-  assert(read_ply("data/read_test/simple_with_flag.ply", pv_pairs));
+  assert(read_ply(CGAL::data_file_path("test/Point_set_processing_3/simple_with_flag.ply"), pv_pairs));
   assert(pv_pairs[0] == std::make_pair(Point_3(1,1,1), Vector_3(2,2,2)));
   assert(pv_pairs[1] == std::make_pair(Point_3(3,3,3), Vector_3(4,4,4)));
   assert(pv_pairs[2] == std::make_pair(Point_3(5,5,5), Vector_3(6,6,6)));

@@ -5,7 +5,7 @@
 template<typename Mesh>
 void test()
 {
-  const std::string fname = "data/7_faces_triangle.off";
+  const std::string fname = CGAL::data_file_path("test/BGL/7_faces_triangle.off");
   Mesh m;
   if(!CGAL::read_OFF(fname, m))
     std::cout << "Error reading file: " << fname << std::endl;

@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
         const char* input_file =
             (argc > 1) ? argv[1]
-            : "data/icosahedron.pwn";
+            : CGAL::data_file_path("test/Polygonal_surface_reconstruction/icosahedron.pwn");
 
         //---------------------------------------------------------------------
 

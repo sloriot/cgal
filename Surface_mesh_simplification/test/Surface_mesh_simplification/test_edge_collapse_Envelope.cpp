@@ -93,7 +93,7 @@ struct My_visitor : SMS::Edge_collapse_visitor_base<Surface>
 int main(int argc, char** argv)
 {
   Surface input_mesh;
-  std::ifstream is(argc > 1 ? argv[1] : "data/helmet.off");
+  std::ifstream is(argc > 1 ? argv[1] : CGAL::data_file_path("test/Surface_mesh_simplification/helmet.off"));
   is >> input_mesh;
 
   SMS::Count_stop_predicate<Surface> stop(0); // go as far as you can while in the envelope

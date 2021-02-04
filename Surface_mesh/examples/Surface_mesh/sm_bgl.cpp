@@ -18,7 +18,7 @@ typedef boost::graph_traits<Mesh>::vertex_descriptor vertex_descriptor;
 int main(int argc, char* argv[])
 {
   Mesh sm;
-  std::fstream in(argc==1?"data/knot1.off":argv[1]);
+  std::fstream in(argc==1?CGAL::data_file_path("meshes/knot1.off"):argv[1]);
   in >> sm;
 
   Mesh::Property_map<vertex_descriptor,vertex_descriptor> predecessor;

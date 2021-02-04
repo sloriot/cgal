@@ -56,8 +56,8 @@ void test()
   //test with SI
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-clip/clipper_for_tet.off") >> tm2;
-    std::ifstream("data-clip/tet_with_si_to_clip.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/clipper_for_tet.off")) >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_with_si_to_clip.off")) >> tm1;
 
     PMP::clip(tm1, tm2,
               params::throw_on_self_intersection(true),
@@ -140,7 +140,7 @@ void test()
   //test with SI
   {
     TriangleMesh tm1;
-    std::ifstream("data-clip/tet_with_si_to_clip.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_with_si_to_clip.off")) >> tm1;
     if(num_vertices(tm1) == 0)
     {
       std::cerr<<"File not found. Aborting."<<std::endl;
@@ -431,8 +431,8 @@ void test()
   // test special case
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-clip/tm_1.off") >> tm2;
-    std::ifstream("data-clip/clipper_1.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tm_1.off")) >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/clipper_1.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -530,7 +530,7 @@ void test_split_plane()
   meshes.clear();
 
   //test with SI
-  std::ifstream("data-clip/tet_si_to_split.off") >> tm1;
+  std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_si_to_split.off")) >> tm1;
   if(num_vertices(tm1) == 0)
   {
     std::cerr<<"File not found. Aborting."<<std::endl;
@@ -611,7 +611,7 @@ void test_split()
   meshes.clear();
 
   // open intersection curve
-  input.open("data-clip/split_A.off");
+  input.open(CGAL::data_file_path("test/Polygon_mesh_processing/split_A.off"));
   input >> tm1;
 
   if(!input)
@@ -623,7 +623,7 @@ void test_split()
 
   input.close();
 
-  input.open("data-clip/splitter.off");
+  input.open(CGAL::data_file_path("test/Polygon_mesh_processing/splitter.off"));
   input >> tm2;
 
   if(!input)
@@ -653,8 +653,8 @@ void test_split()
 
 
   //test with SI
-  std::ifstream("data-clip/splitter_for_tet.off") >> tm2;
-  std::ifstream("data-clip/tet_si_to_split.off") >> tm1;
+  std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/splitter_for_tet.off")) >> tm2;
+  std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_si_to_split.off")) >> tm1;
   //test with SI
   if(num_vertices(tm1) == 0 || num_vertices(tm2) == 0)
   {
@@ -721,7 +721,7 @@ void test_isocuboid()
   meshes.clear();
 
 
-  std::ifstream("data-clip/tet_with_si_to_clip.off") >> tm;
+  std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_with_si_to_clip.off")) >> tm;
   if(num_vertices(tm) == 0)
   {
     std::cerr<<"File not found. Aborting."<<std::endl;
@@ -745,7 +745,7 @@ void test_isocuboid()
   CGAL::clear(tm);
   meshes.clear();
 
-  std::ifstream("data-clip/tet_with_si_to_clip.off") >> tm;
+  std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/tet_with_si_to_clip.off")) >> tm;
   PMP::clip(tm, splitter,
              params::throw_on_self_intersection(true)
              .allow_self_intersections(true));

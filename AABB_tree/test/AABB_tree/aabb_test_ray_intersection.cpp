@@ -76,7 +76,7 @@ int main()
     // polyhedron.make_tetrahedron(p, q, r, s);
   }
 
-  std::ifstream in("data/bunny00.off");
+  std::ifstream in(CGAL::data_file_path("test/AABB_tree/bunny00.off"));
   if(in)
     in >> polyhedron;
   else{

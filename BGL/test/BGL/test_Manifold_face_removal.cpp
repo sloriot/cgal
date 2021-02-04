@@ -17,7 +17,7 @@ typedef boost::graph_traits<SM>::face_descriptor face_descriptor;
 void border_cases()
 {
   SM sm_ref;
-  std::ifstream input("data/nm_selection_removal.off");
+  std::ifstream input(CGAL::data_file_path("test/BGL/nm_selection_removal.off"));
   input >> sm_ref;
 
   {
@@ -79,7 +79,7 @@ void border_cases()
 int main()
 {
   SM sm;
-  std::ifstream input("data/head.off");
+  std::ifstream input(CGAL::data_file_path("meshes/head.off"));
   input >> sm;
 
 // define my selection of faces to remove

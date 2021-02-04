@@ -14,7 +14,7 @@ typedef boost::graph_traits<SMesh>::face_descriptor           face_descriptor;
 
 int main()
 {
-  std::ifstream in("colored_tetra.ply");
+  std::ifstream in(CGAL::data_file_path("meshes/colored_tetra.ply"));
   SMesh mesh;
   CGAL::read_PLY(in, mesh);
 
@@ -36,7 +36,7 @@ int main()
   mesh.add_property_map<SMesh::Halfedge_index, float>("v", 37.f);
 
   // Append second mesh
-  std::ifstream in2("tetra.ply");
+  std::ifstream in2(CGAL::data_file_path("test/Surface_mesh/tetra.ply"));
   CGAL::read_PLY(in2, mesh);
 
   std::ofstream out("out.ply");

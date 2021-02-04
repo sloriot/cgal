@@ -271,7 +271,7 @@ void detect_is_saddle_vertex()
   Traits::Is_saddle_vertex is_saddle_vertex(traits.is_saddle_vertex_object());
   CGAL_USE(is_saddle_vertex);
 
-  std::ifstream inFile("data/saddle_vertex_mesh.off");
+  std::ifstream inFile(CGAL::data_file_path("test/Surface_mesh_shortest_path/saddle_vertex_mesh.off"));
 
   Polyhedron_3 P;
 

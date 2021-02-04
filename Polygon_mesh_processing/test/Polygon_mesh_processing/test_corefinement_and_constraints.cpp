@@ -51,7 +51,7 @@ typedef Triangle_mesh::Property_map<Triangle_mesh::Edge_index,bool> Constrained_
 
 void read_input(Triangle_mesh& tm)
 {
-  std::ifstream input("data/joint_refined.off");
+  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off"));
   input >> tm;
 }
 

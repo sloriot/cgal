@@ -36,7 +36,7 @@ void create_path_3(Path_on_surface<SM>& p)
 int main()
 {
   SM sm;
-  std::ifstream in("data/2torus-3borders.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/2torus-3borders.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/2torus-3borders.off"<<std::endl;

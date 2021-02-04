@@ -178,7 +178,7 @@ int main()
 {
   //load the model from <mesh.off>
   PolyhedralSurf P;
-  std::ifstream stream("data/ellipsoid.off");
+  std::ifstream stream(CGAL::data_file_path("test/Ridges_3/ellipsoid.off"));
   stream >> P;
   fprintf(stderr, "loadMesh %d Ves %d Facets\n",
           (int)P.size_of_vertices(), (int)P.size_of_facets());

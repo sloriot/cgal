@@ -45,9 +45,9 @@ void fct(const char* fname)
 
 int main()
 {
-  fct("data/point.xyz");
-  fct("data/segment.xyz");
-  fct("data/triangle.xyz");
-  fct("data/planar.xyz");
+  fct(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/point.xyz"));
+  fct(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/segment.xyz"));
+  fct(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/triangle.xyz"));
+  fct(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   return 0;
 }

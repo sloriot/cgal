@@ -36,7 +36,7 @@ using namespace CGAL::parameters;
 
 int main(int argc, char*argv[])
 {
-  const char* fname = (argc>1)?argv[1]:"data/sphere.off";
+  const char* fname = (argc>1)?argv[1]:CGAL::data_file_path("test/Mesh_3/sphere.off");
   // Create input polyhedron
   Polyhedron polyhedron;
   std::ifstream input(fname);

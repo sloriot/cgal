@@ -185,14 +185,14 @@ void compile_test() {
   std::deque<PointVectorPair> pv_pairs;
   std::ifstream input;
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(points));
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(points),
@@ -200,7 +200,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(points),
@@ -210,21 +210,21 @@ void compile_test() {
   input.close();
 
   // this will span all OutputIteratorValueType versions
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ<Point_3>(
     input,
     std::front_inserter(points));
   input.clear();
   input.close();
   //-----------------------------------------------------------------------
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(points));
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(points),
@@ -232,7 +232,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(points),
@@ -242,14 +242,14 @@ void compile_test() {
   input.close();
 
   // this will span all OutputIteratorValueType versions
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF<Point_3>(
     input,
     std::front_inserter(points));
   input.clear();
   input.close();
   //-----------------------------------------------------------------------
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(points),
@@ -257,7 +257,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(pv_pairs),
@@ -266,7 +266,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ(
     input,
     std::front_inserter(pv_pairs),
@@ -276,7 +276,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.xyz");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"));
   CGAL::read_XYZ<Point_3>(
     input,
     std::front_inserter(points),
@@ -284,7 +284,7 @@ void compile_test() {
   input.clear();
   input.close();
   //-----------------------------------------------------------------------
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(points),
@@ -292,7 +292,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(pv_pairs),
@@ -301,7 +301,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF(
     input,
     std::front_inserter(pv_pairs),
@@ -311,7 +311,7 @@ void compile_test() {
   input.clear();
   input.close();
 
-  input.open("data/read_test/simple.off");
+  input.open(CGAL::data_file_path("test/Point_set_processing_3/simple.off"));
   CGAL::read_OFF<Point_3>(
     input,
     std::front_inserter(points),
@@ -321,22 +321,22 @@ void compile_test() {
 }
 
 int main() {
-  if(!test_no_deduction_points_and_normals_xyz("data/read_test/simple.xyz")) {
+  if(!test_no_deduction_points_and_normals_xyz(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"))) {
     return EXIT_FAILURE;
   }
   std::cerr << "test_no_deduction_points_and_normals_xyz OK." << std::endl;
 
-  if(!test_no_deduction_points_and_normals_off("data/read_test/simple.off")) {
+  if(!test_no_deduction_points_and_normals_off(CGAL::data_file_path("test/Point_set_processing_3/simple.off"))) {
     return EXIT_FAILURE;
   }
   std::cerr << "test_no_deduction_points_and_normals_off OK." << std::endl;
 
-  if(!test_no_deduction_points_xyz("data/read_test/simple.xyz")) {
+  if(!test_no_deduction_points_xyz(CGAL::data_file_path("test/Point_set_processing_3/simple.xyz"))) {
     return EXIT_FAILURE;
   }
   std::cerr << "test_no_deduction_points_xyz OK." << std::endl;
 
-  if(!test_no_deduction_points_off("data/read_test/simple.off")) {
+  if(!test_no_deduction_points_off(CGAL::data_file_path("test/Point_set_processing_3/simple.off"))) {
     return EXIT_FAILURE;
   }
   std::cerr << "test_no_deduction_points_off OK." << std::endl;

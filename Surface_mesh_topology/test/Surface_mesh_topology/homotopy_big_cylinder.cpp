@@ -43,7 +43,7 @@ void create_path_3(Path_on_surface<SM>& p)
 int main()
 {
   SM sm;
-  std::ifstream in("data/cylinder-with-two-borders.off");
+  std::ifstream in(CGAL::data_file_path("test/Surface_mesh_topology/cylinder-with-two-borders.off"));
   if (!in.is_open())
   {
     std::cout<<"ERROR reading file data/cylinder-with-two-borders.off"<<std::endl;

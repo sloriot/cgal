@@ -384,16 +384,16 @@ int main()
 {
 
   bool expected = true;
-  const char* filename1 =  "data/tetra1.off";
-  const char* filename2 =  "data/tetra3.off";
+  const char* filename1 =  CGAL::data_file_path("test/Polygon_mesh_processing/tetra1.off");
+  const char* filename2 =  CGAL::data_file_path("meshes/reference_tetrahedron.off");
   const char* filename3 =  "data/triangle.polylines.txt";
   const char* filename4 =  "data/planar.polylines.txt";
   const char* filename5 =  "data/tetra3_inter.polylines.txt";
   const char* filename6 =  "data/polylines_inter.polylines.txt";
-  const char* filename7 =  "data/tetra2.off";
-  const char* filename8 =  "data/tetra4.off";
-  const char* filename9 =  "data/small_spheres.off";
-  const char* filename10 = "data/hollow_sphere.off";
+  const char* filename7 =  CGAL::data_file_path("test/Polygon_mesh_processing/tetra2.off");
+  const char* filename8 =  CGAL::data_file_path("test/Polygon_mesh_processing/tetra4.off");
+  const char* filename9 =  CGAL::data_file_path("test/Polygon_mesh_processing/small_spheres.off");
+  const char* filename10 = CGAL::data_file_path("test/Polygon_mesh_processing/hollow_sphere.off");
   const char* filename11 = "data-coref/sphere.off";
 
 

@@ -141,8 +141,8 @@ int main(void)
 {
     const double duration = 0.1;
     std::cout << "AABB hint strategy tests" << std::endl;
-    test_kernels<TRIANGLE>("data/cube.off",duration);
-    test_kernels<TRIANGLE>("data/coverrear.off",duration);
-    test_kernels<TRIANGLE>("data/finger.off",duration);
+    test_kernels<TRIANGLE>(CGAL::data_file_path("test/AABB_tree/cube.off"),duration);
+    test_kernels<TRIANGLE>(CGAL::data_file_path("test/AABB_tree/coverrear.off"),duration);
+    test_kernels<TRIANGLE>(CGAL::data_file_path("test/AABB_tree/finger.off"),duration);
     return EXIT_SUCCESS;
 }

@@ -50,19 +50,19 @@ int main()
 {
   {
     typedef CGAL::Simple_cartesian<float> K;
-    fct<K>("data/planar.xyz");
+    fct<K>(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   }
   {
     typedef CGAL::Simple_cartesian<double> K;
-    fct<K>("data/planar.xyz");
+    fct<K>(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   }
   {
     typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
-    fct<K>("data/planar.xyz");
+    fct<K>(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   }
   {
     typedef CGAL::Exact_predicates_exact_constructions_kernel K;
-    fct<K>("data/planar.xyz");
+    fct<K>(CGAL::data_file_path("test/Advancing_front_surface_reconstruction/planar.xyz"));
   }
   return 0;
 }

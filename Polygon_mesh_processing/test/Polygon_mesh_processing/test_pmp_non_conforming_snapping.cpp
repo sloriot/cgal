@@ -157,15 +157,15 @@ void test(const char* filename,
 
 int main(int, char**)
 {
-  test("data_snapping/non_conform_snapping.off", 0.2, 0.01, 0.0001);
-  test("data_snapping/non-conform_snapping-hole.off", 0.2, 0.01, 0.0001);
-  test("data_snapping/non_conform_snapping-multiple_ccs.off", 0.02, 0.01, 0.0001);
-  test("data_snapping/non-conform_snapping-overlap.off", 0.2, 0.01, 0.0001);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/non_conform_snapping.off"), 0.2, 0.01, 0.0001);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/non-conform_snapping-hole.off"), 0.2, 0.01, 0.0001);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/non_conform_snapping-multiple_ccs.off"), 0.02, 0.01, 0.0001);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/non-conform_snapping-overlap.off"), 0.2, 0.01, 0.0001);
 
-  test("data_snapping/real_data.off", 1., 0.05, 0.0008);
-  test("data_snapping/real_data_2.off", 2, 0.05, 0.000001);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/real_data.off"), 1., 0.05, 0.0008);
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/real_data_2.off"), 2, 0.05, 0.000001);
 
-  test("data_snapping/pig.stl", 20, 0.3, 0.001);
+  test(CGAL::data_file_path("meshes/pig.stl"), 20, 0.3, 0.001);
 
   return EXIT_SUCCESS;
 }
