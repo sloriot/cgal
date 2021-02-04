@@ -38,7 +38,7 @@ typedef typename boost::graph_traits<Mesh>::face_descriptor      face_descriptor
 
 
 
-void collect_patch(const char* file,
+void collect_patch(const std::string file,
                    const Mesh& m,
                    std::set<face_descriptor>& patch)
 {
@@ -73,8 +73,8 @@ void collect_patch(const char* file,
   in.close();
 }
 
-void test_precondition(const char* filename,
-                       const char* bad_selection_file)
+void test_precondition(const std::string filename,
+                       const std::string bad_selection_file)
 {
   Mesh m;
   std::ifstream input(filename);
@@ -156,7 +156,7 @@ Main(int argc, char* argv[])
   std::cout.precision(17);
 #endif
 
-  const char* filename = (argc > 1) ? argv[1]
+  const std::string filename = (argc > 1) ? argv[1]
     : CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off");
   std::ifstream input(filename);
 
@@ -184,7 +184,7 @@ Main(int argc, char* argv[])
   if(!facets.empty())
   {
     std::cout << "Input is self intersecting. STOP" << std::endl;
-    if (strcmp(filename, CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off")) == 0)
+    if (filename == CGAL::data_file_path("test/Polygon_mesh_processing/joint_refined.off"))
       assert(false);
     return;
   }

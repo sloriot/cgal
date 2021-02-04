@@ -13,7 +13,7 @@ typedef K::Point_3                                            Point;
 typedef std::vector<std::size_t>                              Face;
 
 template <typename Point_type, typename Polygon_type>
-void read(const char* fname, std::size_t v, std::size_t f,
+void read(const std::string fname, std::size_t v, std::size_t f,
           bool is_binary = false, bool should_fail = false)
 {
   std::cout << "Reading "<< fname << std::endl;
@@ -70,7 +70,7 @@ void further_tests()
 
 int main(int argc, char** argv)
 {
-  const char* stl_file = (argc > 1) ? argv[1] : CGAL::data_file_path("test/Stream_support/ascii-tetrahedron.stl");
+  const std::string stl_file = (argc > 1) ? argv[1] : CGAL::data_file_path("test/Stream_support/ascii-tetrahedron.stl");
 
   std::vector<Point> points;
   std::vector<Face> polygons;

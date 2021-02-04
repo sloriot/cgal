@@ -18,7 +18,7 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3>      Polyhedron;
 
 int main(int argc, char* argv[])
 {
-  const char* filename = (argc > 1) ? argv[1] : CGAL::data_file_path("meshes/tet-shuffled.off");
+  const std::string filename = (argc > 1) ? argv[1] : CGAL::data_file_path("meshes/tet-shuffled.off");
 
   std::vector<K::Point_3> points;
   std::vector<std::vector<std::size_t> > polygons;

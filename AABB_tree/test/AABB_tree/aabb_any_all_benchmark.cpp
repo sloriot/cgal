@@ -55,7 +55,7 @@ std::size_t intersect(ForwardIterator b, ForwardIterator e, const Tree& tree, lo
 }
 
 template<typename K>
-boost::tuple<std::size_t, std::size_t, std::size_t, long> test(const char* name) {
+boost::tuple<std::size_t, std::size_t, std::size_t, long> test(const std::string name) {
   typedef typename K::FT FT;
   typedef typename K::Ray_3 Ray;
   typedef typename K::Line_3 Line;
@@ -143,7 +143,7 @@ boost::tuple<std::size_t, std::size_t, std::size_t, long> test(const char* name)
 
 int main()
 {
-  const char* filename = CGAL::data_file_path("test/AABB_tree/finger.off");
+  std::string filename = CGAL::data_file_path("test/AABB_tree/finger.off");
 
   std::cout << "| Simple cartesian float kernel | ";
   boost::tuple<std::size_t, std::size_t, std::size_t, long> t1 = test<CGAL::Simple_cartesian<float> >(filename);

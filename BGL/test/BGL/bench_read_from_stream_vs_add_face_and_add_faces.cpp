@@ -30,7 +30,7 @@ int main(int argc, char** argv)
   timer.start();
 
   Mesh m;
-  const char* filename = (argc>1) ? argv[1] : CGAL::data_file_path("test/BGL/genus3.off");
+  const std::string filename = (argc>1) ? argv[1] : CGAL::data_file_path("test/BGL/genus3.off");
   CGAL::read_polygon_mesh(filename, m);
 
   std::cout << "  is_valid? " << CGAL::is_valid_polygon_mesh(m) << "\n";
