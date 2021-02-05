@@ -153,7 +153,7 @@ private:
     return b;
   }
 
-  Nef_polyhedron load_off(const char* name) {
+  Nef_polyhedron load_off(const std::string name) {
     Polyhedron poly;
     std::ifstream off_file(name);
     assert(off_file.good());
@@ -173,27 +173,27 @@ private:
 
   void test_cubes() {
     if(!cubes_tested) {
-      Nef_polyhedron N = load_off("data/cube.off");
+      Nef_polyhedron N = load_off(CGAL::data_file_path("test/Nef_3/cube.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
-      N = load_off("data/wrongly_oriented_cube.off");
+      N = load_off(CGAL::data_file_path("test/Nef_3/wrongly_oriented_cube.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
-      N = load_off("data/cube+v.off");
+      N = load_off(CGAL::data_file_path("test/Nef_3/cube+v.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
-      N = load_off("data/cube+vee.off");
+      N = load_off(CGAL::data_file_path("test/Nef_3/cube+vee.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
-      N = load_off("data/cube+veeee.off");
+      N = load_off(CGAL::data_file_path("test/Nef_3/cube+veeee.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
-      N = load_off("data/cube+vONe.off");
+      N = load_off(CGAL::data_file_path("test/Nef_3/cube+vONe.off"));
       assert(N.is_valid(0,0));
       assert(does_nef3_equals_file(N,"cube.nef3.SH"));
       cubes_tested = true;
@@ -221,11 +221,11 @@ private:
     test_cubes();
     return;
     Polyhedron P;
-    Nef_polyhedron N = load_off("data/cube.off");
+    Nef_polyhedron N = load_off(CGAL::data_file_path("test/Nef_3/cube.off"));
     N.convert_to_Polyhedron(P);
-    std::ofstream out("data/temp.off");
+    std::ofstream out("temp.off");
     out << P;
-    N = load_off("data/temp.off");
+    N = load_off("temp.off");
     assert(does_nef3_equals_file(N,"cube.nef3.SH"));
 
     N = load_nef3("topology.nef3.SH");
@@ -240,13 +240,13 @@ private:
   }
 
   void newell() {
-    Nef_polyhedron N = load_off("data/star.off");
+    Nef_polyhedron N = load_off(CGAL::data_file_path("test/Nef_3/star.off"));
     assert(N.is_valid(0,0));
     assert(does_nef3_equals_file(N,"newell.nef3.SH"));
   }
 
   void transformation() {
-    Nef_polyhedron C = load_off("data/cube.off");
+    Nef_polyhedron C = load_off(CGAL::data_file_path("test/Nef_3/cube.off"));
     Nef_polyhedron N(C);
 
     N.transform(Aff_transformation_3(-1,0,0,
@@ -976,7 +976,7 @@ private:
 
   void simplification_SM() {
 
-    Nef_polyhedron C = load_off("data/cube.off");
+    Nef_polyhedron C = load_off(CGAL::data_file_path("test/Nef_3/cube.off"));
     Nef_polyhedron N  = C;
     Nef_polyhedron N1 = N;
     Nef_polyhedron N2 = N;
@@ -1045,7 +1045,7 @@ private:
     }
 
     Nef_polyhedron N,N2,P,R,S,T;
-    N = load_off("data/centered_cube.off");
+    N = load_off(CGAL::data_file_path("test/Nef_3/centered_cube.off"));
     assert(N.is_valid(0,0));
     N2 = N;
     N2.transform(Aff_transformation_3( CGAL::SCALING, 4, 1));
@@ -1078,7 +1078,7 @@ private:
   void unary_operations() {
 
     Nef_polyhedron X = load_nef3("pl_update_test.nef3.SH");
-    Nef_polyhedron Y = load_off("data/centered_cube.off");
+    Nef_polyhedron Y = load_off(CGAL::data_file_path("test/Nef_3/centered_cube.off"));
     X=X.closure();
     X.difference(Y);
     assert(X.is_valid());
@@ -1179,7 +1179,7 @@ private:
 
   void bug_scenarios() {
 
-    Nef_polyhedron N = load_off("data/octa.off");
+    Nef_polyhedron N = load_off(CGAL::data_file_path("test/Nef_3/octa.off"));
     Nef_polyhedron N1 = N;
     N1.transform(Aff_transformation_3( CGAL::TRANSLATION, Vector_3( 3, 4,5,9)));
     assert(N1.is_valid(0,0));
@@ -1187,8 +1187,8 @@ private:
     assert(N.is_valid(0,0));
     assert(does_nef3_equals_file(N, "octa_ref.nef3.SH"));
 
-    N = load_off("data/2_cycles_on_halfsphere.off");
-    N1 = load_off("data/2_cycles_on_halfsphere2.off");
+    N = load_off(CGAL::data_file_path("test/Nef_3/2_cycles_on_halfsphere.off"));
+    N1 = load_off(CGAL::data_file_path("test/Nef_3/2_cycles_on_halfsphere2.off"));
     N = N1.difference(N);
     assert(N.is_valid(0,0));
     assert(does_nef3_equals_file(N, "2_cycles_on_halfsphere_ref.nef3.SH"));

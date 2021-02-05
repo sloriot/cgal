@@ -896,10 +896,10 @@ bool test_LCC_3()
     trace_test_begin();
     lcc.clear();
     CGAL::Polyhedron_3<typename LCC::Traits> P;
-    std::ifstream in("data/head.off");
+    std::ifstream in(CGAL::data_file_path("test/Linear_cell_complex/head.off"));
     if ( in.fail() )
     {
-      std::cout<<"Error: impossible to open 'data/head.off'"<<std::endl;
+      std::cout<<"Error: impossible to open " << CGAL::data_file_path("test/Linear_cell_complex/head.off") << std::endl;
       return false;
     }
     in >> P;

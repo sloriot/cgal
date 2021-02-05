@@ -144,10 +144,10 @@ typedef CGAL::Triangulation_hierarchy_2<CDT_P2>                  Triangulation_h
 
 
 static const char* data[] =
-{ "data/7_faces_triangle.off", "data/genus3.off", "data/head.off",
-  "data/hedra.off", "data/hedra_open.off",   "data/open_cube.off",
-  "data/rombus.off", "data/tetrahedron.off", "data/triangle.off",
-  "data/triangular_hole.off", "data/cube.off" };
+{ "test/BGL/7_faces_triangle.off", "test/BGL/genus3.off", "meshes/head.off",
+  "meshes/hedra.off", "meshes/hedra_open.off",   "meshes/open_cube.off",
+  "test/BGL/rombus.off", "test/BGL/tetrahedron.off", "test/BGL/triangle.off",
+  "meshes/triangular_hole.off", "meshes/cube.off" };
 
 /*
 #if defined(CGAL_USE_OPENMESH)
@@ -160,12 +160,12 @@ bool read_a_mesh(OMesh& s, const std::string& str) {
 template<typename T>
 bool read_a_mesh(T& m, const std::string& str)
 {
-  return CGAL::read_OFF(str, m);
+  return CGAL::read_OFF(CGAL::data_file_path(str), m);
 }
 
 bool read_a_mesh(Polyhedron& p, const std::string& str)
 {
-  std::ifstream in(str.c_str());
+  std::ifstream in(CGAL::data_file_path(str));
   in >> p;
   bool success = in.good();
   if(success)
@@ -230,7 +230,7 @@ Triangulation_hierarchy_2 t2h_data() { return build_dummy_triangulation_with_ids
 template <typename Graph>
 struct Surface_fixture_1 {
   Surface_fixture_1() {
-    const bool is_reading_successful = read_a_mesh(m, "data/fixture1.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/fixture1.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
     typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
@@ -280,7 +280,7 @@ struct Surface_fixture_1 {
 template <typename Graph>
 struct Surface_fixture_2 {
   Surface_fixture_2() {
-    const bool is_reading_successful = read_a_mesh(m, "data/fixture2.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/fixture2.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -342,7 +342,7 @@ struct Surface_fixture_2 {
 template <typename Graph>
 struct Surface_fixture_3 {
   Surface_fixture_3() {
-    const bool is_reading_successful = read_a_mesh(m, "data/fixture3.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/fixture3.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -389,7 +389,7 @@ struct Surface_fixture_3 {
 template <typename Graph>
 struct Surface_fixture_4 {
   Surface_fixture_4() {
-    const bool is_reading_successful = read_a_mesh(m, "data/fixture4.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/fixture4.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -425,7 +425,7 @@ struct Surface_fixture_4 {
 template <typename Graph>
 struct Surface_fixture_5 {
   Surface_fixture_5() {
-    const bool is_reading_successful = read_a_mesh(m, "data/add_face_to_border.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/add_face_to_border.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -456,7 +456,7 @@ struct Surface_fixture_5 {
 template <typename Graph>
 struct Surface_fixture_6 {
   Surface_fixture_6() {
-    const bool is_reading_successful = read_a_mesh(m, "data/quad.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/quad.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -476,7 +476,7 @@ struct Surface_fixture_6 {
 template <typename Graph>
 struct Surface_fixture_7 {
   Surface_fixture_7() {
-    const bool is_reading_successful = read_a_mesh(m, "data/cube.off");
+    const bool is_reading_successful = read_a_mesh(m, "meshes/cube.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 
@@ -490,7 +490,7 @@ struct Surface_fixture_7 {
 template <typename Graph>
 struct Surface_fixture_8 {
   Surface_fixture_8() {
-    const bool is_reading_successful = read_a_mesh(m, "data/fixture5.off");
+    const bool is_reading_successful = read_a_mesh(m, "test/BGL/fixture5.off");
     assert(is_reading_successful);
     assert(CGAL::is_valid_polygon_mesh(m));
 

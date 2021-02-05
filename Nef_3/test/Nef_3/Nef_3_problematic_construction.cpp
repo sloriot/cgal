@@ -97,9 +97,7 @@ private:
 
      Nef_polyhedron N;
 
-     std::string fullname = datadir + name;
-
-     std::ifstream off_file (fullname.c_str());
+     std::ifstream off_file (name);
      assert(off_file.good());
 
      std::size_t discarded = CGAL::OFF_to_nef_3 (off_file, N, true);
@@ -109,7 +107,7 @@ private:
 
 public:
   void run_test(bool compare, const std::string& suffix) {
-    Nef_polyhedron N = built_nef_from_off("nine_planes.off");
+    Nef_polyhedron N = built_nef_from_off(CGAL::data_file_path("test/Nef_3/nine_planes.off"));
     if(compare)
       assert(does_nef3_equals_file(N,"nine_planes.nef3",suffix));
   }

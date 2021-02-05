@@ -428,7 +428,7 @@ void test_invalid_selections()
 {
   // this creates a non-manifold (pinched) vertex
   SM mesh;
-  read_a_mesh(mesh, CGAL::data_file_path("test/BGL/7_faces_triangle.off"));
+  read_a_mesh(mesh, "test/BGL/7_faces_triangle.off");
 
   std::vector<SM::Face_index> face_range;
   face_range.push_back(SM::Face_index(1));
@@ -440,7 +440,7 @@ void test_invalid_selections()
 
   // this creates a non-manifold vertex (multiple umbrellas)
   clear(mesh);
-  read_a_mesh(mesh, CGAL::data_file_path("test/BGL/genus3.off"));
+  read_a_mesh(mesh, "test/BGL/genus3.off");
   assert(is_valid_polygon_mesh(mesh));
 
   face_range.clear();
