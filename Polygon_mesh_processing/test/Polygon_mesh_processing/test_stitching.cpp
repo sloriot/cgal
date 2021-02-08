@@ -170,7 +170,7 @@ void test_stitch_borders()
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 2, false, {130, 94}, {94});
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 0, false, {}, {140}); // outer border, nothing to stitch
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/full_border.off"), 4);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("meshes/full_border_quads.off"), 4);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("meshes/quads_to_stitch.off"), 4);
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/half_border.off"), 2, false, {23, 15});
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/incidence_3.off"), 3);
   test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/incoherent_patch_orientation.off"), 1);
