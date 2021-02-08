@@ -78,6 +78,7 @@ void read_handle_difs_and_deform(DeformMesh& deform_mesh, InputIterator begin, I
   //translation. Now that it is cumulative, we need to substract the
   //previous translation vector to mimic the overwrite
   Vector previous(0,0,0);
+  const std::string prefix=CGAL::data_file_path("test/Surface_mesh_deformation/cactus_deformed/");
   for(std::size_t i = 0; i < dif_vector.size(); ++i)
   {
     timer.start();
@@ -90,8 +91,7 @@ void read_handle_difs_and_deform(DeformMesh& deform_mesh, InputIterator begin, I
     std::stringstream predeformed_cactus_file;
     predeformed_cactus_file << "data/cactus_deformed/cactus_deformed_" << i << ".off";
     Mesh predeformed_cactus;
-
-    OpenMesh::IO::read_mesh(predeformed_cactus, predeformed_cactus_file.str().c_str());
+    OpenMesh::IO::read_mesh(predeformed_cactus, (prefix+std::to_string(i)+".off").c_str());
     compare_mesh(predeformed_cactus, deform_mesh.halfedge_graph());
 
     // for saving deformation
