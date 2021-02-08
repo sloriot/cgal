@@ -24,8 +24,8 @@ void test()
   // test with a clipper mesh
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/elephant.off") >> tm1;
-    std::ifstream("data-coref/sphere.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("meshes/elephant.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("meshes/sphere.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -40,8 +40,8 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/elephant.off") >> tm1;
-    std::ifstream("data-coref/sphere.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("meshes/elephant.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("meshes/sphere.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -74,7 +74,7 @@ void test()
   // test with a iso-cuboid
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/elephant.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("meshes/elephant.off")) >> tm1;
     K::Iso_cuboid_3 iso_cuboid(K::Point_3(0,0,0), K::Point_3(0.4, 0.6, 0.4));
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
@@ -87,7 +87,7 @@ void test()
   // test with a plane
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
     K::Plane_3 plane(0, 0, 1, -1);
 
     PMP::clip(tm1, plane, params::clip_volume(true));
@@ -96,7 +96,7 @@ void test()
 
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
     K::Plane_3 plane(0, 0, 1, -1);
 
     PMP::clip(tm1, plane, params::clip_volume(false).use_compact_clipper(false));
@@ -105,7 +105,7 @@ void test()
 
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
     K::Plane_3 plane(0, 0, 1, -1);
 
     PMP::clip(tm1, plane, params::clip_volume(false).use_compact_clipper(true));
@@ -114,7 +114,7 @@ void test()
 
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     PMP::clip(tm1, K::Plane_3(-0.236474, 0.437732, 0.867451, -0.838791), params::clip_volume(true));
     assert(CGAL::is_closed(tm1));
@@ -123,7 +123,7 @@ void test()
 
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     PMP::clip(tm1, K::Plane_3(0, 0, 1, 2));
     assert(CGAL::is_empty(tm1));
@@ -131,7 +131,7 @@ void test()
 
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     PMP::clip(tm1, K::Plane_3(0, 0, 1, -2));
     assert(!CGAL::is_empty(tm1));
@@ -157,8 +157,8 @@ void test()
   // clipping with identity
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -175,8 +175,8 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -193,8 +193,8 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -211,8 +211,8 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -230,8 +230,8 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -250,7 +250,7 @@ void test()
   // test orientation + patch without input vertex
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     CGAL::make_tetrahedron(K::Point_3(0.53, -1.3, 0.2),
                            K::Point_3(0.53, 1.1, 0.2),
@@ -272,7 +272,7 @@ void test()
 
   {
     TriangleMesh tm1, tm2;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     CGAL::make_tetrahedron(K::Point_3(0.53, -1.3, 0.2),
                            K::Point_3(0.53, 1.1, 0.2),
@@ -356,7 +356,7 @@ void test()
   {
     TriangleMesh tm1, tm2;
     make_triangle( K::Point_3(0.5, 0, 0.5), K::Point_3(1, 0.5, 0.5), K::Point_3(0.5, 1, 0.5), tm1 );
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -372,7 +372,7 @@ void test()
   {
     TriangleMesh tm1, tm2;
     make_triangle( K::Point_3(0.5, 0, 0.5), K::Point_3(1, 0.5, 0.5), K::Point_3(0.5, 1, 0.5), tm1 );
-    std::ifstream("data-coref/cube.off") >> tm2;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm2;
 
     auto custom_face_index_map_1 = get(CGAL::dynamic_face_property_t<std::size_t>(), tm1);
     CGAL::BGL::internal::initialize_face_index_map(custom_face_index_map_1, tm1);
@@ -389,7 +389,7 @@ void test()
   // test combinaison of use_compact_clipper and clip_volume
   {
     TriangleMesh tm1;
-    std::ifstream("data-coref/cube.off") >> tm1;
+    std::ifstream(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off")) >> tm1;
 
     //  -> closed mesh, true/true
     PMP::clip(tm1, K::Plane_3(-1,0,0,0), params::use_compact_clipper(true).clip_volume(true));
@@ -504,7 +504,7 @@ void test_split_plane()
 {
   // test with a clipper mesh
   Mesh tm1;
-  std::ifstream input("data-coref/elephant.off");
+  std::ifstream input(CGAL::data_file_path("meshes/elephant.off"));
   input >> tm1;
 
   if(!input)
@@ -558,7 +558,7 @@ void test_split()
   // test with a clipper mesh
   TriangleMesh tm1, tm2;
   //closed intersection curves
-  std::ifstream input("data-coref/elephant.off");
+  std::ifstream input(CGAL::data_file_path("meshes/elephant.off"));
   input >> tm1;
 
   if(!input)
@@ -570,7 +570,7 @@ void test_split()
 
   input.close();
 
-  input.open("data-coref/sphere.off");
+  input.open(CGAL::data_file_path("meshes/sphere.off"));
   input >> tm2;
 
   if(!input)
@@ -683,7 +683,7 @@ void test_isocuboid()
 {
   TriangleMesh tm;
   //closed intersection curves
-  std::ifstream input("data-coref/elephant.off");
+  std::ifstream input(CGAL::data_file_path("meshes/elephant.off"));
   input >> tm;
 
   if(!input)

@@ -85,7 +85,7 @@ bool test_orientation(const TriangleMesh& tm, bool is_positive, const NamedParam
 int main()
 {
 
-  std::ifstream input("data-coref/nested_cubes_invalid_volume.off");
+  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/nested_cubes_invalid_volume.off"));
   assert(input);
   SMesh sm1, sm2, sm3, sm4, volume, volume_copy;
   input >> sm1;

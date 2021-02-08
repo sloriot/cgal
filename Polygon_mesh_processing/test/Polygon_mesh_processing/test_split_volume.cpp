@@ -18,7 +18,7 @@ namespace params = PMP::parameters;
 int main()
 {
   Surface_mesh base_cube;
-  std::ifstream input("data-coref/cube.off");
+  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off"));
   input >> base_cube;
 
   Surface_mesh input_mesh;

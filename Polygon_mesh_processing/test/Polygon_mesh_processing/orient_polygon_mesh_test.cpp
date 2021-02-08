@@ -61,12 +61,12 @@ int main()
 {
 
   test_orient<Epic>(CGAL::data_file_path("meshes/elephant.off"));
-  test_orient<Epic>("data-coref/cube.off");
+  test_orient<Epic>(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off"));
   test_orient<Epic>(CGAL::data_file_path("test/Polygon_mesh_processing/tetra1.off"));
   test_orient<Epic>(CGAL::data_file_path("test/Polygon_mesh_processing/tetra2.off"));
   test_orient<Epic>(CGAL::data_file_path("meshes/reference_tetrahedron.off"));
   test_orient<Epic>(CGAL::data_file_path("test/Polygon_mesh_processing/tetra4.off"));
-  test_orient<Epic>("data-coref/cube.off");
+  test_orient<Epic>(CGAL::data_file_path("test/Polygon_mesh_processing/data-coref/cube.off"));
   test_orient<Epec>(CGAL::data_file_path("meshes/elephant.off"));
 
   std::cerr << "All done." << std::endl;
