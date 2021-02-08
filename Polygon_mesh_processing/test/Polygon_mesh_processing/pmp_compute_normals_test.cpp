@@ -211,16 +211,16 @@ int main()
   test(CGAL::data_file_path("meshes/mannequin-devil.off"));
   test(CGAL::data_file_path("test/Polygon_mesh_processing/U.off"));
 
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/deg_on_border.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_edge.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_three.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_four.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_nullface.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_single.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/existing_flip.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/fused_vertices.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/small_ccs.off"));
-  test(CGAL::data_file_path("test/Polygon_mesh_processing/trihole.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/deg_on_border.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_edge.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_three.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_four.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_nullface.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_single.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/existing_flip.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/fused_vertices.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/small_ccs.off"));
+  test(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/trihole.off"));
 
   std::cerr << "All done." << std::endl;
   return EXIT_SUCCESS;

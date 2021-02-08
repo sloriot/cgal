@@ -45,7 +45,7 @@ void test_1()
   std::size_t res = PMP::experimental::snap_border_vertices(fg_source, fg_target);
   assert(res == 0);
 
-  std::ifstream source_input(CGAL::data_file_path("test/Polygon_mesh_processing/border_snapping_source.off"));
+  std::ifstream source_input(CGAL::data_file_path("test/Polygon_mesh_processing/data_snapping/border_snapping_source.off"));
   if(!source_input || !(source_input >> fg_source))
   {
     std::cerr << "Error: cannot open source mesh\n";
@@ -61,7 +61,7 @@ void test_1()
   std::cout << "res: " << res << " (expected 0)" << std::endl;
   assert(res == 0);
 
-  std::ifstream target_input(CGAL::data_file_path("test/Polygon_mesh_processing/border_snapping_target.off"));
+  std::ifstream target_input(CGAL::data_file_path("test/Polygon_mesh_processing/data_snapping/border_snapping_target.off"));
   if(!target_input || !(target_input >> fg_target))
   {
     std::cerr << "Error: cannot open target mesh\n";
@@ -145,14 +145,14 @@ void test_2()
 
   Mesh fg_source, fg_target;
 
-  std::ifstream source_input(CGAL::data_file_path("test/Polygon_mesh_processing/border_snapping_source_2.off"));
+  std::ifstream source_input(CGAL::data_file_path("test/Polygon_mesh_processing/data_snapping/border_snapping_source_2.off"));
   if(!source_input || !(source_input >> fg_source))
   {
     std::cerr << "Error: cannot open source mesh\n";
     return;
   }
 
-  std::ifstream target_input(CGAL::data_file_path("test/Polygon_mesh_processing/border_snapping_target_2.off"));
+  std::ifstream target_input(CGAL::data_file_path("test/Polygon_mesh_processing/data_snapping/border_snapping_target_2.off"));
   if(!target_input || !(target_input >> fg_target))
   {
     std::cerr << "Error: cannot open target mesh\n";

@@ -90,13 +90,13 @@ int main()
   test<Polyhedron>(CGAL::data_file_path("meshes/pig.off"), true);
   test<LCC>(CGAL::data_file_path("meshes/pig.off"), true);
 
-  test<SM>(CGAL::data_file_path("test/Polygon_mesh_processing/nm_vertex_and_edge.off"), false);
-  test<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/nm_vertex_and_edge.off"), false);
-  test<LCC>(CGAL::data_file_path("test/Polygon_mesh_processing/nm_vertex_and_edge.off"), false);
+  test<SM>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/nm_vertex_and_edge.off"), false);
+  test<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/nm_vertex_and_edge.off"), false);
+  test<LCC>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/nm_vertex_and_edge.off"), false);
 
-  test<SM>(CGAL::data_file_path("test/Polygon_mesh_processing/incompatible_orientation.off"), false);
-  test<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/incompatible_orientation.off"), false);
-  test<LCC>(CGAL::data_file_path("test/Polygon_mesh_processing/incompatible_orientation.off"), false);
+  test<SM>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/incompatible_orientation.off"), false);
+  test<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/incompatible_orientation.off"), false);
+  test<LCC>(CGAL::data_file_path("test/Polygon_mesh_processing/data_polygon_soup/incompatible_orientation.off"), false);
 
   std::cout << "Done!" << std::endl;
 

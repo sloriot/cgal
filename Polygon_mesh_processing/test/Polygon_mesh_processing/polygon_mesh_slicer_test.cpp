@@ -70,7 +70,7 @@ int test_slicer()
     assert(polylines.size()==1);
   }
 
-  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/open_cube_meshed.off"));
+  std::ifstream input(CGAL::data_file_path("test/Polygon_mesh_processing/data_slicer/open_cube_meshed.off"));
   Mesh m;
 
   if (!input || !(input >> m)){

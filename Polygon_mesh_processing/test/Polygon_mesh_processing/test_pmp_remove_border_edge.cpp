@@ -15,7 +15,7 @@ void test_middle_edge()
 {
   typedef boost::graph_traits<TriangleMesh> GT;
 
-  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/edge_middle.off"));
+  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/edge_middle.off"));
   TriangleMesh tm;
   in >> tm;
   typename GT::halfedge_descriptor h=GT::null_halfedge();
@@ -44,7 +44,7 @@ void test_edge_border_case1()
 {
   typedef boost::graph_traits<TriangleMesh> GT;
 
-  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/edge_border_case1.off"));
+  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/edge_border_case1.off"));
   TriangleMesh tm;
   in >> tm;
   typename GT::halfedge_descriptor h=GT::null_halfedge();
@@ -73,7 +73,7 @@ void test_edge_border_case2()
 {
   typedef boost::graph_traits<TriangleMesh> GT;
 
-  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/edge_border_case2.off"));
+  std::ifstream in(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/edge_border_case2.off"));
   TriangleMesh tm;
   in >> tm;
   typename GT::halfedge_descriptor h=GT::null_halfedge();

@@ -280,59 +280,59 @@ void remove_negligible_connected_components(const std::string filename)
 template <typename K, typename Mesh>
 void test()
 {
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_2dt_1edge_split_twice.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_2dt_1edge_split_twice.off"),
                                std::initializer_list<std::size_t>({0, 1, 4, 3}), // edge selection
                                std::initializer_list<std::size_t>({0}), // face selection
                                0, 2, // expected number of degenerate edges/faces in the complete mesh
                                0, 1, // expected number of degenerate edges/faces in the selection
                                0, 0); // expected number of degenerate edges/faces in the mesh after partial removal
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_four.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_four.off"),
                                std::initializer_list<std::size_t>({1}),
                                std::initializer_list<std::size_t>({3}),
                                0, 1, 0, 0, 0, 1);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_four-2.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_four-2.off"),
                                std::initializer_list<std::size_t>({2}),
                                std::initializer_list<std::size_t>({3}),
                                0, 1, 0, 0, 0, 1);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_on_border.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_on_border.off"),
                                std::initializer_list<std::size_t>({2}),
                                std::initializer_list<std::size_t>({0}),
                                0, 1, 0, 1, 0, 0);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_three.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_three.off"),
                                std::initializer_list<std::size_t>({2}),
                                std::initializer_list<std::size_t>({1}),
                                0, 1, 0, 0, 0, 1);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_single.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_single.off"),
                                std::initializer_list<std::size_t>({0, 1, 2}),
                                std::initializer_list<std::size_t>({0}),
                                0, 1, 0, 1, 0, 0);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/degtri_nullface.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_nullface.off"),
                                std::initializer_list<std::size_t>({3, 6, 7}),
                                std::initializer_list<std::size_t>({0, 1, 2}),
                                3, 4, 1, 2, 0, 0);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/trihole.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/trihole.off"),
                                std::initializer_list<std::size_t>({12}),
                                std::initializer_list<std::size_t>({4, 5}),
                                1, 3, 1, 2, 0, 0);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("meshes/degtri_sliding.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_sliding.off"),
                                std::initializer_list<std::size_t>({2}),
                                std::initializer_list<std::size_t>({2, 4}),
                                0, 4, 0, 2, 0, 0);
 
-  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/fused_vertices.off"),
+  remove_degeneracies<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/fused_vertices.off"),
                                std::initializer_list<std::size_t>({5, 10, 13, 15, 27, 45}),
                                std::initializer_list<std::size_t>({1, 3, 5, 10, 19}),
                                6, 7, 2, 4, 3, 3);
 
-  remove_negligible_connected_components<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/small_ccs.off"));
+  remove_negligible_connected_components<K, Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/small_ccs.off"));
 }
 
 template <typename Kernel>

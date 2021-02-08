@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 
   // Fourth test ----------------------------------------------------------------
   expected = true;
-  filename = (argc > 7) ? argv[7] : CGAL::data_file_path("test/Polygon_mesh_processing/degtri_single.off");
+  filename = (argc > 7) ? argv[7] : CGAL::data_file_path("test/Polygon_mesh_processing/data_degeneracies/degtri_single.off");
   if(argc > 7) {
     assert(argc > 8);
     std::stringstream ss(argv[8]);

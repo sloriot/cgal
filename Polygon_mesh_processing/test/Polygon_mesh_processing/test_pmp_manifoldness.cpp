@@ -193,7 +193,7 @@ void test_nm_cubes()
   std::cout << "  test: data_repair/nm_closed_cubes.off" << std::endl;
 
   PolygonMesh mesh;
-  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/nm_closed_cubes.off"), mesh);
+  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/nm_closed_cubes.off"), mesh);
 
   // non-manifold vertices
   Vertices_to_merge_container all_merges;
@@ -247,7 +247,7 @@ void test_many_umbrellas()
   std::cout << "  test: data_repair/many_umbrellas.off" << std::endl;
 
   PolygonMesh mesh;
-  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/many_umbrellas.off"), mesh);
+  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/many_umbrellas.off"), mesh);
 
   // non-manifold vertices
   Vertices_to_merge_container all_merges;
@@ -274,7 +274,7 @@ void test_torso()
   std::cout << "  test: data_repair/torso.off" << std::endl;
 
   PolygonMesh mesh;
-  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/torso.off"), mesh);
+  read_mesh(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/torso.off"), mesh);
 
   CGAL::Polygon_mesh_processing::remove_isolated_vertices(mesh);
 
@@ -290,8 +290,8 @@ int main(int /*argc*/, char** /*argv*/)
 
   test_blobby<Surface_mesh>(); // data/blobby.off
   test_nm_cubes<Surface_mesh>(); // data_repair/nm_closed_cubes.off
-  test_pinched_triangles<Surface_mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/two_triangles_sharing_a_vertex.off"), 1);
-  test_pinched_triangles<Surface_mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/three_triangles_sharing_a_vertex.off"), 2);
+  test_pinched_triangles<Surface_mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/two_triangles_sharing_a_vertex.off"), 1);
+  test_pinched_triangles<Surface_mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/three_triangles_sharing_a_vertex.off"), 2);
   test_many_umbrellas<Surface_mesh>(); // data_repair/many_umbrellas.off
   test_torso<Surface_mesh>(); // data_repair/torso.off (only for SM because Polyhedron cannot even read it)
 
@@ -299,8 +299,8 @@ int main(int /*argc*/, char** /*argv*/)
 
   test_blobby<Polyhedron>(); // data/blobby.off
   test_nm_cubes<Polyhedron>(); // data_repair/nm_closed_cubes.off
-  test_pinched_triangles<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/two_triangles_sharing_a_vertex.off"), 1);
-  test_pinched_triangles<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/three_triangles_sharing_a_vertex.off"), 2);
+  test_pinched_triangles<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/two_triangles_sharing_a_vertex.off"), 1);
+  test_pinched_triangles<Polyhedron>(CGAL::data_file_path("test/Polygon_mesh_processing/data_repair/three_triangles_sharing_a_vertex.off"), 2);
   test_many_umbrellas<Polyhedron>(); // data_repair/many_umbrellas.off
 
   return EXIT_SUCCESS;

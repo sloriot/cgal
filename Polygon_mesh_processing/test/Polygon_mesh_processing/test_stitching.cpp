@@ -70,9 +70,9 @@ void test_stitch_boundary_cycles(const std::string fname,
 template <typename Mesh>
 void test_stitch_boundary_cycles()
 {
-  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/boundary_cycle.off"), 4);
-  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/boundary_cycle_2.off"), 2);
-  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/complex_hole.off"), 3);
+  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/boundary_cycle.off"), 4);
+  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/boundary_cycle_2.off"), 2);
+  test_stitch_boundary_cycles<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/complex_hole.off"), 3);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,28 +165,28 @@ void test_stitch_borders(const std::string fname,
 template <typename Mesh>
 void test_stitch_borders()
 {
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/complex_hole.off"), 3, false, {}, {83});
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/pinched.off"), 2, false, {130, 94});
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/pinched.off"), 2, false, {130, 94}, {94});
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/pinched.off"), 0, false, {}, {140}); // outer border, nothing to stitch
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/full_border.off"), 4);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/complex_hole.off"), 3, false, {}, {83});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 2, false, {130, 94});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 2, false, {130, 94}, {94});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 0, false, {}, {140}); // outer border, nothing to stitch
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/full_border.off"), 4);
   test_stitch_borders<Mesh>(CGAL::data_file_path("meshes/full_border_quads.off"), 4);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/half_border.off"), 2, false, {23, 15});
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/incidence_3.off"), 3);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/incoherent_patch_orientation.off"), 1);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/mid_border.off"), 2);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/multiple_incidence.off"), 10, false, {3, 5, 16, 24, 31, 45, 53, 65});
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/non_stitchable.off"), 0);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/non_manifold.off"), 0);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/non_manifold2.off"), 0);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/two_patches.off"), 3);
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/nm_cubes.off"), 4, true /*per cc*/);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/half_border.off"), 2, false, {23, 15});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/incidence_3.off"), 3);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/incoherent_patch_orientation.off"), 1);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/mid_border.off"), 2);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/multiple_incidence.off"), 10, false, {3, 5, 16, 24, 31, 45, 53, 65});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/non_stitchable.off"), 0);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/non_manifold.off"), 0);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/non_manifold2.off"), 0);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/two_patches.off"), 3);
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/nm_cubes.off"), 4, true /*per cc*/);
 }
 
 template <typename Mesh>
 void test_local_stitch_borders()
 {
-  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/pinched.off"), 2, false, {130, 94});
+  test_stitch_borders<Mesh>(CGAL::data_file_path("test/Polygon_mesh_processing/data_stitching/pinched.off"), 2, false, {130, 94});
 
 }
 
