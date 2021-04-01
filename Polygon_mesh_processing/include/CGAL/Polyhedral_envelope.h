@@ -202,7 +202,37 @@ private:
     ePlane_3 eplane;
   };
 
-  typedef std::vector<Plane> Prism;
+  struct Prism {
+
+    std::size_t size() const
+    {
+      return planes.size();
+    }
+
+    void reserve(std::size_t n)
+    {
+      planes.reserve(n);
+    }
+
+    void emplace_back(const Plane& p)
+    {
+      planes.emplace_back(p);
+    }
+
+
+    Plane& operator[](std::size_t i)
+    {
+      return planes[i];
+    }
+
+    const Plane& operator[](std::size_t i) const
+    {
+      return planes[i];
+    }
+
+    std::vector<Plane> planes;
+    int obtuse;
+  };
 
   static const bool OUT_PRISM = 1;
   static const bool IN_PRISM = 0;
@@ -1093,9 +1123,14 @@ private:
 
             int inter = 0;
 
-            if(((cutp[i] == 0)||(cutp[i] == 1)) && ( (cutp[j] == 2)||(cutp[j] == 4) ||(cutp[j] == 6) )){ // ATTENTION Only correct together with CGAL_INITIAL
-              int j0 = (cutp[j] == 2)? 0 : (cutp[j]==4)? 1 : 2;
-              int j1 = (cutp[j] == 2)? 1 : (cutp[j]==4)? 2 : 0;
+            static const int  edges[3][3] = { {2, 4, 6 }, {2, 3, 5}, {2, 4, 5} };
+
+            int ob = prism.obtuse;
+            if (ob == -1) ob = 0;
+
+            if(((cutp[i] == 0)||(cutp[i] == 1)) && ( (cutp[j] == edges[ob][0])||(cutp[j] == edges[ob][1]) ||(cutp[j] == edges[ob][2]) )){ // ATTENTION Only correct together with CGAL_INITIAL
+              int j0 = (cutp[j] == edges[ob][0])? 0 : (cutp[j]==edges[ob][1])? 1 : 2;
+              int j1 = (cutp[j] == edges[ob][0])? 1 : (cutp[j]==edges[ob][1])? 2 : 0;
               const Vector3i & v3i = env_faces[cindex];
               const Point_3& pj0 = env_vertices[v3i[j0]];
               const Point_3& pj1 = env_vertices[v3i[j1]];
@@ -1920,7 +1955,7 @@ private:
         halfspace[i].emplace_back(plane);// number 1
 
         int obtuse = obtuse_angle(ver[faces[i][0]], ver[faces[i][1]], ver[faces[i][2]]);
-
+        halfspace[i].obtuse = obtuse;
 
         edgedire = normalize(AB);
         // if (use_accurate_cross)edgenormaldist = accurate_cross_product_direction(ORIGIN, edgedire, ORIGIN, normal)*tolerance;
