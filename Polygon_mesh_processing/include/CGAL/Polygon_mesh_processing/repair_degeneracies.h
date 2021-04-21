@@ -493,7 +493,7 @@ bool remove_almost_degenerate_faces(const FaceRange& face_range,
             NamedParameters,
             Identity<void*>
           > ::type  User_filter;
-  User_filter user_filter = choose_parameter<User_filter>(get_parameter(np, internal_np::filter));
+  User_filter user_filter = choose_parameter<Identity<void*>>(get_parameter(np, internal_np::filter));
 
   typedef internal::Filter_wrapper_for_cap_needle_removal<TriangleMesh, VPM, Traits, User_filter> Accept_change_functor;
   Accept_change_functor accept_change(tmesh, vpm, user_filter);
