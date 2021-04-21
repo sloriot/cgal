@@ -82,7 +82,7 @@ void test_with_envelope(std::string filename, double eps)
                                                     std::cos(160. / 180 * CGAL_PI),
                                                     4,
                                                     0.14,
-                                                    CGAL::parameters::filter(std::ref(envelope)));
+                                                    CGAL::parameters::filter(envelope));
 
   CGAL::write_polygon_mesh("cleaned_mesh_with_envelope.off", mesh, CGAL::parameters::stream_precision(17));
 
