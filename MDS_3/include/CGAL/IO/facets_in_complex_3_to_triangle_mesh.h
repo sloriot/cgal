@@ -11,8 +11,8 @@
 // Author(s)     : Maxime Gimeno,
 //                 Mael Rouxel-Labbé
 
-#ifndef CGAL_FACETS_IN_COMPLEX_3_TO_TRIANGLE_MESH_H
-#define CGAL_FACETS_IN_COMPLEX_3_TO_TRIANGLE_MESH_H
+#ifndef CGAL_IO_FACETS_IN_COMPLEX_3_TO_TRIANGLE_MESH_H
+#define CGAL_IO_FACETS_IN_COMPLEX_3_TO_TRIANGLE_MESH_H
 
 #include <CGAL/license/MDS_3.h>
 
@@ -25,8 +25,10 @@
 #include <CGAL/Time_stamper.h>
 #include <CGAL/property_map.h>
 
-#include <boost/unordered_map.hpp>
-#include <boost/tuple/tuple.hpp>
+#define CGAL_DEPRECATED_HEADER "<CGAL/IO/facets_in_complex_3_to_triangle_mesh.h>"
+#define CGAL_REPLACEMENT_HEADER "<CGAL/facets_in_complex_3_to_triangle_mesh.h>"
+#include <CGAL/internal/deprecation_warning.h>
+#endif
 
 #include <algorithm>
 #include <cstddef>

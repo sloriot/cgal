@@ -1,6 +1,6 @@
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 
-#include <CGAL/IO/facets_in_complex_3_to_triangle_mesh.h>
+#include <CGAL/facets_in_complex_3_to_triangle_mesh.h>
 
 #include <CGAL/Mesh_triangulation_3.h>
 #include <CGAL/Mesh_complex_3_in_triangulation_3.h>
@@ -42,7 +42,7 @@ int main (int argc, char** argv){
     return 1;
   }
   C3t3 c3t3;
-  if(CGAL::build_triangulation_from_file<C3t3::Triangulation, true>(in, c3t3.triangulation()))
+  if(CGAL::MDS_3::build_triangulation_from_file(in, c3t3.triangulation()))
   {
     for( C3t3::Triangulation::Finite_cells_iterator
          cit = c3t3.triangulation().finite_cells_begin();

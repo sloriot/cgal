@@ -866,6 +866,8 @@ output_to_medit(std::ostream& os,
 
 } // end namespace Mesh_3
 
+namespace IO {
+
 /**
  * @ingroup PkgMDS3IOFunctions
  * @brief outputs a mesh complex to the medit (`.mesh`) file format.
@@ -917,6 +919,12 @@ bool read_MEDIT(std::istream& in, T3& t3)
   CGAL_assertion(!(!in));
   return CGAL::MDS_3::build_triangulation_from_file(in, t3);
 }
+
+} // namespace IO
+
+#ifndef CGAL_NO_DEPRECATED_CODE
+using IO::output_to_medit;
+#endif
 
 } // end namespace CGAL
 

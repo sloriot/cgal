@@ -7,7 +7,8 @@ project( MDS_3_Tests )
 find_package(CGAL REQUIRED)
 
 # Use Eigen
-find_package(Eigen3 3.1.0 REQUIRED) #(3.1.0 or greater)
+find_package(Eigen3 3.1.0 REQUIRED) #(requires 3.1.0 or greater)
+include(CGAL_Eigen3_support)
 
 create_single_source_cgal_program( "test_c3t3.cpp" )
 create_single_source_cgal_program( "test_c3t3_io.cpp" )

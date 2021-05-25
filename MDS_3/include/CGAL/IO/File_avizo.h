@@ -24,9 +24,14 @@
 
 namespace CGAL {
 
-namespace MDS_3 {
+namespace IO {
 
-
+/**
+ * @brief outputs mesh to avizo format
+ * @param os the stream
+ * @param c3t3 the mesh
+ * \see \ref IOStreamAvizo
+ */
 template <class C3T3>
 void
 output_to_avizo(std::ostream& os,
@@ -137,8 +142,12 @@ output_to_avizo(std::ostream& os,
 
 } // end output_to_avizo(...)
 
-} // end namespace MDS_3
+} // end namespace IO
 
+
+#ifndef CGAL_NO_DEPRECATED_CODE
+using IO::output_to_avizo;
+#endif
 
 
 

@@ -19,12 +19,12 @@ int main(int argc, char* argv[])
   Remeshing_triangulation tr;
 
   std::ifstream is(filename, std::ios_base::in);
-  CGAL::read_MEDIT(is, tr);
+  CGAL::IO::read_MEDIT(is, tr);
 
   // [call to a remeshing algorithm]
 
   std::ofstream os("after_remeshing.mesh");
-  CGAL::write_MEDIT(os, tr);
+  CGAL::IO::write_MEDIT(os, tr);
 
   return EXIT_SUCCESS;
 }
