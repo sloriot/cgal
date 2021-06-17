@@ -1425,7 +1425,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
                                    const double containment_epsilon,
                                    VertexPointMap vpm,
                                    const GeomTraits& gt,
-                                   const Visitor& visitor)
+                                   Visitor& visitor)
 {
   typedef boost::graph_traits<TriangleMesh>                               graph_traits;
   typedef typename graph_traits::vertex_descriptor                        vertex_descriptor;
@@ -1466,6 +1466,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
   {
     if (visitor.stop())
       return std::make_pair(false, false);
+    visitor.start_component_handling();
     visitor.status_update(faces_to_remove);
 #if defined(CGAL_PMP_REMOVE_SELF_INTERSECTION_DEBUG) || defined(CGAL_PMP_REMOVE_SELF_INTERSECTION_OUTPUT)
     ++cc_id;
@@ -1473,6 +1474,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
 #ifdef CGAL_PMP_REMOVE_SELF_INTERSECTION_DEBUG
     std::cout << "  DEBUG: --------------- Removal per CC: " << faces_to_remove.size() << " remaining faces to remove (CC: " << cc_id << " - step: " << step << ")\n";
 #endif
+
 
     // Process a connected component of faces to remove.
     // collect all the faces from the connected component
@@ -1662,6 +1664,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
       ++unsolved_self_intersections;
 #endif
 
+      visitor.end_component_handling();
       continue; // cannot replace a patch containing a nm vertex by a disk
     }
 
@@ -1689,6 +1692,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
 #ifdef CGAL_PMP_REMOVE_SELF_INTERSECTION_DEBUG
      ++unsolved_self_intersections;
 #endif
+      visitor.end_component_handling();
       continue;
     }
 
@@ -1754,6 +1758,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
  #endif
 
       something_was_done = true;
+      visitor.end_component_handling();
       continue;
     }
  #ifdef CGAL_PMP_REMOVE_SELF_INTERSECTION_DEBUG
@@ -1818,6 +1823,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
 #endif
 
         topology_issue = true;
+        visitor.end_component_handling();
         continue;
       }
       else
@@ -1830,6 +1836,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
 #endif
 
           all_fixed = false;
+          visitor.end_component_handling();
           continue;
         }
 
@@ -1867,6 +1874,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
 
           all_fixed = false;
           continue;
+          visitor.end_component_handling();
         }
         else
         {
@@ -1894,6 +1902,7 @@ remove_self_intersections_one_step(std::set<typename boost::graph_traits<Triangl
     {
       something_was_done = true;
     }
+    visitor.end_component_handling();
   }
 
   if(!something_was_done)
@@ -1922,7 +1931,19 @@ struct Remove_self_intersection_default_visitor
 {
   bool stop() const { return false; }
   template <class FaceContainer>
-  void status_update(const FaceContainer&) const {}
+  void status_update(const FaceContainer&) {}
+  void start_main_loop() {}
+  void end_main_loop() {}
+  void start_iteration() {}
+  void end_iteration() {}
+  void start_component_handling() {}
+  void end_component_handling() {}
+  void parameters_used( bool /* parameters_used(preserve_genus */,
+                        bool /* only_treat_self_intersections_locally */,
+                        int /* max_steps */,
+                        double /* strong_dihedral_angle */,
+                        double /* weak_dihedral_angle */,
+                        double /* containment_epsilon */ ) {}
 };
 
 template <typename FaceRange, typename TriangleMesh, typename NamedParameters>
@@ -1991,6 +2012,13 @@ bool remove_self_intersections(const FaceRange& face_range,
   > ::type Visitor;
   Visitor visitor = choose_parameter<Visitor>(get_parameter(np, internal_np::visitor));
 
+  visitor.parameters_used(preserve_genus,
+                          only_treat_self_intersections_locally,
+                          max_steps,
+                          strong_dihedral_angle,
+                          weak_dihedral_angle,
+                          containment_epsilon);
+
   if(!preserve_genus)
     duplicate_non_manifold_vertices(tmesh, np);
 
@@ -2001,9 +2029,11 @@ bool remove_self_intersections(const FaceRange& face_range,
   std::set<face_descriptor> faces_to_remove;
   std::set<face_descriptor> working_face_range(face_range.begin(), face_range.end());
 
+  visitor.start_main_loop();
   while(++step < max_steps)
   {
     if (visitor.stop()) break;
+    visitor.start_iteration();
 
     if(faces_to_remove.empty()) // the previous round might have been blocked due to topological constraints
     {
@@ -2044,7 +2074,10 @@ bool remove_self_intersections(const FaceRange& face_range,
     if(all_fixed && topology_issue)
         std::cout << "DEBUG: boundary cycles of boundary edges involved in self-intersections.\n";
 #endif
+
+    visitor.end_iteration();
   }
+  visitor.end_main_loop();
 
 #ifdef CGAL_PMP_REMOVE_SELF_INTERSECTION_DEBUG
   std::cout << "solved by constrained smoothing: " << internal::self_intersections_solved_by_constrained_smoothing << std::endl;
