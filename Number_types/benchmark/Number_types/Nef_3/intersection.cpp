@@ -76,6 +76,10 @@ void print_options() {
     std::cout << "- CGAL_USE_BOOST_MP: false" << std::endl;
   #endif
   std::cout << std::endl;
+
+  std::cout << "* CHOSEN EXACT TYPE:" << std::endl;
+  std::cout << boost::typeindex::type_id<CGAL::Exact_rational>() << std::endl;
+  std::cout << std::endl;
 }
 
 template<typename Kernel>
@@ -139,13 +143,15 @@ void run_all_benches(const std::size_t num_iters, const bool verbose) {
 
   if (!verbose) {
     std::cout << "| N | ";
+    std::cout << "ET | ";
     std::cout << "sphere <-> shifted-spheregrid | ";
     std::cout << "spheregrid <-> shifted-spheregrid | ";
     std::cout << "spheregrid <-> sphere | ";
     std::cout << "rotated-shifted-spheregrid <-> rotated-spheregrid | ";
     std::cout << std::endl;
-    std::cout << "| -- | -- | -- | -- | -- |" << std::endl;
+    std::cout << "| -- | -- | -- | -- | -- | -- |" << std::endl;
     std::cout << "| " << num_iters;
+    std::cout << " | " << boost::typeindex::type_id<CGAL::Exact_rational>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " | " << times[k];
     }
