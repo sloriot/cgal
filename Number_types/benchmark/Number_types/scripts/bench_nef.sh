@@ -29,3 +29,8 @@ cd ../leda # leda
 # CGAL_DISABLE_GMPXX ON
 cd ../boost-mp-latest # gmp without gmpxx but with boost mp
 ./bench
+
+# CGAL_DISABLE_GMPXX ON
+# LINK AGAINST BOOST MASTER
+# cd ../boost-mp-master # gmp without gmpxx but with boost mp
+# ./bench

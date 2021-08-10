@@ -170,7 +170,7 @@ int main() {
   std::cout << std::endl;
 
   // Parameters.
-  const std::size_t num_iters = 1; // number of iterations to average the timing
+  const std::size_t num_iters = 5; // number of iterations to average the timing
   const bool verbose = false; // do we print extra info
 
   // Bench.
