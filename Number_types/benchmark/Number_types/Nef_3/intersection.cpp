@@ -63,6 +63,19 @@ void print_options() {
     std::cout << "- CGAL_USE_LEDA: false" << std::endl;
   #endif
   std::cout << std::endl;
+
+  #if defined(CGAL_DO_NOT_USE_BOOST_MP)
+    std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: true" << std::endl;
+  #else
+    std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: false" << std::endl;
+  #endif
+
+  #if defined(CGAL_USE_BOOST_MP)
+    std::cout << "- CGAL_USE_BOOST_MP: true" << std::endl;
+  #else
+    std::cout << "- CGAL_USE_BOOST_MP: false" << std::endl;
+  #endif
+  std::cout << std::endl;
 }
 
 template<typename Kernel>
