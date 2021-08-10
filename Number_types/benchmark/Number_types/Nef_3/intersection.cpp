@@ -1,5 +1,3 @@
-// #define CGAL_DISABLE_GMP 1
-
 // STL.
 #include <fstream>
 #include <iostream>
@@ -19,10 +17,53 @@
 // Boost.
 #include <boost/type_index.hpp>
 
+using Timer = CGAL::Real_timer;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
 using EPICK = CGAL::Exact_predicates_inexact_constructions_kernel;
 
-using Timer = CGAL::Real_timer;
+void print_options() {
+
+  std::cout << "* Number Type Options:" << std::endl;
+  std::cout << std::endl;
+
+  #if defined(CGAL_DISABLE_GMP)
+    std::cout << "- CGAL_DISABLE_GMP: true" << std::endl;
+  #else
+    std::cout << "- CGAL_DISABLE_GMP: false" << std::endl;
+  #endif
+
+  #if defined(CGAL_USE_GMP)
+    std::cout << "- CGAL_USE_GMP: true" << std::endl;
+  #else
+    std::cout << "- CGAL_USE_GMP: false" << std::endl;
+  #endif
+
+  #if defined(CGAL_DISABLE_GMPXX)
+    std::cout << "- CGAL_DISABLE_GMPXX: true" << std::endl;
+  #else
+    std::cout << "- CGAL_DISABLE_GMPXX: false" << std::endl;
+  #endif
+
+  #if defined(CGAL_USE_GMPXX)
+    std::cout << "- CGAL_USE_GMPXX: true" << std::endl;
+  #else
+    std::cout << "- CGAL_USE_GMPXX: false" << std::endl;
+  #endif
+  std::cout << std::endl;
+
+  #if defined(CGAL_USE_CORE)
+    std::cout << "- CGAL_USE_CORE: true" << std::endl;
+  #else
+    std::cout << "- CGAL_USE_CORE: false" << std::endl;
+  #endif
+
+  #if defined(CGAL_USE_LEDA)
+    std::cout << "- CGAL_USE_LEDA: true" << std::endl;
+  #else
+    std::cout << "- CGAL_USE_LEDA: false" << std::endl;
+  #endif
+  std::cout << std::endl;
+}
 
 template<typename Kernel>
 double run_bench(
@@ -47,10 +88,12 @@ double run_bench(
   inA >> A;
   assert(A.number_of_faces() > 0);
   assert(A.number_of_vertices() > 0);
+  if (A.number_of_faces() == 0) return 0.0;
 
   inB >> B;
   assert(B.number_of_faces() > 0);
   assert(B.number_of_vertices() > 0);
+  if (B.number_of_faces() == 0) return 0.0;
 
   Timer timer;
   double avg_time = 0.0;
@@ -73,7 +116,9 @@ double run_bench(
 template<typename Kernel>
 void run_all_benches(const std::size_t num_iters, const bool verbose) {
 
+  print_options();
   std::vector<double> times;
+
   times.push_back(run_bench<Kernel>("sphere.off", "shifted-spheregrid.off", num_iters, verbose));
   times.push_back(run_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
   times.push_back(run_bench<Kernel>("spheregrid.off", "sphere.off", num_iters, verbose));
