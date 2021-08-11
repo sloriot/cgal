@@ -33,63 +33,65 @@ enum class BENCH_TYPE {
 };
 
 template<typename Kernel>
-void print_parameters(const std::size_t num_iters) {
+void print_parameters(const std::size_t num_iters, const bool verbose) {
 
-  std::cout << "* Parameters:" << std::endl;
-  std::cout << "- Number of iterations N: " << num_iters << std::endl;
-  std::cout << "- Kernel: " << boost::typeindex::type_id<Kernel>() << std::endl;
-  std::cout << std::endl;
+  if (verbose) {
+    std::cout << "* Parameters:" << std::endl;
+    std::cout << "- Number of iterations N: " << num_iters << std::endl;
+    std::cout << "- Kernel: " << boost::typeindex::type_id<Kernel>() << std::endl;
+    std::cout << std::endl;
 
-  #if defined(CGAL_DISABLE_GMP)
-    std::cout << "- CGAL_DISABLE_GMP: true" << std::endl;
-  #else
-    std::cout << "- CGAL_DISABLE_GMP: false" << std::endl;
-  #endif
+    #if defined(CGAL_DISABLE_GMP)
+      std::cout << "- CGAL_DISABLE_GMP: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DISABLE_GMP: false" << std::endl;
+    #endif
 
-  #if defined(CGAL_USE_GMP)
-    std::cout << "- CGAL_USE_GMP: true" << std::endl;
-  #else
-    std::cout << "- CGAL_USE_GMP: false" << std::endl;
-  #endif
+    #if defined(CGAL_USE_GMP)
+      std::cout << "- CGAL_USE_GMP: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_GMP: false" << std::endl;
+    #endif
 
-  #if defined(CGAL_DISABLE_GMPXX)
-    std::cout << "- CGAL_DISABLE_GMPXX: true" << std::endl;
-  #else
-    std::cout << "- CGAL_DISABLE_GMPXX: false" << std::endl;
-  #endif
+    #if defined(CGAL_DISABLE_GMPXX)
+      std::cout << "- CGAL_DISABLE_GMPXX: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DISABLE_GMPXX: false" << std::endl;
+    #endif
 
-  #if defined(CGAL_USE_GMPXX)
-    std::cout << "- CGAL_USE_GMPXX: true" << std::endl;
-  #else
-    std::cout << "- CGAL_USE_GMPXX: false" << std::endl;
-  #endif
-  std::cout << std::endl;
+    #if defined(CGAL_USE_GMPXX)
+      std::cout << "- CGAL_USE_GMPXX: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_GMPXX: false" << std::endl;
+    #endif
+    std::cout << std::endl;
 
-  #if defined(CGAL_USE_CORE)
-    std::cout << "- CGAL_USE_CORE: true" << std::endl;
-  #else
-    std::cout << "- CGAL_USE_CORE: false" << std::endl;
-  #endif
+    #if defined(CGAL_USE_CORE)
+      std::cout << "- CGAL_USE_CORE: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_CORE: false" << std::endl;
+    #endif
 
-  #if defined(CGAL_USE_LEDA)
-    std::cout << "- CGAL_USE_LEDA: true" << std::endl;
-  #else
-    std::cout << "- CGAL_USE_LEDA: false" << std::endl;
-  #endif
-  std::cout << std::endl;
+    #if defined(CGAL_USE_LEDA)
+      std::cout << "- CGAL_USE_LEDA: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_LEDA: false" << std::endl;
+    #endif
+    std::cout << std::endl;
 
-  #if defined(CGAL_DO_NOT_USE_BOOST_MP)
-    std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: true" << std::endl;
-  #else
-    std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: false" << std::endl;
-  #endif
+    #if defined(CGAL_DO_NOT_USE_BOOST_MP)
+      std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DO_NOT_USE_BOOST_MP: false" << std::endl;
+    #endif
 
-  #if defined(CGAL_USE_BOOST_MP)
-    std::cout << "- CGAL_USE_BOOST_MP: true" << std::endl;
-  #else
-    std::cout << "- CGAL_USE_BOOST_MP: false" << std::endl;
-  #endif
-  std::cout << std::endl;
+    #if defined(CGAL_USE_BOOST_MP)
+      std::cout << "- CGAL_USE_BOOST_MP: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_BOOST_MP: false" << std::endl;
+    #endif
+    std::cout << std::endl;
+  }
 
   std::cout << "* CHOSEN EXACT TYPE:" << std::endl;
   std::cout << boost::typeindex::type_id<CGAL::Exact_rational>() << std::endl;
@@ -271,7 +273,7 @@ int main(int argc, char* argv[]) {
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
   using Kernel = EPECK; // chosen kernel
-  print_parameters<Kernel>(num_iters);
+  print_parameters<Kernel>(num_iters, verbose);
 
   auto bench_type = BENCH_TYPE::ALL;
   if (btype == "nef") bench_type = BENCH_TYPE::NEF;
