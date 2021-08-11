@@ -215,21 +215,21 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   times.push_back(run_nef_bench<Kernel>("rotated-shifted-spheregrid.off", "rotated-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
-    std::cout << "| N | ";
-    std::cout << "ET | ";
-    std::cout << "sphere <-> shifted-spheregrid | ";
-    std::cout << "spheregrid <-> shifted-spheregrid | ";
-    std::cout << "spheregrid <-> sphere | ";
-    std::cout << "rotated-shifted-spheregrid <-> rotated-spheregrid | ";
+    std::cout << "{|class=\"wikitable\" style=\"float:left;text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "! N !! ";
+    std::cout << "ET !! ";
+    std::cout << "sphere -- shifted-spheregrid !! ";
+    std::cout << "spheregrid -- shifted-spheregrid !! ";
+    std::cout << "spheregrid -- sphere !! ";
+    std::cout << "rotated-shifted-spheregrid -- rotated-spheregrid ";
     std::cout << std::endl;
-    std::cout << "| -- | -- | -- | -- | -- | -- |" << std::endl;
+    std::cout << "|-" << std::endl;
     std::cout << "| " << num_iters;
-    std::cout << " | " << boost::typeindex::type_id<CGAL::Exact_rational>();
+    std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
     for (std::size_t k = 0; k < times.size(); ++k) {
-      std::cout << " | " << times[k];
+      std::cout << " || " << times[k];
     }
-    std::cout << " |" << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl << "|}" << std::endl;
   }
 }
 
@@ -243,19 +243,19 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
   times.push_back(run_pmp_bench<Kernel>("cheese.off", "cheese-rotated.off", num_iters, verbose));
 
   if (!verbose) {
-    std::cout << "| N | ";
-    std::cout << "ET | ";
-    std::cout << "blobby <-> eight | ";
-    std::cout << "cheese <-> cheese-rotated | ";
+    std::cout << "{|class=\"wikitable\" style=\"float:left;text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "! N !! ";
+    std::cout << "ET !! ";
+    std::cout << "blobby -- eight !! ";
+    std::cout << "cheese -- cheese-rotated ";
     std::cout << std::endl;
-    std::cout << "| -- | -- | -- | -- |" << std::endl;
+    std::cout << "|-" << std::endl;
     std::cout << "| " << num_iters;
-    std::cout << " | " << boost::typeindex::type_id<CGAL::Exact_rational>();
+    std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
     for (std::size_t k = 0; k < times.size(); ++k) {
-      std::cout << " | " << times[k];
+      std::cout << " || " << times[k];
     }
-    std::cout << " |" << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl << "|}" << std::endl;
   }
 }
 
