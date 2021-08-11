@@ -6,21 +6,25 @@ NEFTYPE="nef"
 PMPTYPE="pmp"
 N=1 # number of iterations
 
+# USING RELEASE:
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
-# EXACT TYPES:
+# EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
 
 # ----- 1 -----
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP
+# ET: typedef mpq_class Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # cd gmp-all # gmp without boost mp
 
 # ----- 2 -----
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP
+# ET: typedef Gmpq Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # CGAL_DISABLE_GMPXX ON
 # cd gmp-without-xx # gmp without boost mp and gmpxx
 
 # ----- 3 -----
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP
+# ET: typedef leda_rational Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # WITH_LEDA ON
@@ -34,16 +38,19 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd leda # leda
 
 # ----- 4 -----
+# ET: typedef boost::multiprecision::mpq_rational Type;
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmpxx # gmp without gmpxx but with boost mp
 
 # ----- 5 -----
+# ET: typedef BOOST_cpp_arithmetic_kernel::Rational Type;
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmp # boost mp without gmp
 
 # ----- 6 -----
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP
+# ET: typedef Quotient<MP_Float> Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1 -DCGAL_USE_CORE=1
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd core # cgal core only

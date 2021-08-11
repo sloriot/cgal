@@ -16,7 +16,7 @@
 #include <CGAL/Nef_polyhedron_3.h>
 #include <CGAL/IO/Nef_polyhedron_iostream_3.h>
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
-#include <CGAL/OFF_to_nef_3.h>
+#include <CGAL/Exact_rational.h>
 #include <CGAL/Real_timer.h>
 
 using Timer = CGAL::Real_timer;
@@ -93,7 +93,7 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
     std::cout << std::endl;
   }
 
-  std::cout << "* CHOSEN EXACT TYPE:" << std::endl;
+  std::cout << "* CHOSEN EXACT RATIONAL TYPE:" << std::endl;
   std::cout << boost::typeindex::type_id<CGAL::Exact_rational>() << std::endl;
   std::cout << std::endl;
 }
