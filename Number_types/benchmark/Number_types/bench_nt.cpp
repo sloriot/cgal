@@ -215,7 +215,7 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   times.push_back(run_nef_bench<Kernel>("rotated-shifted-spheregrid.off", "rotated-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
-    std::cout << "{|class=\"wikitable\" style=\"float:left;text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
     std::cout << "! N !! ";
     std::cout << "ET !! ";
     std::cout << "sphere -- shifted-spheregrid !! ";
@@ -243,7 +243,7 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
   times.push_back(run_pmp_bench<Kernel>("cheese.off", "cheese-rotated.off", num_iters, verbose));
 
   if (!verbose) {
-    std::cout << "{|class=\"wikitable\" style=\"float:left;text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
     std::cout << "! N !! ";
     std::cout << "ET !! ";
     std::cout << "blobby -- eight !! ";
