@@ -4,7 +4,7 @@
 # PARAMETERS:
 NEFTYPE="nef"
 PMPTYPE="pmp"
-N=1 # number of iterations
+N=5 # number of iterations
 
 # USING RELEASE:
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
@@ -68,8 +68,8 @@ cd ../boost-mp-without-gmpxx
 ./bench $NEFTYPE $N
 cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
-cd ../core
-./bench $NEFTYPE $N
+# cd ../core # very slow
+# ./bench $NEFTYPE $N
 
 echo " "
 echo "PMP BENCHMARKS"
