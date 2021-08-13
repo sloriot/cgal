@@ -4,6 +4,8 @@
 # PARAMETERS:
 NEFTYPE="nef"
 PMPTYPE="pmp"
+ARRTYPE="arr"
+
 N=5 # number of iterations
 
 # USING RELEASE:
@@ -55,6 +57,13 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # CGAL_DISABLE_GMPXX ON
 # cd core # cgal core only
 
+# ----- 7 -----
+# ET: typedef Quotient<cpp_int> Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
+# CGAL_DISABLE_GMP ON
+# CGAL_DISABLE_GMPXX ON
+# cd core # cgal core only
+
 echo " "
 echo "NEF 3 BENCHMARKS"
 
@@ -70,21 +79,43 @@ cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
+cd ../cppint
+./bench $NEFTYPE $N
+
+# echo " "
+# echo "PMP BENCHMARKS" # not representative
+
+# cd ../gmp-all
+# ./bench $PMPTYPE $N
+# cd ../gmp-without-xx
+# ./bench $PMPTYPE $N
+# cd ../leda
+# ./bench $PMPTYPE $N
+# cd ../boost-mp-without-gmpxx
+# ./bench $PMPTYPE $N
+# cd ../boost-mp-without-gmp
+# ./bench $PMPTYPE $N
+# cd ../core
+# ./bench $PMPTYPE $N
+# cd ../cppint
+# ./bench $PMPTYPE $N
 
 echo " "
-echo "PMP BENCHMARKS"
+echo "ARR BENCHMARKS"
 
 cd ../gmp-all
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
 cd ../gmp-without-xx
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
 cd ../leda
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
 cd ../boost-mp-without-gmpxx
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
 cd ../boost-mp-without-gmp
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
 cd ../core
-./bench $PMPTYPE $N
+./bench $ARRTYPE $N
+cd ../cppint
+./bench $ARRTYPE $N
 
 echo " "

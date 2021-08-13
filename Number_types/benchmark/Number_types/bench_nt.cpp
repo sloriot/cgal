@@ -29,7 +29,8 @@ namespace params = CGAL::Polygon_mesh_processing::parameters;
 enum class BENCH_TYPE {
   ALL = 0,
   NEF = 1,
-  PMP = 2
+  PMP = 2,
+  ARR = 3
 };
 
 template<typename Kernel>
@@ -238,6 +239,7 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
 
   std::vector<double> times;
   std::cout << "* benching PMP ..." << std::endl;
+  CGAL_assertion_msg(false, "WARNING: These benches are not representative!");
 
   times.push_back(run_pmp_bench<Kernel>("blobby.off", "eight.off", num_iters, verbose));
   times.push_back(run_pmp_bench<Kernel>("cheese.off", "cheese-rotated.off", num_iters, verbose));
@@ -259,6 +261,33 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
+template<typename Kernel>
+void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
+
+  std::vector<double> times;
+  std::cout << "* benching ARR ..." << std::endl;
+
+  // todo ...
+
+  // if (!verbose) {
+  //   std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
+  //   std::cout << "! N !! ";
+  //   std::cout << "ET !! ";
+  //   std::cout << "sphere -- shifted-spheregrid !! ";
+  //   std::cout << "spheregrid -- shifted-spheregrid !! ";
+  //   std::cout << "spheregrid -- sphere !! ";
+  //   std::cout << "rotated-shifted-spheregrid -- rotated-spheregrid ";
+  //   std::cout << std::endl;
+  //   std::cout << "|-" << std::endl;
+  //   std::cout << "| " << num_iters;
+  //   std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
+  //   for (std::size_t k = 0; k < times.size(); ++k) {
+  //     std::cout << " || " << times[k];
+  //   }
+  //   std::cout << std::endl << "|}" << std::endl;
+  // }
+}
+
 int main(int argc, char* argv[]) {
 
   std::cout.precision(4);
@@ -278,6 +307,7 @@ int main(int argc, char* argv[]) {
   auto bench_type = BENCH_TYPE::ALL;
   if (btype == "nef") bench_type = BENCH_TYPE::NEF;
   else if (btype == "pmp") bench_type = BENCH_TYPE::PMP;
+  else if (btype == "arr") bench_type = BENCH_TYPE::ARR;
 
   // Bench.
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::NEF) {
@@ -285,6 +315,9 @@ int main(int argc, char* argv[]) {
   }
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::PMP) {
     run_all_pmp_benches<Kernel>(num_iters, verbose);
+  }
+  if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::ARR) {
+    run_all_arr_benches<Kernel>(num_iters, verbose);
   }
 
   return EXIT_SUCCESS;
