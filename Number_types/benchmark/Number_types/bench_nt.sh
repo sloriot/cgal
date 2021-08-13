@@ -76,7 +76,7 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd core # cgal core only
 
 echo " "
-echo "NEF 3 BENCHMARKS"
+echo "NEF BENCHMARKS"
 
 cd ../gmp-all
 ./bench $NEFTYPE $N
