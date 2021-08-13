@@ -8,8 +8,8 @@
 #include <boost/type_index.hpp>
 
 // Kernels.
+#include <CGAL/Simple_cartesian.h>
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
-#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 
 // CGAL.
 #include <CGAL/Surface_mesh.h>
@@ -20,8 +20,9 @@
 #include <CGAL/Real_timer.h>
 
 using Timer = CGAL::Real_timer;
+using ET    = CGAL::Exact_rational;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
-using EPICK = CGAL::Exact_predicates_inexact_constructions_kernel;
+using SCKER = CGAL::Simple_cartesian<ET>;
 
 namespace PMP = CGAL::Polygon_mesh_processing;
 namespace params = CGAL::Polygon_mesh_processing::parameters;
@@ -73,6 +74,12 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_USE_CORE: false" << std::endl;
     #endif
 
+    #if defined(CGAL_USE_CPP_INT)
+      std::cout << "- CGAL_USE_CPP_INT: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_CPP_INT: false" << std::endl;
+    #endif
+
     #if defined(CGAL_USE_LEDA)
       std::cout << "- CGAL_USE_LEDA: true" << std::endl;
     #else
@@ -95,7 +102,7 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
   }
 
   std::cout << "* CHOSEN EXACT RATIONAL TYPE:" << std::endl;
-  std::cout << boost::typeindex::type_id<CGAL::Exact_rational>() << std::endl;
+  std::cout << boost::typeindex::type_id<ET>() << std::endl;
   std::cout << std::endl;
 }
 
@@ -226,7 +233,7 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
     std::cout << "| " << num_iters;
-    std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
+    std::cout << " || " << boost::typeindex::type_id<ET>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " || " << times[k];
     }
@@ -253,7 +260,7 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
     std::cout << "| " << num_iters;
-    std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
+    std::cout << " || " << boost::typeindex::type_id<ET>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " || " << times[k];
     }
@@ -273,14 +280,11 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   //   std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
   //   std::cout << "! N !! ";
   //   std::cout << "ET !! ";
-  //   std::cout << "sphere -- shifted-spheregrid !! ";
-  //   std::cout << "spheregrid -- shifted-spheregrid !! ";
-  //   std::cout << "spheregrid -- sphere !! ";
-  //   std::cout << "rotated-shifted-spheregrid -- rotated-spheregrid ";
+  //   std::cout << "#### -- #### !! ";
   //   std::cout << std::endl;
   //   std::cout << "|-" << std::endl;
   //   std::cout << "| " << num_iters;
-  //   std::cout << " || " << boost::typeindex::type_id<CGAL::Exact_rational>();
+  //   std::cout << " || " << boost::typeindex::type_id<ET>();
   //   for (std::size_t k = 0; k < times.size(); ++k) {
   //     std::cout << " || " << times[k];
   //   }
@@ -301,9 +305,12 @@ int main(int argc, char* argv[]) {
   const bool verbose = false; // do we print extra info
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
-  using Kernel = EPECK; // chosen kernel
-  print_parameters<Kernel>(num_iters, verbose);
 
+  // Chosose a kernel.
+  // using Kernel = SCKER; // pure arithmetic
+  using Kernel = EPECK; // full support
+
+  print_parameters<Kernel>(num_iters, verbose);
   auto bench_type = BENCH_TYPE::ALL;
   if (btype == "nef") bench_type = BENCH_TYPE::NEF;
   else if (btype == "pmp") bench_type = BENCH_TYPE::PMP;

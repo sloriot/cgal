@@ -2,29 +2,36 @@
 # > sh ./bench_nt
 
 # PARAMETERS:
-NEFTYPE="nef"
-PMPTYPE="pmp"
-ARRTYPE="arr"
+
+NEFTYPE="nef" # nef benches
+PMPTYPE="pmp" # polygon mesh processing benches
+ARRTYPE="arr" # arrangment benches
 
 N=5 # number of iterations
 
 # USING RELEASE:
+# You should run this bench from the directory that contains all builds
+# with different configurations (see below) called as below:
+# gmp-all, gmp-without-xx, leda, boost-mp-without-gmpxx, boost-mp-without-gmp, core, cppint.
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
 # EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
 
 # ----- 1 -----
+# gmp-all
 # ET: typedef mpq_class Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # cd gmp-all # gmp without boost mp
 
 # ----- 2 -----
+# gmp-without-xx
 # ET: typedef Gmpq Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # CGAL_DISABLE_GMPXX ON
 # cd gmp-without-xx # gmp without boost mp and gmpxx
 
 # ----- 3 -----
+# leda
 # ET: typedef leda_rational Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # CGAL_DISABLE_GMP ON
@@ -40,17 +47,20 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd leda # leda
 
 # ----- 4 -----
+# boost-mp-without-gmpxx
 # ET: typedef boost::multiprecision::mpq_rational Type;
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmpxx # gmp without gmpxx but with boost mp
 
 # ----- 5 -----
+# boost-mp-without-gmp
 # ET: typedef BOOST_cpp_arithmetic_kernel::Rational Type;
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmp # boost mp without gmp
 
 # ----- 6 -----
+# core
 # ET: typedef Quotient<MP_Float> Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1 -DCGAL_USE_CORE=1
 # CGAL_DISABLE_GMP ON
@@ -58,8 +68,9 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd core # cgal core only
 
 # ----- 7 -----
+# cppint
 # ET: typedef Quotient<cpp_int> Type;
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
+# CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_INT=1
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd core # cgal core only
