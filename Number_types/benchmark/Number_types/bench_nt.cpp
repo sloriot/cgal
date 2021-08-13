@@ -2,6 +2,7 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 // Boost.
@@ -14,8 +15,14 @@
 // CGAL.
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Nef_polyhedron_3.h>
+#include <CGAL/point_generators_2.h>
+#include <CGAL/Join_input_iterator.h>
 #include <CGAL/IO/Nef_polyhedron_iostream_3.h>
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
+#include <CGAL/Surface_sweep_2_algorithms.h>
+#include <CGAL/Arr_segment_traits_2.h>
+#include <CGAL/Counting_iterator.h>
+#include <CGAL/function_objects.h>
 #include <CGAL/Exact_rational.h>
 #include <CGAL/Real_timer.h>
 
@@ -106,6 +113,17 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
   std::cout << std::endl;
 }
 
+template<typename Segment_2>
+void print_segments(
+  const std::string name, const std::vector<Segment_2>& segments) {
+
+  std::ofstream out(name + ".polylines.txt");
+  for (const auto& segment : segments) {
+    out << "2 " << segment.source() << " 0 " << segment.target() << " 0 " << std::endl;
+  }
+  out.close();
+}
+
 template<typename Polygon_mesh>
 bool read_meshes(
   const std::string filename1, const std::string filename2, const bool verbose,
@@ -129,7 +147,63 @@ bool read_meshes(
   assert(B.number_of_vertices() > 0);
   if (B.number_of_faces() == 0) return false;
 
+  inA.close();
+  inB.close();
   return true;
+}
+
+template<typename Kernel, typename Segment_2>
+void generate_random_segments_1(
+  const std::size_t num_segments, std::vector<Segment_2>& segments, const bool verbose) {
+
+  using Point_2 = typename Kernel::Point_2;
+  using C1 = CGAL::Creator_uniform_2<double, Point_2>;
+  using C2 = CGAL::Creator_uniform_2<Point_2, Segment_2>;
+  using P1 = CGAL::Random_points_on_segment_2<Point_2, C1>;
+  using P2 = CGAL::Random_points_on_circle_2<Point_2, C1>;
+  using JI = CGAL::Join_input_iterator_2<P1, P2, C2>;
+
+  segments.clear();
+  segments.reserve(num_segments);
+
+  P1 p1(Point_2(-100, 0), Point_2(100, 0));
+  P2 p2(250);
+  JI generator(p1, p2);
+  std::copy_n(generator, num_segments, std::back_inserter(segments));
+
+  if (verbose) print_segments("rnd-segs-1", segments);
+  assert(segments.size() == num_segments);
+}
+
+template<typename Kernel, typename Segment_2>
+void generate_random_segments_2(
+  const std::size_t num_segments, std::vector<Segment_2>& segments, const bool verbose) {
+
+  using Point_2 = typename Kernel::Point_2;
+  using PG = CGAL::Points_on_segment_2<Point_2>;
+  using Creator = CGAL::Creator_uniform_2<Point_2, Segment_2>;
+  using JI = CGAL::Join_input_iterator_2<PG, PG, Creator>;
+  using CI = CGAL::Counting_iterator<JI, Segment_2>;
+
+  segments.clear();
+  segments.reserve(num_segments);
+
+  PG p1(Point_2(-250,  -50), Point_2(-250,  50), num_segments / 2);
+  PG p2(Point_2( 250, -250), Point_2( 250, 250), num_segments / 2);
+  JI t1(p1, p2);
+  CI t1_begin(t1);
+  CI t1_end(t1, num_segments / 2);
+  std::copy(t1_begin, t1_end, std::back_inserter(segments));
+
+  PG p3(Point_2( -50, -250), Point_2(  50, -250), num_segments / 2);
+  PG p4(Point_2(-250,  250), Point_2( 250,  250), num_segments / 2);
+  JI t2(p3, p4);
+  CI t2_begin(t2);
+  CI t2_end(t2, num_segments / 2);
+  std::copy(t2_begin, t2_end, std::back_inserter(segments));
+
+  if (verbose) print_segments("rnd-segs-2", segments);
+  assert(segments.size() == num_segments);
 }
 
 template<typename Kernel>
@@ -153,8 +227,8 @@ double run_nef_bench(
     Nef_polyhedron nefA(A), nefB(B);
     const Nef_polyhedron nefC = nefA.intersection(nefB);
 
-    avg_time += timer.time();
     timer.stop();
+    avg_time += timer.time();
     timer.reset();
   }
   avg_time /= static_cast<double>(num_iters);
@@ -199,9 +273,47 @@ double run_pmp_bench(
         params::all_default()) // named parameters for mesh2-mesh1 not used)
     );
 
-    avg_time += timer.time();
     timer.stop();
+    avg_time += timer.time();
     timer.reset();
+  }
+  avg_time /= static_cast<double>(num_iters);
+  if (verbose) {
+    std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << std::endl;
+  }
+  return avg_time;
+}
+
+template<typename Kernel>
+double run_arr_bench(
+  const std::string type, const std::size_t num_segments,
+  const std::size_t num_iters, const bool verbose) {
+
+  using Point_2 = typename Kernel::Point_2;
+  using Arr_traits_2 = CGAL::Arr_segment_traits_2<Kernel>;
+  using Segment_2 = typename Arr_traits_2::Curve_2;
+
+  std::vector<Segment_2> segments;
+  if (type == "rnd-segs-1") generate_random_segments_1<Kernel>(num_segments, segments, verbose);
+  else if (type == "rnd-segs-2") generate_random_segments_2<Kernel>(num_segments, segments, verbose);
+  else generate_random_segments_1<Kernel>(num_segments, segments, verbose);
+
+  Timer timer;
+  double avg_time = 0.0;
+  std::vector<Point_2> result;
+  for (std::size_t k = 0; k < num_iters; ++k) {
+    timer.start();
+
+    // Running arr.
+    CGAL::compute_intersection_points(
+      segments.begin(), segments.end(), std::back_inserter(result));
+
+    timer.stop();
+    avg_time += timer.time();
+    timer.reset();
+    assert(segments.size() == num_segments);
+    result.clear();
   }
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
@@ -274,22 +386,25 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching ARR ..." << std::endl;
 
-  // todo ...
+  const std::size_t num_segments = 2000;
+  times.push_back(run_arr_bench<Kernel>("rnd-segs-1", num_segments, num_iters, verbose));
+  times.push_back(run_arr_bench<Kernel>("rnd-segs-2", num_segments, num_iters, verbose));
 
-  // if (!verbose) {
-  //   std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
-  //   std::cout << "! N !! ";
-  //   std::cout << "ET !! ";
-  //   std::cout << "#### -- #### !! ";
-  //   std::cout << std::endl;
-  //   std::cout << "|-" << std::endl;
-  //   std::cout << "| " << num_iters;
-  //   std::cout << " || " << boost::typeindex::type_id<ET>();
-  //   for (std::size_t k = 0; k < times.size(); ++k) {
-  //     std::cout << " || " << times[k];
-  //   }
-  //   std::cout << std::endl << "|}" << std::endl;
-  // }
+  if (!verbose) {
+    std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "! N !! ";
+    std::cout << "ET !! ";
+    std::cout << "random segments 1 !! ";
+    std::cout << "random segments 2 ";
+    std::cout << std::endl;
+    std::cout << "|-" << std::endl;
+    std::cout << "| " << num_iters;
+    std::cout << " || " << boost::typeindex::type_id<ET>();
+    for (std::size_t k = 0; k < times.size(); ++k) {
+      std::cout << " || " << times[k];
+    }
+    std::cout << std::endl << "|}" << std::endl;
+  }
 }
 
 int main(int argc, char* argv[]) {
@@ -308,7 +423,7 @@ int main(int argc, char* argv[]) {
 
   // Chosose a kernel.
   // using Kernel = SCKER; // pure arithmetic
-  using Kernel = EPECK; // full support
+  using Kernel = EPECK; // full support, real use case
 
   print_parameters<Kernel>(num_iters, verbose);
   auto bench_type = BENCH_TYPE::ALL;
