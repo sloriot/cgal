@@ -329,22 +329,24 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching NEF ..." << std::endl;
 
-  times.push_back(run_nef_bench<Kernel>("sphere.off", "shifted-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
-  times.push_back(run_nef_bench<Kernel>("spheregrid.off", "sphere.off", num_iters, verbose));
-  times.push_back(run_nef_bench<Kernel>("rotated-shifted-spheregrid.off", "rotated-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
-    std::cout << "! N !! ";
+    std::cout << "! # !! ";
+    std::cout << "N !! ";
     std::cout << "ET !! ";
-    std::cout << "sphere -- shifted-spheregrid !! ";
+    std::cout << "sphere -- spheregrid !! ";
+    std::cout << "sphere -- rotated-spheregrid !! ";
     std::cout << "spheregrid -- shifted-spheregrid !! ";
-    std::cout << "spheregrid -- sphere !! ";
-    std::cout << "rotated-shifted-spheregrid -- rotated-spheregrid ";
+    std::cout << "rotated-spheregrid -- rotated-shifted-spheregrid ";
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
-    std::cout << "| " << num_iters;
+    std::cout << "| #";
+    std::cout << " || " << num_iters;
     std::cout << " || " << boost::typeindex::type_id<ET>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " || " << times[k];
@@ -365,13 +367,15 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
-    std::cout << "! N !! ";
+    std::cout << "! # !! ";
+    std::cout << "N !! ";
     std::cout << "ET !! ";
     std::cout << "blobby -- eight !! ";
     std::cout << "cheese -- cheese-rotated ";
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
-    std::cout << "| " << num_iters;
+    std::cout << "| #";
+    std::cout << " || " << num_iters;
     std::cout << " || " << boost::typeindex::type_id<ET>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " || " << times[k];
@@ -392,13 +396,15 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
-    std::cout << "! N !! ";
+    std::cout << "! # !! ";
+    std::cout << "N !! ";
     std::cout << "ET !! ";
     std::cout << "random segments 1 !! ";
     std::cout << "random segments 2 ";
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
-    std::cout << "| " << num_iters;
+    std::cout << "| #";
+    std::cout << " || " << num_iters;
     std::cout << " || " << boost::typeindex::type_id<ET>();
     for (std::size_t k = 0; k < times.size(); ++k) {
       std::cout << " || " << times[k];
