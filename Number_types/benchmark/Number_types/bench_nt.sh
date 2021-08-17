@@ -90,8 +90,8 @@ cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
-cd ../cppint
-./bench $NEFTYPE $N
+# cd ../cppint
+# ./bench $NEFTYPE $N
 
 # echo " "
 # echo "PMP BENCHMARKS" # not representative
@@ -111,22 +111,22 @@ cd ../cppint
 # cd ../cppint
 # ./bench $PMPTYPE $N
 
-echo " "
-echo "ARR BENCHMARKS"
+# echo " "
+# echo "ARR BENCHMARKS"
 
-cd ../gmp-all
-./bench $ARRTYPE $N
-cd ../gmp-without-xx
-./bench $ARRTYPE $N
-cd ../leda
-./bench $ARRTYPE $N
-cd ../boost-mp-without-gmpxx
-./bench $ARRTYPE $N
-cd ../boost-mp-without-gmp
-./bench $ARRTYPE $N
-cd ../core
-./bench $ARRTYPE $N
-cd ../cppint
-./bench $ARRTYPE $N
+# cd ../gmp-all
+# ./bench $ARRTYPE $N
+# cd ../gmp-without-xx
+# ./bench $ARRTYPE $N
+# cd ../leda
+# ./bench $ARRTYPE $N
+# cd ../boost-mp-without-gmpxx
+# ./bench $ARRTYPE $N
+# cd ../boost-mp-without-gmp
+# ./bench $ARRTYPE $N
+# cd ../core
+# ./bench $ARRTYPE $N
+# cd ../cppint
+# ./bench $ARRTYPE $N
 
 echo " "
