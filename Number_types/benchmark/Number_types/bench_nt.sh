@@ -62,14 +62,14 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # ----- 6 -----
 # core
 # ET: typedef Quotient<MP_Float> Type;
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1 -DCGAL_USE_CORE=1
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd core # cgal core only
 
 # ----- 7 -----
 # cppint
-# ET: typedef Quotient<cpp_int> Type;
+# ET: typedef Quotient<boost::multiprecision::cpp_int> Type;
 # CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_INT=1
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON

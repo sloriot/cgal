@@ -329,12 +329,12 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching NEF ..." << std::endl;
 
-  times.push_back(run_nef_bench<Kernel>("Tetrahedron1.off", "Tetrahedron2.off", num_iters, verbose));
+  // times.push_back(run_nef_bench<Kernel>("tetrahedron1.off", "tetrahedron2.off", num_iters, verbose));
 
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
@@ -429,7 +429,7 @@ int main(int argc, char* argv[]) {
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
 
-  // Chosose a kernel.
+  // Choose a kernel.
   // using Kernel = SCKER; // pure arithmetic
   using Kernel = EPECK; // full support, real use case
 
