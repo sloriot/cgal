@@ -336,7 +336,7 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::cout << "* benching NEF ..." << std::endl;
 
   // Use it to debug ET types.
-  // times.push_back(run_nef_bench<Kernel>("tetrahedron1.off", "tetrahedron2.off", num_iters, verbose));
+  // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-2.off", num_iters, verbose));
 
   // Real use cases.
   times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
