@@ -7,7 +7,7 @@ NEFTYPE="nef" # nef benches
 PMPTYPE="pmp" # polygon mesh processing benches
 ARRTYPE="arr" # arrangment benches
 
-N=5 # number of iterations
+N=10 # number of iterations
 
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
@@ -98,9 +98,9 @@ cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
-# cd ../cppint
+# cd ../cppint # fails
 # ./bench $NEFTYPE $N
-# cd ../cpprational
+# cd ../cpprational # slow? fails?
 # ./bench $NEFTYPE $N
 
 # echo " "
@@ -126,21 +126,21 @@ cd ../boost-mp-without-gmp
 # echo " "
 # echo "ARR BENCHMARKS"
 
-# cd ../gmp-all
-# ./bench $ARRTYPE $N
-# cd ../gmp-without-xx
-# ./bench $ARRTYPE $N
-# cd ../leda
-# ./bench $ARRTYPE $N
-# cd ../boost-mp-without-gmpxx
-# ./bench $ARRTYPE $N
-# cd ../boost-mp-without-gmp
-# ./bench $ARRTYPE $N
-# cd ../core
-# ./bench $ARRTYPE $N
-# cd ../cppint
-# ./bench $ARRTYPE $N
-# cd ../cpprational
-# ./bench $ARRTYPE $N
+cd ../gmp-all
+./bench $ARRTYPE $N
+cd ../gmp-without-xx
+./bench $ARRTYPE $N
+cd ../leda
+./bench $ARRTYPE $N
+cd ../boost-mp-without-gmpxx
+./bench $ARRTYPE $N
+cd ../boost-mp-without-gmp
+./bench $ARRTYPE $N
+cd ../core
+./bench $ARRTYPE $N
+cd ../cppint
+./bench $ARRTYPE $N
+cd ../cpprational
+./bench $ARRTYPE $N
 
 echo " "

@@ -336,9 +336,27 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::cout << "* benching NEF ..." << std::endl;
 
   // Use it to debug ET types.
+  // std::cout << "test1" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-1.off", num_iters, verbose));
+  // std::cout << "test2" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-2.off", num_iters, verbose));
+  // std::cout << "test3" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-3.off", num_iters, verbose));
+
+  // They do not work at all!
+  // std::cout << "test4" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-4.off", num_iters, verbose));
+  // std::cout << "test5" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-5.off", num_iters, verbose));
+
+  // std::cout << "test6" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-1.off", num_iters, verbose));
+  // std::cout << "test7" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-2.off", num_iters, verbose));
 
   // Real use cases.
+  // std::cout << "test-real" << std::endl;
+
   times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
   times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
