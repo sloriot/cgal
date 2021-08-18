@@ -87,6 +87,12 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_USE_CPP_INT: false" << std::endl;
     #endif
 
+    #if defined(CGAL_USE_CPP_RATIONAL)
+      std::cout << "- CGAL_USE_CPP_RATIONAL: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_CPP_RATIONAL: false" << std::endl;
+    #endif
+
     #if defined(CGAL_USE_LEDA)
       std::cout << "- CGAL_USE_LEDA: true" << std::endl;
     #else
@@ -329,12 +335,14 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching NEF ..." << std::endl;
 
-  times.push_back(run_nef_bench<Kernel>("tetrahedron1.off", "tetrahedron2.off", num_iters, verbose));
+  // Use it to debug ET types.
+  // times.push_back(run_nef_bench<Kernel>("tetrahedron1.off", "tetrahedron2.off", num_iters, verbose));
 
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
-  // times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
+  // Real use cases.
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;

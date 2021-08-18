@@ -12,7 +12,7 @@ N=5 # number of iterations
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
 # with different configurations (see below) called as below:
-# gmp-all, gmp-without-xx, leda, boost-mp-without-gmpxx, boost-mp-without-gmp, core, cppint.
+# gmp-all, gmp-without-xx, leda, boost-mp-without-gmpxx, boost-mp-without-gmp, core, cppint, cpprational.
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
 # EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
@@ -75,6 +75,14 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # CGAL_DISABLE_GMPXX ON
 # cd core # cgal core only
 
+# ----- 8 -----
+# cppint
+# ET: typedef Quotient<boost::multiprecision::cpp_rational> Type;
+# CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_RATIONAL=1
+# CGAL_DISABLE_GMP ON
+# CGAL_DISABLE_GMPXX ON
+# cd core # cgal core only
+
 echo " "
 echo "NEF BENCHMARKS"
 
@@ -91,6 +99,8 @@ cd ../boost-mp-without-gmp
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
 # cd ../cppint
+# ./bench $NEFTYPE $N
+# cd ../cpprational
 # ./bench $NEFTYPE $N
 
 # echo " "
@@ -110,6 +120,8 @@ cd ../boost-mp-without-gmp
 # ./bench $PMPTYPE $N
 # cd ../cppint
 # ./bench $PMPTYPE $N
+# cd ../cpprational
+# ./bench $PMPTYPE $N
 
 # echo " "
 # echo "ARR BENCHMARKS"
@@ -127,6 +139,8 @@ cd ../boost-mp-without-gmp
 # cd ../core
 # ./bench $ARRTYPE $N
 # cd ../cppint
+# ./bench $ARRTYPE $N
+# cd ../cpprational
 # ./bench $ARRTYPE $N
 
 echo " "
