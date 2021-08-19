@@ -11,6 +11,7 @@
 // Kernels.
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
+#include <CGAL/Simple_homogeneous.h>
 
 // CGAL.
 #include <CGAL/Surface_mesh.h>
@@ -26,17 +27,20 @@
 #include <CGAL/Counting_iterator.h>
 #include <CGAL/function_objects.h>
 #include <CGAL/Exact_rational.h>
+#include <CGAL/Exact_integer.h>
 #include <CGAL/Lazy_exact_nt.h>
 #include <CGAL/Real_timer.h>
 
 using Timer = CGAL::Real_timer;
 using ET    = CGAL::Exact_rational;
+using EI    = CGAL::Exact_integer;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
 using SCKER = CGAL::Simple_cartesian<ET>;
 using LAZY1 = CGAL::Simple_cartesian< CGAL::Lazy_exact_nt<ET> >;
 using LAZY2 = CGAL::Filtered_kernel<LAZY1>; // basically the same as EPECK
 using LAZY3 = CGAL::Lazy_kernel<SCKER>;     // basically the same as LAZY2
 using LAZY4 = CGAL::Simple_cartesian< CGAL::Interval_nt<false> >; // pure interval
+using HOMOG = CGAL::Simple_homogeneous<EI>; // works for nef, but only for the intersection part, not for IO
 
 #ifndef CGAL_DONT_USE_LAZY_KERNEL
 namespace PMP = CGAL::Polygon_mesh_processing;
@@ -131,6 +135,10 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
 
   std::cout << "* CHOSEN EXACT RATIONAL TYPE:" << std::endl;
   std::cout << boost::typeindex::type_id<ET>() << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
+  std::cout << boost::typeindex::type_id<EI>() << std::endl;
   std::cout << std::endl;
 }
 
@@ -346,6 +354,8 @@ double run_arr_bench(
   return avg_time;
 }
 
+// Works only with kernels indicated here:
+// https://doc.cgal.org/latest/Nef_3/classCGAL_1_1Nef__polyhedron__3.html
 template<typename Kernel>
 void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
 
@@ -405,6 +415,7 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
+// Not very representative because they do not really use EPECK internally!
 template<typename Kernel>
 void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
 
