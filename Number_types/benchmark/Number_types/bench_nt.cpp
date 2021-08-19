@@ -18,7 +18,9 @@
 #include <CGAL/point_generators_2.h>
 #include <CGAL/Join_input_iterator.h>
 #include <CGAL/IO/Nef_polyhedron_iostream_3.h>
+#ifndef CGAL_DONT_USE_LAZY_KERNEL
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
+#endif
 #include <CGAL/Surface_sweep_2_algorithms.h>
 #include <CGAL/Arr_segment_traits_2.h>
 #include <CGAL/Counting_iterator.h>
@@ -31,10 +33,15 @@ using Timer = CGAL::Real_timer;
 using ET    = CGAL::Exact_rational;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
 using SCKER = CGAL::Simple_cartesian<ET>;
-using LAZY  = CGAL::Simple_cartesian< CGAL::Lazy_exact_nt<ET> >;
+using LAZY1 = CGAL::Simple_cartesian< CGAL::Lazy_exact_nt<ET> >;
+using LAZY2 = CGAL::Filtered_kernel<LAZY1>; // basically the same as EPECK
+using LAZY3 = CGAL::Lazy_kernel<SCKER>;     // basically the same as LAZY2
+using LAZY4 = CGAL::Simple_cartesian< CGAL::Interval_nt<false> >; // pure interval
 
+#ifndef CGAL_DONT_USE_LAZY_KERNEL
 namespace PMP = CGAL::Polygon_mesh_processing;
 namespace params = CGAL::Polygon_mesh_processing::parameters;
+#endif
 
 enum class BENCH_TYPE {
   ALL = 0,
@@ -51,6 +58,12 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
     std::cout << "- Number of iterations N: " << num_iters << std::endl;
     std::cout << "- Kernel: " << boost::typeindex::type_id<Kernel>() << std::endl;
     std::cout << std::endl;
+
+    #if defined(CGAL_DONT_USE_LAZY_KERNEL)
+      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: false" << std::endl;
+    #endif
 
     #if defined(CGAL_DISABLE_GMP)
       std::cout << "- CGAL_DISABLE_GMP: true" << std::endl;
@@ -265,6 +278,7 @@ double run_pmp_bench(
     timer.start();
 
     // Running pmp.
+    #ifndef CGAL_DONT_USE_LAZY_KERNEL
     Polygon_mesh out_union, out_intersection;
     std::array<boost::optional<Polygon_mesh*>, 4> output;
     output[PMP::Corefinement::UNION] = &out_union;
@@ -280,6 +294,7 @@ double run_pmp_bench(
         params::all_default(), // named parameters for mesh1-mesh2 not used
         params::all_default()) // named parameters for mesh2-mesh1 not used)
     );
+    #endif
 
     timer.stop();
     avg_time += timer.time();
@@ -463,9 +478,18 @@ int main(int argc, char* argv[]) {
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
 
   // Choose a kernel.
-  // using Kernel = SCKER; // pure arithmetic
-  using Kernel = EPECK; // full support, real use case
-  // using Kernel = LAZY;  // lazy evaluation
+  // using Kernel = SCKER; // pure arithmetic, works for nef and arr
+  using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
+
+  // using Kernel = LAZY1; // lazy evaluation 1, works for nef and arr
+  // using Kernel = LAZY2; // = EPECK, lazy evaluation 2, fails for nef and works for arr
+  // using Kernel = LAZY3; // = EPECK, lazy evaluation 3, fails for nef and works for arr
+  // using Kernel = LAZY4; // lazy evaluation 4, fails for nef and arr
+
+  // Print only for filtered kernels.
+  // std::cout << "- EK: " << boost::typeindex::type_id<typename Kernel::Exact_kernel>() << std::endl;
+  // std::cout << "- IK: " << boost::typeindex::type_id<typename Kernel::Approximate_kernel>() << std::endl;
+  // std::cout << std::endl;
 
   print_parameters<Kernel>(num_iters, verbose);
   auto bench_type = BENCH_TYPE::ALL;
