@@ -12,7 +12,7 @@ N=10 # number of iterations
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
 # with different configurations (see below) called as below:
-# gmp-all, gmp-without-xx, leda, boost-mp-without-gmpxx, boost-mp-without-gmp, core, cppint, cpprational.
+# gmp-all, gmp-without-xx, boost-mp-without-gmpxx, boost-mp-without-gmp, leda, core, cppint, cpprational.
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
 # EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
@@ -31,6 +31,19 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd gmp-without-xx # gmp without boost mp and gmpxx
 
 # ----- 3 -----
+# boost-mp-without-gmpxx
+# ET: typedef boost::multiprecision::mpq_rational Type;
+# CGAL_DISABLE_GMPXX ON
+# cd boost-mp-without-gmpxx # gmp without gmpxx but with boost mp
+
+# ----- 4 -----
+# boost-mp-without-gmp
+# ET: typedef BOOST_cpp_arithmetic_kernel::Rational Type;
+# CGAL_DISABLE_GMP ON
+# CGAL_DISABLE_GMPXX ON
+# cd boost-mp-without-gmp # boost mp without gmp
+
+# ----- 5 -----
 # leda
 # ET: typedef leda_rational Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
@@ -45,19 +58,6 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # LEDA_LIBRARY_RELEASE: /Users/monet/Documents/third-party/leda/leda-release/libleda_numbers.dylib
 # LEDA_LINKER_FLAGS: -L/opt/X11/lib -lX11 -lpthread
 # cd leda # leda
-
-# ----- 4 -----
-# boost-mp-without-gmpxx
-# ET: typedef boost::multiprecision::mpq_rational Type;
-# CGAL_DISABLE_GMPXX ON
-# cd boost-mp-without-gmpxx # gmp without gmpxx but with boost mp
-
-# ----- 5 -----
-# boost-mp-without-gmp
-# ET: typedef BOOST_cpp_arithmetic_kernel::Rational Type;
-# CGAL_DISABLE_GMP ON
-# CGAL_DISABLE_GMPXX ON
-# cd boost-mp-without-gmp # boost mp without gmp
 
 # ----- 6 -----
 # core
@@ -84,23 +84,44 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd core # cgal core only
 
 echo " "
+echo "MAKE ALL"
+
+cd ../gmp-all
+make
+cd ../gmp-without-xx
+make
+cd ../boost-mp-without-gmpxx
+make
+cd ../boost-mp-without-gmp
+make
+cd ../leda
+make
+cd ../core
+make
+cd ../cppint
+make
+cd ../cpprational
+make
+
+echo " "
 echo "NEF BENCHMARKS"
 
 cd ../gmp-all
 ./bench $NEFTYPE $N
 cd ../gmp-without-xx
 ./bench $NEFTYPE $N
-# cd ../leda # very slow
-# ./bench $NEFTYPE $N
 cd ../boost-mp-without-gmpxx
 ./bench $NEFTYPE $N
 cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
+
+# cd ../leda # very slow
+# ./bench $NEFTYPE $N
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
-# cd ../cppint # fails
+# cd ../cppint # fails / very slow
 # ./bench $NEFTYPE $N
-# cd ../cpprational # slow? fails?
+# cd ../cpprational # fails / very slow
 # ./bench $NEFTYPE $N
 
 # echo " "
@@ -110,11 +131,11 @@ cd ../boost-mp-without-gmp
 # ./bench $PMPTYPE $N
 # cd ../gmp-without-xx
 # ./bench $PMPTYPE $N
-# cd ../leda
-# ./bench $PMPTYPE $N
 # cd ../boost-mp-without-gmpxx
 # ./bench $PMPTYPE $N
 # cd ../boost-mp-without-gmp
+# ./bench $PMPTYPE $N
+# cd ../leda
 # ./bench $PMPTYPE $N
 # cd ../core
 # ./bench $PMPTYPE $N
@@ -123,18 +144,18 @@ cd ../boost-mp-without-gmp
 # cd ../cpprational
 # ./bench $PMPTYPE $N
 
-# echo " "
-# echo "ARR BENCHMARKS"
+echo " "
+echo "ARR BENCHMARKS"
 
 cd ../gmp-all
 ./bench $ARRTYPE $N
 cd ../gmp-without-xx
 ./bench $ARRTYPE $N
-cd ../leda
-./bench $ARRTYPE $N
 cd ../boost-mp-without-gmpxx
 ./bench $ARRTYPE $N
 cd ../boost-mp-without-gmp
+./bench $ARRTYPE $N
+cd ../leda
 ./bench $ARRTYPE $N
 cd ../core
 ./bench $ARRTYPE $N
