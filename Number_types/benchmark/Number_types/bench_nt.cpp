@@ -24,12 +24,14 @@
 #include <CGAL/Counting_iterator.h>
 #include <CGAL/function_objects.h>
 #include <CGAL/Exact_rational.h>
+#include <CGAL/Lazy_exact_nt.h>
 #include <CGAL/Real_timer.h>
 
 using Timer = CGAL::Real_timer;
 using ET    = CGAL::Exact_rational;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
 using SCKER = CGAL::Simple_cartesian<ET>;
+using LAZY  = CGAL::Simple_cartesian< CGAL::Lazy_exact_nt<ET> >;
 
 namespace PMP = CGAL::Polygon_mesh_processing;
 namespace params = CGAL::Polygon_mesh_processing::parameters;
@@ -336,6 +338,8 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   std::cout << "* benching NEF ..." << std::endl;
 
   // Use it to debug ET types.
+
+  // These work for any type!
   // std::cout << "test1" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-1.off", num_iters, verbose));
   // std::cout << "test2" << std::endl;
@@ -343,14 +347,17 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // std::cout << "test3" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-3.off", num_iters, verbose));
 
-  // They do not work at all!
+  // These do not work for all types including gmp!
   // std::cout << "test4" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-4.off", num_iters, verbose));
   // std::cout << "test5" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-5.off", num_iters, verbose));
 
+  // Always works.
   // std::cout << "test6" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-1.off", num_iters, verbose));
+
+  // Works only with Simple_cartesian.
   // std::cout << "test7" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-2.off", num_iters, verbose));
 
@@ -458,6 +465,7 @@ int main(int argc, char* argv[]) {
   // Choose a kernel.
   // using Kernel = SCKER; // pure arithmetic
   using Kernel = EPECK; // full support, real use case
+  // using Kernel = LAZY;  // lazy evaluation
 
   print_parameters<Kernel>(num_iters, verbose);
   auto bench_type = BENCH_TYPE::ALL;
