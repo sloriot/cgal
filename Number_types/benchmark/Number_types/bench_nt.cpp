@@ -27,20 +27,22 @@
 #include <CGAL/Counting_iterator.h>
 #include <CGAL/function_objects.h>
 #include <CGAL/Exact_rational.h>
-#include <CGAL/Exact_integer.h>
 #include <CGAL/Lazy_exact_nt.h>
 #include <CGAL/Real_timer.h>
 
 using Timer = CGAL::Real_timer;
 using ET    = CGAL::Exact_rational;
-using EI    = CGAL::Exact_integer;
 using EPECK = CGAL::Exact_predicates_exact_constructions_kernel;
 using SCKER = CGAL::Simple_cartesian<ET>;
 using LAZY1 = CGAL::Simple_cartesian< CGAL::Lazy_exact_nt<ET> >;
 using LAZY2 = CGAL::Filtered_kernel<LAZY1>; // basically the same as EPECK
 using LAZY3 = CGAL::Lazy_kernel<SCKER>;     // basically the same as LAZY2
 using LAZY4 = CGAL::Simple_cartesian< CGAL::Interval_nt<false> >; // pure interval
-using HOMOG = CGAL::Simple_homogeneous<EI>; // works for nef, but only for the intersection part, not for IO
+
+// Do not use with core.
+// #include <CGAL/Exact_integer.h>
+// using EI    = CGAL::Exact_integer;
+// using HOMOG = CGAL::Simple_homogeneous<EI>; // works for nef, but only for the intersection part, not for IO
 
 #ifndef CGAL_DONT_USE_LAZY_KERNEL
 namespace PMP = CGAL::Polygon_mesh_processing;
@@ -137,9 +139,9 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
   std::cout << boost::typeindex::type_id<ET>() << std::endl;
   std::cout << std::endl;
 
-  std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
-  std::cout << boost::typeindex::type_id<EI>() << std::endl;
-  std::cout << std::endl;
+  // std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
+  // std::cout << boost::typeindex::type_id<EI>() << std::endl;
+  // std::cout << std::endl;
 }
 
 template<typename Segment_2>
