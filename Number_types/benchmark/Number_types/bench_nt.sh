@@ -57,6 +57,8 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # LEDA_LIBRARIES: /Users/monet/Documents/third-party/leda/leda-release/libleda_numbers.dylib
 # LEDA_LIBRARY_RELEASE: /Users/monet/Documents/third-party/leda/leda-release/libleda_numbers.dylib
 # LEDA_LINKER_FLAGS: -L/opt/X11/lib -lX11 -lpthread
+# Might also require on the arm machine:
+# CMAKE_THREAD_LIBS_INIT: -lpthread
 # cd leda # leda
 
 # ----- 6 -----
@@ -76,7 +78,7 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # cd core # cgal core only
 
 # ----- 8 -----
-# cppint
+# cpprational
 # ET: typedef Quotient<boost::multiprecision::cpp_rational> Type;
 # CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_RATIONAL=1
 # CGAL_DISABLE_GMP ON
