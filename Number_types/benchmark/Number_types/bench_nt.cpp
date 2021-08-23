@@ -367,6 +367,7 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // Use it to debug ET types.
 
   // These work for any type!
+
   // std::cout << "test1" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-1.off", num_iters, verbose));
   // std::cout << "test2" << std::endl;
@@ -375,12 +376,14 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-3.off", num_iters, verbose));
 
   // These do not work for all types including gmp!
+
   // std::cout << "test4" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-4.off", num_iters, verbose));
   // std::cout << "test5" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-5.off", num_iters, verbose));
 
   // Always works.
+
   // std::cout << "test6" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-1.off", num_iters, verbose));
 
@@ -389,11 +392,17 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-2.off", num_iters, verbose));
 
   // Real use cases.
-  // std::cout << "test-real" << std::endl;
 
+  std::cout << "test-real 1" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+
+  std::cout << "test-real 2" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
+
+  std::cout << "test-real 3" << std::endl;
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+
+  std::cout << "test-real 4" << std::endl;
   times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
@@ -476,10 +485,41 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
+int test_minimal_boost_gcd() {
+
+  std::cout.precision(20);
+
+  boost::multiprecision::cpp_int u = 1;
+  for (unsigned i = 1; i <= 50; ++i) {
+    u *= i;
+  }
+  std::cout << "u: " << u << std::endl;
+
+  boost::multiprecision::cpp_int v = 1;
+  for (unsigned i = 1; i <= 100; ++i) {
+    v *= i;
+  }
+  std::cout << "v: " << v << std::endl;
+
+  boost::multiprecision::cpp_int r = boost::multiprecision::gcd(u, v);
+  std::cout << "r: " << r << std::endl;
+
+  u = u / r;
+  v = v / r;
+
+  std::cout << "new u: " << u << std::endl;
+  std::cout << "new v: " << v << std::endl;
+
+  return EXIT_SUCCESS;
+}
+
 int main(int argc, char* argv[]) {
 
-  std::cout.precision(4);
-  std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  // return test_minimal_boost_gcd();
+  std::cout.precision(40);
+
+  // std::cout.precision(4);
+  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
@@ -491,8 +531,8 @@ int main(int argc, char* argv[]) {
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
 
   // Choose a kernel.
-  using Kernel = SCKER; // pure arithmetic, works for nef and arr
-  // using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
+  // using Kernel = SCKER; // pure arithmetic, works for nef and arr
+  using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
 
   // using Kernel = LAZY1; // lazy evaluation 1, works for nef and arr
   // using Kernel = LAZY2; // = EPECK, lazy evaluation 2, fails for nef and works for arr
