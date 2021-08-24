@@ -255,6 +255,11 @@ double run_nef_bench(
     timer.stop();
     avg_time += timer.time();
     timer.reset();
+
+    if (verbose) {
+      std::cout << "- num vertices / faces i = " << k << ": " <<
+      nefC.number_of_vertices() << "/" << nefC.number_of_facets() << std::endl;
+    }
   }
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
@@ -340,6 +345,9 @@ double run_arr_bench(
     avg_time += timer.time();
     timer.reset();
     assert(segments.size() == num_segments);
+    if (verbose) {
+      std::cout << "- size i = " << k << ": " << result.size() << std::endl;
+    }
     result.clear();
   }
   avg_time /= static_cast<double>(num_iters);
