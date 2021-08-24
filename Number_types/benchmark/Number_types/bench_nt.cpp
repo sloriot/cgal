@@ -1,3 +1,5 @@
+int test_minimal_nextafter(const bool);
+
 // STL.
 #include <array>
 #include <fstream>
@@ -396,15 +398,15 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // Real use cases.
 
   // std::cout << "test-real 1" << std::endl;
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
 
-  std::cout << "test-real 2" << std::endl;
+  // std::cout << "test-real 2" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
 
-  std::cout << "test-real 3" << std::endl;
+  // std::cout << "test-real 3" << std::endl;
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
 
-  std::cout << "test-real 4" << std::endl;
+  // std::cout << "test-real 4" << std::endl;
   times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
@@ -515,13 +517,35 @@ int test_minimal_boost_gcd() {
   return EXIT_SUCCESS;
 }
 
+void test_minimal_nextafter() {
+
+  _MM_SET_ROUNDING_MODE(_MM_ROUND_UP);
+  const boost::multiprecision::cpp_int x("1312729512902970206056841780066779136");
+
+  double i = x.template convert_to<double>();
+  double s = i;
+
+  const double inf = std::numeric_limits<double>::infinity();
+  assert(i != inf && s != inf);
+  const int cmp = x.compare(i);
+  if (cmp > 0) {
+    s = nextafter(s, +inf);
+    assert(x.compare(s) < 0);
+  } else if (cmp < 0) {
+    i = nextafter(i, -inf);
+    assert(x.compare(i) > 0);
+  }
+}
+
 int main(int argc, char* argv[]) {
 
-  std::cout.precision(40);
-  // return test_minimal_boost_gcd();
+  // std::cout.precision(20);
 
-  // std::cout.precision(4);
-  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  // return test_minimal_boost_gcd();
+  // test_minimal_nextafter();
+
+  std::cout.precision(4);
+  std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
