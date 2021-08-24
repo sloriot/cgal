@@ -12,7 +12,7 @@ N=10 # number of iterations
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
 # with different configurations (see below) called as below:
-# gmp-all, gmp-without-xx, boost-mp-without-gmpxx, boost-mp-without-gmp, leda, core, cppint, cpprational.
+# gmp-all, gmp-without-xx, boost-mp-without-gmpxx, boost-mp-without-gmp, cppint, core, leda.
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
 # EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
@@ -38,12 +38,28 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 
 # ----- 4 -----
 # boost-mp-without-gmp
-# ET: typedef BOOST_cpp_arithmetic_kernel::Rational Type;
+# ET: typedef boost::multiprecision::cpp_rational Type;
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmp # boost mp without gmp
 
 # ----- 5 -----
+# cppint
+# ET: typedef Quotient<boost::multiprecision::cpp_int> Type;
+# CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_INT=1
+# CGAL_DISABLE_GMP ON
+# CGAL_DISABLE_GMPXX ON
+# cd core # cgal core only
+
+# ----- 6 -----
+# core
+# ET: typedef Quotient<MP_Float> Type;
+# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
+# CGAL_DISABLE_GMP ON
+# CGAL_DISABLE_GMPXX ON
+# cd core # cgal core only
+
+# ----- 7 -----
 # leda
 # ET: typedef leda_rational Type;
 # CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
@@ -61,30 +77,6 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # CMAKE_THREAD_LIBS_INIT: -lpthread
 # cd leda # leda
 
-# ----- 6 -----
-# core
-# ET: typedef Quotient<MP_Float> Type;
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_USE_BOOST_MP=1
-# CGAL_DISABLE_GMP ON
-# CGAL_DISABLE_GMPXX ON
-# cd core # cgal core only
-
-# ----- 7 -----
-# cppint
-# ET: typedef Quotient<boost::multiprecision::cpp_int> Type;
-# CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_INT=1
-# CGAL_DISABLE_GMP ON
-# CGAL_DISABLE_GMPXX ON
-# cd core # cgal core only
-
-# ----- 8 -----
-# cpprational
-# ET: typedef Quotient<boost::multiprecision::cpp_rational> Type;
-# CMAKE_CXX_FLAGS: -DCGAL_USE_CPP_RATIONAL=1
-# CGAL_DISABLE_GMP ON
-# CGAL_DISABLE_GMPXX ON
-# cd core # cgal core only
-
 echo " "
 echo "MAKE ALL"
 
@@ -96,13 +88,11 @@ cd ../boost-mp-without-gmpxx
 make
 cd ../boost-mp-without-gmp
 make
-cd ../leda
+cd ../cppint
 make
 cd ../core
 make
-cd ../cppint
-make
-cd ../cpprational
+cd ../leda
 make
 
 echo " "
@@ -117,13 +107,11 @@ cd ../boost-mp-without-gmpxx
 cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
 
-# cd ../leda # very slow
+# cd ../cppint # fails / very slow
 # ./bench $NEFTYPE $N
 # cd ../core # very slow
 # ./bench $NEFTYPE $N
-# cd ../cppint # fails / very slow
-# ./bench $NEFTYPE $N
-# cd ../cpprational # fails / very slow
+# cd ../leda # very slow
 # ./bench $NEFTYPE $N
 
 # echo " "
@@ -137,13 +125,11 @@ cd ../boost-mp-without-gmp
 # ./bench $PMPTYPE $N
 # cd ../boost-mp-without-gmp
 # ./bench $PMPTYPE $N
-# cd ../leda
+# cd ../cppint
 # ./bench $PMPTYPE $N
 # cd ../core
 # ./bench $PMPTYPE $N
-# cd ../cppint
-# ./bench $PMPTYPE $N
-# cd ../cpprational
+# cd ../leda
 # ./bench $PMPTYPE $N
 
 echo " "
@@ -157,13 +143,11 @@ cd ../boost-mp-without-gmpxx
 ./bench $ARRTYPE $N
 cd ../boost-mp-without-gmp
 ./bench $ARRTYPE $N
-cd ../leda
+cd ../cppint
 ./bench $ARRTYPE $N
 cd ../core
 ./bench $ARRTYPE $N
-cd ../cppint
-./bench $ARRTYPE $N
-cd ../cpprational
+cd ../leda
 ./bench $ARRTYPE $N
 
 echo " "
