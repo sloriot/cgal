@@ -396,15 +396,15 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   // Real use cases.
 
   // std::cout << "test-real 1" << std::endl;
-  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 2" << std::endl;
+  std::cout << "test-real 2" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 3" << std::endl;
+  std::cout << "test-real 3" << std::endl;
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 4" << std::endl;
+  std::cout << "test-real 4" << std::endl;
   times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
@@ -517,11 +517,11 @@ int test_minimal_boost_gcd() {
 
 int main(int argc, char* argv[]) {
 
-  // std::cout.precision(40);
+  std::cout.precision(40);
   // return test_minimal_boost_gcd();
 
-  std::cout.precision(4);
-  std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  // std::cout.precision(4);
+  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
