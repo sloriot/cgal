@@ -182,6 +182,10 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
     std::cout << std::endl;
   }
 
+  std::cout << "* CHOSEN KERNEL:" << std::endl;
+  std::cout << boost::typeindex::type_id<Kernel>() << std::endl;
+  std::cout << std::endl;
+
   std::cout << "* CHOSEN EXACT RATIONAL TYPE:" << std::endl;
   std::cout << boost::typeindex::type_id<ET>() << std::endl;
   std::cout << std::endl;
