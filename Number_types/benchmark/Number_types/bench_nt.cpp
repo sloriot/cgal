@@ -57,8 +57,56 @@ enum class BENCH_TYPE {
   NEF = 1,
   PMP = 2,
   ARR = 3,
-  REG = 4
+  REG = 4,
+  MIX = 5
 };
+
+void test_minimal_boost_gcd() {
+
+  boost::multiprecision::cpp_int u = 1;
+  for (unsigned i = 1; i <= 50; ++i) {
+    u *= i;
+  }
+  std::cout << "u: " << u << std::endl;
+
+  boost::multiprecision::cpp_int v = 1;
+  for (unsigned i = 1; i <= 100; ++i) {
+    v *= i;
+  }
+  std::cout << "v: " << v << std::endl;
+
+  // const auto r = boost::multiprecision::gcd(u, v); // fail
+  const boost::multiprecision::cpp_int r = boost::multiprecision::gcd(u, v); // pass
+  std::cout << "r: " << r << std::endl;
+
+  u = u / r;
+  v = v / r;
+
+  std::cout << "new u: " << u << std::endl;
+  std::cout << "new v: " << v << std::endl;
+}
+
+void test_minimal_nextafter() {
+
+  _MM_SET_ROUNDING_MODE(_MM_ROUND_UP); // fail
+  // _MM_SET_ROUNDING_MODE(_MM_ROUND_NEAREST); // pass
+
+  const boost::multiprecision::cpp_int x("1312729512902970206056841780066779136");
+
+  double i = x.template convert_to<double>();
+  double s = i;
+
+  const double inf = std::numeric_limits<double>::infinity();
+  assert(i != inf && s != inf);
+  const int cmp = x.compare(i);
+  if (cmp > 0) {
+    s = nextafter(s, +inf);
+    assert(x.compare(s) < 0);
+  } else if (cmp < 0) {
+    i = nextafter(i, -inf);
+    assert(x.compare(i) > 0);
+  }
+}
 
 template<typename Kernel>
 void print_parameters(const std::size_t num_iters, const bool verbose) {
@@ -236,7 +284,7 @@ void generate_random_segments_2(
 }
 
 template<typename Kernel>
-void generate_closed_contour_10_edges(
+void generate_test_contour(
   std::vector<typename Kernel::Point_2>& contour, const bool verbose) {
 
   using Point_2 = typename Kernel::Point_2;
@@ -256,7 +304,7 @@ void generate_closed_contour_10_edges(
   assert(contour.size() == 10);
 
   if (verbose) {
-    std::cout << "- closed contour: " << contour.size() << std::endl;
+    std::cout << "- generated contour: " << contour.size() << std::endl;
   }
 }
 
@@ -393,14 +441,14 @@ double run_reg_bench(
 
   using Point_2 = typename Kernel::Point_2;
   using Contour = std::vector<Point_2>;
-  using CD = CGAL::Shape_regularization::Contours::Longest_direction_2<Kernel, Contour>;
+  using Directions = CGAL::Shape_regularization::Contours::Longest_direction_2<Kernel, Contour>;
 
   std::vector<Point_2> contour;
-  if (type == "cl-cont-10") generate_closed_contour_10_edges<Kernel>(contour, verbose);
-  else generate_closed_contour_10_edges<Kernel>(contour, verbose);
-
+  generate_test_contour<Kernel>(contour, verbose);
   assert(contour.size() > 0);
-  CD directions(contour, true);
+
+  Directions open_directions(contour, false);
+  Directions closed_directions(contour, true);
 
   Timer timer;
   double avg_time = 0.0;
@@ -409,9 +457,15 @@ double run_reg_bench(
     timer.start();
 
     // Running reg.
-    CGAL::Shape_regularization::Contours::regularize_closed_contour(
-      contour, directions, std::back_inserter(regularized),
-      CGAL::parameters::all_default());
+    if (type == "op-cont") {
+      CGAL::Shape_regularization::Contours::regularize_open_contour(
+        contour, open_directions, std::back_inserter(regularized),
+        CGAL::parameters::all_default());
+    } else if (type == "cl-cont") {
+      CGAL::Shape_regularization::Contours::regularize_closed_contour(
+        contour, closed_directions, std::back_inserter(regularized),
+        CGAL::parameters::all_default());
+    }
 
     timer.stop();
     avg_time += timer.time();
@@ -564,14 +618,16 @@ void run_all_reg_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching REG ..." << std::endl;
 
-  times.push_back(run_reg_bench<Kernel>("cl-cont-10", num_iters, verbose));
+  times.push_back(run_reg_bench<Kernel>("op-cont", num_iters, verbose));
+  times.push_back(run_reg_bench<Kernel>("cl-cont", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
     std::cout << "! # !! ";
     std::cout << "N !! ";
     std::cout << "ET !! ";
-    std::cout << "closed contour 10 ";
+    std::cout << "open contour !! ";
+    std::cout << "closed contour ";
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
     std::cout << "| #";
@@ -584,50 +640,61 @@ void run_all_reg_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
-void test_minimal_boost_gcd() {
+template<typename Kernel>
+double run_efi_testcase_bench(
+  const std::size_t num_iters, const bool verbose) {
 
-  boost::multiprecision::cpp_int u = 1;
-  for (unsigned i = 1; i <= 50; ++i) {
-    u *= i;
+  Timer timer;
+  double avg_time = 0.0;
+  for (std::size_t k = 0; k < num_iters; ++k) {
+    timer.start();
+
+    // Running code.
+
+
+    timer.stop();
+    avg_time += timer.time();
+    timer.reset();
   }
-  std::cout << "u: " << u << std::endl;
-
-  boost::multiprecision::cpp_int v = 1;
-  for (unsigned i = 1; i <= 100; ++i) {
-    v *= i;
+  avg_time /= static_cast<double>(num_iters);
+  if (verbose) {
+    std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << std::endl;
   }
-  std::cout << "v: " << v << std::endl;
-
-  // const auto r = boost::multiprecision::gcd(u, v); // fail
-  const boost::multiprecision::cpp_int r = boost::multiprecision::gcd(u, v); // pass
-  std::cout << "r: " << r << std::endl;
-
-  u = u / r;
-  v = v / r;
-
-  std::cout << "new u: " << u << std::endl;
-  std::cout << "new v: " << v << std::endl;
+  return avg_time;
 }
 
-void test_minimal_nextafter() {
+template<typename Kernel>
+double run_mix_bench(
+  const std::string type, const std::size_t num_iters, const bool verbose) {
 
-  _MM_SET_ROUNDING_MODE(_MM_ROUND_UP); // fail
-  // _MM_SET_ROUNDING_MODE(_MM_ROUND_NEAREST); // pass
+  if (type == "efi-testcase") return run_efi_testcase_bench<Kernel>(num_iters, verbose);
+  else return run_efi_testcase_bench<Kernel>(num_iters, verbose);
+}
 
-  const boost::multiprecision::cpp_int x("1312729512902970206056841780066779136");
+template<typename Kernel>
+void run_all_mix_benches(const std::size_t num_iters, const bool verbose) {
 
-  double i = x.template convert_to<double>();
-  double s = i;
+  std::vector<double> times;
+  std::cout << "* benching MIX ..." << std::endl;
 
-  const double inf = std::numeric_limits<double>::infinity();
-  assert(i != inf && s != inf);
-  const int cmp = x.compare(i);
-  if (cmp > 0) {
-    s = nextafter(s, +inf);
-    assert(x.compare(s) < 0);
-  } else if (cmp < 0) {
-    i = nextafter(i, -inf);
-    assert(x.compare(i) > 0);
+  times.push_back(run_mix_bench<Kernel>("efi-testcase", num_iters, verbose));
+
+  if (!verbose) {
+    std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "! # !! ";
+    std::cout << "N !! ";
+    std::cout << "ET !! ";
+    std::cout << "efi testcase ";
+    std::cout << std::endl;
+    std::cout << "|-" << std::endl;
+    std::cout << "| #";
+    std::cout << " || " << num_iters;
+    std::cout << " || " << boost::typeindex::type_id<ET>();
+    for (std::size_t k = 0; k < times.size(); ++k) {
+      std::cout << " || " << times[k];
+    }
+    std::cout << std::endl << "|}" << std::endl;
   }
 }
 
@@ -670,6 +737,7 @@ int main(int argc, char* argv[]) {
   else if (btype == "pmp") bench_type = BENCH_TYPE::PMP;
   else if (btype == "arr") bench_type = BENCH_TYPE::ARR;
   else if (btype == "reg") bench_type = BENCH_TYPE::REG;
+  else if (btype == "mix") bench_type = BENCH_TYPE::MIX;
 
   // Bench.
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::NEF) {
@@ -684,6 +752,8 @@ int main(int argc, char* argv[]) {
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::REG) {
     run_all_reg_benches<Kernel>(num_iters, verbose);
   }
-
+  if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::MIX) {
+    run_all_mix_benches<Kernel>(num_iters, verbose);
+  }
   return EXIT_SUCCESS;
 }
