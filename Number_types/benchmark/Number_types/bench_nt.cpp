@@ -489,9 +489,7 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
-int test_minimal_boost_gcd() {
-
-  std::cout.precision(20);
+void test_minimal_boost_gcd() {
 
   boost::multiprecision::cpp_int u = 1;
   for (unsigned i = 1; i <= 50; ++i) {
@@ -505,7 +503,8 @@ int test_minimal_boost_gcd() {
   }
   std::cout << "v: " << v << std::endl;
 
-  boost::multiprecision::cpp_int r = boost::multiprecision::gcd(u, v);
+  // const auto r = boost::multiprecision::gcd(u, v); // fail
+  const boost::multiprecision::cpp_int r = boost::multiprecision::gcd(u, v); // pass
   std::cout << "r: " << r << std::endl;
 
   u = u / r;
@@ -513,13 +512,13 @@ int test_minimal_boost_gcd() {
 
   std::cout << "new u: " << u << std::endl;
   std::cout << "new v: " << v << std::endl;
-
-  return EXIT_SUCCESS;
 }
 
 void test_minimal_nextafter() {
 
-  _MM_SET_ROUNDING_MODE(_MM_ROUND_UP);
+  _MM_SET_ROUNDING_MODE(_MM_ROUND_UP); // fail
+  // _MM_SET_ROUNDING_MODE(_MM_ROUND_NEAREST); // pass
+
   const boost::multiprecision::cpp_int x("1312729512902970206056841780066779136");
 
   double i = x.template convert_to<double>();
@@ -541,7 +540,7 @@ int main(int argc, char* argv[]) {
 
   // std::cout.precision(20);
 
-  // return test_minimal_boost_gcd();
+  // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
   std::cout.precision(4);
