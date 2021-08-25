@@ -2,6 +2,7 @@ int test_minimal_nextafter(const bool);
 
 // STL.
 #include <array>
+#include <limits>
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -322,6 +323,8 @@ double run_nef_bench(
 
   Timer timer;
   double avg_time = 0.0;
+  double min_time = std::numeric_limits<double>::max();
+  double max_time = -min_time;
   for (std::size_t k = 0; k < num_iters; ++k) {
     timer.start();
 
@@ -331,6 +334,8 @@ double run_nef_bench(
 
     timer.stop();
     avg_time += timer.time();
+    min_time = std::min(min_time, timer.time());
+    max_time = std::max(max_time, timer.time());
     timer.reset();
 
     if (verbose) {
@@ -341,6 +346,9 @@ double run_nef_bench(
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
     std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << "- min time: " << min_time << " sec." << std::endl;
+    std::cout << "- max time: " << max_time << " sec." << std::endl;
+    std::cout << "- spread  : " << max_time - min_time << " sec." << std::endl;
     std::cout << std::endl;
   }
   return avg_time;
@@ -359,6 +367,8 @@ double run_pmp_bench(
 
   Timer timer;
   double avg_time = 0.0;
+  double min_time = std::numeric_limits<double>::max();
+  double max_time = -min_time;
   for (std::size_t k = 0; k < num_iters; ++k) {
     AA = A; BB = B;
     timer.start();
@@ -384,11 +394,16 @@ double run_pmp_bench(
 
     timer.stop();
     avg_time += timer.time();
+    min_time = std::min(min_time, timer.time());
+    max_time = std::max(max_time, timer.time());
     timer.reset();
   }
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
     std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << "- min time: " << min_time << " sec." << std::endl;
+    std::cout << "- max time: " << max_time << " sec." << std::endl;
+    std::cout << "- spread  : " << max_time - min_time << " sec." << std::endl;
     std::cout << std::endl;
   }
   return avg_time;
@@ -410,6 +425,8 @@ double run_arr_bench(
 
   Timer timer;
   double avg_time = 0.0;
+  double min_time = std::numeric_limits<double>::max();
+  double max_time = -min_time;
   std::vector<Point_2> result;
   for (std::size_t k = 0; k < num_iters; ++k) {
     timer.start();
@@ -420,6 +437,8 @@ double run_arr_bench(
 
     timer.stop();
     avg_time += timer.time();
+    min_time = std::min(min_time, timer.time());
+    max_time = std::max(max_time, timer.time());
     timer.reset();
     assert(segments.size() == num_segments);
     if (verbose) {
@@ -430,6 +449,9 @@ double run_arr_bench(
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
     std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << "- min time: " << min_time << " sec." << std::endl;
+    std::cout << "- max time: " << max_time << " sec." << std::endl;
+    std::cout << "- spread  : " << max_time - min_time << " sec." << std::endl;
     std::cout << std::endl;
   }
   return avg_time;
@@ -452,6 +474,8 @@ double run_reg_bench(
 
   Timer timer;
   double avg_time = 0.0;
+  double min_time = std::numeric_limits<double>::max();
+  double max_time = -min_time;
   std::vector<Point_2> regularized;
   for (std::size_t k = 0; k < num_iters; ++k) {
     timer.start();
@@ -469,6 +493,8 @@ double run_reg_bench(
 
     timer.stop();
     avg_time += timer.time();
+    min_time = std::min(min_time, timer.time());
+    max_time = std::max(max_time, timer.time());
     timer.reset();
     if (verbose) {
       std::cout << "- size i = " << k << ": " << regularized.size() << std::endl;
@@ -478,6 +504,9 @@ double run_reg_bench(
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
     std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << "- min time: " << min_time << " sec." << std::endl;
+    std::cout << "- max time: " << max_time << " sec." << std::endl;
+    std::cout << "- spread  : " << max_time - min_time << " sec." << std::endl;
     std::cout << std::endl;
   }
   return avg_time;
