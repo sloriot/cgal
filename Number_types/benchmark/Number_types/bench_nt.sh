@@ -4,7 +4,6 @@
 # PARAMETERS:
 
 NEFTYPE="nef" # nef benches
-PMPTYPE="pmp" # polygon mesh processing benches
 ARRTYPE="arr" # arrangment benches
 
 N=10 # number of iterations
@@ -113,24 +112,6 @@ cd ../boost-mp-without-gmp
 # ./bench $NEFTYPE $N
 # cd ../leda # very slow
 # ./bench $NEFTYPE $N
-
-# echo " "
-# echo "PMP BENCHMARKS" # not representative
-
-# cd ../gmp-all
-# ./bench $PMPTYPE $N
-# cd ../gmp-without-xx
-# ./bench $PMPTYPE $N
-# cd ../boost-mp-without-gmpxx
-# ./bench $PMPTYPE $N
-# cd ../boost-mp-without-gmp
-# ./bench $PMPTYPE $N
-# cd ../cppint
-# ./bench $PMPTYPE $N
-# cd ../core
-# ./bench $PMPTYPE $N
-# cd ../leda
-# ./bench $PMPTYPE $N
 
 echo " "
 echo "ARR BENCHMARKS"

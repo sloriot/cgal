@@ -24,6 +24,7 @@ int test_minimal_nextafter(const bool);
 #ifndef CGAL_DONT_USE_LAZY_KERNEL
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
 #endif
+#include <CGAL/Shape_regularization/regularize_contours.h>
 #include <CGAL/Surface_sweep_2_algorithms.h>
 #include <CGAL/Arr_segment_traits_2.h>
 #include <CGAL/Counting_iterator.h>
@@ -55,7 +56,8 @@ enum class BENCH_TYPE {
   ALL = 0,
   NEF = 1,
   PMP = 2,
-  ARR = 3
+  ARR = 3,
+  REG = 4
 };
 
 template<typename Kernel>
@@ -234,6 +236,31 @@ void generate_random_segments_2(
 }
 
 template<typename Kernel>
+void generate_closed_contour_10_edges(
+  std::vector<typename Kernel::Point_2>& contour, const bool verbose) {
+
+  using Point_2 = typename Kernel::Point_2;
+  contour.clear();
+  contour = {
+    Point_2(0.0, 0.0),
+    Point_2(4.0, 0.0),
+    Point_2(3.815571, 1.503828),
+    Point_2(4.518233, 1.605529),
+    Point_2(4.0, 2.5),
+    Point_2(4.305586, 2.992361),
+    Point_2(4.305586, 3.990881),
+    Point_2(2.0, 3.5),
+    Point_2(0.0, 4.0),
+    Point_2(0.182071, 0.505309),
+  };
+  assert(contour.size() == 10);
+
+  if (verbose) {
+    std::cout << "- closed contour: " << contour.size() << std::endl;
+  }
+}
+
+template<typename Kernel>
 double run_nef_bench(
   const std::string filename1, const std::string filename2,
   const std::size_t num_iters, const bool verbose) {
@@ -351,6 +378,48 @@ double run_arr_bench(
       std::cout << "- size i = " << k << ": " << result.size() << std::endl;
     }
     result.clear();
+  }
+  avg_time /= static_cast<double>(num_iters);
+  if (verbose) {
+    std::cout << "- avg time: " << avg_time << " sec." << std::endl;
+    std::cout << std::endl;
+  }
+  return avg_time;
+}
+
+template<typename Kernel>
+double run_reg_bench(
+  const std::string type, const std::size_t num_iters, const bool verbose) {
+
+  using Point_2 = typename Kernel::Point_2;
+  using Contour = std::vector<Point_2>;
+  using CD = CGAL::Shape_regularization::Contours::Longest_direction_2<Kernel, Contour>;
+
+  std::vector<Point_2> contour;
+  if (type == "cl-cont-10") generate_closed_contour_10_edges<Kernel>(contour, verbose);
+  else generate_closed_contour_10_edges<Kernel>(contour, verbose);
+
+  assert(contour.size() > 0);
+  CD directions(contour, true);
+
+  Timer timer;
+  double avg_time = 0.0;
+  std::vector<Point_2> regularized;
+  for (std::size_t k = 0; k < num_iters; ++k) {
+    timer.start();
+
+    // Running reg.
+    CGAL::Shape_regularization::Contours::regularize_closed_contour(
+      contour, directions, std::back_inserter(regularized),
+      CGAL::parameters::all_default());
+
+    timer.stop();
+    avg_time += timer.time();
+    timer.reset();
+    if (verbose) {
+      std::cout << "- size i = " << k << ": " << regularized.size() << std::endl;
+    }
+    regularized.clear();
   }
   avg_time /= static_cast<double>(num_iters);
   if (verbose) {
@@ -489,6 +558,32 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
+template<typename Kernel>
+void run_all_reg_benches(const std::size_t num_iters, const bool verbose) {
+
+  std::vector<double> times;
+  std::cout << "* benching REG ..." << std::endl;
+
+  times.push_back(run_reg_bench<Kernel>("cl-cont-10", num_iters, verbose));
+
+  if (!verbose) {
+    std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
+    std::cout << "! # !! ";
+    std::cout << "N !! ";
+    std::cout << "ET !! ";
+    std::cout << "closed contour 10 ";
+    std::cout << std::endl;
+    std::cout << "|-" << std::endl;
+    std::cout << "| #";
+    std::cout << " || " << num_iters;
+    std::cout << " || " << boost::typeindex::type_id<ET>();
+    for (std::size_t k = 0; k < times.size(); ++k) {
+      std::cout << " || " << times[k];
+    }
+    std::cout << std::endl << "|}" << std::endl;
+  }
+}
+
 void test_minimal_boost_gcd() {
 
   boost::multiprecision::cpp_int u = 1;
@@ -574,6 +669,7 @@ int main(int argc, char* argv[]) {
   if (btype == "nef") bench_type = BENCH_TYPE::NEF;
   else if (btype == "pmp") bench_type = BENCH_TYPE::PMP;
   else if (btype == "arr") bench_type = BENCH_TYPE::ARR;
+  else if (btype == "reg") bench_type = BENCH_TYPE::REG;
 
   // Bench.
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::NEF) {
@@ -584,6 +680,9 @@ int main(int argc, char* argv[]) {
   }
   if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::ARR) {
     run_all_arr_benches<Kernel>(num_iters, verbose);
+  }
+  if (bench_type == BENCH_TYPE::ALL || bench_type == BENCH_TYPE::REG) {
+    run_all_reg_benches<Kernel>(num_iters, verbose);
   }
 
   return EXIT_SUCCESS;
