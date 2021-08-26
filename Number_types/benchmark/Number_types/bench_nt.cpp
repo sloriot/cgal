@@ -109,6 +109,12 @@ void test_minimal_nextafter() {
   }
 }
 
+void test_to_interval_tight() {
+
+  std::cout << "- testing tight interval ..." << std::endl;
+  CGAL_assertion_msg(false, "TODO: FINISH TESTING TIGHT INTERVAL!");
+}
+
 template<typename Kernel>
 void print_parameters(const std::size_t num_iters, const bool verbose) {
 
@@ -473,8 +479,8 @@ double run_reg_bench(
   generate_test_contour<Kernel>(contour, verbose);
   assert(contour.size() > 0);
 
-  Directions open_directions(contour, false);
   Directions closed_directions(contour, true);
+  Directions open_directions(contour, false);
 
   Timer timer;
   double avg_time = 0.0;
@@ -485,13 +491,13 @@ double run_reg_bench(
     timer.start();
 
     // Running reg.
-    if (type == "op-cont") {
-      CGAL::Shape_regularization::Contours::regularize_open_contour(
-        contour, open_directions, std::back_inserter(regularized),
-        CGAL::parameters::all_default());
-    } else if (type == "cl-cont") {
+    if (type == "cl-cont") {
       CGAL::Shape_regularization::Contours::regularize_closed_contour(
         contour, closed_directions, std::back_inserter(regularized),
+        CGAL::parameters::all_default());
+    } else if (type == "op-cont") {
+      CGAL::Shape_regularization::Contours::regularize_open_contour(
+        contour, open_directions, std::back_inserter(regularized),
         CGAL::parameters::all_default());
     }
 
@@ -651,16 +657,16 @@ void run_all_reg_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching REG ..." << std::endl;
 
-  times.push_back(run_reg_bench<Kernel>("op-cont", num_iters, verbose));
   times.push_back(run_reg_bench<Kernel>("cl-cont", num_iters, verbose));
+  times.push_back(run_reg_bench<Kernel>("op-cont", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
     std::cout << "! # !! ";
     std::cout << "N !! ";
     std::cout << "ET !! ";
-    std::cout << "open contour !! ";
-    std::cout << "closed contour ";
+    std::cout << "closed contour !! ";
+    std::cout << "open contour ";
     std::cout << std::endl;
     std::cout << "|-" << std::endl;
     std::cout << "| #";
@@ -733,13 +739,16 @@ void run_all_mix_benches(const std::size_t num_iters, const bool verbose) {
 
 int main(int argc, char* argv[]) {
 
-  // std::cout.precision(20);
+  std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  std::cout.precision(4);
-  std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  test_to_interval_tight();
+  return EXIT_SUCCESS;
+
+  // std::cout.precision(4);
+  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
