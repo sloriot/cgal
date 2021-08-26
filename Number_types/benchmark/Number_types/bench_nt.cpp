@@ -17,6 +17,7 @@ int test_minimal_nextafter(const bool);
 #include <CGAL/Simple_homogeneous.h>
 
 // CGAL.
+#include <CGAL/Quotient.h>
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Nef_polyhedron_3.h>
 #include <CGAL/point_generators_2.h>
@@ -111,8 +112,67 @@ void test_minimal_nextafter() {
 
 void test_to_interval_tight() {
 
+  using NT = boost::multiprecision::cpp_int;
+  using Quotient = CGAL::Quotient<NT>;
+  using Traits = CGAL::Real_embeddable_traits<Quotient>;
+  using Interval = typename Traits::To_interval;
+
+  // std::cout << std::endl;
+  // std::cout << boost::typeindex::type_id<Quotient>() << std::endl;
+  // std::cout << std::endl;
+  // std::cout << boost::typeindex::type_id<typename Traits::Type>() << std::endl;
+  // std::cout << std::endl;
+
+  NT n, d;
+  Quotient x;
+  double i, s;
+
+  std::cout << std::endl;
   std::cout << "- testing tight interval ..." << std::endl;
-  CGAL_assertion_msg(false, "TODO: FINISH TESTING TIGHT INTERVAL!");
+
+  // SOFT CASE.
+
+  n = NT("39792587355159975");
+  d = NT("140737488355328");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "SOFT RESULT:" << std::endl;
+  // std::cout << "x: " << x << std::endl;
+  // std::cout << "n: " << x.num << std::endl;
+  // std::cout << "d: " << x.den << std::endl;
+  std::cout << "inf2: " << i << std::endl;
+  std::cout << "ref2: 282.7433388230813307" << std::endl;
+  std::cout << "sup2: " << s << std::endl;
+  std::cout << "ref2: 282.74333882308138755" << std::endl;
+  std::cout << std::endl;
+
+  // Results for current tight using master to_interval().
+  assert(i == 282.7433388230813307);
+  assert(s == 282.74333882308138755);
+
+  // HARD CASE.
+
+  n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+  d = NT("82634630175374856683315372867724319098240552701588533218371381248009342768269285501674184091886435054368116496214846441734481770666205690731018817430937185570378353100803926136323598244976110318516454816403989543192819758059431171537258117598056453283568595627159988837663160716950017789671313834717457946818990093589809113731838629064768225280");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "HARD RESULT:" << std::endl;
+  // std::cout << "x: " << x << std::endl;
+  // std::cout << "n: " << x.num << std::endl;
+  // std::cout << "d: " << x.den << std::endl;
+  std::cout << "inf1: " << i << std::endl;
+  std::cout << "ref1: 9.3488310472396563" << std::endl;
+  std::cout << "sup1: " << s << std::endl;
+  std::cout << "ref1: 9.3488310472396580764" << std::endl;
+  std::cout << std::endl;
+
+  // Results for current tight using cpp_rational.
+  assert(i == 9.3488310472396563);
+  assert(s == 9.3488310472396580764);
 }
 
 template<typename Kernel>
