@@ -799,29 +799,29 @@ void run_all_mix_benches(const std::size_t num_iters, const bool verbose) {
 
 int main(int argc, char* argv[]) {
 
-  std::cout.precision(20);
+  // std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  test_to_interval_tight();
-  return EXIT_SUCCESS;
+  // test_to_interval_tight();
+  // return EXIT_SUCCESS;
 
-  // std::cout.precision(4);
-  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  std::cout.precision(4);
+  std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
   std::cout << std::endl;
 
   // Parameters.
-  const bool verbose = false; // do we print extra info
+  const bool verbose = true; // do we print extra info
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
 
   // Choose a kernel.
-  // using Kernel = SCKER; // pure arithmetic, works for nef and arr
-  using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
+  using Kernel = SCKER; // pure arithmetic, works for nef and arr
+  // using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
 
   // using Kernel = LAZY1; // lazy evaluation 1, works for nef and arr
   // using Kernel = LAZY2; // = EPECK, lazy evaluation 2, fails for nef and works for arr
