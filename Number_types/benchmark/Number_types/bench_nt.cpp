@@ -110,6 +110,7 @@ void test_minimal_nextafter() {
   }
 }
 
+#if defined(CGAL_USE_CPP_INT)
 void test_to_interval_tight() {
 
   using NT = boost::multiprecision::cpp_int;
@@ -174,6 +175,7 @@ void test_to_interval_tight() {
   assert(i == 9.3488310472396563);
   assert(s == 9.3488310472396580764);
 }
+#endif
 
 template<typename Kernel>
 void print_parameters(const std::size_t num_iters, const bool verbose) {
