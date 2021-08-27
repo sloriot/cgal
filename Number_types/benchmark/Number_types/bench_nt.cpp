@@ -114,6 +114,17 @@ void test_minimal_nextafter() {
 #if defined(CGAL_USE_CPP_INT)
 void test_to_interval_tight() {
 
+  #define TESTCASE0 // pass both
+  #define TESTCASE1 // pass both
+  #define TESTCASE2 // fails for gmpzf
+  #define TESTCASE3 // fails for gmpzf
+  #define TESTCASE4 // pass both
+  #define TESTCASE5 // fails for gmpzf
+  #define TESTCASE6 // pass both
+  #define TESTCASE7 // pass both
+  #define TESTCASE8 // fails for gmpzf
+  #define TESTCASE9 // pass both
+
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
   using Traits = CGAL::Real_embeddable_traits<Quotient>;
@@ -133,10 +144,10 @@ void test_to_interval_tight() {
   std::cout << "- testing tight interval ..." << std::endl;
   std::cout << std::endl;
 
-  #if true // small numbers
+  #ifdef TESTCASE0 // small numbers
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE1 RESULT:" << std::endl;
+  std::cout << "CASE0 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("39792587355159975");
@@ -157,10 +168,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // large numbers
+  #ifdef TESTCASE1 // large numbers
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE2 RESULT:" << std::endl;
+  std::cout << "CASE1 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
@@ -181,10 +192,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // returns [inf, inf], num >> den, shift < 0
+  #ifdef TESTCASE2 // returns [inf, inf], num >> den, shift < 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE3 RESULT:" << std::endl;
+  std::cout << "CASE2 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
@@ -204,10 +215,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [0.0, 0.0], num << den, shift > 0
+  #ifdef TESTCASE3 // return [0.0, 0.0], num << den, shift > 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE4 RESULT:" << std::endl;
+  std::cout << "CASE3 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("1");
@@ -227,10 +238,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [1.0, 1.0], num = den, shift = 53, r = 0
+  #ifdef TESTCASE4 // return [1.0, 1.0], num = den, shift = 53, r = 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE5 RESULT:" << std::endl;
+  std::cout << "CASE4 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("10");
@@ -250,10 +261,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [0.16.., 0.16..]
+  #ifdef TESTCASE5 // return [0.16.., 0.16..]
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE6 RESULT:" << std::endl;
+  std::cout << "CASE5 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = NT("1");
@@ -273,10 +284,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [2.0, 2.0], r = 0, num > 0 and den > 0
+  #ifdef TESTCASE6 // return [2.0, 2.0], r = 0, num > 0 and den > 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE7 RESULT:" << std::endl;
+  std::cout << "CASE6 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = +NT("6");
@@ -296,10 +307,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [0.5, 0.5], num < 0 and den < 0
+  #ifdef TESTCASE7 // return [0.5, 0.5], num < 0 and den < 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE8 RESULT:" << std::endl;
+  std::cout << "CASE7 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = -NT("1");
@@ -319,10 +330,10 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // return [-0.33.., -0.33..], num < 0 and den > 0
+  #ifdef TESTCASE8 // return [-0.33.., -0.33..], num < 0 and den > 0
 
   std::cout << "=============" << std::endl;
-  std::cout << "CASE9 RESULT:" << std::endl;
+  std::cout << "CASE8 RESULT:" << std::endl;
   std::cout << "=============" << std::endl;
 
   n = -NT("1");
@@ -342,11 +353,11 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if false // small numbers, num > 0 and den < 0
+  #ifdef TESTCASE9 // small numbers, num > 0 and den < 0
 
-  std::cout << "==============" << std::endl;
-  std::cout << "CASE10 RESULT:" << std::endl;
-  std::cout << "==============" << std::endl;
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE9 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
 
   n = +NT("39792587355159975");
   d = -NT("140737488355328");
@@ -364,6 +375,9 @@ void test_to_interval_tight() {
   assert(s == -282.7433388230813307);
 
   #endif
+
+  std::cout << "---SUCCESS ALL---" << std::endl;
+  std::cout << std::endl;
 }
 #endif
 
@@ -994,13 +1008,13 @@ int main(int argc, char* argv[]) {
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
 
-  std::cout.precision(20);
+  // std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  test_to_interval_tight();
-  return EXIT_SUCCESS;
+  // test_to_interval_tight();
+  // return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
