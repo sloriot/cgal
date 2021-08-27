@@ -1008,13 +1008,13 @@ int main(int argc, char* argv[]) {
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
 
-  std::cout.precision(20);
+  // std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  test_to_interval_tight();
-  return EXIT_SUCCESS;
+  // test_to_interval_tight();
+  // return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
