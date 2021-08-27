@@ -6,7 +6,7 @@
 NEFTYPE="nef" # nef benches
 ARRTYPE="arr" # arrangment benches
 
-N=10 # number of iterations
+N=1 # number of iterations
 
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
@@ -94,17 +94,17 @@ make
 cd ../leda
 make
 
-echo " "
-echo "NEF BENCHMARKS"
+# echo " "
+# echo "NEF BENCHMARKS"
 
-cd ../gmp-all
-./bench $NEFTYPE $N
-cd ../gmp-without-xx
-./bench $NEFTYPE $N
-cd ../boost-mp-without-gmpxx
-./bench $NEFTYPE $N
-cd ../boost-mp-without-gmp
-./bench $NEFTYPE $N
+# cd ../gmp-all
+# ./bench $NEFTYPE $N
+# cd ../gmp-without-xx
+# ./bench $NEFTYPE $N
+# cd ../boost-mp-without-gmpxx
+# ./bench $NEFTYPE $N
+# cd ../boost-mp-without-gmp
+# ./bench $NEFTYPE $N
 
 # cd ../cppint # fails / very slow
 # ./bench $NEFTYPE $N
