@@ -133,7 +133,7 @@ void test_to_interval_tight() {
   std::cout << "- testing tight interval ..." << std::endl;
   std::cout << std::endl;
 
-  #if false // small numbers
+  #if true // small numbers
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE1 RESULT:" << std::endl;
@@ -342,7 +342,7 @@ void test_to_interval_tight() {
 
   #endif
 
-  #if true // small numbers, num > 0 and den < 0
+  #if false // small numbers, num > 0 and den < 0
 
   std::cout << "==============" << std::endl;
   std::cout << "CASE10 RESULT:" << std::endl;
