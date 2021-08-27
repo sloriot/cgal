@@ -114,16 +114,16 @@ void test_minimal_nextafter() {
 #if defined(CGAL_USE_CPP_INT)
 void test_to_interval_tight() {
 
-  #define TESTCASE0 // pass both
-  #define TESTCASE1 // pass both
-  #define TESTCASE2 // fails for gmpzf
-  #define TESTCASE3 // fails for gmpzf
-  #define TESTCASE4 // pass both
-  #define TESTCASE5 // fails for gmpzf
-  #define TESTCASE6 // pass both
-  #define TESTCASE7 // pass both
-  #define TESTCASE8 // fails for gmpzf
-  #define TESTCASE9 // pass both
+  #define TESTCASE0 // pass all three
+  #define TESTCASE1 // pass all three
+  #define TESTCASE2 // fails for gmpzf and stable
+  #define TESTCASE3 // fails for gmpzf and stable
+  #define TESTCASE4 // pass all three
+  #define TESTCASE5 // pass all three
+  #define TESTCASE6 // pass all three
+  #define TESTCASE7 // pass all three
+  #define TESTCASE8 // pass all three
+  #define TESTCASE9 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -274,13 +274,13 @@ void test_to_interval_tight() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: " << 1.0 / 6.0 << std::endl;
+  std::cout << "ref: 0.16666666666666665741" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: " << 1.0 / 6.0 << std::endl;
+  std::cout << "ref: 0.16666666666666668517" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 1.0 / 6.0);
-  assert(s == 1.0 / 6.0);
+  assert(i == 0.16666666666666665741);
+  assert(s == 0.16666666666666668517);
 
   #endif
 
@@ -343,13 +343,13 @@ void test_to_interval_tight() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: " << -1.0 / 3.0 << std::endl;
+  std::cout << "ref: -0.33333333333333337034" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: " << -1.0 / 3.0 << std::endl;
+  std::cout << "ref: -0.33333333333333331483" << std::endl;
   std::cout << std::endl;
 
-  assert(i == -1.0 / 3.0);
-  assert(s == -1.0 / 3.0);
+  assert(i == -0.33333333333333337034);
+  assert(s == -0.33333333333333331483);
 
   #endif
 
