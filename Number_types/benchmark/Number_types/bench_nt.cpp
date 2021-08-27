@@ -822,9 +822,13 @@ int main(int argc, char* argv[]) {
   std::cout << std::endl;
 
   // Parameters.
-  const bool verbose = false; // do we print extra info
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
+  bool verbose = false; // do we print extra info
+  if (argc > 3) {
+    const std::string val = std::string(argv[3]);
+    if (val == "verbose") verbose = true;
+  }
 
   // Choose a kernel.
   // using Kernel = SCKER; // pure arithmetic, works for nef and arr
