@@ -825,16 +825,16 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
 
   // Real use cases.
 
-  // std::cout << "test-real 1" << std::endl;
+  if (verbose) std::cout << "test-real 1" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 2" << std::endl;
+  if (verbose) std::cout << "test-real 2" << std::endl;
   times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 3" << std::endl;
+  if (verbose) std::cout << "test-real 3" << std::endl;
   times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
 
-  // std::cout << "test-real 4" << std::endl;
+  if (verbose) std::cout << "test-real 4" << std::endl;
   times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
@@ -1008,13 +1008,13 @@ int main(int argc, char* argv[]) {
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
 
-  // std::cout.precision(20);
+  std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  // test_to_interval_tight();
-  // return EXIT_SUCCESS;
+  test_to_interval_tight();
+  return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
