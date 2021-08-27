@@ -131,8 +131,13 @@ void test_to_interval_tight() {
 
   std::cout << std::endl;
   std::cout << "- testing tight interval ..." << std::endl;
+  std::cout << std::endl;
 
-  // SOFT CASE.
+  #if false // small numbers
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE1 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
 
   n = NT("39792587355159975");
   d = NT("140737488355328");
@@ -140,21 +145,23 @@ void test_to_interval_tight() {
   std::tie(i, s) = Interval()(x);
 
   std::cout << std::endl;
-  std::cout << "SOFT RESULT:" << std::endl;
-  // std::cout << "x: " << x << std::endl;
-  // std::cout << "n: " << x.num << std::endl;
-  // std::cout << "d: " << x.den << std::endl;
-  std::cout << "inf2: " << i << std::endl;
-  std::cout << "ref2: 282.7433388230813307" << std::endl;
-  std::cout << "sup2: " << s << std::endl;
-  std::cout << "ref2: 282.74333882308138755" << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 282.7433388230813307" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 282.74333882308138755" << std::endl;
   std::cout << std::endl;
 
   // Results for current tight using master to_interval().
   assert(i == 282.7433388230813307);
   assert(s == 282.74333882308138755);
 
-  // HARD CASE.
+  #endif
+
+  #if false // large numbers
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE2 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
 
   n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
   d = NT("82634630175374856683315372867724319098240552701588533218371381248009342768269285501674184091886435054368116496214846441734481770666205690731018817430937185570378353100803926136323598244976110318516454816403989543192819758059431171537258117598056453283568595627159988837663160716950017789671313834717457946818990093589809113731838629064768225280");
@@ -162,19 +169,201 @@ void test_to_interval_tight() {
   std::tie(i, s) = Interval()(x);
 
   std::cout << std::endl;
-  std::cout << "HARD RESULT:" << std::endl;
-  // std::cout << "x: " << x << std::endl;
-  // std::cout << "n: " << x.num << std::endl;
-  // std::cout << "d: " << x.den << std::endl;
-  std::cout << "inf1: " << i << std::endl;
-  std::cout << "ref1: 9.3488310472396563" << std::endl;
-  std::cout << "sup1: " << s << std::endl;
-  std::cout << "ref1: 9.3488310472396580764" << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 9.3488310472396563" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 9.3488310472396580764" << std::endl;
   std::cout << std::endl;
 
   // Results for current tight using cpp_rational.
   assert(i == 9.3488310472396563);
   assert(s == 9.3488310472396580764);
+
+  #endif
+
+  #if false // returns [inf, inf], num >> den, shift < 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE3 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+  d = NT("1");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: inf" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: inf" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == std::numeric_limits<double>::infinity());
+  assert(s == std::numeric_limits<double>::infinity());
+
+  #endif
+
+  #if false // return [0.0, 0.0], num << den, shift > 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE4 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = NT("1");
+  d = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0.0" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 0.0" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 0.0);
+  assert(s == 0.0);
+
+  #endif
+
+  #if false // return [1.0, 1.0], num = den, shift = 53, r = 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE5 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = NT("10");
+  d = NT("10");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 1.0" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 1.0" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 1.0);
+  assert(s == 1.0);
+
+  #endif
+
+  #if false // return [0.16.., 0.16..]
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE6 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = NT("1");
+  d = NT("6");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: " << 1.0 / 6.0 << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: " << 1.0 / 6.0 << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 1.0 / 6.0);
+  assert(s == 1.0 / 6.0);
+
+  #endif
+
+  #if false // return [2.0, 2.0], r = 0, num > 0 and den > 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE7 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = +NT("6");
+  d = +NT("3");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: " << 6.0 / 3.0 << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: " << 6.0 / 3.0 << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 2.0);
+  assert(s == 2.0);
+
+  #endif
+
+  #if false // return [0.5, 0.5], num < 0 and den < 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE8 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = -NT("1");
+  d = -NT("2");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: " << 1.0 / 2.0 << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: " << 1.0 / 2.0 << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 1.0 / 2.0);
+  assert(s == 1.0 / 2.0);
+
+  #endif
+
+  #if false // return [-0.33.., -0.33..], num < 0 and den > 0
+
+  std::cout << "=============" << std::endl;
+  std::cout << "CASE9 RESULT:" << std::endl;
+  std::cout << "=============" << std::endl;
+
+  n = -NT("1");
+  d = +NT("3");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: " << -1.0 / 3.0 << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: " << -1.0 / 3.0 << std::endl;
+  std::cout << std::endl;
+
+  assert(i == -1.0 / 3.0);
+  assert(s == -1.0 / 3.0);
+
+  #endif
+
+  #if true // small numbers, num > 0 and den < 0
+
+  std::cout << "==============" << std::endl;
+  std::cout << "CASE10 RESULT:" << std::endl;
+  std::cout << "==============" << std::endl;
+
+  n = +NT("39792587355159975");
+  d = -NT("140737488355328");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: -282.74333882308138755" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: -282.7433388230813307" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == -282.74333882308138755);
+  assert(s == -282.7433388230813307);
+
+  #endif
 }
 #endif
 
@@ -805,13 +994,13 @@ int main(int argc, char* argv[]) {
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
 
-  // std::cout.precision(20);
+  std::cout.precision(20);
 
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
 
-  // test_to_interval_tight();
-  // return EXIT_SUCCESS;
+  test_to_interval_tight();
+  return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
