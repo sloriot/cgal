@@ -1027,7 +1027,7 @@ int main(int argc, char* argv[]) {
   // Parameters.
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
-  bool verbose = false; // do we print extra info
+  bool verbose = true; // do we print extra info
   if (argc > 3) {
     const std::string val = std::string(argv[3]);
     if (val == "verbose") verbose = true;
