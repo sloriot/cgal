@@ -825,17 +825,20 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
 
   // Real use cases.
 
-  if (verbose) std::cout << "test-real 1" << std::endl;
-  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  if (verbose) std::cout << "test-real 0" << std::endl;
+  times.push_back(run_nef_bench<Kernel>("failure-11.off", "failure-12.off", num_iters, verbose));
 
-  if (verbose) std::cout << "test-real 2" << std::endl;
-  times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
+  // if (verbose) std::cout << "test-real 1" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
 
-  if (verbose) std::cout << "test-real 3" << std::endl;
-  times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+  // if (verbose) std::cout << "test-real 2" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
 
-  if (verbose) std::cout << "test-real 4" << std::endl;
-  times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
+  // if (verbose) std::cout << "test-real 3" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+
+  // if (verbose) std::cout << "test-real 4" << std::endl;
+  // times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
