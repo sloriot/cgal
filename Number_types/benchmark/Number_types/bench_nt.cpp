@@ -828,17 +828,17 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
   if (verbose) std::cout << "test-real 0" << std::endl;
   times.push_back(run_nef_bench<Kernel>("failure-11.off", "failure-12.off", num_iters, verbose));
 
-  // if (verbose) std::cout << "test-real 1" << std::endl;
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
+  if (verbose) std::cout << "test-real 1" << std::endl;
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "spheregrid.off", num_iters, verbose));
 
-  // if (verbose) std::cout << "test-real 2" << std::endl;
-  // times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
+  if (verbose) std::cout << "test-real 2" << std::endl;
+  times.push_back(run_nef_bench<Kernel>("sphere.off", "rotated-spheregrid.off", num_iters, verbose));
 
-  // if (verbose) std::cout << "test-real 3" << std::endl;
-  // times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
+  if (verbose) std::cout << "test-real 3" << std::endl;
+  times.push_back(run_nef_bench<Kernel>("spheregrid.off", "shifted-spheregrid.off", num_iters, verbose));
 
-  // if (verbose) std::cout << "test-real 4" << std::endl;
-  // times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
+  if (verbose) std::cout << "test-real 4" << std::endl;
+  times.push_back(run_nef_bench<Kernel>("rotated-spheregrid.off", "rotated-shifted-spheregrid.off", num_iters, verbose));
 
   if (!verbose) {
     std::cout << "{|class=\"wikitable\" style=\"text-align:center;margin-right:1em;\" " << std::endl;
@@ -869,7 +869,10 @@ void run_all_pmp_benches(const std::size_t num_iters, const bool verbose) {
   std::cout << "* benching PMP ..." << std::endl;
   CGAL_assertion_msg(false, "WARNING: These benches are not representative!");
 
+  if (verbose) std::cout << "test-real 0" << std::endl;
   times.push_back(run_pmp_bench<Kernel>("blobby.off", "eight.off", num_iters, verbose));
+
+  if (verbose) std::cout << "test-real 1" << std::endl;
   times.push_back(run_pmp_bench<Kernel>("cheese.off", "cheese-rotated.off", num_iters, verbose));
 
   if (!verbose) {
@@ -898,7 +901,11 @@ void run_all_arr_benches(const std::size_t num_iters, const bool verbose) {
   std::cout << "* benching ARR ..." << std::endl;
 
   const std::size_t num_segments = 2000;
+
+  if (verbose) std::cout << "test-real 0" << std::endl;
   times.push_back(run_arr_bench<Kernel>("rnd-segs-1", num_segments, num_iters, verbose));
+
+  if (verbose) std::cout << "test-real 1" << std::endl;
   times.push_back(run_arr_bench<Kernel>("rnd-segs-2", num_segments, num_iters, verbose));
 
   if (!verbose) {
@@ -926,7 +933,10 @@ void run_all_reg_benches(const std::size_t num_iters, const bool verbose) {
   std::vector<double> times;
   std::cout << "* benching REG ..." << std::endl;
 
+  if (verbose) std::cout << "test-real 0" << std::endl;
   times.push_back(run_reg_bench<Kernel>("cl-cont", num_iters, verbose));
+
+  if (verbose) std::cout << "test-real 1" << std::endl;
   times.push_back(run_reg_bench<Kernel>("op-cont", num_iters, verbose));
 
   if (!verbose) {
@@ -1039,15 +1049,13 @@ int main(int argc, char* argv[]) {
 
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
-
   std::cout.precision(20);
-  test_to_interval_boost();
 
+  // test_to_interval_boost();
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
-
   // test_to_interval_tight();
-  return EXIT_SUCCESS;
+  // return EXIT_SUCCESS;
 
   // std::cout.precision(4);
   // std::cout.setf(std::ios::fixed, std::ios::floatfield);
