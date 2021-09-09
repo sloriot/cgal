@@ -1057,8 +1057,8 @@ int main(int argc, char* argv[]) {
   // test_to_interval_tight();
   // return EXIT_SUCCESS;
 
-  // std::cout.precision(4);
-  // std::cout.setf(std::ios::fixed, std::ios::floatfield);
+  std::cout.precision(4);
+  std::cout.setf(std::ios::fixed, std::ios::floatfield);
 
   std::cout << std::endl;
   std::cout << " --- NT BENCH --- " << std::endl;
