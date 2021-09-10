@@ -390,12 +390,6 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
     std::cout << "- Kernel: " << boost::typeindex::type_id<Kernel>() << std::endl;
     std::cout << std::endl;
 
-    #if defined(CGAL_DONT_USE_LAZY_KERNEL)
-      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: true" << std::endl;
-    #else
-      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: false" << std::endl;
-    #endif
-
     #if defined(CGAL_DISABLE_GMP)
       std::cout << "- CGAL_DISABLE_GMP: true" << std::endl;
     #else
@@ -427,12 +421,6 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_USE_CORE: false" << std::endl;
     #endif
 
-    #if defined(CGAL_USE_CPP_INT)
-      std::cout << "- CGAL_USE_CPP_INT: true" << std::endl;
-    #else
-      std::cout << "- CGAL_USE_CPP_INT: false" << std::endl;
-    #endif
-
     #if defined(CGAL_USE_LEDA)
       std::cout << "- CGAL_USE_LEDA: true" << std::endl;
     #else
@@ -451,6 +439,32 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
     #else
       std::cout << "- CGAL_USE_BOOST_MP: false" << std::endl;
     #endif
+    std::cout << std::endl;
+
+    #if defined(CGAL_DONT_USE_LAZY_KERNEL)
+      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: false" << std::endl;
+    #endif
+
+    #if defined(CGAL_USE_CPP_INT)
+      std::cout << "- CGAL_USE_CPP_INT: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_CPP_INT: false" << std::endl;
+    #endif
+
+    #if defined(CGAL_DO_NOT_RUN_TESTME)
+      std::cout << "- CGAL_DO_NOT_RUN_TESTME: true" << std::endl;
+    #else
+      std::cout << "- CGAL_DO_NOT_RUN_TESTME: false" << std::endl;
+    #endif
+
+    #if defined(CGAL_USE_TO_INTERVAL_WITH_BOOST)
+      std::cout << "- CGAL_USE_TO_INTERVAL_WITH_BOOST: true" << std::endl;
+    #else
+      std::cout << "- CGAL_USE_TO_INTERVAL_WITH_BOOST: false" << std::endl;
+    #endif
+
     std::cout << std::endl;
   }
 
