@@ -193,7 +193,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE2 // returns [inf, inf], num >> den, shift < 0
+  #ifdef TESTCASE2
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE2 RESULT:" << std::endl;
@@ -206,17 +206,17 @@ void test_to_interval_tight_1() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: inf" << std::endl;
+  std::cout << "ref: 1.7976931348623157081e+308" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: inf" << std::endl;
   std::cout << std::endl;
 
-  assert(i == std::numeric_limits<double>::infinity());
+  assert(i == std::numeric_limits<double>::max());
   assert(s == std::numeric_limits<double>::infinity());
 
   #endif
 
-  #ifdef TESTCASE3 // return [0.0, 0.0], num << den, shift > 0
+  #ifdef TESTCASE3
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE3 RESULT:" << std::endl;
@@ -229,17 +229,17 @@ void test_to_interval_tight_1() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.0" << std::endl;
+  std::cout << "ref: 0" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: 0.0" << std::endl;
+  std::cout << "ref: 1.376480513705538753e-308" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.0);
-  assert(s == 0.0);
+  assert(s == 1.376480513705538753e-308);
 
   #endif
 
-  #ifdef TESTCASE4 // return [1.0, 1.0], num = den, shift = 53, r = 0
+  #ifdef TESTCASE4
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE4 RESULT:" << std::endl;
@@ -252,9 +252,9 @@ void test_to_interval_tight_1() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 1.0" << std::endl;
+  std::cout << "ref: 1" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: 1.0" << std::endl;
+  std::cout << "ref: 1" << std::endl;
   std::cout << std::endl;
 
   assert(i == 1.0);
@@ -262,7 +262,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE5 // return [0.16.., 0.16..]
+  #ifdef TESTCASE5
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE5 RESULT:" << std::endl;
@@ -275,17 +275,17 @@ void test_to_interval_tight_1() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.16666666666666665741" << std::endl;
+  std::cout << "ref: 0.16666666666666662966" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 0.16666666666666668517" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 0.16666666666666665741);
+  assert(i == 0.16666666666666662966);
   assert(s == 0.16666666666666668517);
 
   #endif
 
-  #ifdef TESTCASE6 // return [2.0, 2.0], r = 0, num > 0 and den > 0
+  #ifdef TESTCASE6
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE6 RESULT:" << std::endl;
@@ -308,7 +308,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE7 // return [0.5, 0.5], num < 0 and den < 0
+  #ifdef TESTCASE7
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE7 RESULT:" << std::endl;
@@ -331,7 +331,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE8 // return [-0.33.., -0.33..], num < 0 and den > 0
+  #ifdef TESTCASE8
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE8 RESULT:" << std::endl;
@@ -346,11 +346,11 @@ void test_to_interval_tight_1() {
   std::cout << "inf: " << i << std::endl;
   std::cout << "ref: -0.33333333333333337034" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: -0.33333333333333331483" << std::endl;
+  std::cout << "ref: -0.33333333333333325932" << std::endl;
   std::cout << std::endl;
 
   assert(i == -0.33333333333333337034);
-  assert(s == -0.33333333333333331483);
+  assert(s == -0.33333333333333325932);
 
   #endif
 
@@ -449,7 +449,7 @@ void test_to_interval_tight_2() {
   }
 
   {
-    std::cout << "TEST 5" << std::endl; // den, case 2, cannot convert a non-finite number
+    std::cout << "TEST 5" << std::endl;
 
     n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
     d = NT("1");
@@ -463,7 +463,7 @@ void test_to_interval_tight_2() {
   }
 
   {
-    std::cout << "TEST 6" << std::endl; // num, case 2, fails ub >= input
+    std::cout << "TEST 6" << std::endl;
 
     n = NT("1");
     d = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
@@ -501,7 +501,7 @@ void test_to_interval_tight_2() {
   }
 
   {
-    std::cout << "TEST 8" << std::endl; // different
+    std::cout << "TEST 8" << std::endl; // non representable double
 
     n = NT("1");
     d = NT("3");
