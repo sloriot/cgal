@@ -119,7 +119,7 @@ void test_to_interval_tight_1() {
   // In green, we compare to impl2.
   #define TESTCASE10 // pass all three
   #define TESTCASE11 // impl1: sup is larger (less tight, 9.3488310472396616291)
-  #define TESTCASE12 // impl3: does not handle inf
+  #define TESTCASE12 // pass all three
   #define TESTCASE13 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
   #define TESTCASE14 // pass all three
   #define TESTCASE15 // impl1, impl3: inf is larger (tighter, 0.16666666666666665741)
@@ -390,7 +390,7 @@ void test_to_interval_tight_2() {
   #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
   #define TESTCASE22 // pass all three
   #define TESTCASE23 // pass all three
-  #define TESTCASE24 // impl3: does not handle inf
+  #define TESTCASE24 // pass all three
   #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
   #define TESTCASE26 // impl1, impl3: inf is larger (tighter, 0.099999999999999991673)
   #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
