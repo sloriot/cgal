@@ -112,7 +112,8 @@ void test_minimal_nextafter() {
 }
 
 #if defined(CGAL_USE_CPP_INT)
-void test_to_interval_tight() {
+
+void test_to_interval_tight_1() {
 
   #define TESTCASE0 // pass all three
   #define TESTCASE1 // pass all three
@@ -379,6 +380,141 @@ void test_to_interval_tight() {
   std::cout << "---SUCCESS ALL---" << std::endl;
   std::cout << std::endl;
 }
+
+void test_to_interval_tight_2() {
+
+  std::cout << std::endl;
+  using NT = boost::multiprecision::cpp_int;
+  using Quotient = CGAL::Quotient<NT>;
+  using Traits = CGAL::Real_embeddable_traits<Quotient>;
+  using Interval = typename Traits::To_interval;
+
+  NT n, d;
+  Quotient x;
+  double i, s;
+
+  {
+    std::cout << "TEST 1" << std::endl; // num, case 2
+
+    n = NT("-15284404573383541");
+    d = NT("4503599627370496");
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 2" << std::endl; // num, case 4
+
+    const double n = 0.43464565326;
+    x = Quotient(n);
+    std::tie(i, s) = Interval()(x);
+    assert(i == s);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 3" << std::endl; // num, case 4
+
+    n = NT(1);
+    d = NT(2);
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 4" << std::endl; // shift = 0
+
+    n = NT("7725371961607115");
+    d = NT("1");
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 5" << std::endl; // den, case 2, cannot convert a non-finite number
+
+    n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+    d = NT("1");
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 6" << std::endl; // num, case 2, fails ub >= input
+
+    n = NT("1");
+    d = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 7" << std::endl; // different
+
+    // n = NT("107374182400000000");
+    // d = NT("10");
+    // n = n >> 1; // n = n >> 1 gives shift = 0
+
+    // n = NT("1") << 119;
+    // d = NT("10000000000000000000"); //  fails, subcase 3
+
+    // n = NT("1") << 119;
+    // d = NT("100000000000000000000"); // works, subcase 1
+
+    n = NT("1");
+    d = NT("10"); // works, subcase 1
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+
+  {
+    std::cout << "TEST 8" << std::endl; // different
+
+    n = NT("1");
+    d = NT("3");
+
+    x = Quotient(n, d);
+    std::tie(i, s) = Interval()(x);
+
+    std::cout << "i: " << i << std::endl;
+    std::cout << "s: " << s << std::endl;
+    std::cout << std::endl;
+  }
+}
+
 #endif
 
 template<typename Kernel>
@@ -1068,7 +1204,9 @@ int main(int argc, char* argv[]) {
   // test_to_interval_boost();
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
-  // test_to_interval_tight();
+
+  // test_to_interval_tight_1();
+  // test_to_interval_tight_2();
   // return EXIT_SUCCESS;
 
   std::cout.precision(4);
