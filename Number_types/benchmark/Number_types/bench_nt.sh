@@ -108,14 +108,13 @@ cd ../gmp-all
 ./bench $NEFTYPE $N
 cd ../gmp-without-xx
 ./bench $NEFTYPE $N
-
 cd ../boost-mp-without-gmpxx
 ./bench $NEFTYPE $N
+
 cd ../boost-mp-without-gmp
 ./bench $NEFTYPE $N
 cd ../boost-with-interval
 ./bench $NEFTYPE $N
-
 cd ../cppint
 ./bench $NEFTYPE $N
 
@@ -130,15 +129,14 @@ echo "ARR BENCHMARKS"
 cd ../gmp-all
 ./bench $ARRTYPE $N
 cd ../gmp-without-xx
-
 ./bench $ARRTYPE $N
 cd ../boost-mp-without-gmpxx
 ./bench $ARRTYPE $N
+
 cd ../boost-mp-without-gmp
 ./bench $ARRTYPE $N
 cd ../boost-with-interval
 ./bench $ARRTYPE $N
-
 cd ../cppint
 ./bench $ARRTYPE $N
 
