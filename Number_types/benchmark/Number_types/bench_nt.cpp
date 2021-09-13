@@ -113,18 +113,20 @@ void test_minimal_nextafter() {
 
 #if defined(CGAL_USE_CPP_INT)
 
+// In assert, we use values from impl2.
 void test_to_interval_tight_1() {
 
-  #define TESTCASE0 // pass all three
-  #define TESTCASE1 // pass all three
-  #define TESTCASE2 // fails for gmpzf and stable
-  #define TESTCASE3 // fails for gmpzf and stable
-  #define TESTCASE4 // pass all three
-  #define TESTCASE5 // pass all three
-  #define TESTCASE6 // pass all three
-  #define TESTCASE7 // pass all three
-  #define TESTCASE8 // pass all three
-  #define TESTCASE9 // pass all three
+  // In green, we compare to impl2.
+  #define TESTCASE10 // pass all three
+  #define TESTCASE11 // impl1: sup is larger (less tight, 9.3488310472396616291)
+  #define TESTCASE12 // impl3: does not handle inf
+  #define TESTCASE13 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
+  #define TESTCASE14 // pass all three
+  #define TESTCASE15 // impl1, impl3: inf is larger (tighter, 0.16666666666666665741)
+  #define TESTCASE16 // pass all three
+  #define TESTCASE17 // pass all three
+  #define TESTCASE18 // impl1, impl3: sup is smaller (tighter, -0.33333333333333331483)
+  #define TESTCASE19 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -145,7 +147,7 @@ void test_to_interval_tight_1() {
   std::cout << "- testing tight interval ..." << std::endl;
   std::cout << std::endl;
 
-  #ifdef TESTCASE0 // small numbers
+  #ifdef TESTCASE10 // small numbers
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE0 RESULT:" << std::endl;
@@ -169,7 +171,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE1 // large numbers
+  #ifdef TESTCASE11 // large numbers
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE1 RESULT:" << std::endl;
@@ -193,7 +195,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE2
+  #ifdef TESTCASE12
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE2 RESULT:" << std::endl;
@@ -216,7 +218,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE3
+  #ifdef TESTCASE13
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE3 RESULT:" << std::endl;
@@ -239,7 +241,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE4
+  #ifdef TESTCASE14
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE4 RESULT:" << std::endl;
@@ -262,7 +264,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE5
+  #ifdef TESTCASE15
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE5 RESULT:" << std::endl;
@@ -285,7 +287,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE6
+  #ifdef TESTCASE16
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE6 RESULT:" << std::endl;
@@ -308,7 +310,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE7
+  #ifdef TESTCASE17
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE7 RESULT:" << std::endl;
@@ -331,7 +333,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE8
+  #ifdef TESTCASE18
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE8 RESULT:" << std::endl;
@@ -354,7 +356,7 @@ void test_to_interval_tight_1() {
 
   #endif
 
-  #ifdef TESTCASE9 // small numbers, num > 0 and den < 0
+  #ifdef TESTCASE19 // small numbers, num > 0 and den < 0
 
   std::cout << "=============" << std::endl;
   std::cout << "CASE9 RESULT:" << std::endl;
@@ -383,6 +385,16 @@ void test_to_interval_tight_1() {
 
 void test_to_interval_tight_2() {
 
+  // In green, we compare to impl2.
+  #define TESTCASE20 // pass all three
+  #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
+  #define TESTCASE22 // pass all three
+  #define TESTCASE23 // pass all three
+  #define TESTCASE24 // impl3: does not handle inf
+  #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
+  #define TESTCASE26 // impl1, impl3: inf is larger (tighter, 0.099999999999999991673)
+  #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
+
   std::cout << std::endl;
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -393,126 +405,166 @@ void test_to_interval_tight_2() {
   Quotient x;
   double i, s;
 
-  {
-    std::cout << "TEST 1" << std::endl; // num, case 2
+  #ifdef TESTCASE20
 
-    n = NT("-15284404573383541");
-    d = NT("4503599627370496");
+  std::cout << "TEST 0" << std::endl; // num, case 2
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  n = NT("-15284404573383541");
+  d = NT("4503599627370496");
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
 
-  {
-    std::cout << "TEST 2" << std::endl; // num, case 4
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
 
-    const double n = 0.43464565326;
-    x = Quotient(n);
-    std::tie(i, s) = Interval()(x);
-    assert(i == s);
+  assert(i == -3.3938195750112902793);
+  assert(s == -3.3938195750112898352);
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  #endif
 
-  {
-    std::cout << "TEST 3" << std::endl; // num, case 4
+  #ifdef TESTCASE21
 
-    n = NT(1);
-    d = NT(2);
+  std::cout << "TEST 1" << std::endl; // num, case 4
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  const double nn = 0.43464565326;
+  x = Quotient(nn);
+  std::tie(i, s) = Interval()(x);
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
 
-  {
-    std::cout << "TEST 4" << std::endl; // shift = 0
+  assert(i == 0.43464565325999998668);
+  assert(s == 0.43464565325999998668);
+  assert(i == s);
 
-    n = NT("7725371961607115");
-    d = NT("1");
+  #endif
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  #ifdef TESTCASE22
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  std::cout << "TEST 2" << std::endl; // num, case 4
 
-  {
-    std::cout << "TEST 5" << std::endl;
+  n = NT(1);
+  d = NT(2);
 
-    n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
-    d = NT("1");
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  assert(i == 0.5);
+  assert(s == 0.5);
 
-  {
-    std::cout << "TEST 6" << std::endl;
+  #endif
 
-    n = NT("1");
-    d = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+  #ifdef TESTCASE23
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  std::cout << "TEST 3" << std::endl; // shift = 0
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  n = NT("7725371961607115");
+  d = NT("1");
 
-  {
-    std::cout << "TEST 7" << std::endl; // different
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
 
-    // n = NT("107374182400000000");
-    // d = NT("10");
-    // n = n >> 1; // n = n >> 1 gives shift = 0
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
 
-    // n = NT("1") << 119;
-    // d = NT("10000000000000000000"); //  fails, subcase 3
+  assert(i == 7725371961607115);
+  assert(s == 7725371961607115);
 
-    // n = NT("1") << 119;
-    // d = NT("100000000000000000000"); // works, subcase 1
+  #endif
 
-    n = NT("1");
-    d = NT("10"); // works, subcase 1
+  #ifdef TESTCASE24
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  std::cout << "TEST 4" << std::endl;
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  n = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+  d = NT("1");
 
-  {
-    std::cout << "TEST 8" << std::endl; // non representable double
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
 
-    n = NT("1");
-    d = NT("3");
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
 
-    x = Quotient(n, d);
-    std::tie(i, s) = Interval()(x);
+  assert(i == std::numeric_limits<double>::max());
+  assert(s == std::numeric_limits<double>::infinity());
 
-    std::cout << "i: " << i << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << std::endl;
-  }
+  #endif
+
+  #ifdef TESTCASE25
+
+  std::cout << "TEST 5" << std::endl;
+
+  n = NT("1");
+  d = NT("772537196160711547532081795586792063331305895970601529435744397743492241616327030886637827664482971614281724796166908515292029740442872965475211471498392497954317530347232852540146110053764627070672243390766540271554856759037331142360111552286202392826786995364211101723592791550906796165626083442695020580821188398298798456115881346136681033873");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 0);
+  assert(s == 1.376480513705538753e-308);
+
+  #endif
+
+  #ifdef TESTCASE26
+
+  std::cout << "TEST 6" << std::endl; // different
+
+  // n = NT("107374182400000000");
+  // d = NT("10");
+  // n = n >> 1; // n = n >> 1 gives shift = 0
+
+  // n = NT("1") << 119;
+  // d = NT("10000000000000000000"); //  fails, subcase 3
+
+  // n = NT("1") << 119;
+  // d = NT("100000000000000000000"); // works, subcase 1
+
+  n = NT("1");
+  d = NT("10"); // works, subcase 1
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 0.099999999999999977796);
+  assert(s == 0.10000000000000000555);
+
+  #endif
+
+  #ifdef TESTCASE27
+
+  std::cout << "TEST 7" << std::endl; // non representable double
+
+  n = NT("1");
+  d = NT("3");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << "i: " << i << std::endl;
+  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 0.33333333333333325932);
+  assert(s == 0.33333333333333337034);
+
+  #endif
 }
 
 #endif
