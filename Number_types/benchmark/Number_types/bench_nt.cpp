@@ -64,6 +64,8 @@ enum class BENCH_TYPE {
   MIX = 5
 };
 
+#if defined(CGAL_USE_CPP_INT)
+
 void test_minimal_boost_gcd() {
 
   boost::multiprecision::cpp_int u = 1;
@@ -111,7 +113,34 @@ void test_minimal_nextafter() {
   }
 }
 
-#if defined(CGAL_USE_CPP_INT)
+void test_to_interval_boost() {
+
+  using NT = boost::multiprecision::cpp_int;
+  using Quotient = CGAL::Quotient<NT>;
+  using Traits = CGAL::Real_embeddable_traits<Quotient>;
+  using Interval = typename Traits::To_interval;
+
+  NT n, d;
+  Quotient x;
+  double i, s;
+
+  n = NT("-15284404573383541");
+  d = NT("4503599627370496");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: -3.3938195750112902793" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: -3.3938195750112898352" << std::endl;
+  std::cout << std::endl;
+
+  // Results for current tight using cpp_rational.
+  assert(i == -3.3938195750112902793);
+  assert(s == -3.3938195750112898352);
+}
 
 // In assert, we use values from impl2.
 void test_to_interval_tight_1() {
@@ -567,7 +596,7 @@ void test_to_interval_tight_2() {
   #endif
 }
 
-#endif
+#endif // CPP_INT
 
 template<typename Kernel>
 void print_parameters(const std::size_t num_iters, const bool verbose) {
@@ -1218,44 +1247,15 @@ void run_all_mix_benches(const std::size_t num_iters, const bool verbose) {
   }
 }
 
-void test_to_interval_boost() {
-
-  using NT = boost::multiprecision::cpp_int;
-  using Quotient = CGAL::Quotient<NT>;
-  using Traits = CGAL::Real_embeddable_traits<Quotient>;
-  using Interval = typename Traits::To_interval;
-
-  NT n, d;
-  Quotient x;
-  double i, s;
-
-  n = NT("-15284404573383541");
-  d = NT("4503599627370496");
-
-  x = Quotient(n, d);
-  std::tie(i, s) = Interval()(x);
-
-  std::cout << std::endl;
-  std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: -3.3938195750112902793" << std::endl;
-  std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: -3.3938195750112898352" << std::endl;
-  std::cout << std::endl;
-
-  // Results for current tight using cpp_rational.
-  assert(i == -3.3938195750112902793);
-  assert(s == -3.3938195750112898352);
-}
-
 int main(int argc, char* argv[]) {
 
   // Make sure we have the same seed.
   CGAL::get_default_random() = CGAL::Random(0);
   std::cout.precision(20);
 
-  // test_to_interval_boost();
   // test_minimal_boost_gcd();
   // test_minimal_nextafter();
+  // test_to_interval_boost();
 
   // test_to_interval_tight_1();
   // test_to_interval_tight_2();
