@@ -173,7 +173,7 @@ void test_to_interval_tight_1() {
   double i, s;
 
   std::cout << std::endl;
-  std::cout << "- testing tight interval ..." << std::endl;
+  std::cout << "- T1 testing tight interval ..." << std::endl;
   std::cout << std::endl;
 
   #ifdef TESTCASE10 // small numbers
@@ -412,6 +412,7 @@ void test_to_interval_tight_1() {
   std::cout << std::endl;
 }
 
+// In assert, we use values from impl2.
 void test_to_interval_tight_2() {
 
   // In green, we compare to impl2.
@@ -423,8 +424,8 @@ void test_to_interval_tight_2() {
   #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
   #define TESTCASE26 // impl1, impl3: inf is larger (tighter, 0.099999999999999991673)
   #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
+  #define TESTCASE28 // pass all three
 
-  std::cout << std::endl;
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
   using Traits = CGAL::Real_embeddable_traits<Quotient>;
@@ -433,6 +434,10 @@ void test_to_interval_tight_2() {
   NT n, d;
   Quotient x;
   double i, s;
+
+  std::cout << std::endl;
+  std::cout << "- T2 testing tight interval ..." << std::endl;
+  std::cout << std::endl;
 
   #ifdef TESTCASE20
 
@@ -444,8 +449,11 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: -3.3938195750112902793" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: -3.3938195750112898352" << std::endl;
   std::cout << std::endl;
 
   assert(i == -3.3938195750112902793);
@@ -461,8 +469,11 @@ void test_to_interval_tight_2() {
   x = Quotient(nn);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0.43464565325999998668" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 0.43464565325999998668" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.43464565325999998668);
@@ -475,14 +486,17 @@ void test_to_interval_tight_2() {
 
   std::cout << "TEST 2" << std::endl; // num, case 4
 
-  n = NT(1);
-  d = NT(2);
+  n = NT("1");
+  d = NT("2");
 
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0.5" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 0.5" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.5);
@@ -500,8 +514,11 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 7725371961607115" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 7725371961607115" << std::endl;
   std::cout << std::endl;
 
   assert(i == 7725371961607115);
@@ -519,8 +536,11 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 1.7976931348623157081e+308" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: inf" << std::endl;
   std::cout << std::endl;
 
   assert(i == std::numeric_limits<double>::max());
@@ -538,8 +558,11 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 1.376480513705538753e-308" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0);
@@ -567,8 +590,11 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0.099999999999999977796" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 0.10000000000000000555" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.099999999999999977796);
@@ -586,14 +612,42 @@ void test_to_interval_tight_2() {
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
-  std::cout << "i: " << i << std::endl;
-  std::cout << "s: " << s << std::endl;
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 0.33333333333333325932" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 0.33333333333333337034" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.33333333333333325932);
   assert(s == 0.33333333333333337034);
 
   #endif
+
+  #ifdef TESTCASE28
+
+  std::cout << "TEST 8" << std::endl; // fails assertion (q_bits == num_dbl_digits || r != 0)
+
+  n = NT("21");
+  d = NT("3");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 7" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 7" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 7);
+  assert(s == 7);
+
+  #endif
+
+  std::cout << "---SUCCESS ALL---" << std::endl;
+  std::cout << std::endl;
 }
 
 #endif // CPP_INT
