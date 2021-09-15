@@ -147,7 +147,7 @@ void test_to_interval_tight_1() {
 
   // In green, we compare to impl2.
   #define TESTCASE10 // pass all three
-  #define TESTCASE11 // impl1: sup is larger (less tight, 9.3488310472396616291)
+  #define TESTCASE11 // impl1: fails tightness (sup is larger, s = 9.3488310472396616291)
   #define TESTCASE12 // pass all three
   #define TESTCASE13 // pass all three
   #define TESTCASE14 // pass all three
@@ -417,7 +417,7 @@ void test_to_interval_tight_2() {
 
   // In green, we compare to impl2.
   #define TESTCASE20  // pass all three
-  #define TESTCASE21  // impl1: i != s (i = 0.43464565325999987566, smaller)
+  #define TESTCASE21  // impl1: fails tightness (sup is larger, s = 0.43464565325999998668)
   #define TESTCASE22  // pass all three
   #define TESTCASE23  // pass all three
   #define TESTCASE24  // pass all three
@@ -426,7 +426,7 @@ void test_to_interval_tight_2() {
   #define TESTCASE27  // pass all three
   #define TESTCASE28  // pass all three
   #define TESTCASE29  // pass all three
-  #define TESTCASE210 // pass all three
+  #define TESTCASE210 // impl1, impl3: fails tightness (sup is larger, s = 5.9425938166208590782e+26)
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -1347,9 +1347,9 @@ int main(int argc, char* argv[]) {
   // test_minimal_nextafter();
   // test_to_interval_boost();
 
-  test_to_interval_tight_1();
-  test_to_interval_tight_2();
-  return EXIT_SUCCESS;
+  // test_to_interval_tight_1();
+  // test_to_interval_tight_2();
+  // return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
