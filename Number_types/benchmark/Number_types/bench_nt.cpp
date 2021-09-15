@@ -427,6 +427,7 @@ void test_to_interval_tight_2() {
   #define TESTCASE28  // pass all three
   #define TESTCASE29  // pass all three
   #define TESTCASE210 // impl1, impl3: fails tightness (sup is larger, s = 5.9425938166208590782e+26)
+  #define TESTCASE211 // impl1, impl3: fails tightness (inf is smaller, i = 3602879701896396.5, sup is larger, s = 3602879701896398)
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -679,6 +680,28 @@ void test_to_interval_tight_2() {
 
   assert(i == 5.9425938166208577038e+26);
   assert(s == 5.942593816620858391e+26);
+
+  #endif
+
+  #ifdef TESTCASE211
+
+  std::cout << "TEST 11" << std::endl; // case shift = 0 && p_bits = 51 && cmp = 0, subcase3
+
+  n = NT("36028797018963975");
+  d = NT("10");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 3602879701896397" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 3602879701896397.5" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 3602879701896397);
+  assert(s == 3602879701896397.5);
 
   #endif
 
@@ -1362,7 +1385,7 @@ int main(int argc, char* argv[]) {
   // Parameters.
   const std::string btype = ( (argc > 1) ? std::string(argv[1]) : "all" ); // bench type
   const std::size_t num_iters = ( (argc > 2) ? std::atoi(argv[2]) : 1 ); // number of iterations to average the timing
-  bool verbose = true; // do we print extra info
+  bool verbose = false; // do we print extra info
   if (argc > 3) {
     const std::string val = std::string(argv[3]);
     if (val == "verbose") verbose = true;
