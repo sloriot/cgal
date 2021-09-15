@@ -416,15 +416,17 @@ void test_to_interval_tight_1() {
 void test_to_interval_tight_2() {
 
   // In green, we compare to impl2.
-  #define TESTCASE20 // pass all three
-  #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
-  #define TESTCASE22 // pass all three
-  #define TESTCASE23 // pass all three
-  #define TESTCASE24 // pass all three
-  #define TESTCASE25 // pass all three
-  #define TESTCASE26 // pass all three
-  #define TESTCASE27 // pass all three
-  #define TESTCASE28 // pass all three
+  #define TESTCASE20  // pass all three
+  #define TESTCASE21  // impl1: i != s (i = 0.43464565325999987566, smaller)
+  #define TESTCASE22  // pass all three
+  #define TESTCASE23  // pass all three
+  #define TESTCASE24  // pass all three
+  #define TESTCASE25  // pass all three
+  #define TESTCASE26  // pass all three
+  #define TESTCASE27  // pass all three
+  #define TESTCASE28  // pass all three
+  #define TESTCASE29  // pass all three
+  #define TESTCASE210 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -572,27 +574,17 @@ void test_to_interval_tight_2() {
 
   #ifdef TESTCASE26
 
-  std::cout << "TEST 6" << std::endl; // different
-
-  // n = NT("107374182400000000");
-  // d = NT("10");
-  // n = n >> 1; // n = n >> 1 gives shift = 0
-
-  // n = NT("1") << 119;
-  // d = NT("10000000000000000000"); //  fails, subcase 3
-
-  // n = NT("1") << 119;
-  // d = NT("100000000000000000000"); // works, subcase 1
+  std::cout << "TEST 6" << std::endl; // case shift > 0 && p_bits = 51, subcase1
 
   n = NT("1");
-  d = NT("10"); // works, subcase 1
+  d = NT("10");
 
   x = Quotient(n, d);
   std::tie(i, s) = Interval()(x);
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.099999999999999991673" << std::endl; // 0.099999999999999991673
+  std::cout << "ref: 0.099999999999999991673" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 0.10000000000000000555" << std::endl;
   std::cout << std::endl;
@@ -643,6 +635,50 @@ void test_to_interval_tight_2() {
 
   assert(i == 7);
   assert(s == 7);
+
+  #endif
+
+  #ifdef TESTCASE29
+
+  std::cout << "TEST 9" << std::endl; // case shift > 0 && p_bits = 51, subcase3
+
+  n = NT("17");
+  d = NT("3");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 5.6666666666666660745" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 5.6666666666666669627" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 5.6666666666666660745);
+  assert(s == 5.6666666666666669627);
+
+  #endif
+
+  #ifdef TESTCASE210
+
+  std::cout << "TEST 10" << std::endl; // case shift < 0 && p_bits = 51
+
+  n = NT("7725371961607115475320817955");
+  d = NT("13");
+
+  x = Quotient(n, d);
+  std::tie(i, s) = Interval()(x);
+
+  std::cout << std::endl;
+  std::cout << "inf: " << i << std::endl;
+  std::cout << "ref: 5.9425938166208577038e+26" << std::endl;
+  std::cout << "sup: " << s << std::endl;
+  std::cout << "ref: 5.942593816620858391e+26" << std::endl;
+  std::cout << std::endl;
+
+  assert(i == 5.9425938166208577038e+26);
+  assert(s == 5.942593816620858391e+26);
 
   #endif
 
@@ -1311,9 +1347,9 @@ int main(int argc, char* argv[]) {
   // test_minimal_nextafter();
   // test_to_interval_boost();
 
-  // test_to_interval_tight_1();
-  // test_to_interval_tight_2();
-  // return EXIT_SUCCESS;
+  test_to_interval_tight_1();
+  test_to_interval_tight_2();
+  return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
