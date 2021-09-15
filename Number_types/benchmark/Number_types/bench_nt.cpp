@@ -416,15 +416,15 @@ void test_to_interval_tight_1() {
 void test_to_interval_tight_2() {
 
   // In green, we compare to impl2.
-  #define TESTCASE20 // pass all three
-  #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
-  #define TESTCASE22 // pass all three
-  #define TESTCASE23 // pass all three
-  #define TESTCASE24 // pass all three
-  #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
+  // #define TESTCASE20 // pass all three
+  // #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
+  // #define TESTCASE22 // pass all three
+  // #define TESTCASE23 // pass all three
+  // #define TESTCASE24 // pass all three
+  // #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
   #define TESTCASE26 // impl1, impl3: inf is larger (tighter, 0.099999999999999991673)
-  #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
-  #define TESTCASE28 // pass all three
+  // #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
+  // #define TESTCASE28 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -592,12 +592,12 @@ void test_to_interval_tight_2() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.099999999999999977796" << std::endl;
+  std::cout << "ref: 0.099999999999999991673" << std::endl; // 0.099999999999999991673
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 0.10000000000000000555" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 0.099999999999999977796);
+  assert(i == 0.099999999999999991673);
   assert(s == 0.10000000000000000555);
 
   #endif
@@ -1312,8 +1312,8 @@ int main(int argc, char* argv[]) {
   // test_to_interval_boost();
 
   // test_to_interval_tight_1();
-  // test_to_interval_tight_2();
-  // return EXIT_SUCCESS;
+  test_to_interval_tight_2();
+  return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
