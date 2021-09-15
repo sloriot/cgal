@@ -149,12 +149,12 @@ void test_to_interval_tight_1() {
   #define TESTCASE10 // pass all three
   #define TESTCASE11 // impl1: sup is larger (less tight, 9.3488310472396616291)
   #define TESTCASE12 // pass all three
-  #define TESTCASE13 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
+  #define TESTCASE13 // pass all three
   #define TESTCASE14 // pass all three
-  #define TESTCASE15 // impl1, impl3: inf is larger (tighter, 0.16666666666666665741)
+  #define TESTCASE15 // pass all three
   #define TESTCASE16 // pass all three
   #define TESTCASE17 // pass all three
-  #define TESTCASE18 // impl1, impl3: sup is smaller (tighter, -0.33333333333333331483)
+  #define TESTCASE18 // pass all three
   #define TESTCASE19 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
@@ -262,11 +262,11 @@ void test_to_interval_tight_1() {
   std::cout << "inf: " << i << std::endl;
   std::cout << "ref: 0" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: 1.376480513705538753e-308" << std::endl;
+  std::cout << "ref: 4.9406564584124654418e-324" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0.0);
-  assert(s == 1.376480513705538753e-308);
+  assert(s == std::numeric_limits<double>::denorm_min());
 
   #endif
 
@@ -306,12 +306,12 @@ void test_to_interval_tight_1() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.16666666666666662966" << std::endl;
+  std::cout << "ref: 0.16666666666666665741" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 0.16666666666666668517" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 0.16666666666666662966);
+  assert(i == 0.16666666666666665741);
   assert(s == 0.16666666666666668517);
 
   #endif
@@ -377,11 +377,11 @@ void test_to_interval_tight_1() {
   std::cout << "inf: " << i << std::endl;
   std::cout << "ref: -0.33333333333333337034" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: -0.33333333333333325932" << std::endl;
+  std::cout << "ref: -0.33333333333333331483" << std::endl;
   std::cout << std::endl;
 
   assert(i == -0.33333333333333337034);
-  assert(s == -0.33333333333333325932);
+  assert(s == -0.33333333333333331483);
 
   #endif
 
@@ -416,15 +416,15 @@ void test_to_interval_tight_1() {
 void test_to_interval_tight_2() {
 
   // In green, we compare to impl2.
-  // #define TESTCASE20 // pass all three
-  // #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
-  // #define TESTCASE22 // pass all three
-  // #define TESTCASE23 // pass all three
-  // #define TESTCASE24 // pass all three
-  // #define TESTCASE25 // impl1, impl3: sup is smaller (tighter, 4.9406564584124654418e-324)
-  #define TESTCASE26 // impl1, impl3: inf is larger (tighter, 0.099999999999999991673)
-  // #define TESTCASE27 // impl1, impl3: inf is larger (tighter, 0.33333333333333331483)
-  // #define TESTCASE28 // pass all three
+  #define TESTCASE20 // pass all three
+  #define TESTCASE21 // impl1: i != s (i = 0.43464565325999987566, smaller)
+  #define TESTCASE22 // pass all three
+  #define TESTCASE23 // pass all three
+  #define TESTCASE24 // pass all three
+  #define TESTCASE25 // pass all three
+  #define TESTCASE26 // pass all three
+  #define TESTCASE27 // pass all three
+  #define TESTCASE28 // pass all three
 
   using NT = boost::multiprecision::cpp_int;
   using Quotient = CGAL::Quotient<NT>;
@@ -562,11 +562,11 @@ void test_to_interval_tight_2() {
   std::cout << "inf: " << i << std::endl;
   std::cout << "ref: 0" << std::endl;
   std::cout << "sup: " << s << std::endl;
-  std::cout << "ref: 1.376480513705538753e-308" << std::endl;
+  std::cout << "ref: 4.9406564584124654418e-324" << std::endl;
   std::cout << std::endl;
 
   assert(i == 0);
-  assert(s == 1.376480513705538753e-308);
+  assert(s == std::numeric_limits<double>::denorm_min());
 
   #endif
 
@@ -614,12 +614,12 @@ void test_to_interval_tight_2() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 0.33333333333333325932" << std::endl;
+  std::cout << "ref: 0.33333333333333331483" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 0.33333333333333337034" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 0.33333333333333325932);
+  assert(i == 0.33333333333333331483);
   assert(s == 0.33333333333333337034);
 
   #endif
@@ -1312,8 +1312,8 @@ int main(int argc, char* argv[]) {
   // test_to_interval_boost();
 
   // test_to_interval_tight_1();
-  test_to_interval_tight_2();
-  return EXIT_SUCCESS;
+  // test_to_interval_tight_2();
+  // return EXIT_SUCCESS;
 
   std::cout.precision(4);
   std::cout.setf(std::ios::fixed, std::ios::floatfield);
