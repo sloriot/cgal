@@ -695,12 +695,12 @@ void test_to_interval_tight_2() {
 
   std::cout << std::endl;
   std::cout << "inf: " << i << std::endl;
-  std::cout << "ref: 3602879701896397" << std::endl;
+  std::cout << "ref: 3602879701896397.5" << std::endl;
   std::cout << "sup: " << s << std::endl;
   std::cout << "ref: 3602879701896397.5" << std::endl;
   std::cout << std::endl;
 
-  assert(i == 3602879701896397);
+  assert(i == 3602879701896397.5);
   assert(s == 3602879701896397.5);
 
   #endif
