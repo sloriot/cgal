@@ -429,12 +429,12 @@ compute_density_weight_for_sample_point(
 template <typename ConcurrencyTag,
           typename PointRange,
           typename OutputIterator,
-          typename NamedParameters>
+          typename NamedParameters = parameters::Default_named_parameters>
 OutputIterator
 wlop_simplify_and_regularize_point_set(
   PointRange& points,
   OutputIterator output,
-  const NamedParameters& np
+  const NamedParameters& np = parameters::use_default_values()
 )
 {
   using parameters::choose_parameter;
@@ -611,22 +611,6 @@ wlop_simplify_and_regularize_point_set(
 
   return output;
 }
-
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange,
-          typename OutputIterator>
-OutputIterator
-wlop_simplify_and_regularize_point_set(
-  PointRange& points,
-  OutputIterator output)       ///< output iterator where output points are put.
-{
-  return wlop_simplify_and_regularize_point_set<ConcurrencyTag>
-    (points, output, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 } //namespace CGAL
 

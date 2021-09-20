@@ -585,24 +585,6 @@ namespace Point_set_processing_3
   public:
     typedef typename Kernel::FT type;
   };
-
-  namespace parameters
-  {
-    template <typename Kernel>
-    Named_function_parameters
-    <Kernel,
-     internal_np::geom_traits_t,
-     Named_function_parameters
-     <typename ::Point_set_3<Kernel>::template Property_map<typename Kernel::Vector_3>,
-      internal_np::normal_t,
-      Named_function_parameters
-      <typename ::Point_set_3<Kernel>::template Property_map<typename Kernel::Point_3>,
-       internal_np::point_t> > >
-    inline all_default(const ::Point_set_3<Kernel>& ps)
-    {
-      return ps.parameters();
-    }
-  }
 }
 }
 

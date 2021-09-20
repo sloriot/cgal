@@ -31,8 +31,6 @@
 #include <iterator>
 
 #ifdef DOXYGEN_RUNNING
-#define CGAL_BGL_NP_TEMPLATE_PARAMETERS NamedParameters
-#define CGAL_BGL_NP_CLASS NamedParameters
 #define CGAL_DEPRECATED
 #endif
 
@@ -40,10 +38,10 @@ namespace CGAL {
 namespace Point_set_processing_3 {
 namespace internal {
 
-template <typename PointRange, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename PointRange, typename NamedParameters>
 bool write_XYZ_PSP(std::ostream& os,
                    const PointRange& points,
-                   const CGAL_BGL_NP_CLASS& np)
+                   const NamedParameters& np)
 {
   using CGAL::parameters::choose_parameter;
   using CGAL::parameters::get_parameter;
@@ -127,10 +125,10 @@ bool write_XYZ_PSP(std::ostream& os,
 
    \returns `true` if writing was successful, `false` otherwise.
 */
-template <typename PointRange, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename PointRange, typename NamedParameters = parameters::Default_named_parameters>
 bool write_XYZ(std::ostream& os,
                const PointRange& points,
-               const CGAL_BGL_NP_CLASS& np
+               const NamedParameters& np = parameters::use_default_values()
 #ifndef DOXYGEN_RUNNING
                , typename boost::enable_if<IO::internal::is_Range<PointRange> >::type* = nullptr
 #endif
@@ -138,17 +136,6 @@ bool write_XYZ(std::ostream& os,
 {
   return Point_set_processing_3::internal::write_XYZ_PSP(os, points, np);
 }
-
-/// \cond SKIP_IN_MANUAL
-
-template <typename PointRange>
-bool write_XYZ(std::ostream& os, const PointRange& points,
-               typename boost::enable_if<IO::internal::is_Range<PointRange> >::type* = nullptr)
-{
-  return write_XYZ(os, points, parameters::all_default());
-}
-
-/// \endcond
 
 /**
    \ingroup PkgPointSetProcessing3IOXyz
@@ -191,10 +178,10 @@ bool write_XYZ(std::ostream& os, const PointRange& points,
 
    \returns `true` if writing was successful, `false` otherwise.
 */
-template <typename PointRange, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename PointRange, typename NamedParameters = parameters::Default_named_parameters>
 bool write_XYZ(const std::string& filename,
                const PointRange& points,
-               const CGAL_BGL_NP_CLASS& np
+               const NamedParameters& np = parameters::use_default_values()
 #ifndef DOXYGEN_RUNNING
                , typename boost::enable_if<IO::internal::is_Range<PointRange> >::type* = nullptr
 #endif
@@ -203,18 +190,6 @@ bool write_XYZ(const std::string& filename,
   std::ofstream os(filename);
   return write_XYZ(os, points, np);
 }
-
-/// \cond SKIP_IN_MANUAL
-
-template <typename PointRange>
-bool write_XYZ(const std::string& filename, const PointRange& points,
-               typename boost::enable_if<IO::internal::is_Range<PointRange> >::type* = nullptr)
-{
-  std::ofstream os(filename);
-  return write_XYZ(os, points, parameters::all_default());
-}
-
-/// \endcond
 
 #ifndef CGAL_NO_DEPRECATED_CODE
 
@@ -313,21 +288,11 @@ bool write_xyz_points(std::ostream& os, ///< output stream.
   \deprecated This function is deprecated since \cgal 5.2,
               \link PkgPointSetProcessing3IOXyz `CGAL::write_XYZ()` \endlink should be used instead.
 */
-template <typename PointRange, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
-CGAL_DEPRECATED bool write_xyz_points(std::ostream& os, const PointRange& points, const CGAL_BGL_NP_CLASS& np)
+template <typename PointRange, typename NamedParameters = parameters::Default_named_parameters>
+CGAL_DEPRECATED bool write_xyz_points(std::ostream& os, const PointRange& points, const NamedParameters& np = parameters::use_default_values())
 {
   return write_XYZ(os, points, np);
 }
-
-/// \cond SKIP_IN_MANUAL
-
-template <typename PointRange>
-CGAL_DEPRECATED bool write_xyz_points(std::ostream& os, const PointRange& points)
-{
-  return write_XYZ(os, points, parameters::all_default(points));
-}
-
-/// \endcond
 
 #endif // CGAL_NO_DEPRECATED_CODE
 

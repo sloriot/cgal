@@ -258,12 +258,12 @@ compute_max_spacing(
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename NamedParameters>
+          typename NamedParameters = parameters::Default_named_parameters>
 double
 bilateral_smooth_point_set(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -438,22 +438,6 @@ bilateral_smooth_point_set(
 
    return sum_move_error / nb_points;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange>
-double
-bilateral_smooth_point_set(
-  PointRange& points,
-  unsigned int k)           ///< size of the neighborhood for the implicit surface patch fitting.
-                            ///< The larger the value is, the smoother the result will be.
-{
-  return bilateral_smooth_point_set<ConcurrencyTag>
-    (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

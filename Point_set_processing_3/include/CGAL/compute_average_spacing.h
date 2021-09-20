@@ -34,13 +34,6 @@
 #include <iterator>
 #include <list>
 
-
-
-#ifdef DOXYGEN_RUNNING
-#define CGAL_BGL_NP_TEMPLATE_PARAMETERS NamedParameters
-#define CGAL_BGL_NP_CLASS NamedParameters
-#endif
-
 namespace CGAL {
 
 
@@ -152,7 +145,7 @@ compute_average_spacing(const typename NeighborQuery::Kernel::Point_3& query, //
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename CGAL_BGL_NP_TEMPLATE_PARAMETERS
+          typename NamedParameters = parameters::Default_named_parameters
 >
 #ifdef DOXYGEN_RUNNING
   FT
@@ -162,7 +155,7 @@ template <typename ConcurrencyTag,
 compute_average_spacing(
   const PointRange& points,
   unsigned int k,
-  const CGAL_BGL_NP_CLASS& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -230,21 +223,6 @@ compute_average_spacing(
   // return average spacing
   return sum_spacings / (FT)(nb);
 }
-
-/// \cond SKIP_IN_MANUAL
-
-// variant with default NP
-template <typename ConcurrencyTag, typename PointRange>
-typename Point_set_processing_3::GetFT<PointRange>::type
-compute_average_spacing(
-  const PointRange& points,
-  unsigned int k) ///< number of neighbors.
-{
-  return compute_average_spacing<ConcurrencyTag>
-    (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

@@ -90,7 +90,7 @@ namespace Polygon_mesh_processing {
   * @sa `face_border_length()`
   */
 template<typename PolygonMesh,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 #ifdef DOXYGEN_RUNNING
 FT
 #else
@@ -98,7 +98,7 @@ typename GetGeomTraits<PolygonMesh, NamedParameters>::type::FT
 #endif
 edge_length(typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
             const PolygonMesh& pmesh,
-            const NamedParameters& np)
+            const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -111,32 +111,15 @@ edge_length(typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
                                                        get(vpm, target(h, pmesh))));
 }
 
-template<typename PolygonMesh>
-typename CGAL::Kernel_traits<typename property_map_value<PolygonMesh,
-CGAL::vertex_point_t>::type>::Kernel::FT
-edge_length(typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
-            const PolygonMesh& pmesh)
-{
-  return edge_length(h, pmesh, CGAL::Polygon_mesh_processing::parameters::all_default());
-}
 // edge overloads
 template<typename PolygonMesh,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 typename GetGeomTraits<PolygonMesh, NamedParameters>::type::FT
 edge_length(typename boost::graph_traits<PolygonMesh>::edge_descriptor e,
             const PolygonMesh& pmesh,
-            const NamedParameters& np)
+            const NamedParameters& np = parameters::use_default_values())
 {
   return edge_length(halfedge(e, pmesh), pmesh, np);
-}
-
-template<typename PolygonMesh>
-typename CGAL::Kernel_traits<typename property_map_value<PolygonMesh,
-CGAL::vertex_point_t>::type>::Kernel::FT
-edge_length(typename boost::graph_traits<PolygonMesh>::edge_descriptor e,
-            const PolygonMesh& pmesh)
-{
-  return edge_length(halfedge(e, pmesh), pmesh);
 }
 
 /**
@@ -180,7 +163,7 @@ edge_length(typename boost::graph_traits<PolygonMesh>::edge_descriptor e,
   * @sa `edge_length()`
   */
 template<typename PolygonMesh,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 #ifdef DOXYGEN_RUNNING
 FT
 #else
@@ -188,7 +171,7 @@ typename GetGeomTraits<PolygonMesh, NamedParameters>::type::FT
 #endif
 face_border_length(typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
                    const PolygonMesh& pmesh,
-                   const NamedParameters& np)
+                   const NamedParameters& np = parameters::use_default_values())
 {
   typename GetGeomTraits<PolygonMesh, NamedParameters>::type::FT result = 0;
 
@@ -199,15 +182,6 @@ face_border_length(typename boost::graph_traits<PolygonMesh>::halfedge_descripto
   }
 
   return result;
-}
-
-template<typename PolygonMesh>
-typename CGAL::Kernel_traits<typename property_map_value<PolygonMesh,
-CGAL::vertex_point_t>::type>::Kernel::FT
-face_border_length(typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
-                   const PolygonMesh& pmesh)
-{
-  return face_border_length(h, pmesh, CGAL::Polygon_mesh_processing::parameters::all_default());
 }
 
 /**
@@ -249,7 +223,7 @@ face_border_length(typename boost::graph_traits<PolygonMesh>::halfedge_descripto
   *
   */
 template<typename PolygonMesh,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 #ifdef DOXYGEN_RUNNING
 std::pair<halfedge_descriptor, FT>
 #else
@@ -257,7 +231,7 @@ std::pair<typename boost::graph_traits<PolygonMesh>::halfedge_descriptor,
 typename GetGeomTraits<PolygonMesh, NamedParameters>::type::FT>
 #endif
 longest_border(const PolygonMesh& pmesh,
-               const NamedParameters& np)
+               const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename CGAL::Kernel_traits<
             typename property_map_value<PolygonMesh, CGAL::vertex_point_t>::type>::Kernel::FT  FT;
@@ -288,15 +262,6 @@ longest_border(const PolygonMesh& pmesh,
     }
   }
   return std::make_pair(result_halfedge, result_len);
-}
-
-template<typename PolygonMesh>
-std::pair<typename boost::graph_traits<PolygonMesh>::halfedge_descriptor,
-typename CGAL::Kernel_traits<typename property_map_value<PolygonMesh,
-CGAL::vertex_point_t>::type>::Kernel::FT>
-longest_border(const PolygonMesh& pmesh)
-{
-  return longest_border(pmesh, CGAL::Polygon_mesh_processing::parameters::all_default());
 }
 
 /**

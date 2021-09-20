@@ -1551,14 +1551,14 @@ private:
 template <typename PointRange,
           typename PlaneRange,
           typename OutputIterator,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
           >
 OutputIterator
 structure_point_set (const PointRange& points,
                      const PlaneRange& planes,
                      OutputIterator output,
                      double epsilon,
-                     const NamedParameters& np)
+                     const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -1572,24 +1572,6 @@ structure_point_set (const PointRange& points,
 
   return output;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange,
-          typename PlaneRange,
-          typename OutputIterator>
-OutputIterator
-structure_point_set (const PointRange& points, ///< range of points.
-                     const PlaneRange& planes, ///< range of planes.
-                     OutputIterator output, ///< output iterator where output points are written.
-                     double epsilon) ///< size parameter.
-{
-  return structure_point_set
-    (points, planes, output, epsilon,
-     CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

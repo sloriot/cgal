@@ -170,13 +170,13 @@ compute_avg_knn_sq_distance_3(
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 typename PointRange::iterator
 remove_outliers(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -281,19 +281,6 @@ remove_outliers(
   // Returns the iterator on the first point to remove
   return out;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag, typename PointRange>
-typename PointRange::iterator
-remove_outliers(
-  PointRange& points,
-  unsigned int k) ///< number of neighbors.
-{
-  return remove_outliers<ConcurrencyTag> (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

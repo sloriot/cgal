@@ -128,10 +128,10 @@ CGAL::Emptyset_iterator get_adjacencies (const NamedParameters&, CGAL::Emptyset_
 
    \return the number of clusters identified.
 */
-template <typename PointRange, typename ClusterMap, typename NamedParameters>
+template <typename PointRange, typename ClusterMap, typename NamedParameters = parameters::Default_named_parameters>
 std::size_t cluster_point_set (PointRange& points,
                                ClusterMap cluster_map,
-                               const NamedParameters& np)
+                               const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -257,18 +257,6 @@ std::size_t cluster_point_set (PointRange& points,
 
   return nb_clusters;
 }
-
-/// \cond SKIP_IN_MANUAL
-// overload with default NP
-template <typename PointRange, typename ClusterMap>
-std::size_t cluster_point_set (PointRange& points,
-                               ClusterMap cluster_map,
-                               unsigned int k)
-{
-  return cluster_point_set (points, cluster_map, k,
-                            CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 } // namespace CGAL
 

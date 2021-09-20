@@ -819,15 +819,16 @@ namespace experimental {
 //
 template <typename HalfedgeRange_A, typename HalfedgeRange_B, typename PolygonMesh,
           typename ToleranceMap_A, typename ToleranceMap_B,
-          typename NamedParameters_A, typename NamedParameters_B>
+          typename NamedParameters_A = parameters::Default_named_parameters,
+          typename NamedParameters_B = parameters::Default_named_parameters>
 std::size_t snap_vertices(const HalfedgeRange_A& halfedge_range_A,
                           PolygonMesh& tm_A,
                           ToleranceMap_A tolerance_map_A,
                           const HalfedgeRange_B& halfedge_range_B,
                           PolygonMesh& tm_B,
                           ToleranceMap_B tolerance_map_B,
-                          const NamedParameters_A& np_A,
-                          const NamedParameters_B& np_B)
+                          const NamedParameters_A& np_A = parameters::use_default_values(),
+                          const NamedParameters_B& np_B = parameters::use_default_values())
 {
   CGAL::Emptyset_iterator unused_output_iterator;
 
@@ -835,19 +836,6 @@ std::size_t snap_vertices(const HalfedgeRange_A& halfedge_range_A,
                                          halfedge_range_B, tm_B, tolerance_map_B,
                                          unused_output_iterator, unused_output_iterator,
                                          unused_output_iterator, np_A, np_B);
-}
-
-template <typename HalfedgeRange_A, typename HalfedgeRange_B, typename PolygonMesh,
-          typename ToleranceMap_A, typename ToleranceMap_B>
-std::size_t snap_vertices(const HalfedgeRange_A& halfedge_range_A,
-                          PolygonMesh& tm_A,
-                          ToleranceMap_A tolerance_map_A,
-                          const HalfedgeRange_B& halfedge_range_B,
-                          PolygonMesh& tm_B,
-                          ToleranceMap_B tolerance_map_B)
-{
-  return snap_vertices(halfedge_range_A, tm_A, tolerance_map_A, halfedge_range_B, tm_B, tolerance_map_B,
-                       CGAL::parameters::all_default(), CGAL::parameters::all_default());
 }
 
 template <typename HalfedgeRange_A, typename HalfedgeRange_B, typename PolygonMesh,

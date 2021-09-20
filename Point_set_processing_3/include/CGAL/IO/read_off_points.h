@@ -33,8 +33,6 @@
 #include <type_traits>
 
 #ifdef DOXYGEN_RUNNING
-#define CGAL_BGL_NP_TEMPLATE_PARAMETERS NamedParameters
-#define CGAL_BGL_NP_CLASS NamedParameters
 #define CGAL_DEPRECATED
 #endif
 
@@ -81,10 +79,10 @@ namespace CGAL {
 */
 template <typename OutputIteratorValueType,
           typename PointOutputIterator,
-          typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+          typename NamedParameters = parameters::Default_named_parameters>
 bool read_OFF(std::istream& is,
               PointOutputIterator output,
-              const CGAL_BGL_NP_CLASS& np
+              const NamedParameters& np = parameters::use_default_values()
 #ifndef DOXYGEN_RUNNING
               , typename std::enable_if<CGAL::is_iterator<PointOutputIterator>::value>::type* = nullptr
 #endif
@@ -238,10 +236,10 @@ bool read_OFF(std::istream& is,
 */
 template <typename OutputIteratorValueType,
           typename PointOutputIterator,
-          typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+          typename NamedParameters = parameters::Default_named_parameters>
 bool read_OFF(const std::string& fname,
               PointOutputIterator output,
-              const CGAL_BGL_NP_CLASS& np
+              const NamedParameters& np = parameters::use_default_values()
 #ifndef DOXYGEN_RUNNING
               , typename std::enable_if<CGAL::is_iterator<PointOutputIterator>::value>::type* = nullptr
 #endif
@@ -254,51 +252,21 @@ bool read_OFF(const std::string& fname,
 /// \cond SKIP_IN_MANUAL
 
 // variants with default NP
-template <typename OutputIteratorValueType,
-          typename OutputIterator>
-bool read_OFF(std::istream& is, OutputIterator output,
-              typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
-{
-  return read_OFF<OutputIteratorValueType>(is, output, CGAL::parameters::all_default());
-}
-
-template <typename OutputIteratorValueType, typename OutputIterator>
-bool read_OFF(const std::string& fname, OutputIterator output,
-              typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
-{
-  return read_OFF<OutputIteratorValueType>(fname, output, parameters::all_default());
-}
-
 // variants with default output iterator value type
 template <typename OutputIterator,
-          typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
-bool read_OFF(std::istream& is, OutputIterator output, const CGAL_BGL_NP_CLASS& np,
+          typename NamedParameters = parameters::Default_named_parameters>
+bool read_OFF(std::istream& is, OutputIterator output, const NamedParameters& np = parameters::use_default_values(),
               typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
 {
   return read_OFF<typename value_type_traits<OutputIterator>::type>(is, output, np);
 }
 
-template <typename OutputIterator,typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
-bool read_OFF(const std::string& fname, OutputIterator output, const CGAL_BGL_NP_CLASS& np,
+template <typename OutputIterator,typename NamedParameters = parameters::Default_named_parameters>
+bool read_OFF(const std::string& fname, OutputIterator output, const NamedParameters& np = parameters::use_default_values(),
               typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
 {
   std::ifstream is(fname);
   return read_OFF<typename value_type_traits<OutputIterator>::type>(is, output, np);
-}
-
-// variants with default NP and output iterator value type
-template <typename OutputIterator>
-bool read_OFF(std::istream& is, OutputIterator output,
-              typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
-{
-  return read_OFF<typename value_type_traits<OutputIterator>::type>(is, output, CGAL::parameters::all_default());
-}
-
-template <typename OutputIterator>
-bool read_OFF(const std::string& fname, OutputIterator output,
-              typename std::enable_if<CGAL::is_iterator<OutputIterator>::value>::type* = nullptr)
-{
-  return read_OFF<typename value_type_traits<OutputIterator>::type>(fname, output, parameters::all_default());
 }
 
 /// \endcond
@@ -467,17 +435,10 @@ CGAL_DEPRECATED bool read_off_points(std::istream& is, OutputIterator output)
 }
 
 // variant with default output iterator value type
-template <typename OutputIterator, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
-CGAL_DEPRECATED bool read_off_points(std::istream& is, OutputIterator output, const CGAL_BGL_NP_CLASS& np)
+template <typename OutputIterator, typename NamedParameters = parameters::Default_named_parameters>
+CGAL_DEPRECATED bool read_off_points(std::istream& is, OutputIterator output, const NamedParameters& np = parameters::use_default_values())
 {
   return read_OFF(is, output, np);
-}
-
-// variant with default NP and output iterator value type
-template <typename OutputIterator>
-CGAL_DEPRECATED bool read_off_points(std::istream& is, OutputIterator output)
-{
-  return read_OFF(is, output, CGAL::parameters::all_default());
 }
 
 /// \endcond

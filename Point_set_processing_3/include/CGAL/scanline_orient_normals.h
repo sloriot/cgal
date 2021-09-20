@@ -456,8 +456,8 @@ void orient_scanline (Iterator begin, Iterator end,
      \cgalParamNEnd
    \cgalNamedParamsEnd
 */
-template <typename PointRange, typename NamedParameters>
-void scanline_orient_normals (PointRange& points, const NamedParameters& np)
+template <typename PointRange, typename NamedParameters = parameters::Default_named_parameters>
+void scanline_orient_normals (PointRange& points, const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -548,13 +548,6 @@ void scanline_orient_normals (PointRange& points, const NamedParameters& np)
             << std::size_t(points.size() / double(nb_scanlines))
             << " point(s))" << std::endl;
 #endif
-}
-
-template <typename PointRange>
-void scanline_orient_normals (PointRange& points)
-{
-  return scanline_orient_normals (points,
-                               CGAL::Point_set_processing_3::parameters::all_default(points));
 }
 
 } // namespace CGAL

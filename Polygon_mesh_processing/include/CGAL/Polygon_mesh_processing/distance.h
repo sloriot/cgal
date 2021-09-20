@@ -387,7 +387,7 @@ template<typename Mesh,
          typename GeomTraits,
          typename Creator,
          typename Vpm,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 struct Triangle_structure_sampler_for_triangle_mesh
     : Triangle_structure_sampler_base<PointOutputIterator,
                                       GeomTraits,
@@ -556,7 +556,7 @@ template<typename PointRange,
          typename PointOutputIterator,
          typename GeomTraits,
          typename Creator,
-         typename NamedParameters>
+         typename NamedParameters = parameters::Default_named_parameters>
 struct Triangle_structure_sampler_for_triangle_soup
     : Triangle_structure_sampler_base<PointOutputIterator,
                                       GeomTraits,
@@ -601,7 +601,7 @@ struct Triangle_structure_sampler_for_triangle_soup
   Triangle_structure_sampler_for_triangle_soup(const PointRange& pts,
                                                const TriangleRange& trs,
                                                PointOutputIterator& out,
-                                               const NamedParameters& np)
+                                               const NamedParameters& np = parameters::use_default_values())
     : Base(out, np), points(pts), triangles(trs)
   {
     min_sq_edge_length = (std::numeric_limits<double>::max)();
@@ -838,11 +838,11 @@ struct Triangle_structure_sampler_for_triangle_soup
  *
  * @see `CGAL::Polygon_mesh_processing::sample_triangle_soup()`
  */
-template<class PointOutputIterator, class TriangleMesh, class NamedParameters>
+template<class PointOutputIterator, class TriangleMesh, class NamedParameters = parameters::Default_named_parameters>
 PointOutputIterator
 sample_triangle_mesh(const TriangleMesh& tm,
                      PointOutputIterator out,
-                     const NamedParameters& np)
+                     const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename GetGeomTraits<TriangleMesh, NamedParameters>::type             GeomTraits;
   typedef typename GetVertexPointMap<TriangleMesh, NamedParameters>::const_type   Vpm;
@@ -853,7 +853,7 @@ sample_triangle_mesh(const TriangleMesh& tm,
       Creator_uniform_3<typename GeomTraits::FT,
       typename GeomTraits::Point_3>,
       Vpm,
-      NamedParameters> performer(tm, out, np);
+      NamedParameters> performer(tm, out, np );
   performer.procede();
 
   return performer.out;
@@ -963,12 +963,12 @@ sample_triangle_mesh(const TriangleMesh& tm,
 template<class PointOutputIterator,
          class TriangleRange,
          class PointRange,
-         class NamedParameters>
+         class NamedParameters = parameters::Default_named_parameters>
 PointOutputIterator
 sample_triangle_soup(const PointRange& points,
                      const TriangleRange& triangles,
                      PointOutputIterator out,
-                     const NamedParameters& np)
+                     const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename PointRange::value_type         Point_3;
   typedef typename Kernel_traits<Point_3>::Kernel GeomTraits;
@@ -985,25 +985,6 @@ sample_triangle_soup(const PointRange& points,
   performer.procede();
 
   return performer.out;
-}
-
-template<class PointOutputIterator, class TriangleMesh>
-PointOutputIterator
-sample_triangle_mesh(const TriangleMesh& tm,
-                     PointOutputIterator out)
-{
-  return sample_triangle_mesh(tm, out, parameters::all_default());
-}
-
-template<class PointOutputIterator,
-         class TriangleRange,
-         class PointRange>
-PointOutputIterator
-sample_triangle_soup(const PointRange& points,
-                     const TriangleRange& triangles,
-                     PointOutputIterator out)
-{
-  return sample_triangle_soup(points, triangles, out, parameters::all_default());
 }
 
 template <class Concurrency_tag,
@@ -1045,7 +1026,7 @@ template <class Concurrency_tag, class Kernel, class TriangleMesh,
 double approximate_Hausdorff_distance(
    const TriangleMesh& tm1,
    const TriangleMesh& tm2,
-   const NamedParameters& np,
+   const NamedParameters& np ,
    VertexPointMap vpm_2)
 {
   std::vector<typename Kernel::Point_3> sample_points;
@@ -1097,12 +1078,12 @@ double approximate_Hausdorff_distance(
  */
 template< class Concurrency_tag,
           class TriangleMesh,
-          class NamedParameters1,
-          class NamedParameters2>
+          class NamedParameters1 = parameters::Default_named_parameters,
+          class NamedParameters2 = parameters::Default_named_parameters>
 double approximate_Hausdorff_distance( const TriangleMesh& tm1,
                                        const TriangleMesh& tm2,
-                                       const NamedParameters1& np1,
-                                       const NamedParameters2& np2)
+                                       const NamedParameters1& np1 = parameters::use_default_values(),
+                                       const NamedParameters2& np2 = parameters::use_default_values())
 {
   typedef typename GetGeomTraits<TriangleMesh,
                                  NamedParameters1>::type GeomTraits;
@@ -1120,13 +1101,13 @@ double approximate_Hausdorff_distance( const TriangleMesh& tm1,
  */
 template< class Concurrency_tag,
           class TriangleMesh,
-          class NamedParameters1,
-          class NamedParameters2>
+          class NamedParameters1 = parameters::Default_named_parameters,
+          class NamedParameters2 = parameters::Default_named_parameters>
 double approximate_symmetric_Hausdorff_distance(
   const TriangleMesh& tm1,
   const TriangleMesh& tm2,
-  const NamedParameters1& np1,
-  const NamedParameters2& np2)
+  const NamedParameters1& np1 = parameters::use_default_values(),
+  const NamedParameters2& np2 = parameters::use_default_values())
 {
   return (std::max)(
     approximate_Hausdorff_distance<Concurrency_tag>(tm1,tm2,np1,np2),
@@ -1167,10 +1148,10 @@ double approximate_symmetric_Hausdorff_distance(
 template< class Concurrency_tag,
           class TriangleMesh,
           class PointRange,
-          class NamedParameters>
+          class NamedParameters = parameters::Default_named_parameters>
 double max_distance_to_triangle_mesh(const PointRange& points,
                                      const TriangleMesh& tm,
-                                     const NamedParameters& np)
+                                     const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename GetGeomTraits<TriangleMesh,
                                  NamedParameters>::type GeomTraits;
@@ -1215,11 +1196,11 @@ double max_distance_to_triangle_mesh(const PointRange& points,
  */
 template< class TriangleMesh,
           class PointRange,
-          class NamedParameters>
+          class NamedParameters = parameters::Default_named_parameters>
 double approximate_max_distance_to_point_set(const TriangleMesh& tm,
                                              const PointRange& points,
                                              const double precision,
-                                             const NamedParameters& np)
+                                             const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename GetGeomTraits<TriangleMesh,
                                  NamedParameters>::type GeomTraits;
@@ -1244,72 +1225,6 @@ double approximate_max_distance_to_point_set(const TriangleMesh& tm,
   }
   return to_double(ref.refine(precision, tree));
 }
-
-// convenience functions with default parameters
-
-template< class Concurrency_tag,
-          class TriangleMesh,
-          class PointRange>
-double max_distance_to_triangle_mesh(const PointRange& points,
-                                     const TriangleMesh& tm)
-{
-   return max_distance_to_triangle_mesh<Concurrency_tag,
-           TriangleMesh,
-           PointRange>
-           (points, tm, parameters::all_default());
-}
-
-template< class TriangleMesh,
-          class PointRange>
-double approximate_max_distance_to_point_set(const TriangleMesh& tm,
-                                             const PointRange& points,
-                                             const double precision)
-{
-  return approximate_max_distance_to_point_set(tm, points, precision,
-                                               parameters::all_default());
-}
-
-template< class Concurrency_tag,
-          class TriangleMesh,
-          class NamedParameters>
-double approximate_Hausdorff_distance(const TriangleMesh& tm1,
-                                      const TriangleMesh& tm2,
-                                      const NamedParameters& np)
-{
-  return approximate_Hausdorff_distance<Concurrency_tag>(
-    tm1, tm2, np, parameters::all_default());
-}
-
-template< class Concurrency_tag,
-          class TriangleMesh>
-double approximate_Hausdorff_distance(const TriangleMesh& tm1,
-                                      const TriangleMesh& tm2)
-{
-  return approximate_Hausdorff_distance<Concurrency_tag>(
-    tm1, tm2, parameters::all_default(), parameters::all_default());
-}
-
-
-template< class Concurrency_tag,
-          class TriangleMesh,
-          class NamedParameters>
-double approximate_symmetric_Hausdorff_distance(const TriangleMesh& tm1,
-                                                const TriangleMesh& tm2,
-                                                const NamedParameters& np)
-{
-  return approximate_symmetric_Hausdorff_distance<Concurrency_tag>(
-    tm1, tm2, np, parameters::all_default());
-}
-
-template< class Concurrency_tag,
-          class TriangleMesh>
-double approximate_symmetric_Hausdorff_distance(const TriangleMesh& tm1,
-                                                const TriangleMesh& tm2)
-{
-  return approximate_symmetric_Hausdorff_distance<Concurrency_tag>(
-    tm1, tm2, parameters::all_default(), parameters::all_default());
-}
-
 }
 } // end of namespace CGAL::Polygon_mesh_processing
 

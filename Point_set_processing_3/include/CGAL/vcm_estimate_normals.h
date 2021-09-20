@@ -257,13 +257,13 @@ vcm_convolve (ForwardIterator first,
 
 */
 template <typename PointRange,
-          typename NamedParameters>
+          typename NamedParameters = parameters::Default_named_parameters>
 void
 compute_vcm (const PointRange& points,
              std::vector< std::array<double, 6> > &ccov,
              double offset_radius,
              double convolution_radius,
-             const NamedParameters& np)
+             const NamedParameters& np = parameters::use_default_values())
 {
     using parameters::choose_parameter;
     using parameters::get_parameter;
@@ -297,21 +297,6 @@ compute_vcm (const PointRange& points,
                                kernel);
     }
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-void
-compute_vcm (const PointRange& points,
-             std::vector< std::array<double, 6> > &ccov,
-             double offset_radius,
-             double convolution_radius)
-{
-  compute_vcm (points, ccov, offset_radius, convolution_radius,
-               CGAL::Point_set_processing_3::parameters::all_default (points));
-}
-
-/// \endcond
 
 /// \cond SKIP_IN_MANUAL
 template <typename PointRange,
@@ -439,33 +424,17 @@ vcm_estimate_normals_internal (PointRange& points,
    \cgalNamedParamsEnd
 */
 template <typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 void
 vcm_estimate_normals (PointRange& points,
                       double offset_radius,
                       double convolution_radius,
-                      const NamedParameters& np
+                      const NamedParameters& np = parameters::use_default_values()
 )
 {
   vcm_estimate_normals_internal(points, offset_radius, convolution_radius, np);
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-void
-vcm_estimate_normals (PointRange& points,
-                      double offset_radius, ///< offset radius.
-                      double convolution_radius) ///< convolution radius.
-{
-  return vcm_estimate_normals
-    (points, offset_radius, convolution_radius,
-     CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-
-/// \endcond
-
 
 /**
    \ingroup PkgPointSetProcessing3Algorithms
@@ -514,33 +483,17 @@ vcm_estimate_normals (PointRange& points,
    \cgalNamedParamsEnd
 */
 template < typename PointRange,
-           typename NamedParameters
+           typename NamedParameters = parameters::Default_named_parameters
 >
 void
 vcm_estimate_normals (PointRange& points,
                       double offset_radius,
                       unsigned int k,
-                      const NamedParameters& np
+                      const NamedParameters& np = parameters::use_default_values()
 )
 {
   vcm_estimate_normals_internal(points, offset_radius, 0, np, k);
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-void
-vcm_estimate_normals (PointRange& points,
-                      double offset_radius, ///< offset radius.
-                      unsigned int k)
-{
-  return vcm_estimate_normals
-    (points, offset_radius, k,
-     CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-
-
-/// \endcond
 
 } // namespace CGAL
 

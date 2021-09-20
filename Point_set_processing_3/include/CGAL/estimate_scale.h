@@ -484,14 +484,14 @@ public:
 template <typename PointRange,
           typename QueryPointRange,
           typename OutputIterator,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 OutputIterator
 estimate_local_k_neighbor_scales(
   const PointRange& points,
   const QueryPointRange& queries,
   OutputIterator output,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -517,23 +517,6 @@ estimate_local_k_neighbor_scales(
 
   return output;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange,
-          typename QueryPointRange,
-          typename OutputIterator
->
-OutputIterator
-estimate_local_k_neighbor_scales(
-  const PointRange& points,
-  const QueryPointRange& queries,
-  OutputIterator output)
-{
-  return estimate_local_k_neighbor_scales
-    (points, queries, output, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 /**
    \ingroup PkgPointSetProcessing3Algorithms
@@ -571,12 +554,12 @@ estimate_local_k_neighbor_scales(
    \return The estimated scale in the K nearest neighbors sense.
 */
 template <typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 std::size_t
 estimate_global_k_neighbor_scale(
   const PointRange& points,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -588,17 +571,6 @@ estimate_global_k_neighbor_scale(
   std::sort (scales.begin(), scales.end());
   return scales[scales.size() / 2];
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-std::size_t
-estimate_global_k_neighbor_scale(const PointRange& points)
-{
-  return estimate_global_k_neighbor_scale
-    (points, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 /**
    \ingroup PkgPointSetProcessing3Algorithms
@@ -652,14 +624,14 @@ estimate_global_k_neighbor_scale(const PointRange& points)
 template <typename PointRange,
           typename QueryPointRange,
           typename OutputIterator,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 OutputIterator
 estimate_local_range_scales(
   const PointRange& points,
   const QueryPointRange& queries,
   OutputIterator output,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -684,23 +656,6 @@ estimate_local_range_scales(
 
   return output;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange,
-          typename QueryPointRange,
-          typename OutputIterator
->
-OutputIterator
-estimate_local_range_scales(
-  const PointRange& points,
-  const QueryPointRange& queries,
-  OutputIterator output)
-{
-  return estimate_local_range_scales
-    (points, queries, output, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 /**
    \ingroup PkgPointSetProcessing3Algorithms
@@ -742,7 +697,7 @@ estimate_local_range_scales(
    of `points`.
 */
 template <typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 #ifdef DOXYGEN_RUNNING
   FT
@@ -751,7 +706,7 @@ template <typename PointRange,
 #endif
 estimate_global_range_scale(
   const PointRange& points,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -763,17 +718,6 @@ estimate_global_range_scale(
   std::sort (scales.begin(), scales.end());
   return std::sqrt (scales[scales.size() / 2]);
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-typename Point_set_processing_3::GetFT<PointRange>::type
-estimate_global_range_scale(const PointRange& points)
-{
-  return estimate_global_range_scale
-    (points, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 } //namespace CGAL
 

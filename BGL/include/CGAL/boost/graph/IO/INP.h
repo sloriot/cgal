@@ -25,12 +25,12 @@ namespace CGAL {
 
 /// \cond SKIP_IN_MANUAL
 
-template <typename Graph, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename Graph, typename NamedParameters = parameters::Default_named_parameters>
 bool write_INP(std::ostream& os,
                const std::string& name,
                const std::string& type,
                const Graph& g,
-               const CGAL_BGL_NP_CLASS& np)
+               const NamedParameters& np = parameters::use_default_values())
 {
   typedef typename boost::graph_traits<Graph>::vertex_descriptor                  vertex_descriptor;
   typedef typename boost::graph_traits<Graph>::face_descriptor                    face_descriptor;
@@ -72,28 +72,16 @@ bool write_INP(std::ostream& os,
   os << "*End Part"<< std::endl;
 
   return os.good();
-}
+}e
 
-template <typename Graph, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename Graph, typename NamedParameters = parameters::Default_named_parameters>
 bool write_INP(const std::string& fname,
                const std::string& type,
                const Graph& g,
-               const CGAL_BGL_NP_CLASS& np)
+               const NamedParameters& np = parameters::use_default_values())
 {
   std::ofstream os(fname);
   return write_INP(os, fname, type, g, np);
-}
-
-template <typename Graph>
-bool write_INP(std::ostream& os, const std::string& name, const std::string& type, const Graph& g)
-{
-  return write_INP(os, name, type, g, parameters::all_default());
-}
-
-template <typename Graph>
-bool write_INP(const std::string& fname, const std::string& type, const Graph& g)
-{
-  return write_INP(fname, type, g, parameters::all_default());
 }
 
 /// \endcond

@@ -182,13 +182,13 @@ jet_smooth_point(
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 void
 jet_smooth_point_set(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -270,22 +270,6 @@ jet_smooth_point_set(
        return true;
      });
 }
-
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange>
-void
-jet_smooth_point_set(
-  PointRange& points,
-  unsigned int k) ///< number of neighbors.
-{
-  jet_smooth_point_set<ConcurrencyTag>
-    (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

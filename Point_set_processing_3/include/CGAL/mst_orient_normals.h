@@ -594,13 +594,13 @@ create_mst_graph(
    \return iterator over the first point with an unoriented normal.
 */
 template <typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 typename PointRange::iterator
 mst_orient_normals(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
     using parameters::choose_parameter;
     using parameters::get_parameter;
@@ -724,20 +724,6 @@ mst_orient_normals(
 
     return first_unoriented_point;
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename PointRange>
-typename PointRange::iterator
-mst_orient_normals(
-  PointRange& points,
-  unsigned int k) ///< number of neighbors
-
-{
-  return mst_orient_normals (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 

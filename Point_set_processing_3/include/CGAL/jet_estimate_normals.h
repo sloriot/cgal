@@ -173,13 +173,13 @@ jet_estimate_normal(const typename NeighborQuery::Point_3& query, ///< point to 
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 void
 jet_estimate_normals(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -254,21 +254,6 @@ jet_estimate_normals(
   memory = CGAL::Memory_sizer().virtual_size(); CGAL_TRACE("  %ld Mb allocated\n", memory>>20);
   CGAL_TRACE("End of jet_estimate_normals()\n");
 }
-
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange>
-void
-jet_estimate_normals(
-  PointRange& points,
-  unsigned int k) ///< number of neighbors.
-{
-  jet_estimate_normals<ConcurrencyTag>
-    (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 } //namespace CGAL
 

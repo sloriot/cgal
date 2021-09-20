@@ -112,12 +112,12 @@ assert(points.size() == 3);
 assert(points[1].second[1] == 255);
 
 os.open("tmp.las", std::ios_base::binary);
-CGAL::write_las_points(os, ps, CGAL::parameters::all_default());
+CGAL::write_las_points(os, ps);
 os.close();
 assert(ok);
 ps.clear();
 is.open("tmp.las", std::ios::binary);
-ok = CGAL::read_las_points(is, std::back_inserter (ps),CGAL::parameters::all_default());
+ok = CGAL::read_las_points(is, std::back_inserter (ps));
 is.close();
 assert(ok);
 assert(ps.size() == 3);
@@ -150,42 +150,39 @@ assert(points.size() == 3);
 assert(points[1].second[1] == 255);
 
 os.open("tmp.ply");
-ok = CGAL::write_ply_points(os, ps, CGAL::parameters::all_default());
+ok = CGAL::write_ply_points(os, ps);
 os.close();
 assert(ok);
 
 is.open("tmp.ply");
 ps.clear();
-ok = CGAL::read_ply_points(is, std::back_inserter (ps),
-                           CGAL::parameters::all_default());
+ok = CGAL::read_ply_points(is, std::back_inserter (ps));
 is.close();
 assert(ok);
 assert(ps.size() == 3);
 
 //OFF
 os.open("tmp.off");
-ok = CGAL::write_off_points(os, ps, CGAL::parameters::all_default());
+ok = CGAL::write_off_points(os, ps);
 os.close();
 assert(ok);
 
 is.open("tmp.off");
 ps.clear();
-ok = CGAL::read_off_points(is, std::back_inserter (ps),
-                           CGAL::parameters::all_default());
+ok = CGAL::read_off_points(is, std::back_inserter (ps));
 is.close();
 assert(ok);
 assert(ps.size() == 3);
 
 //XYZ
 os.open("tmp.xyz");
-ok = CGAL::write_xyz_points(os, ps, CGAL::parameters::all_default());
+ok = CGAL::write_xyz_points(os, ps);
 os.close();
 assert(ok);
 
 is.open("tmp.xyz");
 ps.clear();
-ok = CGAL::read_xyz_points(is, std::back_inserter (ps),
-                           CGAL::parameters::all_default());
+ok = CGAL::read_xyz_points(is, std::back_inserter (ps));
 is.close();
 assert(ok);
 assert(ps.size() == 3);

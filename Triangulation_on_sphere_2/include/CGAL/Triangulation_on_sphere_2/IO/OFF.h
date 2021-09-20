@@ -66,10 +66,10 @@ class Triangulation_on_sphere_2;
 
   \return `true` if the writing was successful, `false` otherwise.
  */
-template <typename Gt, typename Tds, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename Gt, typename Tds, typename NamedParameters = parameters::Default_named_parameters>
 bool write_OFF(std::ostream& os,
                const CGAL::Triangulation_on_sphere_2<Gt, Tds>& dt,
-               const CGAL_BGL_NP_CLASS& np)
+               const NamedParameters& np = parameters::use_default_values())
 {
   typedef Triangulation_on_sphere_2<Gt,Tds>             Tr;
   typedef typename Tr::Vertex_handle                    Vertex_handle;
@@ -134,16 +134,6 @@ bool write_OFF(std::ostream& os,
   return !os.fail();
 }
 
-/// \cond SKIP_IN_MANUAL
-
-template <typename Gt, typename Tds>
-bool write_OFF(std::ostream& os, const CGAL::Triangulation_on_sphere_2<Gt, Tds>& dt)
-{
-  return write_OFF(os, dt, parameters::all_default());
-}
-
-/// \endcond
-
 /*!
   \ingroup PkgPointSet3IOOFF
 
@@ -167,25 +157,14 @@ bool write_OFF(std::ostream& os, const CGAL::Triangulation_on_sphere_2<Gt, Tds>&
 
   \return `true` if the writing was successful, `false` otherwise.
 */
-template <typename Gt, typename Tds, typename CGAL_BGL_NP_TEMPLATE_PARAMETERS>
+template <typename Gt, typename Tds, typename NamedParameters = parameters::Default_named_parameters>
 bool write_OFF(const std::string& fname,
                const CGAL::Triangulation_on_sphere_2<Gt, Tds>& dt,
-               const CGAL_BGL_NP_CLASS& np)
+               const NamedParameters& np = parameters::use_default_values())
 {
   std::ofstream os(fname); // stream precision will be set in the ostream overload
   return write_OFF(os, dt, np);
 }
-
-/// \cond SKIP_IN_MANUAL
-
-template <typename Gt, typename Tds>
-bool write_OFF(const std::string& fname, const CGAL::Triangulation_on_sphere_2<Gt, Tds>& dt)
-{
-  std::ofstream os(fname);
-  return write_OFF(os, dt, parameters::all_default());
-}
-
-/// \endcond
 
 } // namespace CGAL
 

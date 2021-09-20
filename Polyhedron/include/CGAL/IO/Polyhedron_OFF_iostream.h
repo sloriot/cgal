@@ -94,7 +94,7 @@ template <class Traits,
           class Alloc>
 bool read_OFF(std::istream& in, Polyhedron_3<Traits, Items, HDS, Alloc>& P)
 {
-  return read_OFF(in, P, parameters::all_default());
+  return read_OFF(in, P, parameters::use_default_values());
 }
 
 template <class Traits,
@@ -146,7 +146,7 @@ template <class Traits,
           class Alloc>
 bool write_OFF(std::ostream& out, const Polyhedron_3<Traits, Items, HDS, Alloc>& P)
 {
-  return write_OFF(out, P, parameters::all_default());
+  return write_OFF(out, P, parameters::use_default_values());
 }
 
 template <class Traits,

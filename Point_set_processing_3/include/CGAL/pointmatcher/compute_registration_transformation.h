@@ -548,7 +548,8 @@ compute_registration_transformation(const PointRange1& range1, const PointRange2
    converge is written to `std::cerr` if the registration cannot converge.
 */
 template <class PointRange1, class PointRange2,
-          class NamedParameters1, class NamedParameters2>
+          class NamedParameters1 = parameters::Default_named_parameters,
+          class NamedParameters2 = parameters::Default_named_parameters>
 #ifdef DOXYGEN_RUNNING
 std::pair<geom_traits::Aff_transformation_3, bool>
 #else
@@ -556,7 +557,8 @@ std::pair<typename CGAL::Point_set_processing_3::GetK<PointRange1, NamedParamete
   ::Kernel::Aff_transformation_3, bool>
 #endif
 compute_registration_transformation (const PointRange1& point_set_1, const PointRange2& point_set_2,
-                                     const NamedParameters1& np1, const NamedParameters2& np2)
+                                     const NamedParameters1& np1 = parameters::use_default_values(),
+                                     const NamedParameters2& np2 = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -595,31 +597,6 @@ compute_registration_transformation (const PointRange1& point_set_1, const Point
                                                                initial_transformation,
                                                                internal::construct_icp<Scalar>(np1, np2));
 }
-
-// convenience overloads
-template <class PointRange1, class PointRange2,
-          class NamedParameters1>
-std::pair<typename CGAL::Point_set_processing_3::GetK<PointRange1, NamedParameters1>
-  ::Kernel::Aff_transformation_3, bool>
-compute_registration_transformation(const PointRange1& point_set_1, const PointRange2& point_set_2,
-      const NamedParameters1& np1)
-{
-  namespace params = CGAL::Point_set_processing_3::parameters;
-  return compute_registration_transformation(point_set_1, point_set_2, np1, params::all_default(point_set_1));
-}
-
-template <class PointRange1, class PointRange2>
-std::pair<typename CGAL::Point_set_processing_3::GetK<PointRange1,
-          Named_function_parameters<bool, internal_np::all_default_t> >
-  ::Kernel::Aff_transformation_3, bool>
-compute_registration_transformation(const PointRange1& point_set_1, const PointRange2& point_set_2)
-{
-  namespace params = CGAL::Point_set_processing_3::parameters;
-  return compute_registration_transformation(point_set_1, point_set_2,
-                                             params::all_default(point_set_1),
-                                             params::all_default(point_set_2));
-}
-
 
 } } // end of namespace CGAL::pointmatcher
 

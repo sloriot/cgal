@@ -206,10 +206,12 @@ register_point_sets(const PointRange1& range1,    PointRange2& range2,
    \return the registration score.
 */
 template <class PointRange1, class PointRange2,
-          class NamedParameters1, class NamedParameters2>
+          class NamedParameters1 = parameters::Default_named_parameters,
+          class NamedParameters2 = parameters::Default_named_parameters>
 double
 register_point_sets (const PointRange1& point_set_1, PointRange2& point_set_2,
-                     const NamedParameters1& np1, const NamedParameters2& np2)
+                     const NamedParameters1& np1 = parameters::use_default_values(),
+                     const NamedParameters2& np2 = parameters::use_default_values())
 {
   namespace PSP = CGAL::Point_set_processing_3;
   namespace GR = gr;
@@ -250,27 +252,6 @@ register_point_sets (const PointRange1& point_set_1, PointRange2& point_set_2,
                                                point_map1, point_map2,
                                                normal_map1, normal_map2,
                                                options);
-}
-
-// convenience overloads
-template <class PointRange1, class PointRange2,
-          class NamedParameters1>
-double
-register_point_sets(const PointRange1& point_set_1, PointRange2& point_set_2,
-                    const NamedParameters1& np1)
-{
-  namespace params = CGAL::Point_set_processing_3::parameters;
-  return register_point_sets(point_set_1, point_set_2, np1, params::all_default(point_set_1));
-}
-
-template <class PointRange1, class PointRange2>
-double
-register_point_sets(const PointRange1& point_set_1, PointRange2& point_set_2)
-{
-  namespace params = CGAL::Point_set_processing_3::parameters;
-  return register_point_sets(point_set_1, point_set_2,
-                             params::all_default(point_set_1),
-                             params::all_default(point_set_2));
 }
 
 } } // end of namespace CGAL::OpenGR

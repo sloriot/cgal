@@ -350,12 +350,12 @@ update_new_point(
 template <typename ConcurrencyTag,
           typename PointRange,
           typename OutputIterator,
-          typename NamedParameters>
+          typename NamedParameters = parameters::Default_named_parameters>
 OutputIterator
 edge_aware_upsample_point_set(
   const PointRange& points,
   OutputIterator output,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -612,22 +612,6 @@ edge_aware_upsample_point_set(
 
   return output;
 }
-
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange,
-          typename OutputIterator>
-OutputIterator
-edge_aware_upsample_point_set(
-  const PointRange& points,
-  OutputIterator output)
-{
-  return edge_aware_upsample_point_set<ConcurrencyTag>
-    (points, output, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
 
 } //namespace CGAL
 

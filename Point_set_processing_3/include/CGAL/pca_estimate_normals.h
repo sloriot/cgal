@@ -148,13 +148,13 @@ pca_estimate_normal(const typename NeighborQuery::Kernel::Point_3& query, ///< p
 */
 template <typename ConcurrencyTag,
           typename PointRange,
-          typename NamedParameters
+          typename NamedParameters = parameters::Default_named_parameters
 >
 void
 pca_estimate_normals(
   PointRange& points,
   unsigned int k,
-  const NamedParameters& np)
+  const NamedParameters& np = parameters::use_default_values())
 {
   using parameters::choose_parameter;
   using parameters::get_parameter;
@@ -226,22 +226,6 @@ pca_estimate_normals(
   memory = CGAL::Memory_sizer().virtual_size(); CGAL_TRACE("  %ld Mb allocated\n", memory>>20);
   CGAL_TRACE("End of pca_estimate_normals()\n");
 }
-
-/// \cond SKIP_IN_MANUAL
-// variant with default NP
-template <typename ConcurrencyTag,
-          typename PointRange
->
-void
-pca_estimate_normals(
-  PointRange& points,
-  unsigned int k) ///< number of neighbors.
-{
-  return pca_estimate_normals<ConcurrencyTag>
-    (points, k, CGAL::Point_set_processing_3::parameters::all_default(points));
-}
-/// \endcond
-
 
 } //namespace CGAL
 
