@@ -11,7 +11,7 @@ N=10 # number of iterations
 # USING RELEASE:
 # You should run this bench from the directory that contains all builds
 # with different configurations (see below) called as below:
-# gmp-all, gmp-without-xx, boost-mp-without-gmpxx, boost-mp-without-gmp, boost-with-interval, cppint, core, leda.
+# gmp-all, gmp-without-xx, boost-mp-without-gmpxx, boost-mp-without-gmp, cppint, core, leda.
 cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-release/gmp-all/
 
 # EXACT RATIONAL TYPES (ET, see Exact_type_selector.h):
@@ -43,9 +43,6 @@ cd /Users/monet/Documents/fork/pull-requests/leda-benchmarks/builds/benchmarks-r
 # CGAL_DISABLE_GMP ON
 # CGAL_DISABLE_GMPXX ON
 # cd boost-mp-without-gmp # boost mp without gmp
-
-# or if we want to use our to_interval():
-# CMAKE_CXX_FLAGS: -DCGAL_DO_NOT_RUN_TESTME=1 -DCGAL_USE_TO_INTERVAL_WITH_BOOST=1
 
 # ----- 5 -----
 # cppint
@@ -92,8 +89,6 @@ cd ../boost-mp-without-gmpxx
 make
 cd ../boost-mp-without-gmp
 make
-cd ../boost-with-interval
-make
 cd ../cppint
 make
 cd ../core
@@ -112,8 +107,6 @@ cd ../boost-mp-without-gmpxx
 ./bench $NEFTYPE $N
 
 cd ../boost-mp-without-gmp
-./bench $NEFTYPE $N
-cd ../boost-with-interval
 ./bench $NEFTYPE $N
 cd ../cppint
 ./bench $NEFTYPE $N
@@ -134,8 +127,6 @@ cd ../boost-mp-without-gmpxx
 ./bench $ARRTYPE $N
 
 cd ../boost-mp-without-gmp
-./bench $ARRTYPE $N
-cd ../boost-with-interval
 ./bench $ARRTYPE $N
 cd ../cppint
 ./bench $ARRTYPE $N

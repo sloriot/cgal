@@ -800,12 +800,6 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_DO_NOT_RUN_TESTME: false" << std::endl;
     #endif
 
-    #if defined(CGAL_USE_TO_INTERVAL_WITH_BOOST)
-      std::cout << "- CGAL_USE_TO_INTERVAL_WITH_BOOST: true" << std::endl;
-    #else
-      std::cout << "- CGAL_USE_TO_INTERVAL_WITH_BOOST: false" << std::endl;
-    #endif
-
     std::cout << std::endl;
   }
 
