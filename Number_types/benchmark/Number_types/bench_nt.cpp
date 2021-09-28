@@ -30,6 +30,7 @@
 #include <CGAL/Arr_segment_traits_2.h>
 #include <CGAL/Counting_iterator.h>
 #include <CGAL/function_objects.h>
+#include <CGAL/Exact_integer.h>
 #include <CGAL/Exact_rational.h>
 #include <CGAL/Lazy_exact_nt.h>
 #include <CGAL/Real_timer.h>
@@ -44,9 +45,7 @@ using LAZY3 = CGAL::Lazy_kernel<SCKER>;     // basically the same as LAZY2
 using LAZY4 = CGAL::Simple_cartesian< CGAL::Interval_nt<false> >; // pure interval
 
 // Do not use with core.
-// #include <CGAL/Exact_integer.h>
-// using EI    = CGAL::Exact_integer;
-// using HOMOG = CGAL::Simple_homogeneous<EI>; // works for nef, but only for the intersection part, not for IO
+// using HOMOG = CGAL::Simple_homogeneous<CGAL::Exact_integer>; // works for nef, but only for the intersection part, not for IO
 
 #ifndef CGAL_DONT_USE_LAZY_KERNEL
 namespace PMP = CGAL::Polygon_mesh_processing;
@@ -81,12 +80,6 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_USE_GMP: true" << std::endl;
     #else
       std::cout << "- CGAL_USE_GMP: false" << std::endl;
-    #endif
-
-    #if defined(CGAL_DISABLE_GMPXX)
-      std::cout << "- CGAL_DISABLE_GMPXX: true" << std::endl;
-    #else
-      std::cout << "- CGAL_DISABLE_GMPXX: false" << std::endl;
     #endif
 
     #if defined(CGAL_USE_GMPXX)
@@ -128,18 +121,6 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
       std::cout << "- CGAL_DONT_USE_LAZY_KERNEL: false" << std::endl;
     #endif
 
-    #if defined(CGAL_USE_CPP_INT)
-      std::cout << "- CGAL_USE_CPP_INT: true" << std::endl;
-    #else
-      std::cout << "- CGAL_USE_CPP_INT: false" << std::endl;
-    #endif
-
-    #if defined(CGAL_DO_NOT_RUN_TESTME)
-      std::cout << "- CGAL_DO_NOT_RUN_TESTME: true" << std::endl;
-    #else
-      std::cout << "- CGAL_DO_NOT_RUN_TESTME: false" << std::endl;
-    #endif
-
     std::cout << std::endl;
   }
 
@@ -152,7 +133,7 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
   std::cout << std::endl;
 
   std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
-  std::cout << boost::typeindex::type_id<EI>() << std::endl;
+  std::cout << boost::typeindex::type_id<CGAL::Exact_integer>() << std::endl;
   std::cout << std::endl;
 }
 
