@@ -811,9 +811,9 @@ void print_parameters(const std::size_t num_iters, const bool verbose) {
   std::cout << boost::typeindex::type_id<ET>() << std::endl;
   std::cout << std::endl;
 
-  // std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
-  // std::cout << boost::typeindex::type_id<EI>() << std::endl;
-  // std::cout << std::endl;
+  std::cout << "* CHOSEN EXACT INTEGER TYPE:" << std::endl;
+  std::cout << boost::typeindex::type_id<EI>() << std::endl;
+  std::cout << std::endl;
 }
 
 template<typename Segment_2>
