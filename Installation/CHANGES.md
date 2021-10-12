@@ -35,7 +35,7 @@ Release date: December 2021
     that enables to provide a map from a point to a weight associated with this point.
 
 
-### [Mesh Data Structure 3](https://doc.cgal.org/5.4/Manual/packages.html#PkgMDS3) (new package)
+### [Tetrahedral Mesh Data Structure 3](https://doc.cgal.org/5.4/Manual/packages.html#PkgTMDS3) (new package)
 
 - This new package wraps all the existing code that deals with a
 ` MeshComplex_3InTriangulation_3`, and makes the data structure independant
