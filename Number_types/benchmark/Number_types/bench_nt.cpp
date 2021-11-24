@@ -45,7 +45,7 @@ using LAZY3 = CGAL::Lazy_kernel<SCKER>;     // basically the same as LAZY2
 using LAZY4 = CGAL::Simple_cartesian< CGAL::Interval_nt<false> >; // pure interval
 
 // Do not use with core.
-// using HOMOG = CGAL::Simple_homogeneous<CGAL::Exact_integer>; // works for nef, but only for the intersection part, not for IO
+// using HOMOG = CGAL::Simple_homogeneous<CGAL::Exact_integer>;
 
 #ifndef CGAL_DONT_USE_LAZY_KERNEL
 namespace PMP = CGAL::Polygon_mesh_processing;
@@ -334,7 +334,7 @@ double run_pmp_bench(
         params::vertex_point_map(get(boost::vertex_point, out_union)),        // named parameters for out_union
         params::vertex_point_map(get(boost::vertex_point, out_intersection)), // named parameters for out_intersection
         params::all_default(), // named parameters for mesh1-mesh2 not used
-        params::all_default()) // named parameters for mesh2-mesh1 not used)
+        params::all_default()) // named parameters for mesh2-mesh1 not used
     );
     #endif
 
@@ -458,8 +458,6 @@ double run_reg_bench(
   return avg_time;
 }
 
-// Works only with kernels indicated here:
-// https://doc.cgal.org/latest/Nef_3/classCGAL_1_1Nef__polyhedron__3.html
 template<typename Kernel>
 void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
 
@@ -468,32 +466,21 @@ void run_all_nef_benches(const std::size_t num_iters, const bool verbose) {
 
   // Use it to debug ET types.
 
-  // These work for any type!
-
   // std::cout << "test1" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-1.off", num_iters, verbose));
   // std::cout << "test2" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-2.off", num_iters, verbose));
   // std::cout << "test3" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-3.off", num_iters, verbose));
-
-  // These do not work for all types including gmp!
-
   // std::cout << "test4" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-4.off", num_iters, verbose));
   // std::cout << "test5" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("triangle-1.off", "triangle-5.off", num_iters, verbose));
 
-  // Always works.
-
   // std::cout << "test6" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-1.off", num_iters, verbose));
-
-  // Works only with Simple_cartesian.
   // std::cout << "test7" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("tetrahedron-1.off", "tetrahedron-2.off", num_iters, verbose));
-
-  // Real use cases.
 
   // if (verbose) std::cout << "test-real 0" << std::endl;
   // times.push_back(run_nef_bench<Kernel>("failure-11.off", "failure-12.off", num_iters, verbose));
@@ -709,13 +696,13 @@ int main(int argc, char* argv[]) {
   }
 
   // Choose a kernel.
-  // using Kernel = SCKER; // pure arithmetic, works for nef and arr
-  using Kernel = EPECK; // full support, real use case, fails for nef and works for arr
+  // using Kernel = SCKER; // pure arithmetic
+  using Kernel = EPECK; // full support
 
-  // using Kernel = LAZY1; // lazy evaluation 1, works for nef and arr
-  // using Kernel = LAZY2; // = EPECK, lazy evaluation 2, fails for nef and works for arr
-  // using Kernel = LAZY3; // = EPECK, lazy evaluation 3, fails for nef and works for arr
-  // using Kernel = LAZY4; // lazy evaluation 4, fails for nef and arr
+  // using Kernel = LAZY1; // lazy evaluation 1,
+  // using Kernel = LAZY2; // = EPECK, lazy evaluation 2
+  // using Kernel = LAZY3; // = EPECK, lazy evaluation 3
+  // using Kernel = LAZY4; // lazy evaluation 4
 
   // Print only for filtered kernels.
   // std::cout << "- EK: " << boost::typeindex::type_id<typename Kernel::Exact_kernel>() << std::endl;
