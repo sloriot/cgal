@@ -223,6 +223,7 @@ class Intersection_of_triangle_meshes
   Node_visitor visitor;
   Faces_to_nodes_map         f_to_node;      //Associate a pair of triangles to their intersection points
   std::vector<Node_id> extra_terminal_nodes; //used only for autorefinement
+  std::unordered_map<vertex_descriptor, Node_id> vertex_to_node_id; // only used for autorefinement
   Non_manifold_feature_map<TriangleMesh> non_manifold_feature_map_1,
                                          non_manifold_feature_map_2;
   static const constexpr std::size_t NM_NID = (std::numeric_limits<std::size_t>::max)();
@@ -449,13 +450,63 @@ class Intersection_of_triangle_meshes
     if (&tm1==&tm2 && h2<h1)
       key=Key(ipt.type_2, ipt.type_1, h2, h1);
 
-    std::pair<typename std::map<Key,Node_id>::iterator,bool> res=
+    std::pair<typename std::map<Key,Node_id>::iterator,bool> cnm_insert_res=
       coplanar_node_map.insert(std::make_pair(key,current_node+1));
-    if (res.second){ //insert a new node
+    if (cnm_insert_res.second){ //insert a new node
+      if (&tm1==&tm2) // only for autorefinement
+      {
+        // a vertex could intersect several halfedges (border hedges or a non-manifold hedges if nm-map is not used).
+        // We need to make sure that the node id of that vertex is the same. As it cannot
+        // be detected with coplanar_node_map, we need another map
+        if (ipt.type_1==ON_VERTEX)
+        {
+          if (ipt.type_2==ON_VERTEX)
+          {
+            auto vn_insert_res_1 = vertex_to_node_id.insert(std::make_pair(target(h1, tm1), current_node+1));
+            auto vn_insert_res_2 = vertex_to_node_id.insert(std::make_pair(target(h2, tm2), current_node+1));
+            if (!vn_insert_res_1.second)
+            {
+              CGAL_assertion(vn_insert_res_2.second || vn_insert_res_1.first->second == vn_insert_res_2.first->second);
+              vn_insert_res_2.first->second = vn_insert_res_1.first->second;
+              cnm_insert_res.first->second=vn_insert_res_1.first->second;
+              return std::pair<Node_id,bool>(vn_insert_res_1.first->second, true);
+            }
+            else
+              if(!vn_insert_res_2.second)
+              {
+                vn_insert_res_1.first->second = vn_insert_res_2.first->second;
+                cnm_insert_res.first->second=vn_insert_res_1.first->second;
+                return std::pair<Node_id,bool>(vn_insert_res_2.first->second, true);
+              }
+          }
+          else
+          {
+            auto vn_insert_res = vertex_to_node_id.insert(std::make_pair(target(h1, tm1), current_node+1));
+            if (!vn_insert_res.second)
+            {
+              cnm_insert_res.first->second=vn_insert_res.first->second;
+              return std::pair<Node_id,bool>(vn_insert_res.first->second, true);
+            }
+          }
+        }
+        else
+        {
+          if (ipt.type_2==ON_VERTEX)
+          {
+            auto vn_insert_res = vertex_to_node_id.insert(std::make_pair(target(h2, tm2), current_node+1));
+            if (!vn_insert_res.second)
+            {
+              cnm_insert_res.first->second=vn_insert_res.first->second;
+              return std::pair<Node_id,bool>(vn_insert_res.first->second, true);
+            }
+          }
+        }
+      }
+
       nodes.add_new_node(ipt.point);
       return std::pair<Node_id,bool>(++current_node, true);
     }
-    return std::pair<Node_id,bool>(res.first->second, false);
+    return std::pair<Node_id,bool>(cnm_insert_res.first->second, false);
   }
 
   void add_intersection_point_to_face_and_all_edge_incident_faces(face_descriptor f_1,
@@ -488,7 +539,9 @@ class Intersection_of_triangle_meshes
                                            ? Face_pair(f_1,f_2)
                                            : Face_pair(f_2,f_1);
         if ( coplanar_faces.count(face_pair) == 0 )
+        {
           f_to_node[face_pair].insert(node_id);
+        }
       }
     }
   }
@@ -695,9 +748,9 @@ class Intersection_of_triangle_meshes
     CGAL_assertion( &tm1 < &tm2 || &tm1==&tm2 );
 
     typedef std::tuple<Intersection_type,
-                         Intersection_type,
-                         halfedge_descriptor,
-                         halfedge_descriptor> Key;
+                       Intersection_type,
+                       halfedge_descriptor,
+                       halfedge_descriptor> Key;
 
     typedef std::map<Key,Node_id> Coplanar_node_map;
     Coplanar_node_map coplanar_node_map;
@@ -1534,7 +1587,7 @@ class Intersection_of_triangle_meshes
   {
     const TriangleMesh& tm = nodes.tm1;
     CGAL_assertion(doing_autorefinement);
-    std::map<vertex_descriptor, Node_id> vertex_to_node_id;
+
     for (typename Faces_to_nodes_map::iterator it=f_to_node.begin();
           it!=f_to_node.end(); ++it)
     {
@@ -1550,7 +1603,7 @@ class Intersection_of_triangle_meshes
           if ( target(h1, tm)==target(h2,tm) )
           {
             Node_id node_id = current_node+1;
-            std::pair< typename std::map<vertex_descriptor, Node_id>::iterator, bool>
+            std::pair< typename std::unordered_map<vertex_descriptor, Node_id>::iterator, bool>
               insert_res = vertex_to_node_id.insert(std::make_pair(target(h1,tm), node_id));
             if (insert_res.second)
             {
