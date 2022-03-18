@@ -206,9 +206,6 @@ class Intersection_of_triangle_meshes
 
   typedef std::size_t Node_id;
 
-  // we use Face_pair_and_int and not Face_pair to handle coplanar case.
-  // Indeed the boundary of the intersection of two coplanar triangles
-  // may contain several segments.
   typedef std::unordered_map< Face_pair, Node_id_set, boost::hash<Face_pair> >    Faces_to_nodes_map;
   typedef Intersection_nodes<TriangleMesh,
                              VertexPointMap1, VertexPointMap2,
