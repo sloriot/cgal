@@ -116,6 +116,7 @@ struct Default_surface_intersection_visitor{
   // If we implement a predicate only test, we can get rid of it.
   static const bool Predicates_on_constructions_needed = doing_autorefinement;
   static const bool do_need_vertex_graph = false;
+  static constexpr bool allow_triple_intersections = true;
   void set_non_manifold_feature_map(
     const TriangleMesh&,
     const Non_manifold_feature_map<TriangleMesh>&)
@@ -210,6 +211,8 @@ class Intersection_of_triangle_meshes
   typedef Intersection_nodes<TriangleMesh,
                              VertexPointMap1, VertexPointMap2,
                              Predicates_on_constructions_needed>    Node_vector;
+// config flags
+  static constexpr bool allow_triple_intersections = Node_visitor::allow_triple_intersections;
 
 // data members
   Edge_to_faces stm_edge_to_ltm_faces; // map edges from the triangle mesh with the smaller address to faces of the triangle mesh with the larger address
@@ -1273,6 +1276,11 @@ class Intersection_of_triangle_meshes
                   if (nid1==nid2)
                   {
                     // shared intersection edge ( TODO what happen for boundary intersection edges)
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+                    std::cout << "throw Triple_intersection_exception: case 1\n";
+#endif
+                    if (allow_triple_intersections)
+                      continue;
                     throw Triple_intersection_exception();
                   }
 
@@ -1283,6 +1291,11 @@ class Intersection_of_triangle_meshes
                   {
                     if ( !collinear_are_ordered_along_line(pt1, common_pt, pt2)  )
                     {
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+                      std::cout << "throw Triple_intersection_exception: case 2\n";
+#endif
+                      if (allow_triple_intersections)
+                        continue;
                       throw Triple_intersection_exception();
                     }
                   }
@@ -1334,6 +1347,11 @@ class Intersection_of_triangle_meshes
                        (collinear(s12[0], s12[1], s23[0]) && collinear(s12[0], s12[1], s23[1]) ) ||
                        (collinear(s13[0], s13[1], s23[0]) && collinear(s13[0], s13[1], s23[1]) ) )
                   {
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+                    std::cout << "throw Triple_intersection_exception: case 3\n";
+#endif
+                    if (allow_triple_intersections)
+                      continue;
                     throw Triple_intersection_exception();
                   }
 

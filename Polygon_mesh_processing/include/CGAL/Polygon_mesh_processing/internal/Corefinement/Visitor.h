@@ -84,6 +84,7 @@ struct Ecm_bind<G, No_mark<G>, No_mark<G> >
 template<class G>
 struct No_extra_output_from_corefinement
 {
+  static constexpr bool allow_triple_intersections = true;
   void start_new_polyline(std::size_t, std::size_t) {}
   void add_node_to_polyline(std::size_t){}
   template<class Node_id_pair, class halfedge_descriptor>
@@ -428,6 +429,18 @@ struct Node_id_to_vertex<TriangleMesh, true>
       put(vpm, v, p);
   }
 };
+
+template <bool doing_autorefinement, typename OutputBuilder>
+struct Allow_triple_intersections
+{
+  static constexpr bool value = false;
+};
+
+template <typename OutputBuilder>
+struct Allow_triple_intersections<true, OutputBuilder>
+{
+  static constexpr bool value = OutputBuilder::allow_triple_intersections;
+};
 }
 
 
@@ -454,6 +467,8 @@ class Surface_intersection_visitor_for_corefinement{
 public:
   static const bool Predicates_on_constructions_needed = true;
   static const bool do_need_vertex_graph = true;
+  static constexpr bool allow_triple_intersections =
+      internal::Allow_triple_intersections<doing_autorefinement, OutputBuilder>::value;
 // typdefs
 private:
   typedef std::size_t                                                   Node_id;

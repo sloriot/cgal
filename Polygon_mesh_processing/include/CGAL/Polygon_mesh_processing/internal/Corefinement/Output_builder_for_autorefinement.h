@@ -148,6 +148,8 @@ class Output_builder_for_autorefinement
   }
 
 public:
+// config flags
+  static constexpr bool allow_triple_intersections = false;
 
   Output_builder_for_autorefinement(      TriangleMesh& tm,
                                     const VertexPointMap& vpm,
