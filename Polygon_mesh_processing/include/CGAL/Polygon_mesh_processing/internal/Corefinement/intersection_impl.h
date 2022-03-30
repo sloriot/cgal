@@ -1764,12 +1764,18 @@ public:
     const TriangleMesh& tm=nodes.tm1;
     const VertexPointMap1& vpm=nodes.vpm1;
 
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== filter_intersections ==" << std::endl;
+#endif
     filter_intersections(tm, vpm);
 
     Node_id current_node((std::numeric_limits<Node_id>::max)());
     CGAL_assertion(current_node+1==0);
 
     //first handle coplanar triangles
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== compute_intersection_of_coplanar_faces ==" << std::endl;
+#endif
     compute_intersection_of_coplanar_faces(current_node, tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1);
     if (!coplanar_faces.empty())
       visitor.input_have_coplanar_faces();
@@ -1778,6 +1784,9 @@ public:
 
     //compute intersection points of segments and triangles.
     //build the nodes of the graph and connectivity infos
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== compute_intersection_points ==" << std::endl;
+#endif
     compute_intersection_points(stm_edge_to_ltm_faces, tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1, current_node);
 
     if (!build_polylines){
@@ -1791,13 +1800,22 @@ public:
     //  (check_coplanar_edge(s)) of this so that,
     //  we can remove one intersecting edge out of the two
 /// TODO AUTOREF_TAG does this happen in coplanar cases only? + shall we do it have new edge splitting?
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== remove_duplicated_intersecting_edges ==" << std::endl;
+#endif
     remove_duplicated_intersecting_edges();
 
 
     // If a pair of faces defines an isolated node, check if they share a common
     // vertex and create a new node in that case.
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== add_common_vertices_for_pairs_of_faces_with_isolated_node ==" << std::endl;
+#endif
     add_common_vertices_for_pairs_of_faces_with_isolated_node(current_node);
 
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== detect_intersections_in_the_graph ==" << std::endl;
+#endif
     detect_intersections_in_the_graph(tm, vpm, current_node);
 #if 0
     //collect connectivity infos and create polylines
@@ -1805,12 +1823,18 @@ public:
 #endif
       //using the graph approach (at some point we know all
       // connections between intersection points)
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== construct_polylines ==" << std::endl;
+#endif
       construct_polylines(output);
 #if 0
     else
       construct_polylines_with_info(nodes,out); //direct construction by propagation
 #endif
 
+#ifdef CGAL_DEBUG_AUTOREFINEMENT
+    std::cout << "== visitor.finalize() ==" << std::endl;
+#endif
     visitor.finalize(nodes,tm,tm,vpm,vpm);
 
     return output;
