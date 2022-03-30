@@ -1386,10 +1386,15 @@ public:
           //to optimize it might be better to only use sorted pair. TAG_SLXX1
           Node_id_pair opposite_pair(node_id_pair.second,node_id_pair.first);
           it_poly_hedge=edge_to_hedge.find(opposite_pair);
-          CGAL_assertion( it_poly_hedge!=edge_to_hedge.end() );
 
-          call_put(marks_on_edges,tm,edge(it_poly_hedge->second,tm),true);
-          output_builder.set_edge_per_polyline(tm,opposite_pair,it_poly_hedge->second);
+          if (it_poly_hedge!=edge_to_hedge.end())
+          {
+            // TODO: change to be checked
+            CGAL_assertion( it_poly_hedge!=edge_to_hedge.end() );
+
+            call_put(marks_on_edges,tm,edge(it_poly_hedge->second,tm),true);
+            output_builder.set_edge_per_polyline(tm,opposite_pair,it_poly_hedge->second);
+          }
         }
       }
     }
