@@ -1025,9 +1025,36 @@ class Intersection_of_triangle_meshes
           case ON_FACE:
           {
             CGAL_assertion(f_2==face(std::get<1>(res),tm2));
-
-            Node_id node_id=++current_node;
-            add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            Node_id node_id(-1);
+            if (doing_autorefinement)
+            {
+              if ( std::get<3>(res) ) // is edge target in triangle plane
+              {
+                auto vtn_ires = vertex_to_node_id.insert( std::make_pair(target(h_1, tm1), current_node+1) );
+                if (vtn_ires.second)
+                  ++current_node;
+                node_id = vtn_ires.first->second;
+              }
+              else
+              {
+                if ( std::get<2>(res) ) // is edge source in triangle plane
+                {
+                  auto vtn_ires = vertex_to_node_id.insert( std::make_pair(source(h_1, tm1), current_node+1) );
+                  if (vtn_ires.second)
+                    ++current_node;
+                  node_id = vtn_ires.first->second;
+                }
+                else
+                  node_id = ++current_node;
+              }
+              if (node_id == current_node)
+                add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            }
+            else
+            {
+              node_id=++current_node;
+              add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            }
             visitor.new_node_added(node_id,ON_FACE,h_1,halfedge(f_2,tm2),tm1,tm2,std::get<3>(res),std::get<2>(res));
             for (;it_edge!=all_edges.end();++it_edge){
               add_intersection_point_to_face_and_all_edge_incident_faces(f_2,*it_edge,tm2,tm1,node_id);
@@ -1048,8 +1075,36 @@ class Intersection_of_triangle_meshes
           // Case when the edge intersect one edge of the face.
           case ON_EDGE:
           {
-            Node_id node_id=++current_node;
-            add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            Node_id node_id(-1);
+            if (doing_autorefinement)
+            {
+              if ( std::get<3>(res) ) // is edge target in triangle plane
+              {
+                auto vtn_ires = vertex_to_node_id.insert( std::make_pair(target(h_1, tm1), current_node+1) );
+                if (vtn_ires.second)
+                  ++current_node;
+                node_id = vtn_ires.first->second;
+              }
+              else
+              {
+                if ( std::get<2>(res) ) // is edge source in triangle plane
+                {
+                  auto vtn_ires = vertex_to_node_id.insert( std::make_pair(source(h_1, tm1), current_node+1) );
+                  if (vtn_ires.second)
+                    ++current_node;
+                  node_id = vtn_ires.first->second;
+                }
+                else
+                  node_id = ++current_node;
+              }
+              if (node_id == current_node)
+                add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            }
+            else
+            {
+              node_id=++current_node;
+              add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
+            }
             halfedge_descriptor h_2=std::get<1>(res);
 
             std::size_t eid2 = nm_features_map_2.non_manifold_edges.empty()
@@ -1086,9 +1141,40 @@ class Intersection_of_triangle_meshes
 
           case ON_VERTEX:
           {
-            Node_id node_id=++current_node;
             halfedge_descriptor h_2=std::get<1>(res);
-            nodes.add_new_node(get(vpm2, target(h_2,tm2))); //we use the original vertex to create the node
+            Node_id node_id(-1);
+            if (doing_autorefinement)
+            {
+              auto vtn_ires_v2 = vertex_to_node_id.insert( std::make_pair(target(h_2, tm2), current_node+1) );
+
+              if ( std::get<3>(res) ) // is edge target in triangle plane
+              {
+                auto vtn_ires = vertex_to_node_id.insert( std::make_pair(target(h_1, tm1), vtn_ires_v2.first->second) );
+                node_id = vtn_ires.first->second;
+              }
+              else
+              {
+                if ( std::get<2>(res) ) // is edge source in triangle plane
+                {
+                  auto vtn_ires = vertex_to_node_id.insert( std::make_pair(source(h_1, tm1), vtn_ires_v2.first->second) );
+                  node_id = vtn_ires.first->second;
+                }
+                else
+                  node_id = vtn_ires_v2.first->second;
+              }
+              if (node_id != current_node+1)
+                vtn_ires_v2.first->second = node_id; // update in case node was already known
+              else
+              {
+                ++current_node;
+                nodes.add_new_node(get(vpm2, target(h_2,tm2))); //we use the original vertex to create the node
+              }
+            }
+            else
+            {
+              node_id=++current_node;
+              nodes.add_new_node(get(vpm2, target(h_2,tm2))); //we use the original vertex to create the node
+            }
             //before it was ON_FACE but do not remember why, probably a bug...
             visitor.new_node_added(node_id,ON_VERTEX,h_1,h_2,tm1,tm2,std::get<3>(res),std::get<2>(res));
 
@@ -1129,7 +1215,7 @@ class Intersection_of_triangle_meshes
 
     void insert(Node_id i){
       ++degree;
-      CGAL_assertion(!neighbors.count(i));
+//      CGAL_assertion(!neighbors.count(i)); //TMP
       neighbors.insert(i);
     }
 
