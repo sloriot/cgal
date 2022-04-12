@@ -146,6 +146,9 @@ namespace Boost_MP_internal {
   // here we know that `intv` contains int64 numbers such that their msb is std::numeric_limits<double>::digits-1
   inline
   Interval_nt<false> shift_positive_interval( const Interval_nt<false>& intv, const int e ) {
+    
+    std::cout << "shift_positive_interval\n";
+    
     CGAL_assertion(intv.inf() > 0.0);
     CGAL_assertion(intv.sup() > 0.0);
     typedef std::numeric_limits<double> limits;
@@ -153,13 +156,26 @@ namespace Boost_MP_internal {
     if (e < limits::min_exponent)
     {
       if ( e+std::numeric_limits<double>::digits < std::numeric_limits<double>::min_exponent)
-        return CGAL::Interval_nt<false>(0, (limits::min)());
+      {        
+        if (limits::has_denorm == std::denorm_absent||
+            e/* +std::numeric_limits<double>::digits */ <= -1022)
+        {
+          std::cout << "case 1\n";
+          return CGAL::Interval_nt<false>(0, limits::denorm_min());
+        }
+      }
+      std::cout << "case 2\n";
       // following calls to ldexp call are exact (e+digits is larger or equal to min_exponent)
       return CGAL::Interval_nt<false>(std::ldexp(intv.inf(), e), std::ldexp(intv.sup(), e));
     }
     if (e > limits::max_exponent)
+    {
+      std::cout << "case 3\n";
       return CGAL::Interval_nt<false>((limits::max)(), limits::infinity()); // no multiplication as intv is positive
+    }
 
+    std::cout << "case 4\n";
+    Protect_FPU_rounding<true> P(CGAL_FE_UPWARD);
     const double scale = std::ldexp(1.0, e); // ldexp call is exact (e is less than min_exponent)
     return scale * intv;
   }
@@ -183,14 +199,21 @@ namespace Boost_MP_internal {
   bool are_bounds_correct( const double l, const double u, const Type& x ) {
     typedef std::numeric_limits<double> limits;
 
+    std::cout << "are_bounds_correct\n" << std::setprecision(17);
+    std::cout << "l: " << l << "\n";
+    std::cout << "u: " << u << "\n";
+    std::cout << "l==u " << (l==u) << "\n";
+    
     const double inf = std::numeric_limits<double>::infinity();
     if ( u!=l && (u==-inf || l==inf
-                          || (u==0 && l >=  -(limits::min)())
-                          || (l==0 && u <= (limits::min)())) )
+                          || (u==0 && l <=  -limits::denorm_min())
+                          || (l==0 && u >= limits::denorm_min())) )
     {
+      std::cout << "we are here\n";
+      
       return x >  Type((limits::max)()) ||
              x < Type(-(limits::max)()) ||
-             (x > Type(-(limits::min)()) && x < Type((limits::min)()));
+             (x >= Type(-limits::denorm_min()) && x <= Type(limits::denorm_min()));
     }
 
 //    CGAL_assertion(u == l || u == std::nextafter(l, +inf));
@@ -217,6 +240,7 @@ namespace Boost_MP_internal {
     }
     const Type lb(l), ub(u);
     const bool are_bounds_respected = (lb <= x && x <= ub);
+    std::cout << "are_bounds_respected " << are_bounds_respected << "\n";
     return are_bounds_tight && are_bounds_respected;
   }
 
@@ -245,7 +269,6 @@ namespace Boost_MP_internal {
     const double pp_dbl = static_cast<double>(pp);
     const double qq_dbl = static_cast<double>(qq);
     const Interval_nt<false> intv(pp_dbl, qq_dbl);
-    Protect_FPU_rounding<true> P(CGAL_FE_UPWARD);
     return shift_positive_interval(intv, -static_cast<int>(shift)).pair();
   }
 
