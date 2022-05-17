@@ -35,19 +35,19 @@ int main(int argc, char* argv[])
   {
     CGAL::Timer t;
     t.start();
-    PMP::clip(tet, tri);
+    K::Plane_3 p(-0.990461, -0.0105343, 0.137388,169.738);
+    PMP::clip(tet, true, p, CGAL::parameters::clip_volume(true));
     std::cout << "New: " << t.time() << " sec." << std::endl;
     std::ofstream out("new_out.off");
     out.precision(17);
     out << tet << std::endl;
   }
 
-
   {
     CGAL::Timer t;
     t.start();
     K::Plane_3 p(-0.990461, -0.0105343, 0.137388,169.738);
-    PMP::clip(tet_copy, p);
+    PMP::clip(tet_copy, p, CGAL::parameters::clip_volume(true));
     std::cout << "Old: " << t.time() << " sec." << std::endl;
     std::ofstream out("old_out.off");
     out.precision(17);

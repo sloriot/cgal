@@ -71,6 +71,12 @@ private:
     return typename Exact_kernel::Point_3(p.x(), p.y(), p.z());
   }
 
+  typename Exact_kernel::Plane_3
+  to_exact(const typename Input_kernel::Plane_3& p) const
+  {
+    return typename Exact_kernel::Plane_3(p.a(), p.b(), p.c(), p.d());
+  }
+
 public:
   const TriangleMesh &tm1, &tm2;
   const VertexPointMap1& vpm1;
@@ -120,6 +126,19 @@ public:
         to_exact( get(vpm_b, target(next(h_b,tm_b),tm_b)) ),
         to_exact( get(vpm_a, source(h_a,tm_a)) ),
         to_exact( get(vpm_a, target(h_a,tm_a)) ) ) );
+  }
+
+  template <class VPM> // VertexPointMap1 or VertexPointMap2
+  void add_new_node(const typename Input_kernel::Plane_3& plane,
+                    halfedge_descriptor h,
+                    const TriangleMesh& tm,
+                    const VPM& vpm)
+  {
+    add_new_node(
+      typename Exact_kernel::Construct_plane_line_intersection_point_3()(
+        to_exact( plane ),
+        to_exact( get(vpm, source(h,tm)) ),
+        to_exact( get(vpm, target(h,tm)) ) ) );
   }
 
   template <class VPM> // VertexPointMap1 or VertexPointMap2
@@ -208,6 +227,12 @@ public:
     return Exact_kernel::Point_3(p.x(), p.y(), p.z());
   }
 
+  Exact_kernel::Plane_3
+  to_exact(const typename Input_kernel::Plane_3& p) const
+  {
+    return Exact_kernel::Plane_3(p.a(), p.b(), p.c(), p.d());
+  }
+
   size_t size() const {return enodes.size();}
 
   void add_new_node(const Exact_kernel::Point_3& p)
@@ -242,6 +267,19 @@ public:
         to_exact( get(vpm_b, target(next(h_b,tm_b),tm_b)) ),
         to_exact( get(vpm_a, source(h_a,tm_a)) ),
         to_exact( get(vpm_a, target(h_a,tm_a)) ) ) );
+  }
+
+  template <class VPM> // VertexPointMap1 or VertexPointMap2
+  void add_new_node(const typename Input_kernel::Plane_3& plane,
+                    halfedge_descriptor h,
+                    const TriangleMesh& tm,
+                    const VPM& vpm)
+  {
+    add_new_node(
+      typename Exact_kernel::Construct_plane_line_intersection_point_3()(
+        to_exact( plane ),
+        to_exact( get(vpm, source(h,tm)) ),
+        to_exact( get(vpm, target(h,tm)) ) ) );
   }
 
   // use to resolve intersection of 3 faces in autorefinement only
@@ -412,6 +450,19 @@ public:
         get(vpm_b, target(next(h_b,tm_b),tm_b)),
         get(vpm_a, source(h_a,tm_a)),
         get(vpm_a, target(h_a,tm_a)) ) );
+  }
+
+  template <class VPM> // VertexPointMap1 or VertexPointMap2
+  void add_new_node(const typename Exact_kernel::Plane_3& plane,
+                    halfedge_descriptor h,
+                    const TriangleMesh& tm,
+                    const VPM& vpm)
+  {
+    add_new_node(
+      typename Exact_kernel::Construct_plane_line_intersection_point_3()(
+        plane,
+        get(vpm, source(h,tm)),
+        get(vpm, target(h,tm)) ) );
   }
 
   void add_new_node(const Point_3& p)

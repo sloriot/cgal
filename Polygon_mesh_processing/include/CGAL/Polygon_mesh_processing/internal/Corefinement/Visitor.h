@@ -440,7 +440,8 @@ template< class TriangleMesh,
           class EdgeMarkMapBind_ = Default,
           class UserVisitor_ = Default,
           bool doing_autorefinement = false,
-          bool handle_non_manifold_features = false >
+          bool handle_non_manifold_features = false,
+          bool clip_using_a_plane = false>
 class Surface_intersection_visitor_for_corefinement{
 //default template parameters
   typedef typename Default::Get<EdgeMarkMapBind_,
@@ -830,6 +831,83 @@ public:
 
         on_edge[tm1_ptr][edge(h_1,tm1)].push_back(node_id);
         check_node_on_boundary_edge_case(node_id,h_1,tm1);
+      }
+    }
+  }
+
+  void new_node_added(std::size_t node_id,
+                      halfedge_descriptor h,
+                      const TriangleMesh& tm,
+                      bool is_target_coplanar,
+                      bool is_source_coplanar)
+  {
+    TriangleMesh* tm_ptr = const_cast<TriangleMesh*>(&tm);
+    //~ TriangleMesh* tm2_ptr = const_cast<TriangleMesh*>(&tm2);
+    graph_node_classifier.new_node(node_id, *tm_ptr);
+    //~ graph_node_classifier.new_node(node_id, *tm2_ptr);
+
+    //forward to the visitor
+//    user_visitor.intersection_point_detected(node_id, type, h_1, h_2, tm1, tm2, is_target_coplanar, is_source_coplanar);
+    //~ if (tm2_ptr!=const_mesh_ptr)
+    //~ {
+      //~ on_face[tm2_ptr][face(h_2,tm2)].push_back(node_id);
+    //~ }
+
+    CGAL_assertion(!is_target_coplanar || !is_source_coplanar); //coplanar edge are not forwarded
+
+    if ( is_target_coplanar )
+    {
+      //grab original vertex that is on commom intersection
+      mesh_to_vertices_on_inter[tm_ptr].insert(std::make_pair(node_id,h));
+      Node_id_to_vertex& node_id_to_vertex=mesh_to_node_id_to_vertex[tm_ptr];
+      if (node_id_to_vertex.size()<=node_id)
+        node_id_to_vertex.resize(node_id+1);
+      node_id_to_vertex.register_vertex(node_id, target(h,tm));
+      all_incident_faces_got_a_node_as_vertex(h,node_id, *tm_ptr);
+      // register the vertex in the output builder
+      output_builder.set_vertex_id(target(h, tm), node_id, tm);
+      check_node_on_boundary_vertex_case(node_id,h,tm);
+    }
+    else{
+      if ( is_source_coplanar ){
+        //grab original vertex that is on commom intersection
+        halfedge_descriptor h_opp=opposite(h,tm);
+        mesh_to_vertices_on_inter[tm_ptr].insert(std::make_pair(node_id,h_opp));
+        Node_id_to_vertex& node_id_to_vertex=mesh_to_node_id_to_vertex[tm_ptr];
+        if(node_id_to_vertex.size()<=node_id)
+          node_id_to_vertex.resize(node_id+1);
+        node_id_to_vertex.register_vertex(node_id, source(h, tm));
+        all_incident_faces_got_a_node_as_vertex(h_opp,node_id, *tm_ptr);
+        // register the vertex in the output builder
+        output_builder.set_vertex_id(source(h, tm), node_id, tm);
+        check_node_on_boundary_vertex_case(node_id,h_opp,tm);
+      }
+      else{
+        //handle intersection on principal edge
+        typename std::map<const TriangleMesh*, const NM_features_map*>::iterator it_find =
+          non_manifold_feature_maps.find(tm_ptr);
+        if ( it_find != non_manifold_feature_maps.end() )
+        {
+          // update h if it is not the canonical non-manifold edge
+          // This is important to make sure intersection points on non-manifold
+          // edges are all connected for the same edge so that the redistribution
+          // on other edges does not overwrite some nodes.
+          // This update might be required in case of EDGE-EDGE intersection or
+          // COPLANAR intersection.
+          const NM_features_map& nm_features_map_1 = *it_find->second;
+          std::size_t eid1 = nm_features_map_1.non_manifold_edges.empty()
+                           ? std::size_t(-1)
+                           : get(nm_features_map_1.e_nm_id, edge(h, tm));
+
+          if (eid1 != std::size_t(-1))
+          {
+            if ( edge(h, tm) != nm_features_map_1.non_manifold_edges[eid1].front() )
+              h = halfedge(nm_features_map_1.non_manifold_edges[eid1].front(), tm);
+          }
+        }
+
+        on_edge[tm_ptr][edge(h,tm)].push_back(node_id);
+        check_node_on_boundary_edge_case(node_id,h,tm);
       }
     }
   }

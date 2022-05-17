@@ -205,6 +205,9 @@ class Intersection_of_triangle_meshes
   typedef std::set< Face_pair > Coplanar_face_set;
 
   typedef std::size_t Node_id;
+  
+  typedef typename Kernel_traits<
+    typename boost::property_traits<VertexPointMap1>::value_type>::type Input_kernel;
 
   // we use Face_pair_and_int and not Face_pair to handle coplanar case.
   // Indeed the boundary of the intersection of two coplanar triangles
@@ -226,7 +229,8 @@ class Intersection_of_triangle_meshes
   Non_manifold_feature_map<TriangleMesh> non_manifold_feature_map_1,
                                          non_manifold_feature_map_2;
   static const constexpr std::size_t NM_NID = (std::numeric_limits<std::size_t>::max)();
-  CGAL_assertion_code(bool doing_autorefinement;)
+  CGAL_assertion_code(bool doing_autorefinement = false;)
+  CGAL_assertion_code(bool clip_with_plane = false;)
 
 // member functions
   template <class VPMF, class VPME>
@@ -240,48 +244,6 @@ class Intersection_of_triangle_meshes
                             std::set<face_descriptor>& tm_e_faces,
                             bool run_check)
   {
-      // when tm_e is the non-intersecting clip triangle nothing is to do
-      if (faces(tm_e).size() == 1) {
-          return;
-    }
-      if (faces(tm_f).size() == 1) {
-          face_descriptor fd = *faces(tm_f).begin();
-          halfedge_descriptor hd = halfedge(fd, tm_f);
-          auto fp0 = get(vpm_f, source(hd, tm_f));
-          auto fp1 = get(vpm_f, target(hd, tm_f));
-          auto fp2 = get(vpm_f, target(next(hd, tm_f), tm_f));
-          std::vector<CGAL::Oriented_side> vertex_os(num_vertices(tm_e));
-          bool all_in = true;
-          bool all_out = true;
-          for (vertex_descriptor v : vertices(tm_e))
-          {
-            vertex_os[v] = orientation(fp0, fp1, fp2, get(vpm_e, v));
-            if (vertex_os[v] != CGAL::ON_POSITIVE_SIDE) all_in = false;
-            if (vertex_os[v] != CGAL::ON_NEGATIVE_SIDE) all_out = false;
-          }
-
-          Edge_to_faces& edge_to_faces = &tm_e < &tm_f
-              ? stm_edge_to_ltm_faces
-              : ltm_edge_to_stm_faces;
-#ifdef DO_NOT_HANDLE_COPLANAR_FACES
-           typedef Collect_face_bbox_per_edge_bbox<TriangleMesh, Edge_to_faces> Callback;
-           Callback callback(tm_f, tm_e, edge_to_faces);
-#else
-
-          typedef Collect_face_bbox_per_edge_bbox_with_coplanar_handling<
-              TriangleMesh, VPMF, VPME, Edge_to_faces, Coplanar_face_set>
-              Callback;
-          Callback  callback(tm_f, tm_e, vpm_f, vpm_e, edge_to_faces, coplanar_faces);
-#endif
-          for (edge_descriptor e : edges(tm_e))
-          {
-              vertex_descriptor src = source(e, tm_e), tgt = target(e, tm_e);
-              if (vertex_os[src] == CGAL::ON_ORIENTED_BOUNDARY || vertex_os[tgt] == CGAL::ON_ORIENTED_BOUNDARY || vertex_os[src] != vertex_os[tgt]) {
-                  callback(halfedge(fd, tm_f), halfedge(e, tm_e));
-              }
-          }
-          return;
-    }
     std::vector<Box> face_boxes, edge_boxes;
     std::vector<Box*> face_boxes_ptr, edge_boxes_ptr;
 
@@ -415,6 +377,99 @@ class Intersection_of_triangle_meshes
     CGAL::box_intersection_d( face_boxes_ptr.begin(), face_boxes_ptr.end(),
                               edge_boxes_ptr.begin(), edge_boxes_ptr.end(),
                               callback, cutoff );
+  }
+
+  // for clipping with plane
+  template <class VPME>
+  void filter_intersections(const typename Input_kernel::Plane_3& plane,
+                            const TriangleMesh& tm_edges,
+                            const VPME& vpmap_tme,
+                                  std::vector<CGAL::Oriented_side>& vertex_os,
+                            const Non_manifold_feature_map<TriangleMesh>& non_manifold_feature_map,
+                            bool throw_on_self_intersection)
+  {
+    face_descriptor fd = boost::graph_traits<TriangleMesh>::null_face();
+
+    bool all_in = true;
+    bool all_out = true;
+    for (vertex_descriptor v : vertices(tm_edges))
+    {
+      vertex_os[v] = plane.oriented_side(get(vpmap_tme, v));
+      if (vertex_os[v] != CGAL::ON_POSITIVE_SIDE) all_in = false;
+      if (vertex_os[v] != CGAL::ON_NEGATIVE_SIDE) all_out = false;
+    }
+
+    if (all_in || all_out) return;
+
+    auto test_halfedge = [&](halfedge_descriptor h)
+    {
+      //check if the segment intersects the plane of the facet or if it is included in the plane
+      const Orientation o_src = vertex_os[source(h, tm_edges)];
+      const Orientation o_tgt = vertex_os[target(h, tm_edges)];
+      if (o_src==o_tgt){
+        if (o_src!=ON_ORIENTED_BOUNDARY){
+          return; //no intersection
+        }
+
+        if (plane.oriented_side(get(vpmap_tme, target( next(h, tm_edges), tm_edges)))==ON_ORIENTED_BOUNDARY)
+          coplanar_faces.insert(std::make_pair(fd, face(h, tm_edges)));
+        halfedge_descriptor h_opp=opposite(h, tm_edges);
+        if (!is_border(h_opp, tm_edges) &&
+            plane.oriented_side(get(vpmap_tme, target(next(h_opp, tm_edges),tm_edges)))==ON_ORIENTED_BOUNDARY)
+        {
+          coplanar_faces.insert(std::make_pair(fd, face(h_opp, tm_edges)));
+        }
+        //in case only the edge is coplanar, the intersection points will be detected using an incident facet
+        return;
+      }
+      // non-coplanar case
+      stm_edge_to_ltm_faces[edge(h,tm_edges)].insert(fd);
+    };
+
+    if (non_manifold_feature_map.non_manifold_edges.empty())
+    // general manifold case
+      for (edge_descriptor e : edges(tm_edges))
+      {
+        halfedge_descriptor h = halfedge(e, tm_edges);
+        test_halfedge(h);
+      }
+    else
+    // non-manifold case
+      for (edge_descriptor e : edges(tm_edges))
+      {
+        std::size_t eid=get(non_manifold_feature_map.e_nm_id, e);
+        halfedge_descriptor h=halfedge(e,tm_edges);
+        // insert only one copy of a non-manifold edge
+        if (eid!=NM_NID)
+        {
+          if (non_manifold_feature_map.non_manifold_edges[eid].front()!=e)
+            continue;
+          else
+            // make sure the halfedge used is consistant with stored one
+            h = halfedge(non_manifold_feature_map.non_manifold_edges[eid].front(), tm_edges);
+        }
+        test_halfedge(h);
+      }
+
+    if (throw_on_self_intersection)
+    {
+      std::set<face_descriptor> tm_e_faces;
+      for (const auto& p : stm_edge_to_ltm_faces)
+      {
+        halfedge_descriptor h = halfedge(p.first, tm_edges);
+        if (!is_border(h, tm_edges))
+          tm_e_faces.insert(face(h, tm_edges));
+        h=opposite(h, tm_edges);
+        if (!is_border(h, tm_edges))
+          tm_e_faces.insert(face(h, tm_edges));
+      }
+      if (Polygon_mesh_processing::does_self_intersect(tm_e_faces,
+                                                       tm_edges,
+                                                       CGAL::parameters::vertex_point_map(vpmap_tme)))
+      {
+        throw Self_intersection_exception();
+      }
+    }
   }
 
   template<class Cpl_inter_pt,class Key>
@@ -1624,7 +1679,6 @@ public:
   {
     CGAL_precondition(is_triangle_mesh(tm1));
     CGAL_precondition(is_triangle_mesh(tm2));
-    CGAL_assertion_code( doing_autorefinement=false; )
   }
 
   // for autorefinement
@@ -1636,6 +1690,18 @@ public:
   {
     CGAL_precondition(is_triangle_mesh(tm));
     CGAL_assertion_code( doing_autorefinement=true; )
+  }
+
+  // for clipping with a plane
+  Intersection_of_triangle_meshes(const TriangleMesh& tm,
+                                  const VertexPointMap1& vpm,
+                                  bool,
+                                  const Node_visitor& v=Node_visitor())
+  : nodes(tm, tm, vpm, vpm)
+  , visitor(v)
+  {
+    CGAL_precondition(is_triangle_mesh(tm));
+    CGAL_assertion_code( clip_with_plane=true; )
   }
 
 // setting maps of non manifold features
@@ -1787,6 +1853,216 @@ public:
 
     visitor.finalize(nodes,tm,tm,vpm,vpm);
 
+    return output;
+  }
+
+  // for clipping with a plane
+  template <class OutputIterator,class Plane_3>
+  OutputIterator operator()(OutputIterator output,
+                            const Plane_3& plane,
+                            bool throw_on_self_intersection,
+                            bool build_polylines)
+  {
+    std::cout << "coucou\n";
+    CGAL_assertion(!doing_autorefinement && clip_with_plane);
+
+    const TriangleMesh& tm=nodes.tm1;
+    const VertexPointMap1& vpm=nodes.vpm1;
+
+    std::vector<CGAL::Oriented_side> vertex_os(num_vertices(tm)); // TODO: used vertex index map
+    filter_intersections(plane, tm, vpm, vertex_os, non_manifold_feature_map_1, throw_on_self_intersection);
+
+    Node_id current_node((std::numeric_limits<Node_id>::max)());
+    CGAL_assertion(current_node+1==0);
+// TODO: handle non-manifold edges in coplanar
+    
+    // TODO: handle coplanar
+    visitor.set_number_of_intersection_points_from_coplanar_faces(current_node+1);
+    
+  
+    //~ #ifndef DO_NOT_HANDLE_COPLANAR_FACES
+    //~ //first handle coplanar triangles
+    //~ if (&tm1<&tm2)
+      //~ compute_intersection_of_coplanar_faces(current_node, tm1, tm2, vpm1, vpm2, non_manifold_feature_map_1, non_manifold_feature_map_2);
+    //~ else
+      //~ compute_intersection_of_coplanar_faces(current_node, tm2, tm1, vpm2, vpm1, non_manifold_feature_map_2, non_manifold_feature_map_1);
+
+    //~ visitor.set_number_of_intersection_points_from_coplanar_faces(current_node+1);
+    //~ if (!coplanar_faces.empty())
+      //~ visitor.input_have_coplanar_faces();
+    //~ #endif // not DO_NOT_HANDLE_COPLANAR_FACES
+
+    //~ //compute intersection points of segments and triangles.
+    //~ //build the nodes of the graph and connectivity infos
+    //~ Edge_to_faces& tm1_edge_to_tm2_faces = (&tm1<&tm2)
+                                         //~ ? stm_edge_to_ltm_faces
+                                         //~ : ltm_edge_to_stm_faces;
+    //~ Edge_to_faces& tm2_edge_to_tm1_faces = (&tm1>&tm2)
+                                         //~ ? stm_edge_to_ltm_faces
+                                         //~ : ltm_edge_to_stm_faces;
+
+    // compute_intersection_points
+    
+    std::cout << "nb intersected edges: " << stm_edge_to_ltm_faces.size() << "\n";
+    
+    for(typename Edge_to_faces::iterator it=stm_edge_to_ltm_faces.begin();
+                                         it!=stm_edge_to_ltm_faces.end();++it)
+    {
+      edge_descriptor e_1=it->first;
+
+      halfedge_descriptor h_1=halfedge(e_1,tm);
+      Face_set& fset=it->second;
+      CGAL_assertion(fset.size()==1);
+
+      face_descriptor f_2=*fset.begin();
+      CGAL_assertion(f_2 == boost::graph_traits<TriangleMesh>::null_face());
+    
+   //handle degenerate case: one extremity of edge belong to f_2
+      vertex_descriptor src = source(e_1, tm), tgt = target(e_1, tm);
+      std::vector<halfedge_descriptor> all_edges;
+      if ( vertex_os[tgt]==ON_ORIENTED_BOUNDARY ) // is edge target in triangle plane
+      {
+        if (!non_manifold_feature_map_1.non_manifold_edges.empty())
+        {
+          std::size_t vid1 = get(non_manifold_feature_map_1.v_nm_id, tgt);
+          if (vid1 != NM_NID)
+          {
+            for (vertex_descriptor vd : non_manifold_feature_map_1.non_manifold_vertices[vid1])
+            {
+              std::copy(halfedges_around_target(vd,tm).first,
+                        halfedges_around_target(vd,tm).second,
+                        std::back_inserter(all_edges));
+            }
+            if (all_edges.front()!=h_1)
+            {
+              // restore expected property
+              typename std::vector<halfedge_descriptor>::iterator pos =
+                std::find(all_edges.begin(), all_edges.end(), h_1);
+              CGAL_assertion(pos!=all_edges.end());
+              std::swap(*pos, all_edges.front());
+            }
+          }
+          else
+            std::copy(halfedges_around_target(h_1,tm).first,
+                      halfedges_around_target(h_1,tm).second,
+                      std::back_inserter(all_edges));
+        }
+        else
+          std::copy(halfedges_around_target(h_1,tm).first,
+                    halfedges_around_target(h_1,tm).second,
+                    std::back_inserter(all_edges));
+      }
+      else{
+        if ( vertex_os[src]==ON_ORIENTED_BOUNDARY ) // is edge source in triangle plane
+        {
+          if (!non_manifold_feature_map_1.non_manifold_edges.empty())
+          {
+            std::size_t vid1 = get(non_manifold_feature_map_1.v_nm_id, src);
+            if (vid1 != NM_NID)
+            {
+              for (vertex_descriptor vd : non_manifold_feature_map_1.non_manifold_vertices[vid1])
+              {
+                std::copy(halfedges_around_source(vd,tm).first,
+                          halfedges_around_source(vd,tm).second,
+                          std::back_inserter(all_edges));
+              }
+              if (all_edges.front()!=h_1)
+              {
+                // restore expected property
+                typename std::vector<halfedge_descriptor>::iterator pos =
+                  std::find(all_edges.begin(), all_edges.end(), h_1);
+                CGAL_assertion(pos!=all_edges.end());
+                std::swap(*pos, all_edges.front());
+              }
+            }
+            else
+              std::copy(halfedges_around_source(h_1,tm).first,
+                        halfedges_around_source(h_1,tm).second,
+                        std::back_inserter(all_edges));
+          }
+          else
+            std::copy(halfedges_around_source(h_1,tm).first,
+                      halfedges_around_source(h_1,tm).second,
+                      std::back_inserter(all_edges));
+        }
+        else
+        {
+          all_edges.push_back(h_1);
+          edge_descriptor e_1 = edge(h_1, tm);
+          if (!non_manifold_feature_map_1.non_manifold_edges.empty())
+          {
+            std::size_t eid1 = get(non_manifold_feature_map_1.e_nm_id, e_1);
+            if (eid1 != NM_NID)
+            {
+              CGAL_assertion( non_manifold_feature_map_1.non_manifold_edges[eid1][0]==e_1 );
+              for (std::size_t k=1;
+                               k<non_manifold_feature_map_1.non_manifold_edges[eid1].size();
+                               ++k)
+              {
+                edge_descriptor e_1b = non_manifold_feature_map_1.non_manifold_edges[eid1][k];
+                // note that the orientation of the halfedge pushed back is
+                // not relevant for how it is used in the following
+                all_edges.push_back(halfedge(e_1b, tm));
+              }
+            }
+          }
+        }
+      }
+      CGAL_precondition(all_edges[0]==h_1 || all_edges[0]==opposite(h_1,tm));
+
+      // #ifdef USE_DETECTION_MULTIPLE_DEFINED_EDGES
+      // check_coplanar_edges(std::next(all_edges.begin()),
+      //                      all_edges.end(),std::get<1>(res),type);
+      // #endif
+
+      typename std::vector<halfedge_descriptor>::iterator it_edge=all_edges.begin();
+
+      Node_id node_id=++current_node;
+      // add_new_node
+      if ( vertex_os[tgt]==ON_ORIENTED_BOUNDARY ) // is edge target in triangle plane
+        nodes.add_new_node(get(vpm, tgt));
+      else{
+        if ( vertex_os[src]==ON_ORIENTED_BOUNDARY ) // is edge source in triangle plane
+          nodes.add_new_node(get(vpm, src));
+        else
+          nodes.add_new_node(plane, h_1,tm,vpm);
+      }
+
+      visitor.new_node_added(node_id,h_1,tm,vertex_os[tgt]==ON_ORIENTED_BOUNDARY,vertex_os[src]==ON_ORIENTED_BOUNDARY);
+      for (;it_edge!=all_edges.end();++it_edge)
+        add_intersection_point_to_face_and_all_edge_incident_faces(f_2,*it_edge,tm,tm,node_id);
+    }
+
+    nodes.check_no_duplicates();
+
+    #warning finish me too
+/*
+    if (!build_polylines){
+      visitor.finalize(nodes,tm1,tm2,vpm1,vpm2);
+      return output;
+    }
+    //remove duplicated intersecting edges:
+    //  In case two faces are incident along an intersection edge coplanar
+    //  in a face of another polyhedron (and one extremity inside the face),
+    //  the intersection will be reported twice. We kept track
+    //  (check_coplanar_edge(s)) of this so that,
+    //  we can remove one intersecting edge out of the two
+    remove_duplicated_intersecting_edges();
+
+#if 0
+    //collect connectivity infos and create polylines
+    if ( Node_visitor::do_need_vertex_graph )
+#endif
+      //using the graph approach (at some point we know all
+      // connections between intersection points)
+      construct_polylines(output);
+#if 0
+    else
+      construct_polylines_with_info(nodes,out); //direct construction by propagation
+#endif
+
+    visitor.finalize(nodes,tm1,tm2,vpm1,vpm2);
+*/
     return output;
   }
 

@@ -742,6 +742,140 @@ bool clip(TriangleMesh& tm,
   return clip(tm, clipper, np, params::do_not_modify(do_not_modify));
 }
 
+/// WIP
+template <class TriangleMesh,
+          class NamedParameters = parameters::Default_named_parameters>
+bool clip(TriangleMesh& tm,
+          bool /*tmp*/,
+#ifdef DOXYGEN_RUNNING
+          const Plane_3& plane,
+#else
+          const typename GetGeomTraits<TriangleMesh, NamedParameters>::type::Plane_3& plane,
+#endif
+          const NamedParameters& np = parameters::default_values())
+{
+  using parameters::choose_parameter;
+  using parameters::get_parameter;
+  using parameters::Default_named_parameters;
+
+  const bool do_not_modify = choose_parameter(get_parameter(np, internal_np::allow_self_intersections), false);
+
+  if (do_not_modify)
+  {
+    CGAL_assertion(is_closed(clipper));
+    assert(!"Not yet implemented");
+/*
+    internal::generic_clip_impl(tm, clipper, np_tm, np_c);
+    return true;
+*/  
+  }
+
+  const bool clip_volume =
+    choose_parameter(get_parameter(np, internal_np::clip_volume), false);
+
+  if(clip_volume && is_closed(tm))
+  {
+    const bool throw_on_self_intersection =
+      choose_parameter(get_parameter(np, internal_np::throw_on_self_intersection), false);
+
+  // Vertex point maps
+    //for input meshes
+    typedef typename GetVertexPointMap<TriangleMesh, NamedParameters>::type  VPM;
+
+    VPM vpm = choose_parameter(get_parameter(np, internal_np::vertex_point),
+                               get_property_map(boost::vertex_point, tm));
+
+    typedef typename boost::property_traits<VPM>::value_type                 Point_3;
+
+    // handle case of empty meshes (isolated vertices are ignored)
+    if (faces(tm).empty())
+      return true;
+
+  // Edge is-constrained maps
+    //for input meshes
+    typedef typename internal_np::Lookup_named_param_def <
+      internal_np::edge_is_constrained_t,
+      NamedParameters,
+      Corefinement::No_mark<TriangleMesh>//default
+    > ::type Ecm;
+
+    Ecm ecm = choose_parameter<Ecm>(get_parameter(np, internal_np::edge_is_constrained));
+    typedef Corefinement::No_mark<TriangleMesh> No_mark;
+    typedef Corefinement::Ecm_bind<TriangleMesh, Ecm, No_mark> Ecm_in;
+
+    // Face index point maps
+    typedef typename CGAL::GetInitializedFaceIndexMap<TriangleMesh, NamedParameters>::type FaceIndexMap;
+
+    FaceIndexMap fid_map = get_initialized_face_index_map(tm, np);
+
+    // User visitor
+    typedef typename internal_np::Lookup_named_param_def <
+      internal_np::visitor_t,
+      NamedParameters,
+      Corefinement::Default_visitor<TriangleMesh>//default
+    > ::type User_visitor;
+    User_visitor uv(choose_parameter<User_visitor>(get_parameter(np, internal_np::visitor)));
+
+    typedef std::tuple<
+      boost::optional<VPM>,
+      boost::optional<VPM>,
+      boost::optional<VPM>,
+      boost::optional<VPM>
+    > VPM_out_tuple;
+
+    VPM_out_tuple vpm_out_tuple(boost::none, vpm, boost::none, boost::none);
+
+
+    typedef std::tuple<No_mark, Ecm, No_mark, No_mark> Edge_mark_map_tuple;
+
+    // surface intersection algorithm call
+    typedef Corefinement::Face_graph_output_builder<TriangleMesh,
+                                                    VPM,
+                                                    VPM,
+                                                    VPM_out_tuple,
+                                                    FaceIndexMap,
+                                                    FaceIndexMap,
+                                                    Default,
+                                                    Ecm_in,
+                                                    Edge_mark_map_tuple,
+                                                    User_visitor> Ob;
+
+    typedef Corefinement::Surface_intersection_visitor_for_corefinement<
+              TriangleMesh, VPM, VPM, Ob, Ecm_in, User_visitor,
+              false /*allow non-manifold*/,
+              false/*autoref*/,
+              true/*plane clipping*/> Algo_visitor;
+
+    No_mark no_mark;
+    Ecm_in ecm_in(tm,tm,ecm,no_mark);
+    Edge_mark_map_tuple ecms_out(no_mark, ecm, no_mark, no_mark);
+    std::array< boost::optional<TriangleMesh*>,4> output;
+    output[Corefinement::INTERSECTION]=&tm;
+    Ob ob(tm, tm, vpm, vpm, fid_map, fid_map, ecm_in, vpm_out_tuple, ecms_out, uv, output);
+
+    // special case used for clipping open meshes
+    if (choose_parameter(get_parameter(np, internal_np::use_bool_op_to_clip_surface), false))
+    {
+      const bool use_compact_clipper =
+        choose_parameter(get_parameter(np, internal_np::use_compact_clipper), true);
+      ob.setup_for_clipping_a_surface(use_compact_clipper);
+    }
+
+    Corefinement::Intersection_of_triangle_meshes<TriangleMesh, VPM, VPM, Algo_visitor >
+      functor(tm, tm, vpm, vpm, Algo_visitor(uv,ob,ecm_in));
+    functor(CGAL::Emptyset_iterator(), plane, throw_on_self_intersection, true);
+
+    return ob.intersection_is_valid();
+  }
+  assert(!"Not yet implemented");
+/*   
+  return corefine_and_compute_intersection(tm, clipper, tm,
+                                           np_tm.use_bool_op_to_clip_surface(true),
+                                           np_c);    
+ */
+}
+
+
 /**
   * \ingroup PMP_corefinement_grp
   *
