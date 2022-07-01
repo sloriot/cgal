@@ -22,6 +22,8 @@
 #include <CGAL/Segment_Delaunay_graph_2/Are_same_points_C2.h>
 #include <CGAL/Segment_Delaunay_graph_2/Are_same_segments_C2.h>
 
+#include <CGAL/predicates/sign_of_determinant.h>
+
 #ifdef CGAL_SDG_CHECK_INCIRCLE_CONSISTENCY
 #ifndef CGAL_SDG_USE_OLD_INCIRCLE
 #include <CGAL/Segment_Delaunay_graph_2/Voronoi_vertex_sqrt_field_C2.h>
