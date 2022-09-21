@@ -20,6 +20,7 @@
 
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/has_xxx.hpp>
 
 #include <type_traits>
 #include <utility>
@@ -33,6 +34,8 @@
 #define CGAL_NP_TEMPLATE_PARAMETERS_2 NP_T2=bool, typename NP_Tag2=CGAL::internal_np::all_default_t, typename NP_Base2=CGAL::internal_np::No_property
 #define CGAL_NP_CLASS_2 CGAL::Named_function_parameters<NP_T2,NP_Tag2,NP_Base2>
 
+#define CGAL_NP_TEMPLATE_PARAMETERS_VARIADIC NP_T, typename ... NP_Tag, typename ... NP_Base
+
 namespace CGAL {
 namespace internal_np{
 
@@ -44,8 +47,16 @@ enum all_default_t { all_default };
 // define enum types and values for new named parameters
 #define CGAL_add_named_parameter(X, Y, Z)            \
   enum X { Y };
+#define CGAL_add_named_parameter_with_compatibility(X, Y, Z)            \
+  enum X { Y };
+#define CGAL_add_named_parameter_with_compatibility_ref_only(X, Y, Z)            \
+  enum X { Y };
+#define CGAL_add_extra_named_parameter_with_compatibility(X, Y, Z)
 #include <CGAL/STL_Extension/internal/parameters_interface.h>
 #undef CGAL_add_named_parameter
+#undef CGAL_add_named_parameter_with_compatibility
+#undef CGAL_add_named_parameter_with_compatibility_ref_only
+#undef CGAL_add_extra_named_parameter_with_compatibility
 
 template <typename T, typename Tag, typename Base>
 struct Named_params_impl : Base
@@ -248,16 +259,62 @@ struct Named_function_parameters
 
 // create the functions for new named parameters and the one imported boost
 // used to concatenate several parameters
-#define CGAL_add_named_parameter(X, Y, Z)                          \
-  template<typename K>                                           \
+#define CGAL_add_named_parameter(X, Y, Z)                             \
+  template<typename K>                                                \
   Named_function_parameters<K, internal_np::X, self>                  \
-  Z(const K& k) const                                            \
-  {                                                              \
+  Z(const K& k) const                                                 \
+  {                                                                   \
     typedef Named_function_parameters<K, internal_np::X, self> Params;\
-    return Params(k, *this);                                     \
+    return Params(k, *this);                                          \
+  }
+#define CGAL_add_named_parameter_with_compatibility(X, Y, Z)          \
+  template<typename K>                                                \
+  Named_function_parameters<K, internal_np::X, self>                  \
+  Z(const K& k) const                                                 \
+  {                                                                   \
+    typedef Named_function_parameters<K, internal_np::X, self> Params;\
+    return Params(k, *this);                                          \
+  }
+#define CGAL_add_named_parameter_with_compatibility_ref_only(X, Y, Z) \
+  template<typename K>                                                \
+  Named_function_parameters<std::reference_wrapper<const K>,          \
+                            internal_np::X, self>                     \
+  Z(const K& k) const                                                 \
+  {                                                                   \
+    typedef Named_function_parameters<std::reference_wrapper<const K>,\
+                                      internal_np::X, self> Params;   \
+    return Params(std::cref(k), *this);                               \
+  }
+#define CGAL_add_extra_named_parameter_with_compatibility(X, Y, Z)    \
+  template<typename K>                                                \
+  Named_function_parameters<K, internal_np::X, self>                  \
+  Z(const K& k) const                                                 \
+  {                                                                   \
+    typedef Named_function_parameters<K, internal_np::X, self> Params;\
+    return Params(k, *this);                                          \
   }
 #include <CGAL/STL_Extension/internal/parameters_interface.h>
 #undef CGAL_add_named_parameter
+#undef CGAL_add_named_parameter_with_compatibility
+#undef CGAL_add_named_parameter_with_compatibility_ref_only
+#undef CGAL_add_extra_named_parameter_with_compatibility
+
+  template <typename OT, typename OTag>
+  Named_function_parameters<OT, OTag, self>
+  combine(const Named_function_parameters<OT,OTag>& np) const
+  {
+    return Named_function_parameters<OT, OTag, self>(np.v,*this);
+  }
+
+  template <typename OT, typename OTag, typename ... NPS>
+  auto
+  combine(const Named_function_parameters<OT,OTag>& np, const NPS& ... nps) const
+  {
+    return Named_function_parameters<OT, OTag, self>(np.v,*this).combine(nps...);
+  }
+
+  // typedef for SFINAE
+  typedef int CGAL_Named_function_parameters_class;
 };
 
 namespace parameters {
@@ -286,7 +343,47 @@ inline no_parameters(Named_function_parameters<T,Tag,Base>)
   return Params();
 }
 
-// define free functions for named parameters
+template <class Tag, bool ref_only = false>
+struct Boost_parameter_compatibility_wrapper
+{
+  template <typename K>
+  Named_function_parameters<K, Tag>
+  operator()(const K& p) const
+  {
+    typedef Named_function_parameters<K, Tag> Params;
+    return Params(p);
+  }
+
+  template <typename K>
+  Named_function_parameters<K, Tag>
+  operator=(const K& p) const
+  {
+    typedef Named_function_parameters<K, Tag> Params;
+    return Params(p);
+  }
+};
+
+template <class Tag>
+struct Boost_parameter_compatibility_wrapper<Tag, true>
+{
+  template <typename K>
+  Named_function_parameters<std::reference_wrapper<const K>, Tag>
+  operator()(const K& p) const
+  {
+    typedef Named_function_parameters<std::reference_wrapper<const K>, Tag> Params;
+    return Params(std::cref(p));
+  }
+
+  template <typename K>
+  Named_function_parameters<std::reference_wrapper<const K>, Tag>
+  operator=(const K& p) const
+  {
+    typedef Named_function_parameters<std::reference_wrapper<const K>, Tag> Params;
+    return Params(std::cref(p));
+  }
+};
+
+// define free functions and Boost_parameter_compatibility_wrapper for named parameters
 #define CGAL_add_named_parameter(X, Y, Z)        \
   template <typename K>                        \
   Named_function_parameters<K, internal_np::X>                  \
@@ -295,8 +392,18 @@ inline no_parameters(Named_function_parameters<T,Tag,Base>)
     typedef Named_function_parameters<K, internal_np::X> Params;\
     return Params(p);                          \
   }
+// TODO: need to make sure this works when using several compilation units
+#define CGAL_add_named_parameter_with_compatibility(X, Y, Z)        \
+  const Boost_parameter_compatibility_wrapper<internal_np::X> Z;
+#define CGAL_add_named_parameter_with_compatibility_ref_only(X, Y, Z)        \
+  const Boost_parameter_compatibility_wrapper<internal_np::X, true> Z;
+#define CGAL_add_extra_named_parameter_with_compatibility(X, Y, Z)        \
+  const Boost_parameter_compatibility_wrapper<internal_np::X> Z;
 #include <CGAL/STL_Extension/internal/parameters_interface.h>
 #undef CGAL_add_named_parameter
+#undef CGAL_add_extra_named_parameter_with_compatibility
+#undef CGAL_add_named_parameter_with_compatibility
+#undef CGAL_add_named_parameter_with_compatibility_ref_only
 
 // function to extract a parameter
 template <typename T, typename Tag, typename Base, typename Query_tag>
@@ -386,6 +493,17 @@ struct is_default_parameter
 
 } // end of parameters namespace
 
+namespace internal_np {
+
+template <typename Tag, typename K, typename ... NPS>
+auto
+combine_named_parameters(const Named_function_parameters<K, Tag>& np, const NPS& ... nps)
+{
+  return np.combine(nps ...);
+}
+
+} // end of internal_np namespace
+
 #ifndef CGAL_NO_DEPRECATED_CODE
 namespace Polygon_mesh_processing {
 
@@ -407,5 +525,10 @@ namespace boost
   }
 }
 #endif
+
+// For disambiguation using SFINAR
+BOOST_MPL_HAS_XXX_TRAIT_DEF(CGAL_Named_function_parameters_class)
+template<class T>
+CGAL_CPP17_INLINE constexpr bool is_named_function_parameter = has_CGAL_Named_function_parameters_class<T>::value;
 
 #endif // CGAL_BOOST_FUNCTION_PARAMS_HPP
