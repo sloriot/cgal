@@ -6,8 +6,7 @@ namespace CGAL {
 \cgalAutoToc
 \authors Sébastien Loriot, Mael Rouxel-Labbé, Jane Tournois, Ilker %O. Yaz
 
-\image html neptun_head.jpg
-\image latex neptun_head.jpg
+\image html neptun_head.jpg width=33%
 <BR>
 
 \section PMPIntroduction Introduction
@@ -169,11 +168,7 @@ triangles. To paliate this phenomenon, area smoothing is followed by an (optiona
 In any case, area smoothing is guaranteed to improve the spatial distribution of the vertices
 over the area that is being smoothed. A simple example can be found in \ref Polygon_mesh_processing/mesh_smoothing_example.cpp.
 
-\cgalFigureAnchor{PMPFigMeshSmoothing}
-<center>
-<img src="mesh_smoothing.png" style="max-width:70%;"/>
-</center>
-\cgalFigureCaptionBegin{PMPFigMeshSmoothing}
+\cgalFigureBegin{PMPFigMeshSmoothing, mesh_smoothing.png}
 Mesh smoothing of the closed surface <i>blobby</i>, containing self-intersections (circled in red). For each smoothing combination,
 10 iterations were applied. From left to right:
 (a) Input mesh;
@@ -181,7 +176,7 @@ Mesh smoothing of the closed surface <i>blobby</i>, containing self-intersection
 (c) Smoothing based on areas with Delaunay flips;
 (d) Smoothing based on angles;
 (e) Smoothing based on angles and areas, with Delaunay flips.
-\cgalFigureCaptionEnd
+\cgalFigureEnd
 
 \cgalFigureBegin{Fig_smooth_stats, smooth_statistics.png}
 Statistics for the various combinations of mesh smoothing.
@@ -205,14 +200,10 @@ down the evolution in cylindrical regions. The smoothed shape converges to a sph
 conformally equivalent to its original shape.
 A simple example can be found in \ref Polygon_mesh_processing/shape_smoothing_example.cpp.
 
-\cgalFigureAnchor{PMPFigShapeSmoothing}
-<center>
-<img src="shape_smoothing.png" style="max-width:70%;"/>
-</center>
-\cgalFigureCaptionBegin{PMPFigShapeSmoothing}
+\cgalFigureBegin{PMPFigShapeSmoothing,shape_smoothing.png}
 Shape smoothing of the devil model, using the mean curvature flow with a time step equal to 0.05 and
 constraining border vertices (located at the neck, where the mesh is open).
-\cgalFigureCaptionEnd
+\cgalFigureEnd
 
 
 \subsubsection Extrusion
@@ -542,14 +533,10 @@ The detected self-intersection is illustrated on Figure \cgalFigureRef{SelfInter
 
 \cgalExample{Polygon_mesh_processing/self_intersections_example.cpp}
 
-\cgalFigureAnchor{SelfIntersections}
-<center>
-<img src="selfintersections.jpg" style="max-width:70%;"/>
-</center>
-\cgalFigureCaptionBegin{SelfIntersections}
+\cgalFigureBegin{SelfIntersections,selfintersections.jpg}
 Detecting self-intersections on a triangle mesh.
 The intersecting triangles are displayed in dark grey and red on the right image.
-\cgalFigureCaptionEnd
+\cgalFigureEnd
 
 \subsection PMPInsideTest Side of Triangle Mesh
 
