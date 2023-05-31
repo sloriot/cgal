@@ -24,6 +24,13 @@ namespace CGAL {
 namespace Polygon_mesh_processing {
 namespace Corefinement {
 
+template <class TriangleMesh>
+struct Intersection_nodes_base
+{
+  typedef std::size_t Node_id;
+  Node_id current_node = (std::numeric_limits<Node_id>::max)();
+};
+
 // A class responsible for storing the intersection nodes of the intersection
 // polylines. Different specializations are available depending whether
 // predicates on constructions are needed.
@@ -42,6 +49,7 @@ class Intersection_nodes;
 template <class TriangleMesh,
           class VertexPointMap1, class VertexPointMap2>
 class Intersection_nodes<TriangleMesh, VertexPointMap1, VertexPointMap2, false, false>
+  : public Intersection_nodes_base<TriangleMesh>
 {
 //typedefs
 public:
@@ -144,6 +152,7 @@ public:
 // that we can answer exactly predicates
 template <class TriangleMesh, class VertexPointMap1, class VertexPointMap2>
 class Intersection_nodes<TriangleMesh, VertexPointMap1, VertexPointMap2, true, false>
+  : public Intersection_nodes_base<TriangleMesh>
 {
 //typedefs
 public:
@@ -325,6 +334,7 @@ template <class TriangleMesh, class VertexPointMap1, class VertexPointMap2,
           bool Predicates_on_constructions_needed>
 class Intersection_nodes<TriangleMesh, VertexPointMap1, VertexPointMap2,
                          Predicates_on_constructions_needed, true>
+  : public Intersection_nodes_base<TriangleMesh>
 {
 //typedefs
   typedef typename boost::property_traits<VertexPointMap1>::value_type  Point_3;

@@ -226,18 +226,22 @@ class Intersection_of_triangle_meshes
                              Predicates_on_constructions_needed>    Node_vector;
 
 // data members
+//---
+// TODO_PARALLEL: container that needs to be handled carefully for
+//---
   Edge_to_faces stm_edge_to_ltm_faces; // map edges from the triangle mesh with the smaller address to faces of the triangle mesh with the larger address
   Edge_to_faces ltm_edge_to_stm_faces; // map edges from the triangle mesh with the larger address to faces of the triangle mesh with the smaller address
   // here face descriptor are from tmi and tmj such that &tmi<&tmj
   Coplanar_face_set coplanar_faces;
   Node_vector nodes;
+//---
   Node_visitor visitor;
   Faces_to_nodes_map         f_to_node;      //Associate a pair of triangles to their intersection points
   std::vector<Node_id> extra_terminal_nodes; //used only for autorefinement
   Non_manifold_feature_map<TriangleMesh> non_manifold_feature_map_1,
                                          non_manifold_feature_map_2;
   const TriangleMesh* const_mesh_ptr;
-  static const constexpr std::size_t NM_NID = (std::numeric_limits<std::size_t>::max)();
+  static constexpr std::size_t NM_NID = (std::numeric_limits<std::size_t>::max)();
   CGAL_assertion_code(bool doing_autorefinement;)
 
 // member functions
@@ -324,6 +328,7 @@ class Intersection_of_triangle_meshes
     //using pointers in box_intersection_d is about 10% faster
     if (throw_on_self_intersection){
         Callback_with_self_intersection_report<TriangleMesh, Callback> callback_si(callback, tm_f_faces, tm_e_faces);
+        // TODO_PARALLEL: check if it is worth using Concurrent_tag here
         CGAL::box_intersection_d(face_boxes_ptr.begin(), face_boxes_ptr.end(),
                                  edge_boxes_ptr.begin(), edge_boxes_ptr.end(),
                                  callback_si, cutoff);
@@ -442,7 +447,6 @@ class Intersection_of_triangle_meshes
   template<class Cpl_inter_pt,class Key>
   std::pair<Node_id,bool>
   get_or_create_node(const Cpl_inter_pt& ipt,
-                           Node_id& current_node,
                            std::map<Key,Node_id>& coplanar_node_map,
                            const Non_manifold_feature_map<TriangleMesh>& nm_features_map_1,
                            const Non_manifold_feature_map<TriangleMesh>& nm_features_map_2,
@@ -514,10 +518,10 @@ class Intersection_of_triangle_meshes
       key=Key(ipt.type_2, ipt.type_1, h2, h1);
 
     std::pair<typename std::map<Key,Node_id>::iterator,bool> res=
-      coplanar_node_map.insert(std::make_pair(key,current_node+1));
+      coplanar_node_map.insert(std::make_pair(key,nodes.current_node+1));
     if (res.second){ //insert a new node
       nodes.add_new_node(ipt.point);
-      return std::pair<Node_id,bool>(++current_node, true);
+      return std::pair<Node_id,bool>(++nodes.current_node, true);
     }
     return std::pair<Node_id,bool>(res.first->second, false);
   }
@@ -748,8 +752,7 @@ class Intersection_of_triangle_meshes
   }
 
   template <typename VPM1, typename VPM2>
-  void compute_intersection_of_coplanar_faces(Node_id& current_node,
-                                              const TriangleMesh& tm1,
+  void compute_intersection_of_coplanar_faces(const TriangleMesh& tm1,
                                               const TriangleMesh& tm2,
                                               const VPM1& vpm1,
                                               const VPM2& vpm2,
@@ -767,6 +770,7 @@ class Intersection_of_triangle_meshes
     Coplanar_node_map coplanar_node_map;
 
     visitor.start_handling_intersection_of_coplanar_faces(coplanar_faces.size());
+    // TODO_PARALLEL
     for(const Face_pair& face_pair : coplanar_faces)
     {
       visitor.intersection_of_coplanar_faces_step();
@@ -812,7 +816,7 @@ class Intersection_of_triangle_meshes
         Node_id node_id;
         bool is_new_node;
         std::tie(node_id, is_new_node) =
-            get_or_create_node(ipt,current_node,coplanar_node_map,nm_features_map_1,nm_features_map_2,tm1,tm2);
+            get_or_create_node(ipt,coplanar_node_map,nm_features_map_1,nm_features_map_2,tm1,tm2);
         cpln_nodes.push_back(node_id);
 
         switch(ipt.type_1){
@@ -928,13 +932,14 @@ class Intersection_of_triangle_meshes
                                    const VPM1& vpm1,
                                    const VPM2& vpm2,
                                    const Non_manifold_feature_map<TriangleMesh>& nm_features_map_1,
-                                   const Non_manifold_feature_map<TriangleMesh>& nm_features_map_2,
-                                   Node_id& current_node)
+                                   const Non_manifold_feature_map<TriangleMesh>& nm_features_map_2)
   {
     typedef std::tuple<Intersection_type, halfedge_descriptor, bool,bool>  Inter_type;
 
     visitor.start_handling_edge_face_intersections(tm1_edge_to_tm2_faces.size());
 
+    // TODO_PARALLEL: tm2_edge_to_tm1_faces or tm1_edge_to_tm2_faces (the global variables)
+    //                will be updated to remove edge/edge intersections
     for(typename Edge_to_faces::iterator it=tm1_edge_to_tm2_faces.begin();
                                          it!=tm1_edge_to_tm2_faces.end();++it)
     {
@@ -1064,7 +1069,7 @@ class Intersection_of_triangle_meshes
           {
             CGAL_assertion(f_2==face(std::get<1>(res),tm2));
 
-            Node_id node_id=++current_node;
+            Node_id node_id=++nodes.current_node;
             add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
             visitor.new_node_added(node_id,ON_FACE,h_1,halfedge(f_2,tm2),tm1,tm2,std::get<3>(res),std::get<2>(res));
             for (;it_edge!=all_edges.end();++it_edge){
@@ -1086,7 +1091,7 @@ class Intersection_of_triangle_meshes
           // Case when the edge intersect one edge of the face.
           case ON_EDGE:
           {
-            Node_id node_id=++current_node;
+            Node_id node_id=++nodes.current_node;
             add_new_node(h_1,f_2,tm1,tm2,vpm1,vpm2,res);
             halfedge_descriptor h_2=std::get<1>(res);
 
@@ -1124,7 +1129,7 @@ class Intersection_of_triangle_meshes
 
           case ON_VERTEX:
           {
-            Node_id node_id=++current_node;
+            Node_id node_id=++nodes.current_node;
             halfedge_descriptor h_2=std::get<1>(res);
             nodes.add_new_node(get(vpm2, target(h_2,tm2))); //we use the original vertex to create the node
             //before it was ON_FACE but do not remember why, probably a bug...
@@ -1156,7 +1161,7 @@ class Intersection_of_triangle_meshes
         } // end switch on the type of the intersection
       } // end loop on all faces that intersect the edge
     } // end loop on all entries (edges) in 'edge_to_face'
-    CGAL_assertion(nodes.size()==unsigned(current_node+1));
+    CGAL_assertion(nodes.size()==unsigned(nodes.current_node+1));
     visitor.end_handling_edge_face_intersections();
   }
 
@@ -1204,8 +1209,7 @@ class Intersection_of_triangle_meshes
 
   template <class VPM>
   void detect_intersections_in_the_graph(const TriangleMesh& tm,
-                                         const VPM& vpm,
-                                         Node_id& current_node)
+                                         const VPM& vpm)
   {
     std::unordered_map<face_descriptor,
                        std::vector<face_descriptor> > face_intersections;
@@ -1386,7 +1390,7 @@ class Intersection_of_triangle_meshes
                                      halfedge(f2, tm),
                                      halfedge(f3, tm),
                                      tm, vpm);
-                  Node_id node_id=++current_node;
+                  Node_id node_id=++nodes.current_node;
 #ifdef CGAL_DEBUG_AUTOREFINEMENT
                   std::cerr << "New triple node " << node_id << "\n";
 #endif
@@ -1404,7 +1408,7 @@ class Intersection_of_triangle_meshes
     }
 
 #ifdef CGAL_DEBUG_AUTOREFINEMENT
-    std::cout << "\nAt the end of new node creation, current_node is " << current_node << "\n\n";
+    std::cout << "\nAt the end of new node creation, current_node is " << nodes.current_node << "\n\n";
 #endif
     typedef std::pair<Node_id_set* const, std::vector<std::pair<std::array<std::size_t,2>, Node_id> > > Node_id_set_and_nodes;
     for(Node_id_set_and_nodes& n_id_and_new_nodes : map_to_process)
@@ -1622,7 +1626,7 @@ class Intersection_of_triangle_meshes
       f_to_node.erase(it);
   }
 
-  void add_common_vertices_for_pairs_of_faces_with_isolated_node(Node_id& current_node)
+  void add_common_vertices_for_pairs_of_faces_with_isolated_node()
   {
     const TriangleMesh& tm = nodes.tm1;
     CGAL_assertion(doing_autorefinement);
@@ -1641,12 +1645,12 @@ class Intersection_of_triangle_meshes
         {
           if ( target(h1, tm)==target(h2,tm) )
           {
-            Node_id node_id = current_node+1;
+            Node_id node_id = nodes.current_node+1;
             std::pair< typename std::map<vertex_descriptor, Node_id>::iterator, bool>
               insert_res = vertex_to_node_id.insert(std::make_pair(target(h1,tm), node_id));
             if (insert_res.second)
             {
-              ++current_node;
+              ++nodes.current_node;
               nodes.add_new_node(get(nodes.vpm1, target(h1,tm)));
               visitor.new_node_added(node_id,ON_VERTEX,h1,h2,tm,tm,true,false);
               extra_terminal_nodes.push_back(node_id);
@@ -1721,21 +1725,21 @@ public:
     std::set<face_descriptor> tm2_faces;
 
     visitor.start_filtering_intersections();
+    // TODO_PARALLEL: both calls to filter_intersections could be done in parallel
     filter_intersections(tm1, tm2, vpm1, vpm2, non_manifold_feature_map_2, throw_on_self_intersection, tm1_faces, tm2_faces, false);
     filter_intersections(tm2, tm1, vpm2, vpm1, non_manifold_feature_map_1, throw_on_self_intersection, tm2_faces, tm1_faces, true);
     visitor.end_filtering_intersections();
 
-    Node_id current_node((std::numeric_limits<Node_id>::max)());
-    CGAL_assertion(current_node+1==0);
+    CGAL_assertion(nodes.current_node+1==0);
 // TODO: handle non-manifold edges in coplanar
     #ifndef DO_NOT_HANDLE_COPLANAR_FACES
     //first handle coplanar triangles
     if (&tm1<&tm2)
-      compute_intersection_of_coplanar_faces(current_node, tm1, tm2, vpm1, vpm2, non_manifold_feature_map_1, non_manifold_feature_map_2);
+      compute_intersection_of_coplanar_faces(tm1, tm2, vpm1, vpm2, non_manifold_feature_map_1, non_manifold_feature_map_2);
     else
-      compute_intersection_of_coplanar_faces(current_node, tm2, tm1, vpm2, vpm1, non_manifold_feature_map_2, non_manifold_feature_map_1);
+      compute_intersection_of_coplanar_faces(tm2, tm1, vpm2, vpm1, non_manifold_feature_map_2, non_manifold_feature_map_1);
 
-    visitor.set_number_of_intersection_points_from_coplanar_faces(current_node+1);
+    visitor.set_number_of_intersection_points_from_coplanar_faces(nodes.current_node+1);
     if (!coplanar_faces.empty())
       visitor.input_have_coplanar_faces();
     #endif // not DO_NOT_HANDLE_COPLANAR_FACES
@@ -1749,8 +1753,8 @@ public:
                                          ? stm_edge_to_ltm_faces
                                          : ltm_edge_to_stm_faces;
 
-    compute_intersection_points(tm1_edge_to_tm2_faces, tm1, tm2, vpm1, vpm2, non_manifold_feature_map_1, non_manifold_feature_map_2, current_node);
-    compute_intersection_points(tm2_edge_to_tm1_faces, tm2, tm1, vpm2, vpm1, non_manifold_feature_map_2, non_manifold_feature_map_1, current_node);
+    compute_intersection_points(tm1_edge_to_tm2_faces, tm1, tm2, vpm1, vpm2, non_manifold_feature_map_1, non_manifold_feature_map_2);
+    compute_intersection_points(tm2_edge_to_tm1_faces, tm2, tm1, vpm2, vpm1, non_manifold_feature_map_2, non_manifold_feature_map_1);
 
     visitor.check_no_duplicates(nodes);
 
@@ -1795,11 +1799,10 @@ public:
 
     filter_intersections(tm, vpm);
 
-    Node_id current_node((std::numeric_limits<Node_id>::max)());
-    CGAL_assertion(current_node+1==0);
+    CGAL_assertion(nodes.current_node+1==0);
 
     //first handle coplanar triangles
-    compute_intersection_of_coplanar_faces(current_node, tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1);
+    compute_intersection_of_coplanar_faces(tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1);
     if (!coplanar_faces.empty())
       visitor.input_have_coplanar_faces();
 
@@ -1807,7 +1810,7 @@ public:
 
     //compute intersection points of segments and triangles.
     //build the nodes of the graph and connectivity infos
-    compute_intersection_points(stm_edge_to_ltm_faces, tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1, current_node);
+    compute_intersection_points(stm_edge_to_ltm_faces, tm, tm, vpm, vpm, non_manifold_feature_map_1, non_manifold_feature_map_1);
 
     if (!build_polylines){
       visitor.finalize(nodes,tm,tm,vpm,vpm);
@@ -1825,9 +1828,9 @@ public:
 
     // If a pair of faces defines an isolated node, check if they share a common
     // vertex and create a new node in that case.
-    add_common_vertices_for_pairs_of_faces_with_isolated_node(current_node);
+    add_common_vertices_for_pairs_of_faces_with_isolated_node();
 
-    detect_intersections_in_the_graph(tm, vpm, current_node);
+    detect_intersections_in_the_graph(tm, vpm);
 #if 0
     //collect connectivity infos and create polylines
     if ( Node_visitor::do_need_vertex_graph )
