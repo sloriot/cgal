@@ -41,6 +41,7 @@
 \package_listing{Polyline_simplification_2}
 \package_listing{Visibility_2}
 \package_listing{Set_movable_separability_2}
+\package_listing{K_visibility}
 
 
 \cgalPackageSection{PartPolyhedra,Cell Complexes and Polyhedra}

@@ -1,0 +1,33 @@
+/// \defgroup PkgKvisibilityRef K-visibility Reference
+
+/// \defgroup PkgKvisibilityRefFunctions Functions
+/// \ingroup PkgKvisibilityRef
+
+/*!
+\addtogroup PkgKvisibilityRef
+\todo check generated documentation
+
+\cgalPkgDescriptionBegin{K-visibility,PkgKvisibility}
+\cgalPkgPicture{pkg-small.png}
+
+\cgalPkgSummaryBegin
+\cgalPkgAuthors{PACKAGE AUTHOR}
+\cgalPkgDesc{The package provides ... }
+\cgalPkgManuals{Chapter_K_Visibility,PkgKvisibility}
+\cgalPkgSummaryEnd
+
+\cgalPkgShortInfoBegin
+\cgalPkgSince{6.1}
+\cgalPkgBib{cgal:x-x}
+\cgalPkgLicense{\ref licensesGPL "GPL"}
+\cgalPkgShortInfoEnd
+
+\cgalPkgDescriptionEnd
+
+\cgalClassifedRefPages
+
+\cgalCRPSection{Functions}
+- `CGAL::watch_tower_1_5()`
+
+
+*/
