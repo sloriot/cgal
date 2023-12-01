@@ -54,12 +54,12 @@ public:
                                                         Ccb_halfedge_circulator;
 
 private:
-  typedef typename Arrangement_2::DVertex               DVertex;
-  typedef typename Arrangement_2::DHalfedge             DHalfedge;
-  typedef typename Arrangement_2::DFace                 DFace;
-  typedef typename Arrangement_2::DOuter_ccb            DOuter_ccb;
-  typedef typename Arrangement_2::DInner_ccb            DInner_ccb;
-  typedef typename Arrangement_2::DIso_vertex           DIso_vertex;
+  typedef typename Arrangement_2::Dcel::Vertex               DVertex;
+  typedef typename Arrangement_2::Dcel::Halfedge             DHalfedge;
+  typedef typename Arrangement_2::Dcel::Face                 DFace;
+  typedef typename Arrangement_2::Dcel::Outer_ccb            DOuter_ccb;
+  typedef typename Arrangement_2::Dcel::Inner_ccb            DInner_ccb;
+  typedef typename Arrangement_2::Dcel::Isolated_vertex      DIso_vertex;
 
   typedef Arr_point_location_result<Arrangement_2>      Pl_result;
   typedef typename Pl_result::Type                      Pl_result_type;
@@ -768,15 +768,16 @@ public:
 
   /// \name Functions used by the arrangement reader and writer.
   //@{
+
   typedef typename Arrangement_2::Dcel                Dcel;
-  typedef typename Arrangement_2::DVertex_const_iter  Dcel_vertex_iterator;
-  typedef typename Arrangement_2::DEdge_const_iter    Dcel_edge_iterator;
-  typedef typename Arrangement_2::DFace_const_iter    Dcel_face_iterator;
-  typedef typename Arrangement_2::DOuter_ccb_const_iter
+  typedef typename Dcel::Vertex_const_iterator        DVertex_const_iter;
+  typedef typename Dcel::Edge_const_iterator    Dcel_edge_iterator;
+  typedef typename Dcel::Face_const_iterator    Dcel_face_iterator;
+  typedef typename DFace::Outer_ccb_const_iterator
                                                       Dcel_outer_ccb_iterator;
-  typedef typename Arrangement_2::DInner_ccb_const_iter
+  typedef typename DFace::Inner_ccb_const_iterator
                                                       Dcel_inner_ccb_iterator;
-  typedef typename Arrangement_2::DIso_vertex_const_iter
+  typedef typename DFace::Isolated_vertex_const_iterator
                                                       Dcel_iso_vertex_iterator;
 
   typedef DVertex                                     Dcel_vertex;

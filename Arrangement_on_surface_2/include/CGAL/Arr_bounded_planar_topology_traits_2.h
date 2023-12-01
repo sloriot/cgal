@@ -38,7 +38,7 @@
 namespace CGAL {
 
 // Forward declaration:
-template <typename GeometryTraits_2, typename TopTraits_>
+template <typename GeometryTraits_2, typename TopTraits_, typename Final>
 class Arrangement_on_surface_2;
 
 /*! \class Arr_bounded_planar_topology_traits_2
@@ -47,7 +47,8 @@ class Arrangement_on_surface_2;
  * of bounded curves on the plane.
  */
 template <typename GeometryTraits_2,
-          typename Dcel_ = Arr_default_dcel<GeometryTraits_2> >
+          typename Dcel_,
+          typename Final_>
 class Arr_bounded_planar_topology_traits_2 :
   public Arr_planar_topology_traits_base_2<GeometryTraits_2, Dcel_>
 {
@@ -79,7 +80,7 @@ public:
 
   //! \name Arrangement types
   //!@{
-  typedef Arr_bounded_planar_topology_traits_2<Gt2, Dcel> Self;
+  typedef Arr_bounded_planar_topology_traits_2<Gt2, Dcel, Final_> Self;
   typedef Arr_traits_basic_adaptor_2<Gt2>                 Gt_adaptor_2;
   //!@}
 
@@ -100,9 +101,9 @@ public:
    * An auxiliary structure for rebinding the topology traits with a new
    * geometry-traits class and a new DCEL class.
    */
-  template <typename T, typename D>
+  template <typename T, typename D, typename F>
   struct rebind {
-    typedef Arr_bounded_planar_topology_traits_2<T, D> other;
+    typedef Arr_bounded_planar_topology_traits_2<T, D, F> other;
   };
 
 protected:
@@ -188,7 +189,7 @@ public:
 private:
   /// \name Auxiliary type definitions.
   //@{
-  typedef Arrangement_on_surface_2<Gt2, Self>                   Arr;
+  typedef Arrangement_on_surface_2<Gt2, Self, Final_>                   Arr;
 
 public:
   // The following definitions of helper functions use a C++11 features called

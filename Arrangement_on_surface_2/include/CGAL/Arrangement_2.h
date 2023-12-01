@@ -41,16 +41,18 @@ template <class GeomTraits_,
           class Dcel_ = Arr_default_dcel<GeomTraits_> >
 class Arrangement_2 :
   public Arrangement_on_surface_2
-    <GeomTraits_, typename Default_planar_topology<GeomTraits_, Dcel_>::Traits>
+    <GeomTraits_,
+     typename Default_planar_topology<GeomTraits_, Dcel_, Arrangement_2<GeomTraits_, Dcel_>>::Traits,
+     Arrangement_2<GeomTraits_, Dcel_>>
 {
 
 protected:
 
-  typedef Default_planar_topology<GeomTraits_, Dcel_>     Default_topology;
+  typedef Default_planar_topology<GeomTraits_, Dcel_, Arrangement_2<GeomTraits_, Dcel_>>     Default_topology;
 
 public:
   typedef Arrangement_on_surface_2<GeomTraits_,
-                                   typename Default_topology::Traits>
+                                   typename Default_topology::Traits, Arrangement_2<GeomTraits_, Dcel_>>
                                                           Base;
 
   typedef GeomTraits_                                     Geometry_traits_2;

@@ -68,9 +68,9 @@ namespace Ss2 = Surface_sweep_2;
 // const Arr_segment_2&, const Arr_walk_along_line_point_location<>&,
 // mpl_::bool_< true>)'
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation, typename ZoneVisitor>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const typename GeometryTraits_2::Curve_2& c,
             const PointLocation& pl, ZoneVisitor &visitor,
             std::is_same<int, double>::type)
@@ -78,7 +78,7 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef ZoneVisitor                                   Zone_visitor;
 
   typedef typename Gt2::Point_2                         Point_2;
@@ -140,9 +140,9 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // mpl_::bool_< true>)'
 //
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation, typename ZoneVisitor>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const typename GeometryTraits_2::X_monotone_curve_2& c,
             const PointLocation& pl, ZoneVisitor &visitor,
             std::is_same<int, int>::type)
@@ -150,7 +150,7 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef ZoneVisitor                                   Zone_visitor;
 
   // Obtain an arrangement accessor.
@@ -177,9 +177,9 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 
 //-----------------------------------------------------------------------------
 // Common interface for the insert of the Curve_2 and X_monotone_curve_2
-template <typename GeometryTraits_2, typename TopologyTraits, typename Curve,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final, typename Curve,
           typename PointLocation, typename ZoneVisitor>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const Curve& c, const PointLocation& pl, ZoneVisitor &visitor)
 {
   typedef GeometryTraits_2                              Gt2;
@@ -195,9 +195,9 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // For now the solution is to add a dummy variable at the end (referring
 // to point-location). Maybe the proper solution is to use std::enable_if
 // together with appropriate tag.
-template <typename GeometryTraits_2, typename TopologyTraits, typename Curve,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final, typename Curve,
           typename PointLocation>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const Curve& c, const PointLocation& pl,
             typename PointLocation::Point_2*)
 {
@@ -216,8 +216,8 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // Overloaded version with no point location object - using the default point
 // location.
 //
-template <typename GeometryTraits_2, typename TopologyTraits, typename Curve>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final, typename Curve>
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const Curve& c)
 {
   typedef TopologyTraits                                Tt;
@@ -233,17 +233,17 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
  * \param begin the beginning of the curve range
  * \param end past-the-end curve range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
 void
-insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              InputIterator begin_xcurves, InputIterator end_xcurves)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -287,9 +287,9 @@ insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
  * \param begin_points the beginning of the point range
  * \param end_points past-the-end point range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename XcInputIterator, typename PInputIterator>
-void insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
+void insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>&
                   arr,
                   XcInputIterator begin_xcurves, XcInputIterator end_xcurves,
                   PInputIterator begin_points, PInputIterator end_points)
@@ -298,7 +298,7 @@ void insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -339,10 +339,9 @@ void insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
  * \param begin the beginning of the curve range
  * \param end past-the-end curve range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename XcInputIterator, typename PInputIterator>
-void insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
-                      TopologyTraits>& arr,
+void insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits, Final>& arr,
                       XcInputIterator begin_xcurves, XcInputIterator end_xcurves,
                       PInputIterator begin_points, PInputIterator end_points)
 {
@@ -350,7 +349,7 @@ void insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -413,16 +412,16 @@ void insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
 // const Arr_segment_2&, const Arr_walk_along_line_point_location<>&,
 // mpl_::bool_< true>)'
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             InputIterator begin, InputIterator end,
             std::is_same<int, double>::type)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Gt2::Point_2                         Point_2;
   typedef typename Gt2::X_monotone_curve_2              X_monotone_curve_2;
 
@@ -467,16 +466,16 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // const Arr_segment_2&, const Arr_walk_along_line_point_location<>&,
 // mpl_::bool_< true>)'
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             InputIterator begin, InputIterator end,
             std::is_same<int, int>::type)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
 
   // Obtain an arrangement accessor.
   Arr_accessor<Arr> arr_access(arr);
@@ -502,9 +501,9 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 
 //-----------------------------------------------------------------------------
 // Common interface for the inserts of the Curve_2 and X_monotone_curve_2
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
-void insert(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits>& arr,
+void insert(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits,Final>& arr,
             InputIterator begin, InputIterator end)
 {
   typedef GeometryTraits_2                              Gt2;
@@ -525,17 +524,16 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits>& arr,
 // given as an isertion hint.
 // The inserted x-monotone curve may intersect the existing arrangement.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
-void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
+void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             const typename GeometryTraits_2::X_monotone_curve_2& c,
             typename Arr_point_location_result<
-              Arrangement_on_surface_2<GeometryTraits_2,
-                                       TopologyTraits> >::type obj)
+              Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits, Final> >::type obj)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Tt::Zone_insertion_visitor           Zone_visitor;
 
   // Obtain an arrangement accessor.
@@ -564,10 +562,10 @@ void insert(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // ----------------------------------------------------------------------------
 // backward compatibility functions.
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
 CGAL_DEPRECATED void insert_x_monotone_curve
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  const typename GeometryTraits_2::X_monotone_curve_2& c,
  const PointLocation& pl)
 {
@@ -575,40 +573,40 @@ CGAL_DEPRECATED void insert_x_monotone_curve
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits>
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
 CGAL_DEPRECATED void insert_x_monotone_curve
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  const typename GeometryTraits_2::X_monotone_curve_2& c)
 {
   insert(arr, c);
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
 CGAL_DEPRECATED void insert_x_monotone_curves
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  InputIterator begin, InputIterator end)
 {
   insert(arr, begin, end);
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits>
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
 CGAL_DEPRECATED void insert_x_monotone_curve
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  const typename GeometryTraits_2::X_monotone_curve_2& c,
  typename Arr_point_location_result<
-   Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits> >::type obj)
+   Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final> >::type obj)
 {
   insert(arr, c, obj);
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
 CGAL_DEPRECATED
-void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
+void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>&
                   arr,
                   const typename GeometryTraits_2::Curve_2& c,
                   const PointLocation& pl)
@@ -617,9 +615,9 @@ void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits>
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
 CGAL_DEPRECATED
-void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
+void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>&
                   arr,
                   const typename GeometryTraits_2::Curve_2& c)
 {
@@ -627,10 +625,10 @@ void insert_curve(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
 }
 
 /* DEPRECATED use insert() instead */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
 CGAL_DEPRECATED
-void insert_curves(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
+void insert_curves(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>&
                    arr,
                    InputIterator begin, InputIterator end)
 {
@@ -642,19 +640,19 @@ void insert_curves(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
 // interior does not intersect with any existing edge or vertex in the
 // arrangement (incremental insertion).
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
-typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>::
+typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>::
 Halfedge_handle
 insert_non_intersecting_curve
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  const typename GeometryTraits_2::X_monotone_curve_2& c,
  const PointLocation& pl)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
 
   typedef Arr_traits_basic_adaptor_2<typename Arr::Geometry_traits_2>
                                                         Traits_adaptor_2;
@@ -799,11 +797,11 @@ insert_non_intersecting_curve
 // arrangement (incremental insertion).
 // Overloaded version with no point location object.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
-typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>::
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
+typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>::
 Halfedge_handle
 insert_non_intersecting_curve
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  const typename GeometryTraits_2::X_monotone_curve_2& c)
 {
   typedef TopologyTraits                                Tt;
@@ -819,10 +817,9 @@ insert_non_intersecting_curve
  * \param begin the beginning of the curve range
  * \param end past-the-end curve range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
-void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
-                                                            TopologyTraits>& arr,
+void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
                                    InputIterator begin_xcurves,
                                    InputIterator end_xcurves)
 {
@@ -830,7 +827,7 @@ void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -868,10 +865,9 @@ void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
  * \param begin the beginning of the curve range
  * \param end past-the-end curve range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename XcInputIterator, typename PInputIterator>
-void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
-                                                            TopologyTraits>& arr,
+void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits,Final>& arr,
                                    XcInputIterator begin_xcurves,
                                    XcInputIterator end_xcurves,
                                    PInputIterator begin_points,
@@ -881,7 +877,7 @@ void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -919,11 +915,10 @@ void non_intersecting_insert_empty(Arrangement_on_surface_2<GeometryTraits_2,
  * \param begin the beginning of the curve range
  * \param end past-the-end curve range
  */
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename XcInputIterator, typename PInputIterator>
 void
-non_intersecting_insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
-                                                           TopologyTraits>& arr,
+non_intersecting_insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,TopologyTraits,Final>& arr,
                                   XcInputIterator begin_xcurves,
                                   XcInputIterator end_xcurves,
                                   PInputIterator begin_points,
@@ -933,7 +928,7 @@ non_intersecting_insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
   typedef TopologyTraits                                Tt;
 
   // Arrangement types
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef typename Arr::Allocator                       Allocator;
 
   // Surface sweep types
@@ -1005,16 +1000,16 @@ non_intersecting_insert_non_empty(Arrangement_on_surface_2<GeometryTraits_2,
 // the arrangement, such that the curve interiors do not intersect with
 // any existing edge or vertex in the arrangement (aggregated insertion).
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename InputIterator>
 void insert_non_intersecting_curves
-(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
  InputIterator begin, InputIterator end)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
 
   // Obtain an arrangement accessor.
   Arr_accessor<Arr> arr_access(arr);
@@ -1043,16 +1038,16 @@ void insert_non_intersecting_curves
 // the edges incident to the end-vertices of the removed edge after its
 // deletion, the function performs these merges as well.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
-typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>::Face_handle
-remove_edge(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
+typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>::Face_handle
+remove_edge(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
             typename Arrangement_on_surface_2<GeometryTraits_2,
-            TopologyTraits>::Halfedge_handle e)
+            TopologyTraits,Final>::Halfedge_handle e)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>      Arr;
   typedef Arr_traits_adaptor_2<Gt2>                     Traits_adaptor_2;
 
   // Notify the arrangement observers that a global operation is about to
@@ -1116,17 +1111,17 @@ remove_edge(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // Insert a vertex that corresponds to a given point into the arrangement.
 // The inserted point may lie on any existing arrangement feature.
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
-typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>::Vertex_handle
-insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>::Vertex_handle
+insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const typename GeometryTraits_2::Point_2& p,
              const PointLocation& pl)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
 
   typedef typename Arr::Vertex_const_handle             Vertex_const_handle;
   typedef typename Arr::Halfedge_const_handle           Halfedge_const_handle;
@@ -1185,10 +1180,10 @@ insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // Insert a vertex that corresponds to a given point into the arrangement.
 // The inserted point may lie on any existing arrangement feature.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
-typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>::
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
+typename Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>::
 Vertex_handle
-insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const typename GeometryTraits_2::Point_2& p)
 {
   typedef TopologyTraits                                Tt;
@@ -1202,16 +1197,16 @@ insert_point(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 //-----------------------------------------------------------------------------
 // Remove a vertex from the arrangement.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
-bool remove_vertex(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
+bool remove_vertex(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>&
                    arr,
                    typename Arrangement_on_surface_2<
-                     GeometryTraits_2, TopologyTraits>::Vertex_handle v)
+                     GeometryTraits_2, TopologyTraits,Final>::Vertex_handle v)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
   typedef Arr_traits_adaptor_2<Gt2>                     Traits_adaptor_2;
 
   // Notify the arrangement observers that a global operation is about to
@@ -1266,15 +1261,15 @@ bool remove_vertex(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>&
 // edegs are disjoint-interior, and the holes are located in their proper
 // position.
 //
-template <typename GeometryTraits_2, typename TopologyTraits>
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final>
 bool
-is_valid(const Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr)
+is_valid(const Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr)
 {
   typedef GeometryTraits_2                              Gt2;
   typedef TopologyTraits                                Tt;
 
   // Arrangement types (iterator and circulator types).
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
   typedef typename Arr::Allocator                       Allocator;
   typedef typename Arr::Edge_const_iterator             Edge_const_iterator;
   typedef typename Arr::Halfedge_const_handle           Halfedge_const_handle;
@@ -1468,10 +1463,10 @@ is_valid(const Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr)
 // Compute the zone of the given x-monotone curve in the existing arrangement.
 // Meaning, it output the arrangement's vertices, edges and faces that the
 // x-monotone curve intersects.
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename OutputIterator, typename PointLocation>
 OutputIterator
-zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
      const typename GeometryTraits_2::X_monotone_curve_2& c,
      OutputIterator oi,
      const PointLocation& pl)
@@ -1480,7 +1475,7 @@ zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
   typedef TopologyTraits                                Tt;
 
   // Obtain an arrangement accessor.
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
 
   // Define a zone-computation object an a visitor that performs the
   // intersection check.
@@ -1500,10 +1495,10 @@ zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // Overloaded version with no point location object - the walk point-location
 // strategy is used as default.
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename OutputIterator>
 OutputIterator
-zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
      const typename GeometryTraits_2::X_monotone_curve_2& c,
      OutputIterator oi)
 {
@@ -1528,10 +1523,10 @@ zone(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // error: no matching function for call to `do_intersect(Arrangement_on_surface_2<>&,
 // const Arr_segment_2&, const Arr_walk_along_line_point_location<>&, mpl_::bool_< true>)'
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
 bool
-do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const typename GeometryTraits_2::X_monotone_curve_2& c,
              const PointLocation& pl, std::is_same<int, int>::type)
 {
@@ -1539,7 +1534,7 @@ do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
   typedef TopologyTraits                                Tt;
 
   // Obtain an arrangement accessor.
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
 
   // Define a zone-computation object an a visitor that performs the
   // intersection check.
@@ -1566,10 +1561,10 @@ do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // `do_intersect(Arrangement_on_surface_2<>&,
 // const Arr_segment_2&, const Arr_walk_along_line_point_location<>&, mpl_::bool_< true>)'
 //
-template <typename GeometryTraits_2, typename TopologyTraits,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final,
           typename PointLocation>
 bool
-do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const typename GeometryTraits_2::X_monotone_curve_2& c,
              const PointLocation& pl, std::is_same<int, double>::type)
 {
@@ -1577,7 +1572,7 @@ do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
   typedef TopologyTraits                                Tt;
 
   // Obtain an arrangement accessor.
-  typedef Arrangement_on_surface_2<Gt2, Tt>             Arr;
+  typedef Arrangement_on_surface_2<Gt2, Tt, Final>             Arr;
 
   // Break the input curve into x-monotone subcurves and isolated points.
   typedef Arr_traits_adaptor_2<Gt2>                     Traits_adaptor_2;
@@ -1618,10 +1613,10 @@ do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 
 //-----------------------------------------------------------------------------
 // Common interface for the do_intersect of the Curve_2 and X_monotone_curve_2
-template <typename GeometryTraits_2, typename TopologyTraits, typename Curve,
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final, typename Curve,
           typename PointLocation>
 bool
-do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const Curve& c, const PointLocation& pl)
 {
   typedef GeometryTraits_2                              Gt2;
@@ -1638,9 +1633,9 @@ do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
 // Checks whether the given curve intersects the existing arrangement.
 // Overloaded version with no point location object - the walk point-location
 // strategy is used as default.
-template <typename GeometryTraits_2, typename TopologyTraits, typename Curve>
+template <typename GeometryTraits_2, typename TopologyTraits, typename Final, typename Curve>
 bool
-do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits>& arr,
+do_intersect(Arrangement_on_surface_2<GeometryTraits_2, TopologyTraits, Final>& arr,
              const Curve& c)
 {
   typedef TopologyTraits                                Tt;

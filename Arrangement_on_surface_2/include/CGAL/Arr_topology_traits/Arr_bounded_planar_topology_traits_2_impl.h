@@ -27,8 +27,8 @@ namespace CGAL {
 //-----------------------------------------------------------------------------
 // Assign the contents of another topology-traits class.
 //
-template <typename GeometryTraits_2, typename Dcel_>
-void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_>::
+template <typename GeometryTraits_2, typename Dcel_, typename Final_>
+void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_, Final_>::
 assign(const Self& other)
 {
   // Assign the base class.
@@ -41,8 +41,8 @@ assign(const Self& other)
 //-----------------------------------------------------------------------------
 // Initialize an empty DCEL structure.
 //
-template <typename GeometryTraits_2, typename Dcel_>
-void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_>::init_dcel()
+template <typename GeometryTraits_2, typename Dcel_, typename Final_>
+void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_, Final_>::init_dcel()
 {
   // Clear the current DCEL.
   this->m_dcel.delete_all();
@@ -57,8 +57,8 @@ void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_>::init_dcel()
 //-----------------------------------------------------------------------------
 // Make the necessary updates after the DCEL structure have been updated.
 //
-template <typename GeometryTraits_2, typename Dcel_>
-void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_>::
+template <typename GeometryTraits_2, typename Dcel_, typename Final_>
+void Arr_bounded_planar_topology_traits_2<GeometryTraits_2, Dcel_, Final_>::
 dcel_updated()
 {
   // Go over the DCEL faces and locate the unbounded face.

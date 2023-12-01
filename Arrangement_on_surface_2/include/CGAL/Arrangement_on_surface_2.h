@@ -61,7 +61,7 @@ namespace CGAL {
  * class should also be aware of the kind of surface on which its curves and
  * points are defined.
  */
-template <typename GeomTraits_, typename TopTraits_>
+template <typename GeomTraits_, typename TopTraits_, typename Final>
 class Arrangement_on_surface_2 {
 public:
   typedef GeomTraits_                                     Geometry_traits_2;
@@ -83,7 +83,7 @@ public:
                         Right_side_category>::value);
 
 public:
-  typedef Arrangement_on_surface_2<Geometry_traits_2, Topology_traits>
+  typedef Arrangement_on_surface_2<Geometry_traits_2, Topology_traits, Final>
                                                           Self;
 
   typedef typename Geometry_traits_2::Point_2             Point_2;
@@ -110,8 +110,8 @@ public:
   typedef typename Dcel::Size                       Size;
 
 protected:
-  friend class Arr_observer<Self>;
-  friend class Arr_accessor<Self>;
+  friend class Arr_observer<Final>;
+  friend class Arr_accessor<Final>;
 
   // Internal DCEL types:
   typedef typename Dcel::Vertex                     DVertex;
@@ -146,7 +146,7 @@ protected:
   typedef typename DFace::Isolated_vertex_const_iterator
                                                     DIso_vertex_const_iter;
 
-protected:
+public:
   /*! \class
    * A functor for filtering DCEL vertices at infinity.
    */
@@ -528,7 +528,7 @@ public:
     { return (Vertex_const_iterator(DVertex_const_iter(this->ptr()))); }
   };
 
-protected:
+public:
   class _Valid_vertex_iterator :
     public I_Filtered_iterator<DVertex_iter, _Is_valid_vertex, Vertex,
                                DDifference, DIterator_category>
@@ -892,7 +892,7 @@ protected:
   typedef CGAL_ALLOCATOR(Point_2)                 Points_alloc;
   typedef CGAL_ALLOCATOR(X_monotone_curve_2)      Curves_alloc;
 
-  typedef Arr_observer<Self>                      Observer;
+  typedef Arr_observer<Final>                      Observer;
   typedef std::list<Observer*>                    Observers_container;
   typedef typename Observers_container::iterator  Observers_iterator;
 
@@ -1559,7 +1559,7 @@ public:
     }
   }
 
-protected:
+public:
   /// \name Determining the boundary-side conditions.
   //@{
 
@@ -2344,7 +2344,7 @@ protected:
     return false;
   }
 
-protected:
+public:
   /* Notify the observers on global arrangement operations: */
 
   void _notify_before_assign(const Self& arr)
@@ -2861,9 +2861,9 @@ protected:
  * \param cv The curve to be inserted.
  * \param pl A point-location object associated with the arrangement.
  */
-template <typename GeomTraits, typename TopTraits, typename Curve,
+template <typename GeomTraits, typename TopTraits, typename Final, typename Curve,
           typename PointLocation>
-void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+void insert(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
             const Curve& c, const PointLocation& pl,
             typename PointLocation::Point_2* = 0);
 
@@ -2876,8 +2876,8 @@ void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param arr The arrangement.
  * \param cv The curve to be inserted.
  */
-template <typename GeomTraits, typename TopTraits, typename Curve>
-void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final, typename Curve>
+void insert(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
             const Curve& c);
 
 /*!
@@ -2890,8 +2890,8 @@ void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param end A past-the-end iterator for the curve range.
  * \pre The value type of the iterators must be Curve_2.
  */
-template <typename GeomTraits, typename TopTraits, typename InputIterator>
-void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final, typename InputIterator>
+void insert(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
             InputIterator begin, InputIterator end);
 
 /*!
@@ -2905,11 +2905,11 @@ void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  *            in the arrangement.
  */
 
-template <typename GeomTraits, typename TopTraits>
-void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final>
+void insert(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
             const typename GeomTraits::X_monotone_curve_2& c,
             typename Arr_point_location_result<
-              Arrangement_on_surface_2<GeomTraits, TopTraits> >::type obj);
+              Arrangement_on_surface_2<GeomTraits, TopTraits, Final> >::type obj);
 
 /*!
  * Insert an x-monotone curve into the arrangement, such that the curve
@@ -2922,10 +2922,10 @@ void insert(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \return A handle for one of the new halfedges corresponding to the
  *         inserted curve, directed (lexicographically) from left to right.
  */
-template <typename GeomTraits, typename TopTraits, typename PointLocation>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
+template <typename GeomTraits, typename TopTraits, typename Final, typename PointLocation>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
 insert_non_intersecting_curve
-(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
  const typename GeomTraits::X_monotone_curve_2& c,
  const PointLocation& pl);
 
@@ -2940,10 +2940,10 @@ insert_non_intersecting_curve
  * \return A handle for one of the new halfedges corresponding to the inserted
  *         curve, directed (lexicographically) from left to right.
  */
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
 insert_non_intersecting_curve
-(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
  const typename GeomTraits::X_monotone_curve_2& c);
 
 /*!
@@ -2957,9 +2957,9 @@ insert_non_intersecting_curve
  *      The curves in the range are pairwise interior-disjoint, and their
  *      interiors do not intersect any existing edge or vertex.
  */
-template <typename GeomTraits, typename TopTraits, typename InputIterator>
+template <typename GeomTraits, typename TopTraits, typename Final, typename InputIterator>
 void insert_non_intersecting_curves
-(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
  InputIterator begin, InputIterator end);
 
 /*!
@@ -2970,11 +2970,10 @@ void insert_non_intersecting_curves
  * \param e The edge to remove (one of the pair of twin halfedges).
  * \return A handle for the remaining face.
  */
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Face_handle
-remove_edge(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
-            typename Arrangement_on_surface_2<GeomTraits,
-                                              TopTraits>::Halfedge_handle e);
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Face_handle
+remove_edge(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
+            typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle e);
 
 /*!
  * Insert a vertex that corresponds to a given point into the arrangement.
@@ -2984,9 +2983,9 @@ remove_edge(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param pl A point-location object associated with the arrangement.
  * \return A handle to the vertex that corresponds to the given point.
  */
-template <typename GeomTraits, typename TopTraits, typename PointLocation>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Vertex_handle
-insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final, typename PointLocation>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Vertex_handle
+insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
              const typename GeomTraits::Point_2& p,
              const PointLocation& pl);
 
@@ -2997,9 +2996,9 @@ insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param p The point to be inserted.
  * \return A handle to the vertex that corresponds to the given point.
  */
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Vertex_handle
-insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Vertex_handle
+insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
              const typename GeomTraits::Point_2& p);
 
 /*!
@@ -3008,11 +3007,10 @@ insert_point(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param v The vertex to remove.
  * \return Whether the vertex has been removed or not.
  */
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 bool
-remove_vertex(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
-              typename Arrangement_on_surface_2<GeomTraits,
-                                                TopTraits>::Vertex_handle v);
+remove_vertex(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
+              typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Vertex_handle v);
 
 
 /*!
@@ -3022,8 +3020,8 @@ remove_vertex(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param arr The arrangement.
  * \return Whether the arrangement is valid.
  */
-template <typename GeomTraits, typename TopTraits>
-bool is_valid(const Arrangement_on_surface_2<GeomTraits, TopTraits>& arr);
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool is_valid(const Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr);
 
 /*! Compute the zone of the given x-monotone curve in the existing arrangement.
  * Meaning, it output the arrangement's vertices, edges and faces that the
@@ -3036,9 +3034,9 @@ bool is_valid(const Arrangement_on_surface_2<GeomTraits, TopTraits>& arr);
  * \param pl the point location strategy used to locate the starting point.
  * \return the past-the-end output iterator.
  */
-template <typename GeomTraits, typename TopTraits,
+template <typename GeomTraits, typename TopTraits, typename Final,
           typename OutputIterator, typename PointLocation>
-OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
                     const typename GeomTraits::X_monotone_curve_2& c,
                     OutputIterator oi,
                     const PointLocation& pl);
@@ -3054,8 +3052,8 @@ OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  *           \c Halfedge_handle, or a \c Face_handle.
  * \return the past-the-end output iterator.
  */
-template <typename GeomTraits, typename TopTraits, typename OutputIterator>
-OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final, typename OutputIterator>
+OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
                     const typename GeomTraits::X_monotone_curve_2& c,
                     OutputIterator oi);
 
@@ -3068,9 +3066,9 @@ OutputIterator zone(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * point.
  * \return True if the curve intersect the arrangement, false otherwise.
  */
-template <typename GeomTraits, typename TopTraits, typename Curve,
+template <typename GeomTraits, typename TopTraits, typename Final, typename Curve,
           typename PointLocation>
-bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
                   const Curve& c, const PointLocation& pl);
 
 /*!
@@ -3082,8 +3080,8 @@ bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
  * \param c The x-monotone curve/curve.
  * \return True if the curve intersect the arrangement, false otherwise.
  */
-template <typename GeomTraits, typename TopTraits, typename Curve>
-bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
+template <typename GeomTraits, typename TopTraits, typename Final, typename Curve>
+bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
                   const Curve& c);
 
 } //namespace CGAL

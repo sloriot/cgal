@@ -27,8 +27,8 @@ namespace CGAL {
 //-----------------------------------------------------------------------------
 // Default constructor.
 //
-template <typename GeomTraits, typename Dcel_>
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 Arr_unb_planar_topology_traits_2():
   Base(),
   v_bl(nullptr),
@@ -42,8 +42,8 @@ Arr_unb_planar_topology_traits_2():
 //-----------------------------------------------------------------------------
 // Constructor with a geometry-traits class.
 //
-template <typename GeomTraits, typename Dcel_>
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 Arr_unb_planar_topology_traits_2 (const Geometry_traits_2 * geom_traits) :
   Base (geom_traits),
   v_bl (nullptr),
@@ -57,8 +57,8 @@ Arr_unb_planar_topology_traits_2 (const Geometry_traits_2 * geom_traits) :
 //-----------------------------------------------------------------------------
 // Assign the contents of another topology-traits class.
 //
-template <typename GeomTraits, typename Dcel_>
-void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 assign(const Self& other)
 {
   // Assign the base class.
@@ -73,8 +73,8 @@ assign(const Self& other)
 //-----------------------------------------------------------------------------
 // Make the necessary updates after the DCEL structure have been updated.
 //
-template <typename GeomTraits, typename Dcel_>
-void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::dcel_updated ()
+template <typename GeomTraits, typename Dcel_, typename Final_>
+void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::dcel_updated ()
 {
   // Go over the DCEL vertices and locate the four fictitious ones.
   typename Dcel::Vertex_iterator       vit;
@@ -138,8 +138,8 @@ void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::dcel_updated ()
 //-----------------------------------------------------------------------------
 // Initialize an empty DCEL structure.
 //
-template <typename GeomTraits, typename Dcel_>
-void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::init_dcel ()
+template <typename GeomTraits, typename Dcel_, typename Final_>
+void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::init_dcel ()
 {
   // Clear the current DCEL.
   this->m_dcel.delete_all();
@@ -243,8 +243,8 @@ void Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::init_dcel ()
 //-----------------------------------------------------------------------------
 // Check if the given vertex is associated with the given curve end.
 //
-template <typename GeomTraits, typename Dcel_>
-bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 are_equal(const Vertex *v,
           const X_monotone_curve_2& cv, Arr_curve_end ind,
           Arr_parameter_space ps_x, Arr_parameter_space ps_y) const
@@ -295,12 +295,12 @@ are_equal(const Vertex *v,
 // interior of the curve, find a place for a boundary vertex that will
 // represent the curve end along the face boundary.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 std::optional
   <std::variant
-    <typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Vertex*,
-     typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Halfedge*> >
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+    <typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Vertex*,
+     typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Halfedge*> >
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 place_boundary_vertex(Face* f,
                       const X_monotone_curve_2& cv, Arr_curve_end ind,
                       Arr_parameter_space ps_x, Arr_parameter_space ps_y)
@@ -337,12 +337,12 @@ place_boundary_vertex(Face* f,
 //-----------------------------------------------------------------------------
 // Locate a DCEL feature that contains the given unbounded curve end.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 std::variant
-<typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Vertex*,
- typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Halfedge*,
- typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Face*>
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+<typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Vertex*,
+ typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Halfedge*,
+ typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Face*>
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 locate_curve_end (const X_monotone_curve_2& cv, Arr_curve_end ind,
                   Arr_parameter_space ps_x, Arr_parameter_space ps_y)
 {
@@ -398,9 +398,9 @@ locate_curve_end (const X_monotone_curve_2& cv, Arr_curve_end ind,
 //-----------------------------------------------------------------------------
 // Split a fictitious edge using the given vertex.
 //
-template <typename GeomTraits, typename Dcel_>
-typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Halfedge*
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Halfedge*
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 split_fictitious_edge (Halfedge *e, Vertex *v)
 {
   CGAL_precondition (v->parameter_space_in_x() != ARR_INTERIOR ||
@@ -475,8 +475,8 @@ split_fictitious_edge (Halfedge *e, Vertex *v)
 //-----------------------------------------------------------------------------
 // Determine whether the given face is unbounded.
 //
-template <typename GeomTraits, typename Dcel_>
-bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 is_unbounded(const Face *f) const
 {
   // Go over the outer CBB of the given face and look for fictitious halfedges.
@@ -501,8 +501,8 @@ is_unbounded(const Face *f) const
 //-----------------------------------------------------------------------------
 // Determine whether the given boundary vertex is redundant.
 //
-template <typename GeomTraits, typename Dcel_>
-bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+bool Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 is_redundant(const Vertex *v) const
 {
   CGAL_precondition (v != v_bl && v != v_tl && v != v_br && v != v_tr);
@@ -524,9 +524,9 @@ is_redundant(const Vertex *v) const
 //-----------------------------------------------------------------------------
 // Erase the given redundant vertex.
 //
-template <typename GeomTraits, typename Dcel_>
-typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::Halfedge*
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+template <typename GeomTraits, typename Dcel_, typename Final_>
+typename Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::Halfedge*
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 erase_redundant_vertex (Vertex *v)
 {
   CGAL_precondition (is_redundant (v));
@@ -596,9 +596,9 @@ erase_redundant_vertex (Vertex *v)
 // Compare the x-coordinates of a given vertex (which may lie at infinity) and
 // the given point.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 Comparison_result
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 compare_x (const Point_2& p, const Vertex* v) const
 {
   // First check if the vertex v lies at x = -oo (then it is obviously smaller
@@ -633,9 +633,9 @@ compare_x (const Point_2& p, const Vertex* v) const
 //-----------------------------------------------------------------------------
 // Compare the given vertex (which may lie at infinity) and the given point.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 Comparison_result
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 compare_xy (const Point_2& p, const Vertex* v) const
 {
   // First check if the vertex v lies at x = -oo (then it is obviously smaller
@@ -674,9 +674,9 @@ compare_xy (const Point_2& p, const Vertex* v) const
 // Compare the relative y-position of the given point and the given edge
 // (which may be fictitious).
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 Comparison_result
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 compare_y_at_x(const Point_2& p, const Halfedge* he) const
 {
   // In case of a valid edge, just compare p to its associated curve.
@@ -704,10 +704,10 @@ compare_y_at_x(const Point_2& p, const Halfedge* he) const
 //-----------------------------------------------------------------------------
 // Get the curve associated with a boundary vertex.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 const typename
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::X_monotone_curve_2*
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::X_monotone_curve_2*
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 _curve (const Vertex* v, Arr_curve_end& ind) const
 {
   // Go over the incident halfedges of v until encountering the halfedge
@@ -735,9 +735,9 @@ _curve (const Vertex* v, Arr_curve_end& ind) const
 // Check whether the given infinite curve end lies on the given fictitious
 // halfedge.
 //
-template <typename GeomTraits, typename Dcel_>
+template <typename GeomTraits, typename Dcel_, typename Final_>
 bool
-Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_>::
+Arr_unb_planar_topology_traits_2<GeomTraits, Dcel_, Final_>::
 _is_on_fictitious_edge(const X_monotone_curve_2& cv, Arr_curve_end ind,
                        Arr_parameter_space ps_x, Arr_parameter_space ps_y,
                        const Halfedge* he,

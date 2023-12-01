@@ -32,32 +32,32 @@ namespace CGAL {
 
 namespace internal {
 
-template <typename GeomTraits, typename Dcel, typename Tag>
+template <typename GeomTraits, typename Dcel, typename Final, typename Tag>
 struct Default_planar_topology_impl {};
 
-template <typename GeomTraits, typename Dcel>
-struct Default_planar_topology_impl<GeomTraits, Dcel,
+template <typename GeomTraits, typename Dcel, typename Final>
+struct Default_planar_topology_impl<GeomTraits, Dcel, Final,
                                     Arr_all_sides_oblivious_tag>
 {
   // A topology-traits class that supports only bounded curves:
-  typedef Arr_bounded_planar_topology_traits_2<GeomTraits, Dcel>    Traits;
+  typedef Arr_bounded_planar_topology_traits_2<GeomTraits, Dcel, Final>    Traits;
 
 };
 
-template <typename GeomTraits, typename Dcel>
-struct Default_planar_topology_impl<GeomTraits, Dcel,
+template <typename GeomTraits, typename Dcel, typename Final>
+struct Default_planar_topology_impl<GeomTraits, Dcel, Final,
                                     Arr_not_all_sides_oblivious_tag>
 {
   // A topology-traits class that supports unbounded curves:
-  typedef Arr_unb_planar_topology_traits_2<GeomTraits, Dcel>        Traits;
+  typedef Arr_unb_planar_topology_traits_2<GeomTraits, Dcel, Final>        Traits;
 };
 
 } // namespace internal
 
-template <typename GeomTraits, typename Dcel>
+template <typename GeomTraits, typename Dcel, typename Final>
 struct Default_planar_topology :
   public internal::Default_planar_topology_impl<
-    GeomTraits, Dcel,
+    GeomTraits, Dcel, Final,
     typename Arr_all_sides_oblivious_category<
       typename internal::Arr_complete_left_side_category<GeomTraits>::Category,
       typename internal::Arr_complete_bottom_side_category<GeomTraits>::Category,

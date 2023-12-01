@@ -41,8 +41,8 @@ namespace CGAL {
 //-----------------------------------------------------------------------------
 // Default constructor.
 //
-template <typename GeomTraits, typename TopTraits>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::Arrangement_on_surface_2() :
+template <typename GeomTraits, typename TopTraits, typename Final>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Arrangement_on_surface_2() :
   m_topol_traits()
 {
   typedef has_Left_side_category<GeomTraits> Cond_left;
@@ -85,8 +85,8 @@ Arrangement_on_surface_2<GeomTraits, TopTraits>::Arrangement_on_surface_2() :
 //-----------------------------------------------------------------------------
 // Copy constructor.
 //
-template <typename GeomTraits, typename TopTraits>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 Arrangement_on_surface_2(const Self& arr) :
   m_geom_traits(nullptr),
   m_own_traits(false)
@@ -95,8 +95,8 @@ Arrangement_on_surface_2(const Self& arr) :
 //-----------------------------------------------------------------------------
 // Constructor given a traits object.
 //
-template <typename GeomTraits, typename TopTraits>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 Arrangement_on_surface_2(const Geometry_traits_2* geom_traits) :
   m_topol_traits(geom_traits)
 {
@@ -140,9 +140,9 @@ Arrangement_on_surface_2(const Geometry_traits_2* geom_traits) :
 //-----------------------------------------------------------------------------
 // Assignment operator.
 //
-template <typename GeomTraits, typename TopTraits>
-Arrangement_on_surface_2<GeomTraits, TopTraits>&
-Arrangement_on_surface_2<GeomTraits, TopTraits>::operator=(const Self& arr)
+template <typename GeomTraits, typename TopTraits, typename Final>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>&
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::operator=(const Self& arr)
 {
   if (this == &arr) return (*this);     // handle self-assignment
   assign(arr);
@@ -152,8 +152,8 @@ Arrangement_on_surface_2<GeomTraits, TopTraits>::operator=(const Self& arr)
 //-----------------------------------------------------------------------------
 // Assign an arrangement.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::assign(const Self& arr)
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::assign(const Self& arr)
 {
   // Clear the current contents of the arrangement.
   clear();
@@ -208,8 +208,8 @@ void Arrangement_on_surface_2<GeomTraits, TopTraits>::assign(const Self& arr)
 //-----------------------------------------------------------------------------
 // Destructor.
 //
-template <typename GeomTraits, typename TopTraits>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::~Arrangement_on_surface_2()
+template <typename GeomTraits, typename TopTraits, typename Final>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::~Arrangement_on_surface_2()
 {
   // Free all stored points.
   typename Dcel::Vertex_iterator vit;
@@ -245,8 +245,8 @@ Arrangement_on_surface_2<GeomTraits, TopTraits>::~Arrangement_on_surface_2()
 //-----------------------------------------------------------------------------
 // Clear the arrangement.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::clear()
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::clear()
 {
   // Notify the observers that we are about to clear the arrangement.
   _notify_before_clear();
@@ -272,9 +272,9 @@ void Arrangement_on_surface_2<GeomTraits, TopTraits>::clear()
 //-----------------------------------------------------------------------------
 // Insert a point as an isolated vertex in the interior of a given face.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Vertex_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Vertex_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_in_face_interior(const Point_2& p, Face_handle f)
 {
   DFace* p_f = _face(f);
@@ -312,9 +312,9 @@ insert_in_face_interior(const Point_2& p, Face_handle f)
 // Insert an x-monotone curve into the arrangement as a new hole (inner
 // component) inside the given face.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_in_face_interior(const X_monotone_curve_2& cv, Face_handle f)
 {
 #if CGAL_ARRANGEMENT_ON_SURFACE_INSERT_VERBOSE
@@ -429,9 +429,9 @@ insert_in_face_interior(const X_monotone_curve_2& cv, Face_handle f)
 // Insert an x-monotone curve into the arrangement, such that its left
 // endpoint corresponds to a given arrangement vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_from_left_vertex(const X_monotone_curve_2& cv,
                         Vertex_handle v,
                         Face_handle f)
@@ -570,9 +570,9 @@ insert_from_left_vertex(const X_monotone_curve_2& cv,
 // endpoint corresponds to a given arrangement vertex, given the exact place
 // for the curve in the circular list around this vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_from_left_vertex(const X_monotone_curve_2& cv, Halfedge_handle prev)
 {
 #if CGAL_ARRANGEMENT_ON_SURFACE_INSERT_VERBOSE
@@ -666,9 +666,9 @@ insert_from_left_vertex(const X_monotone_curve_2& cv, Halfedge_handle prev)
 // Insert an x-monotone curve into the arrangement, such that its right
 // endpoint corresponds to a given arrangement vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_from_right_vertex(const X_monotone_curve_2& cv,
                          Vertex_handle v, Face_handle f)
 {
@@ -804,9 +804,9 @@ insert_from_right_vertex(const X_monotone_curve_2& cv,
 // endpoint corresponds to a given arrangement vertex, given the exact place
 // for the curve in the circular list around this vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_from_right_vertex(const X_monotone_curve_2& cv,
                          Halfedge_handle prev)
 {
@@ -901,9 +901,9 @@ insert_from_right_vertex(const X_monotone_curve_2& cv,
 // Insert an x-monotone curve into the arrangement, such that both its
 // endpoints corresponds to a given arrangement vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_at_vertices(const X_monotone_curve_2& cv,
                    Vertex_handle v1, Vertex_handle v2,
                    Face_handle f)
@@ -1145,9 +1145,9 @@ insert_at_vertices(const X_monotone_curve_2& cv,
 // endpoints correspond to given arrangement vertices, given the exact
 // place for the curve in one of the circular lists around a vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_at_vertices(const X_monotone_curve_2& cv,
                    Halfedge_handle prev1,
                    Vertex_handle v2)
@@ -1294,9 +1294,9 @@ insert_at_vertices(const X_monotone_curve_2& cv,
 // endpoints correspond to given arrangement vertices, given the exact
 // place for the curve in both circular lists around these two vertices.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 insert_at_vertices(const X_monotone_curve_2& cv,
                    Halfedge_handle prev1, Halfedge_handle prev2)
 {
@@ -1453,9 +1453,9 @@ insert_at_vertices(const X_monotone_curve_2& cv,
 //-----------------------------------------------------------------------------
 // Replace the point associated with the given vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Vertex_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Vertex_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 modify_vertex(Vertex_handle vh, const Point_2& p)
 {
   CGAL_precondition_msg
@@ -1474,9 +1474,9 @@ modify_vertex(Vertex_handle vh, const Point_2& p)
 //-----------------------------------------------------------------------------
 // Remove an isolated vertex from the interior of a given face.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Face_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Face_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 remove_isolated_vertex(Vertex_handle v)
 {
   CGAL_precondition(v->is_isolated());
@@ -1508,9 +1508,9 @@ remove_isolated_vertex(Vertex_handle v)
 //-----------------------------------------------------------------------------
 // Replace the x-monotone curve associated with the given edge.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 modify_edge(Halfedge_handle e, const X_monotone_curve_2& cv)
 {
   CGAL_precondition_msg(! e->is_fictitious(),
@@ -1529,9 +1529,9 @@ modify_edge(Halfedge_handle e, const X_monotone_curve_2& cv)
 // Split a given edge into two, and associate the given x-monotone
 // curves with the split edges.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 split_edge(Halfedge_handle e,
            const X_monotone_curve_2& cv1, const X_monotone_curve_2& cv2)
 {
@@ -1595,9 +1595,9 @@ split_edge(Halfedge_handle e,
 // Merge two edges to form a single edge, and associate the given x-monotone
 // curve with the merged edge.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Halfedge_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Halfedge_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 merge_edge(Halfedge_handle e1, Halfedge_handle e2,
            const X_monotone_curve_2& cv)
 {
@@ -1747,9 +1747,9 @@ merge_edge(Halfedge_handle e1, Halfedge_handle e2,
 //-----------------------------------------------------------------------------
 // Remove an edge from the arrangement.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::Face_handle
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::Face_handle
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 remove_edge(Halfedge_handle e, bool remove_source, bool remove_target)
 {
   // Comment EBEB 2012-08-06: this has become a simple forwarding function
@@ -1772,9 +1772,9 @@ remove_edge(Halfedge_handle e, bool remove_source, bool remove_target)
 //-----------------------------------------------------------------------------
 // Locate the place for the given curve around the given vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _locate_around_vertex(DVertex* v,
                       const X_monotone_curve_2& cv, Arr_curve_end ind) const
 {
@@ -1834,9 +1834,9 @@ _locate_around_vertex(DVertex* v,
 //-----------------------------------------------------------------------------
 // Compute the distance (in halfedges) between two halfedges.
 //
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 unsigned int
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _halfedge_distance(const DHalfedge* e1, const DHalfedge* e2) const
 {
   CGAL_precondition(e1 != e2);
@@ -1867,9 +1867,9 @@ _halfedge_distance(const DHalfedge* e1, const DHalfedge* e2) const
 // return SMALLER if e1 to e2 is shorter, EQUAL if paths lengths are equal,
 //  o/w LARGER
 //
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 Comparison_result
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compare_induced_path_length(const DHalfedge* e1, const DHalfedge* e2) const
 {
   CGAL_precondition(e1 != e2);
@@ -1914,8 +1914,8 @@ _compare_induced_path_length(const DHalfedge* e1, const DHalfedge* e2) const
 //-----------------------------------------------------------------------------
 // Move a given outer CCB from one face to another.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _move_outer_ccb(DFace* from_face, DFace* to_face, DHalfedge* he)
 {
   // Get the DCEL record that represents the outer CCB.
@@ -1943,8 +1943,8 @@ _move_outer_ccb(DFace* from_face, DFace* to_face, DHalfedge* he)
 //-----------------------------------------------------------------------------
 // Move a given inner CCB (hole) from one face to another.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _move_inner_ccb(DFace* from_face, DFace* to_face, DHalfedge* he)
 {
   // Get the DCEL record that represents the inner CCB.
@@ -1972,8 +1972,8 @@ _move_inner_ccb(DFace* from_face, DFace* to_face, DHalfedge* he)
 //-----------------------------------------------------------------------------
 // Move all inner CCBs (holes) from one face to another.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _move_all_inner_ccb(DFace* from_face, DFace* to_face)
 {
   // Comment EFEF 2015-09-28: The following loop and the loop at the end of this
@@ -1998,8 +1998,8 @@ _move_all_inner_ccb(DFace* from_face, DFace* to_face)
 //-----------------------------------------------------------------------------
 // Insert the given vertex as an isolated vertex inside the given face.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _insert_isolated_vertex(DFace* f, DVertex* v)
 {
 #if CGAL_ARRANGEMENT_ON_SURFACE_INSERT_VERBOSE
@@ -2035,8 +2035,8 @@ _insert_isolated_vertex(DFace* f, DVertex* v)
 //-----------------------------------------------------------------------------
 // Move a given isolated vertex from one face to another.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _move_isolated_vertex(DFace* from_face, DFace* to_face, DVertex* v)
 {
   // Get the DCEL isolated-vertex record.
@@ -2062,8 +2062,8 @@ _move_isolated_vertex(DFace* from_face, DFace* to_face, DVertex* v)
 //-----------------------------------------------------------------------------
 // Move all isolated vertices from one face to another.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _move_all_isolated_vertices(DFace* from_face, DFace* to_face)
 {
   // Comment EFEF 2015-09-28: The following loop and the loop at the end of this
@@ -2089,9 +2089,9 @@ _move_all_isolated_vertices(DFace* from_face, DFace* to_face)
 //-----------------------------------------------------------------------------
 // Create a new vertex and associate it with the given point.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DVertex*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DVertex*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _create_vertex(const Point_2& p)
 {
   // Notify the observers that we are about to create a new vertex.
@@ -2114,9 +2114,9 @@ _create_vertex(const Point_2& p)
 
 // Create a new vertex on boundary
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DVertex*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DVertex*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _create_boundary_vertex(const Point_2& p,
                         Arr_parameter_space ps_x, Arr_parameter_space ps_y)
 {
@@ -2139,9 +2139,9 @@ _create_boundary_vertex(const Point_2& p,
 //-----------------------------------------------------------------------------
 // Create a new vertex on boundary
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DVertex*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DVertex*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _create_boundary_vertex(const X_monotone_curve_2& cv, Arr_curve_end ind,
                         Arr_parameter_space ps_x, Arr_parameter_space ps_y)
 {
@@ -2179,9 +2179,9 @@ _create_boundary_vertex(const X_monotone_curve_2& cv, Arr_curve_end ind,
 // Locate the DCEL features that will be used for inserting the given point,
 // which has a boundary condition, and set a proper vertex there.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DVertex*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DVertex*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _place_and_set_point(DFace* f, const Point_2& p,
                      Arr_parameter_space ps_x, Arr_parameter_space ps_y)
 {
@@ -2226,9 +2226,9 @@ _place_and_set_point(DFace* f, const Point_2& p,
 // Locate the DCEL features that will be used for inserting the given curve
 // end, which has a boundary condition, and set the proper vertex there.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DVertex*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DVertex*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _place_and_set_curve_end(DFace* f,
                          const X_monotone_curve_2& cv, Arr_curve_end ind,
                          Arr_parameter_space ps_x, Arr_parameter_space ps_y,
@@ -2290,9 +2290,9 @@ _place_and_set_curve_end(DFace* f,
 // or existing isolated vertices), so a new inner CCB is formed in the face
 // that contains the two vertices.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _insert_in_face_interior(DFace* f,
                          const X_monotone_curve_2& cv,
                          Arr_halfedge_direction cv_dir,
@@ -2362,9 +2362,9 @@ _insert_in_face_interior(DFace* f,
 // endpoint corresponds to a free vertex (a newly created vertex or an
 // isolated vertex).
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _insert_from_vertex(DHalfedge* he_to, const X_monotone_curve_2& cv,
                     Arr_halfedge_direction cv_dir,
                     DVertex* v)
@@ -2446,9 +2446,9 @@ _insert_from_vertex(DHalfedge* he_to, const X_monotone_curve_2& cv,
 // it will be the incident face of the halfedge directed from the first
 // vertex to the second vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _insert_at_vertices(DHalfedge* he_to,
                     const X_monotone_curve_2& cv,
                     Arr_halfedge_direction cv_dir,
@@ -3183,8 +3183,8 @@ _insert_at_vertices(DHalfedge* he_to,
 // Relocate all inner CCBs (holes) to their proper position,
 // immediately after a face has split due to the insertion of a new halfedge.
 //
-template <typename GeomTraits, typename TopTraits>
-void  Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void  Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _relocate_inner_ccbs_in_new_face(DHalfedge* new_he)
 {
   // The given halfedge points to the new face, while its twin points to the
@@ -3233,8 +3233,8 @@ _relocate_inner_ccbs_in_new_face(DHalfedge* new_he)
 // Relocate all isolated vertices to their proper position,
 // immediately after a face has split due to the insertion of a new halfedge.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _relocate_isolated_vertices_in_new_face(DHalfedge* new_he)
 {
 #if CGAL_ARRANGEMENT_ON_SURFACE_INSERT_VERBOSE
@@ -3279,8 +3279,8 @@ _relocate_isolated_vertices_in_new_face(DHalfedge* new_he)
 // position, immediately after a face has split due to the insertion of a new
 // halfedge.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _relocate_in_new_face(DHalfedge* new_he)
 {
 #if CGAL_ARRANGEMENT_ON_SURFACE_INSERT_VERBOSE
@@ -3295,8 +3295,8 @@ _relocate_in_new_face(DHalfedge* new_he)
 //-----------------------------------------------------------------------------
 // Replace the point associated with the given vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _modify_vertex(DVertex* v, const Point_2& p)
 {
   // Notify the observers that we are about to modify a vertex.
@@ -3313,8 +3313,8 @@ _modify_vertex(DVertex* v, const Point_2& p)
 //-----------------------------------------------------------------------------
 // Replace the x-monotone curve associated with the given edge.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _modify_edge(DHalfedge* he, const X_monotone_curve_2& cv)
 {
   // Notify the observers that we are about to modify an edge.
@@ -3331,8 +3331,8 @@ _modify_edge(DHalfedge* he, const X_monotone_curve_2& cv)
 //-----------------------------------------------------------------------------
 // Check if the given vertex represents one of the ends of a given curve.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _are_equal(const DVertex* v,
            const X_monotone_curve_2& cv, Arr_curve_end ind) const
 {
@@ -3361,9 +3361,9 @@ _are_equal(const DVertex* v,
 // Split a given edge into two at a given point, and associate the given
 // x-monotone curves with the split edges.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _split_edge(DHalfedge* e, const Point_2& p,
             const X_monotone_curve_2& cv1, const X_monotone_curve_2& cv2)
 {
@@ -3389,9 +3389,9 @@ _split_edge(DHalfedge* e, const Point_2& p,
 // Split a given edge into two at a given vertex, and associate the given
 // x-monotone curves with the split edges.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DHalfedge*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _split_edge(DHalfedge* e, DVertex* v,
             const X_monotone_curve_2& cv1, const X_monotone_curve_2& cv2)
 {
@@ -3472,8 +3472,8 @@ _split_edge(DHalfedge* e, DVertex* v,
   return he1;
 }
 
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_indices(Arr_parameter_space /* ps_x_curr */,
                  Arr_parameter_space /* ps_y_curr */,
                  Arr_parameter_space /* ps_x_next */,
@@ -3482,8 +3482,8 @@ _compute_indices(Arr_parameter_space /* ps_x_curr */,
                  Arr_false) const
 { /* nothing if no identification */ }
 
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_indices(Arr_parameter_space ps_x_curr, Arr_parameter_space ps_y_curr,
                  Arr_parameter_space ps_x_next, Arr_parameter_space ps_y_next,
                  int& x_index, int& y_index,  Arr_true) const
@@ -3535,10 +3535,10 @@ _compute_indices(Arr_parameter_space ps_x_curr, Arr_parameter_space ps_y_curr,
 //              on an open boundary.
 // Postcondition If nullptr is a local minimum, it is inserted first.
 //                No other local minima can be nullptr.
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 template <typename OutputIterator>
 std::pair<Sign, Sign>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_signs_and_local_minima(const DHalfedge* he_to,
                                 const X_monotone_curve_2& cv,
                                 Arr_halfedge_direction cv_dir,
@@ -3676,17 +3676,17 @@ _compute_signs_and_local_minima(const DHalfedge* he_to,
 // Computes the signs of a closed ccb (loop) when deleting he_anchor and its
 // opposite belonging to different faces for the case where non of the
 // boundaries is identified, thus, return the pair (ZERO, ZERO)
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 std::pair<Sign, Sign>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_signs(const DHalfedge* /* he_anchor */, Arr_false) const
 { return (std::make_pair(ZERO, ZERO)); }
 
   // Computes the signs of a closed ccb (loop) when deleting he_anchor and its
 // opposite belonging to different faces.
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 std::pair<Sign, Sign>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_signs(const DHalfedge* he_anchor, Arr_true) const
 {
   // We go over the sequence of vertices, starting from he_before's target
@@ -3760,11 +3760,10 @@ _compute_signs(const DHalfedge* he_anchor, Arr_true) const
 // Computes the halfedge that points at the smallest vertex in a closed ccb
 // when deleting he_anchor and its opposite belonging to same face
 // (loop-about-to-split).
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 std::pair<std::pair<Sign, Sign>,
-          const typename Arrangement_on_surface_2<GeomTraits,
-                                                  TopTraits>::DHalfedge*>
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+          const typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DHalfedge*>
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _compute_signs_and_min(const DHalfedge* he_anchor,
                        Arr_parameter_space& ps_x_min,
                        Arr_parameter_space& ps_y_min,
@@ -3887,8 +3886,8 @@ _compute_signs_and_min(const DHalfedge* he_anchor,
 /* This is the implementation for the case where all 4 boundary sides are
  * oblivious.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller(const DHalfedge* he1,
             Arr_parameter_space /* ps_x1 */, Arr_parameter_space /* ps_y1 */,
             const DHalfedge* he2,
@@ -3906,8 +3905,8 @@ _is_smaller(const DHalfedge* he1,
 /* This is a wrapper for the case where any boundary side is not
  * necessarily oblivious.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller(const DHalfedge* he1,
             Arr_parameter_space ps_x1, Arr_parameter_space ps_y1,
             const DHalfedge* he2,
@@ -3937,8 +3936,8 @@ _is_smaller(const DHalfedge* he1,
 /* This is the implementation for the case where all 4 boundary sides are
  * oblivious.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller(const X_monotone_curve_2& /* cv1 */, const Point_2& p1,
             Arr_parameter_space /* ps_x1 */, Arr_parameter_space /* ps_y1 */,
             const X_monotone_curve_2& /* cv2 */, const Point_2& p2,
@@ -3954,8 +3953,8 @@ _is_smaller(const X_monotone_curve_2& /* cv1 */, const Point_2& p1,
  * This can be further refined as the combination of LEFT and LEFT can occur
  * only when the right and left boundary sides are identified.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller(const X_monotone_curve_2& cv1, const Point_2& p1,
             Arr_parameter_space ps_x1, Arr_parameter_space ps_y1,
             const X_monotone_curve_2& cv2, const Point_2& p2,
@@ -4010,8 +4009,8 @@ _is_smaller(const X_monotone_curve_2& cv1, const Point_2& p1,
 /* This is the implementation for the case where all 4 boundary sides are
  * oblivious.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller_near_right(const X_monotone_curve_2& cv1,
                        const X_monotone_curve_2& cv2,
                        const Point_2& p,
@@ -4026,8 +4025,8 @@ _is_smaller_near_right(const X_monotone_curve_2& cv1,
 /*! This is the implementation for the case where any one of the 4 boundary
  * sides can be of any type.
  */
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_smaller_near_right(const X_monotone_curve_2& cv1,
                        const X_monotone_curve_2& cv2,
                        const Point_2& p,
@@ -4061,9 +4060,9 @@ _is_smaller_near_right(const X_monotone_curve_2& cv1,
 //   of cv itself.
 // Precondition: If the leftend of cv is a local minimum, it must be the first
 //   in the range.
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 template <typename InputIterator>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _defines_outer_ccb_of_new_face(const DHalfedge* he_to,
                                const X_monotone_curve_2& cv,
                                const DHalfedge* he_away,
@@ -4163,8 +4162,8 @@ _defines_outer_ccb_of_new_face(const DHalfedge* he_to,
 // Is the first given x-monotone curve above the second given?
 // This function is invoked when the bottom and top boundaries are neither
 // identified nor contracted
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
           const Point_2& point,
           Arr_parameter_space /* ps_y1 */,
@@ -4176,8 +4175,8 @@ _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
 
 // Is the first given x-monotone curve above the second given?
 // This function is invoked when the bottom and top boundaries are identified
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
           const Point_2& point,
           Arr_parameter_space ps_y1,
@@ -4219,8 +4218,8 @@ _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
 
 // Is the first given x-monotone curve above the second given?
 // This function is invoked when the bottom or top boundaries are contracted
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
           const Point_2& point,
           Arr_parameter_space ps_y1,
@@ -4261,9 +4260,9 @@ _is_above(const X_monotone_curve_2& xcv1, const X_monotone_curve_2& xcv2,
 // In case the removal causes the creation of a new hole, the given halfedge
 // should point at this hole.
 //
-template <typename GeomTraits, typename TopTraits>
-typename Arrangement_on_surface_2<GeomTraits, TopTraits>::DFace*
-Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+typename Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::DFace*
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _remove_edge(DHalfedge* e, bool remove_source, bool remove_target)
 {
   // Obtain the pair of twin edges to be removed, the connected components they
@@ -5178,8 +5177,8 @@ _remove_edge(DHalfedge* e, bool remove_source, bool remove_target)
 }
 
 // Decide whether a hole is created
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _hole_creation_on_edge_removal(std::pair< CGAL::Sign, CGAL::Sign > signs1,
                                std::pair< CGAL::Sign, CGAL::Sign > signs2,
                                bool same_face) {
@@ -5198,8 +5197,8 @@ _hole_creation_on_edge_removal(std::pair< CGAL::Sign, CGAL::Sign > signs1,
 // Remove a vertex in case it becomes redundant after the deletion of an
 // incident edge.
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _remove_vertex_if_redundant(DVertex* v, DFace* f)
 {
   CGAL_precondition((v->parameter_space_in_x() != ARR_INTERIOR) ||
@@ -5266,8 +5265,8 @@ _remove_vertex_if_redundant(DVertex* v, DFace* f)
 // Remove an isolated vertex from the interior of a given face (but not from
 // the DCEL).
 //
-template <typename GeomTraits, typename TopTraits>
-void Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+void Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _remove_isolated_vertex(DVertex* v)
 {
   // Remove the isolated vertex from the face and delete its record.
@@ -5282,8 +5281,8 @@ _remove_isolated_vertex(DVertex* v)
 // Check whether the arrangement is valid. In particular, check the
 // validity of each vertex, halfedge, and face.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::is_valid() const
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::is_valid() const
 {
   Vertex_const_iterator vit;
   bool is_vertex_valid;
@@ -5330,8 +5329,8 @@ bool Arrangement_on_surface_2<GeomTraits, TopTraits>::is_valid() const
 //---------------------------------------------------------------------------
 // Check the validity of a vertex.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_valid(Vertex_const_handle v) const
 {
   // Do not check isolated vertices, as they have no incident halfedges.
@@ -5360,8 +5359,8 @@ _is_valid(Vertex_const_handle v) const
 //---------------------------------------------------------------------------
 // Check the validity of a halfedge.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_valid(Halfedge_const_handle he) const
 {
   // Check relations with the previous and the next halfedges.
@@ -5415,8 +5414,8 @@ _is_valid(Halfedge_const_handle he) const
 //---------------------------------------------------------------------------
 // Check the validity of a face.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_valid(Face_const_handle f) const
 {
   // Check if all outer components of the face refer to f.
@@ -5471,8 +5470,8 @@ _is_valid(Face_const_handle f) const
 //---------------------------------------------------------------------------
 // Check the validity of an outer CCB.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_outer_ccb_valid(const DOuter_ccb* oc, const DHalfedge* first) const
 {
   // Make sure that all halfedges along the CCB refer to the same component.
@@ -5496,8 +5495,8 @@ _is_outer_ccb_valid(const DOuter_ccb* oc, const DHalfedge* first) const
 //---------------------------------------------------------------------------
 // Check the validity of an inner CCB.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _is_inner_ccb_valid(const DInner_ccb* ic, const DHalfedge* first) const
 {
   // Make sure that all halfedges along the CCB refer to the same component.
@@ -5522,9 +5521,9 @@ _is_inner_ccb_valid(const DInner_ccb* ic, const DHalfedge* first) const
 // Check that all vertices are unique (no two vertices with the same
 // geometric point).
 //
-template <typename GeomTraits, typename TopTraits>
+template <typename GeomTraits, typename TopTraits, typename Final>
 bool
-Arrangement_on_surface_2<GeomTraits, TopTraits>::_are_vertices_unique() const
+Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::_are_vertices_unique() const
 {
   if (number_of_vertices() < 2) return true;
 
@@ -5563,8 +5562,8 @@ Arrangement_on_surface_2<GeomTraits, TopTraits>::_are_vertices_unique() const
 //---------------------------------------------------------------------------
 // Check that the curves around a given vertex are ordered clockwise.
 //
-template <typename GeomTraits, typename TopTraits>
-bool Arrangement_on_surface_2<GeomTraits, TopTraits>::
+template <typename GeomTraits, typename TopTraits, typename Final>
+bool Arrangement_on_surface_2<GeomTraits, TopTraits, Final>::
 _are_curves_ordered_cw_around_vertrex(Vertex_const_handle v) const
 {
   if (v->degree() < 3) return true;

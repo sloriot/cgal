@@ -86,9 +86,6 @@ public:
     p_pt(nullptr)
   { pss[0] = pss[1] = static_cast<char>(CGAL::ARR_INTERIOR); }
 
-  /*! Destructor. */
-  virtual ~Arr_vertex_base() {}
-
   // Access/modification for pointer squatting
   void* inc() const { return p_inc; }
   void set_inc(void * inc) const
@@ -131,7 +128,7 @@ public:
   }
 
   /*! Assign from another vertex. */
-  virtual void assign(const Arr_vertex_base<Point>& v)
+  void assign(const Arr_vertex_base<Point>& v)
   {
     p_pt = v.p_pt;
     pss[0] = v.pss[0];
@@ -178,9 +175,6 @@ public:
     p_cv(nullptr)
   {}
 
-  /*! Destructor. */
-  virtual ~Arr_halfedge_base() {}
-
   /*! Check if the curve pointer is nullptr. */
   bool has_null_curve() const { return (p_cv == nullptr); }
 
@@ -211,7 +205,7 @@ public:
   }
 
   /*! Assign from another halfedge. */
-  virtual void assign(const Arr_halfedge_base<X_monotone_curve>& he)
+  void assign(const Arr_halfedge_base<X_monotone_curve>& he)
   { p_cv = he.p_cv; }
 };
 
@@ -249,9 +243,6 @@ public:
   /*! Default constructor. */
   Arr_face_base() : flags(0) {}
 
-  /*! Destructor. */
-  virtual ~Arr_face_base() {}
-
   /*! Check if the face is unbounded. */
   bool is_unbounded() const { return ((flags & IS_UNBOUNDED) != 0); }
 
@@ -267,7 +258,7 @@ public:
   { flags = (fictitious) ? (flags | IS_FICTITIOUS) : (flags & ~IS_FICTITIOUS); }
 
   /*! Assign from another face. */
-  virtual void assign(const Arr_face_base& f) { flags = f.flags; }
+  void assign(const Arr_face_base& f) { flags = f.flags; }
 };
 
 // Forward declarations:

@@ -18,7 +18,7 @@
 
 /*! \file
  * Definition of the I/O operators for the class-template
- * Arrangement_on_surface_2<GeomTraits,TopTraits>.
+ * Arrangement_on_surface_2<GeomTraits, TopTraits, Final>.
  */
 
 #include <CGAL/Arrangement_on_surface_2.h>
@@ -37,13 +37,13 @@ namespace IO {
  * \param os The output stream.
  * \param format The formatter.
  */
-template <class GeomTraits, class TopTraits, class Formatter>
+template <class GeomTraits, class TopTraits, class Final, class Formatter>
 std::ostream&
-    write (const Arrangement_on_surface_2<GeomTraits,TopTraits>& arr,
+    write (const Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
            std::ostream& os,
            Formatter& format)
 {
-  typedef Arrangement_on_surface_2<GeomTraits,TopTraits>  Arrangement_2;
+  typedef Arrangement_on_surface_2<GeomTraits, TopTraits, Final>  Arrangement_2;
   typedef Arrangement_2_writer<Arrangement_2>             Arr_writer;
 
   Arr_writer      writer (arr);
@@ -60,12 +60,12 @@ std::ostream&
  * \param os The output stream.
  * \param arr The arrangement.
  */
-template <class GeomTraits, class TopTraits>
+template <class GeomTraits, class TopTraits, class Final>
 std::ostream&
     operator<< (std::ostream& os,
-                const Arrangement_on_surface_2<GeomTraits,TopTraits>& arr)
+                const Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr)
 {
-  typedef Arrangement_on_surface_2<GeomTraits,TopTraits>  Arrangement_2;
+  typedef Arrangement_on_surface_2<GeomTraits, TopTraits, Final>  Arrangement_2;
   typedef Arrangement_2_writer<Arrangement_2>             Arr_writer;
   typedef Arr_text_formatter<Arrangement_2>               Text_formatter;
 
@@ -84,13 +84,13 @@ namespace IO {
  * \param os The output stream.
  * \param format The formatter.
  */
-template <class GeomTraits, class TopTraits, class Formatter>
+template <class GeomTraits, class TopTraits, class Final, class Formatter>
 std::istream&
-    read (Arrangement_on_surface_2<GeomTraits,TopTraits>& arr,
+    read (Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr,
           std::istream& is,
           Formatter& format)
 {
-  typedef Arrangement_on_surface_2<GeomTraits,TopTraits>  Arrangement_2;
+  typedef Arrangement_on_surface_2<GeomTraits, TopTraits, Final>  Arrangement_2;
   typedef Arrangement_2_reader<Arrangement_2>             Arr_reader;
 
   Arr_reader      reader(arr);
@@ -107,12 +107,12 @@ std::istream&
  * \param is The input stream.
  * \param arr The arrangement.
  */
-template <class GeomTraits, class TopTraits>
+template <class GeomTraits, class TopTraits, class Final>
 std::istream&
     operator>> (std::istream& is,
-                Arrangement_on_surface_2<GeomTraits,TopTraits>& arr)
+                Arrangement_on_surface_2<GeomTraits, TopTraits, Final>& arr)
 {
-  typedef Arrangement_on_surface_2<GeomTraits,TopTraits>  Arrangement_2;
+  typedef Arrangement_on_surface_2<GeomTraits, TopTraits, Final>  Arrangement_2;
   typedef Arrangement_2_reader<Arrangement_2>             Arr_reader;
   typedef Arr_text_formatter<Arrangement_2>               Text_formatter;
 
