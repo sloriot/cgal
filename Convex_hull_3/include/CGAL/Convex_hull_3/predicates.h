@@ -14,6 +14,7 @@
 #ifndef CGAL_CONVEX_HULL_3_PREDICATES_H
 #define CGAL_CONVEX_HULL_3_PREDICATES_H
 
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/license/Convex_hull_3.h>
 
 #include <CGAL/Named_function_parameters.h>
@@ -21,210 +22,86 @@
 
 #include <vector>
 
+#define USE_EXACT_PREDICATE true
+
 namespace CGAL {
 
 namespace Convex_hull_3 {
 
 namespace predicates_impl
 {
-// vec.h
-//----------------------------
 
-/*
- *
- *  Vec3
- *
- */
+typedef CGAL::Exact_predicates_inexact_constructions_kernel      K;
+typedef CGAL::Vector_3<K>                                        Vector_3;
 
-template< typename NT >
-struct Vec3
-{
-    typedef Vec3<NT>    Self;
-    typedef NT          NumberType;
-
-#define vecset(x,y,z) data_[0]=(x); data_[1]=(y); data_[2]=(z);
-    Vec3() { vecset(NT(0), NT(0), NT(0)) }
-    Vec3(const Self & s) = default;
-    Vec3(const NT & x, const NT & y, const NT & z) { vecset(x,y,z) }
-    inline void set(const NT & x, const NT & y, const NT & z) {
-      vecset(x,y,z)
-    }
-#undef vecset
-
-    inline NT operator()(const int i) const { assert(3 > i && 0 <= i); return data_[i]; }
-    inline NT operator[](const int i) const { return data_[i]; }
-    inline NT & operator[](const int i) { return data_[i]; }
-    inline NT x() const { return data_[0]; }
-    inline NT y() const { return data_[1]; }
-    inline NT z() const { return data_[2]; }
-    inline NT & operator()(const int i) { assert(3 > i && 0 <= i); return data_[i]; }
-    inline NT & x() { return data_[0]; }
-    inline NT & y() { return data_[1]; }
-    inline NT & z() { return data_[2]; }
-    const NT * data() const { return data_; }
-
-    inline NT squaredLength() const { return x()*x()+y()*y()+z()*z(); }
-    inline NT l1norm() const { return std::max(std::abs(x()), std::max(std::abs(y()), std::abs(z()))); }
-    inline NT norm2() const { return x()*x()+y()*y()+z()*z(); }
-    inline NT length() const { return ::sqrt(squaredLength()); }
-    inline void normalize() { const NT l = length(); x() /= l; y() /= l; z() /= l; }
-    inline Self normalized() const { const NT l = length(); return Self(x()/l, y()/l, z()/l); }
-    inline void LInfNormalize() { const NT l = l1norm(); x() /= l; y() /= l; z() /= l; }
-    inline Self LInfNormalized() const { const NT l = l1norm(); return Self(x()/l, y()/l, z()/l); }
-    inline static Self cross(const Self & lhs, const Self & rhs) {
-      return Self(lhs.y() * rhs.z() - lhs.z() * rhs.y(),
-          lhs.z() * rhs.x() - lhs.x() * rhs.z(),
-          lhs.x() * rhs.y() - lhs.y() * rhs.x());
-    }
-
-    inline Self operator-(const Self & rhs) const { return Self(x()-rhs.x(), y()-rhs.y(), z()-rhs.z()); }
-    inline Self operator-() const { return Self(-data_[0], data_[1], -data_[2]); }
-    inline Self operator+(const Self & rhs) const { return Self(x()+rhs.x(), y()+rhs.y(), z()+rhs.z()); }
-    inline NT operator|(const Self & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z(); }
-    inline void negate() { data_[0] = - data_[0]; data_[1] = - data_[1]; data_[2] = - data_[2]; }
-    inline Self negated() const { return Self(-x(), -y(), -z()); }
-
-    NT data_[3];
-};
-
-template< typename NT >
-Vec3<NT> operator/(const Vec3<NT> & lhs, const NT & rhs)
-{
-    return Vec3<NT>(lhs.x()/rhs, lhs.y()/rhs, lhs.z()/rhs);
+Vector_3 LInfNormalize(const Vector_3 &vec) {
+  auto l1norm = std::max(std::abs(vec.x()), std::max(std::abs(vec.y()), std::abs(vec.z())));
+  return vec / l1norm;
 }
-
-template< typename NT >
-Vec3<NT> operator*(const NT & lhs, const Vec3<NT> & rhs)
-{
-    return Vec3<NT>(lhs*rhs.x(), lhs*rhs.y(), lhs*rhs.z());
-}
-
-template< typename NT >
-bool operator==(const Vec3<NT> & lhs, const Vec3<NT> & rhs)
-{
-    return ( lhs.x() == rhs.x() ) && ( lhs.y() == rhs.y() ) && ( lhs.z() == rhs.z() );
-}
-
-/*
- *
- *  Vec4
- *
- */
-
-template< typename NT >
-struct Vec4
-{
-    typedef Vec4<NT>    Self;
-    typedef Vec3<NT>    V3;
-    typedef NT          NumberType;
-
-#define vecset(x,y,z,w) data_[0]=(x); data_[1]=(y); data_[2]=(z); data_[3] = w;
-    Vec4() { vecset(NT(0), NT(0), NT(0), NT(0)) }
-    Vec4(const Self & s) { vecset(s.x(), s.y(), s.z(), s.w()) }
-    Vec4(const V3 & s) { vecset(s.x(), s.y(), s.z(), NT(1)) }
-    Vec4(const NT & x, const NT & y, const NT & z, const NT & w) { vecset(x,y,z,w) }
-    inline void set(const NT & x, const NT & y, const NT & z, const NT & w) {
-      vecset(x,y,z,w)
-    }
-#undef vecset
-
-    inline NT operator()(const int i) const { assert(4 > i && 0 <= i); return data_[i]; }
-    inline NT operator[](const int i) const { return data_[i]; }
-    inline NT & operator[](const int i) { return data_[i]; }
-    inline NT x() const { return data_[0]; }
-    inline NT y() const { return data_[1]; }
-    inline NT z() const { return data_[2]; }
-    inline NT w() const { return data_[3]; }
-    inline NT & operator()(const int i) { assert(4 > i && 0 <= i); return data_[i]; }
-    inline NT & x() { return data_[0]; }
-    inline NT & y() { return data_[1]; }
-    inline NT & z() { return data_[2]; }
-    inline NT & w() { return data_[3]; }
-    const NT * data() const { return data_; }
-
-    V3 toVec3() const { return V3(x(), y(), z()); }
-
-    inline NT squaredLength() const { return x()*x()+y()*y()+z()*z()+w()*w(); }
-    inline NT length() const { return ::sqrt(squaredLength()); }
-    inline void normalize() { NT l = length(); x() /= l; y() /= l; z() /= l; w() /= l; }
-
-    inline Self operator-(const Self & rhs) const { return Self(x()-rhs.x(), y()-rhs.y(), z()-rhs.z(), w()-rhs.w()); }
-    inline Self operator+(const Self & rhs) const { return Self(x()+rhs.x(), y()+rhs.y(), z()+rhs.z(), w()+rhs.w()); }
-    inline NT operator|(const Self & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z() + w()*rhs.w(); }
-    inline NT operator|(const V3 & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z(); }
-    inline NT dotAs3(const Self & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z(); }
-    //inline NT operator|(const V3 & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z() + w(); }
-    inline NT operator()(const V3 & rhs) const { return x()*rhs.x() + y()*rhs.y() + z()*rhs.z() + w(); }
-    inline void negate() { data_[0] = - data_[0]; data_[1] = - data_[1]; data_[2] = - data_[2]; data_[3] = - data_[3]; }
-
-    inline static V3 crossAs3(const Self & lhs, const Self & rhs) {
-          return V3(lhs.y() * rhs.z() - lhs.z() * rhs.y(),
-              lhs.z() * rhs.x() - lhs.x() * rhs.z(),
-              lhs.x() * rhs.y() - lhs.y() * rhs.x());
-        }
-
-    NT data_[4];
-};
-
-template< typename NT >
-Vec4<NT> operator*(const NT & lhs, const Vec4<NT> & rhs)
-{
-    return Vec4<NT>(lhs*rhs.x(), lhs*rhs.y(), lhs*rhs.z(), lhs*rhs.w());
-}
-//----------------------------
-
 
 // spherical.h
 //----------------------------
 
-template <class NT>
 struct SphericalPolygonElement {
-  Vec3<NT> vertex_; // A vertex of the spherical polygon
-  Vec3<NT> north_; // The north pole of the equatorial arc/edge leading OUT OF that vertex_ (arcs are oriented west-to-east, or CCW in a right-handed frame.
+  Vector_3 vertex_; // A vertex of the spherical polygon
+  Vector_3 north_; // The north pole of the equatorial arc/edge leading OUT OF that vertex_ (arcs are oriented west-to-east, or CCW in a right-handed frame.
   // In the spherical polygon (v0, n0), (v1, n1), (v2, n2), ... we have
   // v1 = cross(n0, n1),  more generally: v_{i+1} = cross(n_i, n_{i+1})  and
   // n1 = cross(v1, v2),  more generally: n_i     = cross(v_i, v_{i+1}).
   SphericalPolygonElement(){}
-  SphericalPolygonElement(const Vec3<NT> & n) : north_(n.normalized()) {}
-  SphericalPolygonElement(const Vec3<NT> & v, const Vec3<NT> & n) : vertex_(v), north_(n) {}
+  SphericalPolygonElement(const Vector_3 & n) : vertex_(Vector_3(0.0f, 0.0f, 0.0f)), north_(n / std::sqrt(n.squared_length())) {}
+  SphericalPolygonElement(const Vector_3 & v, const Vector_3 & n) : vertex_(v), north_(n) {}
 };
 
-template <class NT>
-struct SphericalPolygon : public std::vector<SphericalPolygonElement<NT>> {
+struct SphericalPolygon : public std::vector<SphericalPolygonElement> {
 
-  typedef std::vector<SphericalPolygonElement<NT>> Base;
+  typedef std::vector<SphericalPolygonElement> Base;
   typedef typename Base::iterator iterator;
   typedef typename Base::const_iterator const_iterator;
   SphericalPolygon() {
     this->reserve(16);
   }
 
-  Vec3<NT> averageDirection() const {
+  Vector_3 averageDirection() const {
     // PRECONDITION : all northes are normalized.
     switch( this->size() ) {
-      case 0 : return Vec3<NT>(0.0f, 0.0f, 0.0f); break;
+      case 0 : return Vector_3(0.0f, 0.0f, 0.0f); break;
       case 1 : return this->begin()->north_; break;
       case 2 : return (*this)[0].north_ + (*this)[1].north_; break;
       default : {
-                  Vec3<NT> avg;
-                  for( const SphericalPolygonElement<NT> & v : *this )
+                  Vector_3 avg(0.0f, 0.0f, 0.0f);
+                  for( const SphericalPolygonElement & v : *this )
                     avg = avg + v.vertex_;
                   return avg;
                 } break;
     }
   }
 
-  void clip(const Vec3<NT> & OrigVertex, SphericalPolygon<NT> & result, bool doClean=true) const {
+  void clip(const Vector_3 & OrigVertex, SphericalPolygon & result, bool doClean=true) const {
     // PRECONDITION : clipNorth, and all northes are normalized.
 #define _ray_spherical_eps 1e-6f
+    typename K::Collinear_3 compute_collinear =  K().collinear_3_object();
+    typename K::Angle_3 compute_angle = K().angle_3_object();
     const int n = this->size();
     result.clear();
     switch( n ) {
       case 0 : break; // 0 means empty, so nothing to do
       case 1 : {
                  result = (*this);
-                 Vec3<NT> clipNorth = OrigVertex.normalized();
-                 NT dot = this->begin()->north_ | clipNorth;
+                 Vector_3 clipNorth = OrigVertex / std::sqrt(OrigVertex.squared_length());
+#ifdef USE_EXACT_PREDICATE
+                 bool collinear = compute_collinear(ORIGIN + this->begin()->north_, ORIGIN, ORIGIN + OrigVertex);
+                 if (collinear) {
+                    Angle angle = compute_angle(this->begin()->north_, OrigVertex);
+                    if ( angle == OBTUSE ) {
+                      result.clear();
+                      break;
+                    } if ( angle == ACUTE ) {
+                      break;
+                    }
+                 }
+#else
+                 auto dot = this->begin()->north_ * clipNorth;
                  if( dot < -0.99984769515 ) { // about one degree
                    // intersection of two almost opposite hemispheres ==> empty
                    result.clear();
@@ -232,49 +109,59 @@ struct SphericalPolygon : public std::vector<SphericalPolygonElement<NT>> {
                  } else if( dot > 0.99984769515 ) {
                    break;
                  }
-                 Vec3<NT> v(Vec3<NT>::cross(clipNorth, this->begin()->north_).LInfNormalized());
+#endif
+                 Vector_3 v = LInfNormalize(cross_product(OrigVertex, this->begin()->north_));
                  result.begin()->vertex_ = v;
-                 result.emplace_back(v.negated(), clipNorth);
+                 result.emplace_back(-v, clipNorth);
                  break;
                }
       case 2 : {
                  result = (*this);
-                 Vec3<NT> clipNorth = OrigVertex.LInfNormalized();
+                 Vector_3 clipNorth = LInfNormalize(OrigVertex);
                  iterator next = result.begin();
                  iterator cur = next++;
-                 NT vDot = this->begin()->vertex_ | clipNorth;
-                 if( vDot >= _ray_spherical_eps ) {
+#ifdef USE_EXACT_PREDICATE
+                 Angle angle = compute_angle(this->begin()->vertex_, OrigVertex);
+                 if ( angle == ACUTE ) {
+#else
+                 auto vDot = this->begin()->vertex_* clipNorth;
+                 if ( vDot >= _ray_spherical_eps ) {
+#endif
                    // we'll get a triangle
-                   next->vertex_ = Vec3<NT>::cross(clipNorth, next->north_).LInfNormalized();
-                   Vec3<NT> v(Vec3<NT>::cross(cur->north_, clipNorth).LInfNormalized());
+                   next->vertex_ = LInfNormalize(cross_product(OrigVertex, next->north_));
+                   Vector_3 v = LInfNormalize(cross_product(cur->north_, OrigVertex));
                    result.emplace(next, v, clipNorth);
-                 } else if( vDot <= - _ray_spherical_eps ) {
+#ifdef USE_EXACT_PREDICATE
+                  } else if ( angle == OBTUSE ) {
+#else
+                  } else if ( vDot <= -_ray_spherical_eps ) {
+#endif
                    // we'll get a triangle
-                   cur->vertex_ = Vec3<NT>::cross(clipNorth, cur->north_).LInfNormalized();
-                   Vec3<NT> v(Vec3<NT>::cross(next->north_, clipNorth).LInfNormalized());
+                   cur->vertex_ = LInfNormalize(cross_product(OrigVertex, cur->north_));
+                   Vector_3 v = LInfNormalize(cross_product(next->north_, OrigVertex));
                    result.emplace_back(v, clipNorth);
                  } else {
                    // we keep a moon crescent
-                   NT curTest(clipNorth | Vec3<NT>::cross(cur->north_, cur->vertex_));
-                   Vec3<NT> nextTest(Vec3<NT>::cross(next->north_, next->vertex_));
-                   if( curTest > 0.0f ) {
-                     if( (clipNorth | nextTest) <= 0.0f ) {
+                   Angle curAngle = compute_angle(OrigVertex, cross_product(cur->north_, cur->vertex_));
+                   Angle nextAngle = compute_angle(OrigVertex, cross_product(next->north_, next->vertex_));
+                   if( curAngle == ACUTE ) {
+                     if( nextAngle == OBTUSE || nextAngle == RIGHT ) {
                        next->north_ = clipNorth;
-                       cur->vertex_ = Vec3<NT>::cross(next->north_, cur->north_);
-                       cur->vertex_.LInfNormalize();
+                       cur->vertex_ = cross_product(next->north_, cur->north_);
+                       cur->vertex_ = LInfNormalize(cur->vertex_);
                        next->vertex_ = cur->vertex_;
-                       next->vertex_.negate();
+                       next->vertex_ = -next->vertex_;
                      } else {
                        // the crescent is unchanged
                        //std::cerr << "kept a crescent\n";
                      }
                    } else {
-                     if( (clipNorth | nextTest) > 0.0f ) {
+                     if( nextAngle == ACUTE ) {
                        cur->north_ = clipNorth;
-                       next->vertex_ = Vec3<NT>::cross(cur->north_, next->north_);
-                       next->vertex_.LInfNormalize();
+                       next->vertex_ = cross_product(cur->north_, next->north_);
+                       next->vertex_ = LInfNormalize(next->vertex_);
                        cur->vertex_ = next->vertex_;
-                       cur->vertex_.negate();
+                       cur->vertex_ = -cur->vertex_;
                      } else {
                        //std::cerr << "killed a crescent\n";
                        result.clear();
@@ -286,31 +173,70 @@ struct SphericalPolygon : public std::vector<SphericalPolygonElement<NT>> {
       default : { // n >= 3
                   int nbKept(0);
                   const_iterator cur = this->begin();
-                  Vec3<NT> clipNorth = OrigVertex.LInfNormalized();
-                  NT nextDot, curDot = clipNorth | cur->vertex_;
+                  Vector_3 clipNorth = LInfNormalize(OrigVertex);
+#ifdef USE_EXACT_PREDICATE
+                  Angle curAngle = compute_angle(OrigVertex, cur->vertex_);
+                  Angle nextAngle;
+#else
+                  auto curDot = clipNorth * cur->vertex_;
+                  auto nextDot = curDot;
+#endif
                   while( cur != this->end() ) {
-                    if( cur+1 == this->end() )
-                      nextDot = clipNorth | this->begin()->vertex_;
-                    else
-                      nextDot = clipNorth | (cur+1)->vertex_;
-                    if( curDot >= _ray_spherical_eps ) { // cur is "IN"
+                    if( cur+1 == this->end() ) {
+#ifdef USE_EXACT_PREDICATE
+                      nextAngle = compute_angle(OrigVertex, this->begin()->vertex_);
+#else
+                      nextDot = clipNorth * this->begin()->vertex_;
+#endif
+                    } else {
+#ifdef USE_EXACT_PREDICATE
+                      nextAngle = compute_angle(OrigVertex, (cur+1)->vertex_);
+#else
+                      nextDot = clipNorth * (cur+1)->vertex_;
+#endif
+                    }
+#ifdef USE_EXACT_PREDICATE
+                    if( curAngle == ACUTE ) { // cur is "IN"
+#else
+                    if( curDot >= _ray_spherical_eps) { // cur is "IN"
+#endif
                       ++nbKept;
                       result.push_back(*cur);
-                      if( nextDot <= -_ray_spherical_eps ) { // next is "OUT"
-                        result.emplace_back(Vec3<NT>::cross(cur->north_, clipNorth).LInfNormalized(), clipNorth);
+#ifdef USE_EXACT_PREDICATE
+                      if( nextAngle == OBTUSE ) { // next is "OUT"
+#else
+                      if( nextDot <= -_ray_spherical_eps) { // next is "OUT"
+#endif
+                        result.emplace_back(LInfNormalize(cross_product(cur->north_, OrigVertex)), clipNorth);
                       }
+#ifdef USE_EXACT_PREDICATE
+                    } else if( curAngle == RIGHT ) { // cur is "ON" the clipping plane
+#else
                     } else if( curDot > -_ray_spherical_eps ) { // cur is "ON" the clipping plane
+#endif
                       ++nbKept;
-                      if ( nextDot <= -_ray_spherical_eps ) // next is "OUT"
+#ifdef USE_EXACT_PREDICATE
+                      if ( nextAngle == OBTUSE ) // next is "OUT"
+#else
+                      if ( nextDot <= -_ray_spherical_eps) // next is "OUT"
+#endif
                         result.emplace_back(cur->vertex_, clipNorth);
                       else
                         result.push_back(*cur);
                     } else { // cur is "OUT"
+#ifdef USE_EXACT_PREDICATE
+                      if ( nextAngle == ACUTE ) { // next is "IN"
+#else
                       if ( nextDot >= _ray_spherical_eps ) { // next is "IN"
-                        result.emplace_back(Vec3<NT>::cross(clipNorth, cur->north_).LInfNormalized(), cur->north_);
+#endif
+                        result.emplace_back(LInfNormalize(cross_product(OrigVertex, cur->north_)), cur->north_);
                       }
                     }
+#ifdef USE_EXACT_PREDICATE
+                    curAngle = nextAngle;
+#else
                     curDot = nextDot;
+#endif
                     ++cur;
                   }
                   if( (result.size() < 3/*too small*/) || ((nbKept == n)/*no change*/ && doClean) ) {
@@ -327,40 +253,36 @@ struct SphericalPolygon : public std::vector<SphericalPolygonElement<NT>> {
 
 //----------------------------
 
-template <class NT, class PointRange>
-Vec3<NT> vertex(const PointRange& p, int i)
-{
-  return Vec3<NT>(p[i].x(), p[i].y(), p[i].z());
-}
-
-template <class NT, class Convex>
-bool differenceCoversZeroInDir(const Convex& A, const Convex& B, int & vA, int & vB, const Vec3<NT> & dir) {
+template <class Convex>
+bool differenceCoversZeroInDir(const Convex& A, const Convex& B, int & vA, int & vB, const Vector_3 & dir) {
   // difference above is: A - B
-  NT maxOverA = vertex<NT>(A, 0) | dir;
-  NT minOverB = vertex<NT>(B, 0) | dir;
+  auto maxOverA = (A[0] - ORIGIN) * dir;
+  auto minOverB = (B[0] - ORIGIN) * dir;
   vA = vB = 0;
   const int na = A.size();
   for( int i = 1; i < na; ++i ) {
-    NT tempA = vertex<NT>(A, i) | dir;
+    auto tempA = (A[i] - ORIGIN) * dir;
     if( tempA > maxOverA ) { maxOverA = tempA; vA = i; }
   }
   const int nb = B.size();
   for( int i = 1; i < nb; ++i ) {
-    NT tempB = vertex<NT>(B, i) | dir;
+    auto tempB = (B[i] - ORIGIN) * dir;
     if( tempB < minOverB ) { minOverB = tempB; vB = i; }
   }
+  Vector_3 vecA = A[vA] - ORIGIN;
+  Vector_3 vecB = B[vB] - ORIGIN;
   return maxOverA >= minOverB;
 }
 
-template<typename NT, typename Convex >
+template<typename Convex>
 bool sphericalDisjoint(const Convex & a, const Convex & b, unsigned long INTER_MAX_ITER) {
-  SphericalPolygon<NT> positiveBound, tempPoly;
+  SphericalPolygon positiveBound, tempPoly;
   int vA, vB;
-  Vec3<NT> dir(vertex<NT>(b, 0) - vertex<NT>(a, 0));
+  Vector_3 dir = b[0] - a[0];
   if( ! differenceCoversZeroInDir(a, b, vA, vB, dir) ) return true;
   positiveBound.clear();
   positiveBound.emplace_back(dir);
-  positiveBound.clip(vertex<NT>(b, vB) - vertex<NT>(a, vA), tempPoly); positiveBound.swap(tempPoly);
+  positiveBound.clip(b[vB] - a[vA], tempPoly); positiveBound.swap(tempPoly);
   if( positiveBound.empty() ) return false;
   unsigned long planeStatPerPair = 0;
   do {
@@ -369,7 +291,7 @@ bool sphericalDisjoint(const Convex & a, const Convex & b, unsigned long INTER_M
     {
       return false;
     }
-    positiveBound.clip(vertex<NT>(b, vB) - vertex<NT>(a, vA), tempPoly); positiveBound.swap(tempPoly);
+    positiveBound.clip(b[vB] - a[vA], tempPoly); positiveBound.swap(tempPoly);
     if( positiveBound.empty() ) return false;
   } while( true );
 }
@@ -449,7 +371,7 @@ bool do_intersect(const PointRange1& r1, const PointRange2& r2,
 
   unsigned int max_nb_iterations = choose_parameter(get_parameter(np1, internal_np::number_of_iterations), 0);
 
-  return !predicates_impl::sphericalDisjoint<typename Geom_traits::FT>(a, b, max_nb_iterations);
+  return !predicates_impl::sphericalDisjoint(a, b, max_nb_iterations);
 }
 
 template <class PointRange1, class PointRange2,
