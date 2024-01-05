@@ -1,3 +1,5 @@
+#define USE_FIXED_PROJECTION_TRAITS
+
 // Copyright (c) 2023 GeometryFactory (France).
 // All rights reserved.
 //
@@ -53,6 +55,10 @@
 #ifdef CGAL_AUTOREF_SET_POINT_IDS_USING_MUTEX
 #include <CGAL/mutex.h>
 #endif
+#endif
+
+#ifdef USE_FIXED_PROJECTION_TRAITS
+#include <CGAL/Kernel_23/internal/Projection_traits_3.h>
 #endif
 
 #include <vector>
@@ -447,6 +453,9 @@ bool collect_intersections(const std::array<typename K::Point_3, 3>& t1,
 }
 
 template <class EK,
+#ifdef USE_FIXED_PROJECTION_TRAITS
+          int dim,
+#endif
           class PointVector>
 void generate_subtriangles(std::size_t ti,
                            std::vector<std::pair<std::size_t, std::size_t>>& segments,
@@ -458,7 +467,14 @@ void generate_subtriangles(std::size_t ti,
                            PointVector& new_triangles
                            )
 {
+
+#ifdef USE_FIXED_PROJECTION_TRAITS
+  typedef ::CGAL::internal::Projection_traits_3<EK, dim> P_traits;
+#else
   typedef CGAL::Projection_traits_3<EK> P_traits;
+#endif
+
+
   typedef CGAL::No_constraint_intersection_tag Itag;
 
   typedef CGAL::Constrained_Delaunay_triangulation_2<P_traits ,Default, Itag> CDT_2;
@@ -467,8 +483,19 @@ void generate_subtriangles(std::size_t ti,
 
   const std::array<typename EK::Point_3,3>& t = triangles[ti];
 
-  // positive triangle normal
   typename EK::Vector_3 n = normal(t[0], t[1], t[2]);
+
+#ifdef USE_FIXED_PROJECTION_TRAITS
+  P_traits cdt_traits;
+  bool orientation_flipped = false;
+  CDT cdt(cdt_traits);
+  // TODO: still need to figure out why I can't make the orientation_flipped correctly
+  cdt.insert(t[0]);
+  cdt.insert(t[1]);
+  cdt.insert(t[2]);
+#else
+  // positive triangle normal
+
   typename EK::Point_3 o(CGAL::ORIGIN);
 
   bool orientation_flipped = false;
@@ -484,7 +511,7 @@ void generate_subtriangles(std::size_t ti,
   cdt.insert_outside_affine_hull(t[1]);
   typename CDT::Vertex_handle v = cdt.tds().insert_dim_up(cdt.infinite_vertex(), orientation_flipped);
   v->set_point(t[2]);
-
+#endif
 #ifdef CGAL_AUTOREFINE_DEBUG_COUNTERS
   struct Counter
   {
@@ -1066,7 +1093,30 @@ void autorefine_triangle_soup(PointRange& soup_points,
       new_triangles.push_back({triangles[ti], ti});
     else
     {
+
+#ifdef USE_FIXED_PROJECTION_TRAITS
+      const std::array<typename EK::Point_3, 3>& t = triangles[ti];
+      auto is_constant_in_dim = [](const std::array<typename EK::Point_3, 3>& t, int dim)
+      {
+        return t[0][dim] == t[1][dim] && t[0][dim] != t[2][dim];
+      };
+
+      typename EK::Vector_3 orth = CGAL::normal(t[0], t[1], t[2]); // TODO::avoid construction?
+      int c = CGAL::abs(orth[0]) > CGAL::abs(orth[1]) ? 0 : 1;
+      c = CGAL::abs(orth[2]) > CGAL::abs(orth[c]) ? 2 : c;
+
+      if (c == 0) {
+        autorefine_impl::generate_subtriangles<EK, 0>(ti, all_segments_ids[ti], all_points[ti], all_in_triangle_ids[ti], intersecting_triangles, coplanar_triangles, triangles, new_triangles);
+      }
+      else if (c == 1) {
+        autorefine_impl::generate_subtriangles<EK, 1>(ti, all_segments_ids[ti], all_points[ti], all_in_triangle_ids[ti], intersecting_triangles, coplanar_triangles, triangles, new_triangles);
+      }
+      else if (c == 2) {
+        autorefine_impl::generate_subtriangles<EK, 2>(ti, all_segments_ids[ti], all_points[ti], all_in_triangle_ids[ti], intersecting_triangles, coplanar_triangles, triangles, new_triangles);
+      }
+#else
       autorefine_impl::generate_subtriangles<EK>(ti, all_segments_ids[ti], all_points[ti], all_in_triangle_ids[ti], intersecting_triangles, coplanar_triangles, triangles, new_triangles);
+#endif
     }
 
 #ifdef CGAL_AUTOREF_USE_PROGRESS_DISPLAY
