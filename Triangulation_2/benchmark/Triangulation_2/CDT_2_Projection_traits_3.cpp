@@ -25,8 +25,7 @@ int main()
   std::string type;
   Point_3 p;
 
-  while(pin){
-    pin >> type;
+  while(pin >> type){
     if(type == "double") {
       pin >> p;
       points.push_back(p);
@@ -38,10 +37,11 @@ int main()
   }
   pin.close();
 
+  std::cout << points.size() << "points" << std::endl;
+
   std::ifstream sin("segments_3.txt");
-  while(sin){
-    std::size_t i, j;
-    sin >> i >> j;
+  std::size_t i, j;
+  while(sin >> i >> j){
     segments.push_back(std::make_pair(i,j));
   }
 
