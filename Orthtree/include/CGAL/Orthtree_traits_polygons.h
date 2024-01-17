@@ -73,7 +73,7 @@ struct Orthtree_traits_polygons : public Orthtree_traits_3_base<GeomTraits>
 
     for (const std::pair<std::size_t, Node_data_element> &p : m_polygons) {
       const Node_data_element& poly = p.second;
-      for (int i = 0; i < poly.size(); i++)
+      for (int i = 0; i < static_cast<int>(poly.size()); i++)
         for (int d = 0; d < Dimension::value; d++) {
           bbox_min[d] = (std::min)(bbox_min[d], poly[i][d]);
           bbox_max[d] = (std::max)(bbox_max[d], poly[i][d]);
