@@ -649,7 +649,7 @@ void Straight_skeleton_builder_2<Gt,Ss,V>::CreateContourBisectors()
 }
 
 template<class Gt, class Ss, class V>
-void Straight_skeleton_builder_2<Gt,Ss,V>::HarmonizeSpeeds(boost::mpl::bool_<true>)
+void Straight_skeleton_builder_2<Gt,Ss,V>::HarmonizeSpeeds(std::true_type)
 {
   CGAL_STSKEL_BUILDER_TRACE ( 2, "Harmonize speeds..." ) ;
 

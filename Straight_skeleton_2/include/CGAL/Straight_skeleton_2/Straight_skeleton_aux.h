@@ -20,7 +20,6 @@
 #include <CGAL/Polygon_with_holes_2.h>
 
 #include <boost/mpl/has_xxx.hpp>
-#include <boost/mpl/or.hpp>
 #include <optional>
 
 #include <iostream>

@@ -22,8 +22,6 @@
 #include <CGAL/HalfedgeDS_const_decorator.h>
 #include <CGAL/enum.h>
 
-#include <boost/mpl/bool.hpp>
-
 #include <algorithm>
 #include <exception>
 #include <iostream>
@@ -1146,8 +1144,8 @@ private :
   void UpdatePQ( Vertex_handle aV, Triedge const& aPrevEventTriedge ) ;
   void CreateInitialEvents();
   void CreateContourBisectors();
-  void HarmonizeSpeeds(boost::mpl::bool_<false>) { }
-  void HarmonizeSpeeds(boost::mpl::bool_<true>);
+  void HarmonizeSpeeds(std::false_type) { }
+  void HarmonizeSpeeds(std::true_type);
 
   // @fixme This function can create an inconsistency between the skeleton and the offset
   // when caching is used: this function will harmonize values in the cache used by the skeleton
@@ -1157,10 +1155,10 @@ private :
   void HarmonizeSpeeds() {
     // Harmonize speed only if we have a segment type with id and a not exact square root
     return HarmonizeSpeeds(
-      boost::mpl::bool_< CGAL_SS_i::has_Segment_2_with_ID<Traits>::value &&
-                         ( !is_same_or_derived<Field_with_sqrt_tag,
-                                               typename Algebraic_structure_traits<FT>::Algebraic_category
-                          >::value || std::is_floating_point<FT>::value) >() );
+      std::bool_constant< CGAL_SS_i::has_Segment_2_with_ID<Traits>::value &&
+                         ( !is_same_or_derived_v<Field_with_sqrt_tag,
+                                                 typename Algebraic_structure_traits<FT>::Algebraic_category>
+                            || std::is_floating_point_v<FT>) >() );
   }
   void InitPhase();
 
@@ -1343,12 +1341,12 @@ private :
   }
 
 // internal function to filter split event in case the traits is Filtered
-  bool CanSafelyIgnoreSplitEventImpl(const EventPtr&, boost::mpl::bool_<false>) const
+  bool CanSafelyIgnoreSplitEventImpl(const EventPtr&, std::false_type) const
   {
     return false;
   }
 
-  bool CanSafelyIgnoreSplitEventImpl(const EventPtr& lEvent, boost::mpl::bool_<true>) const
+  bool CanSafelyIgnoreSplitEventImpl(const EventPtr& lEvent, std::true_type) const
   {
     return mTraits.CanSafelyIgnoreSplitEvent(lEvent);
   }
@@ -1361,14 +1359,14 @@ private :
   void ComputeUpperBoundForValidSplitEventsImpl(Vertex_handle,
                                                 Halfedge_handle_vector_iterator,
                                                 Halfedge_handle_vector_iterator,
-                                                boost::mpl::bool_<false>) const
+                                                std::false_type) const
   {
   }
 
   void ComputeUpperBoundForValidSplitEventsImpl(Vertex_handle aNode,
                                                 Halfedge_handle_vector_iterator contour_halfedges_begin,
                                                 Halfedge_handle_vector_iterator contour_halfedges_end,
-                                                boost::mpl::bool_<true>) const
+                                                std::true_type) const
   {
     return mTraits.ComputeFilteringBound(aNode, contour_halfedges_begin, contour_halfedges_end);
   }
