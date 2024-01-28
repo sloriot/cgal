@@ -27,6 +27,10 @@ struct is_same_or_derived :
   >
 {};
 
+template <class Base, class Derived>
+inline constexpr bool is_same_or_derived_v =
+  is_same_or_derived<Base,Derived>::value;
+
 namespace cpp20 {
 
   template< class T >

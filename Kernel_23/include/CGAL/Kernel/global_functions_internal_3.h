@@ -390,14 +390,8 @@ compare_dihedral_angle(const typename K::Vector_3& ab1,
 
 template <class K, class T1, class T2, class T3>
 inline
-std::enable_if_t<
-  boost::mpl::equal_to<boost::mpl::integral_c<int,
-                                              Ambient_dimension<T1>::type::value>,
-                       boost::mpl::integral_c<int, 3> >::value,
-  typename K::Comparison_result>
-  // boost::mpl::equal_to<typename Ambient_dimension<T1>::type,
-  //                      boost::mpl::int_<3> >,
-  // typename K::Comparison_result>::type
+std::enable_if_t<Ambient_dimension<T1>::type::value==3,
+                 typename K::Comparison_result>
 compare_distance(const T1 &o1,
                  const T2 &o2,
                  const T3 &o3, const K& k)
@@ -407,14 +401,8 @@ compare_distance(const T1 &o1,
 
 template <class K, class T1, class T2, class T3, class T4>
 inline
-std::enable_if_t<
-  boost::mpl::equal_to<boost::mpl::integral_c<int,
-                                              Ambient_dimension<T1>::type::value>,
-                       boost::mpl::integral_c<int, 3> >::value,
-  typename K::Comparison_result>
-  // boost::mpl::equal_to<typename Ambient_dimension<T1>::type,
-  //                      boost::mpl::int_<3> >,
-  // typename K::Comparison_result>::type
+std::enable_if_t<Ambient_dimension<T1>::type::value==3,
+                 typename K::Comparison_result>
 compare_distance(const T1 &o1,
                  const T2 &o2,
                  const T3 &o3,
