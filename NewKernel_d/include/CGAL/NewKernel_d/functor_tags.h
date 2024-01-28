@@ -17,7 +17,6 @@
 #include <utility>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/has_xxx.hpp>
-#include <boost/mpl/not.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/front.hpp>

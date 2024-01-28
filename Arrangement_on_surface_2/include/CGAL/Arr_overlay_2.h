@@ -25,8 +25,6 @@
 
 #include <vector>
 #include <optional>
-#include <boost/mpl/or.hpp>
-#include <boost/type_traits.hpp>
 
 #include <CGAL/Arrangement_on_surface_2.h>
 #include <CGAL/Surface_sweep_2.h>

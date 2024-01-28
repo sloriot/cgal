@@ -31,7 +31,6 @@
 #include <CGAL/STL_Extension/internal/info_check.h>
 
 #include <boost/iterator/zip_iterator.hpp>
-#include <boost/mpl/and.hpp>
 #include <boost/property_map/function_property_map.hpp>
 
 #endif //CGAL_TRIANGULATION_2_DONT_INSERT_RANGE_OF_POINTS_WITH_INFO

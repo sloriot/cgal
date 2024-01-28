@@ -4,9 +4,6 @@
 
 #include <CGAL/Arr_tags.h>
 
-#include <boost/mpl/assert.hpp>
-#include <boost/mpl/bool.hpp>
-
 struct Traits1 {
   typedef CGAL::Arr_open_side_tag Left_side_category;
   typedef CGAL::Arr_open_side_tag Bottom_side_category;

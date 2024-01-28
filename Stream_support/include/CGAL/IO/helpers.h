@@ -18,7 +18,6 @@
 #include <CGAL/Point_3.h>
 #include <CGAL/type_traits/is_iterator.h>
 
-#include <boost/mpl/logical.hpp>
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/range/has_range_iterator.hpp>
 

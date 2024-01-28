@@ -37,10 +37,8 @@
 #include <CGAL/tuple.h>
 
 #include <optional>
-#include <boost/none.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/contains.hpp>
-#include <boost/mpl/or.hpp>
 #include <boost/format.hpp>
 #include <variant>
 #include <boost/math/special_functions/round.hpp>

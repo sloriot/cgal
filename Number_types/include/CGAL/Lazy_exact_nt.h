@@ -19,8 +19,6 @@
 #include <CGAL/boost/iterator/transform_iterator.hpp> // for Root_of functor
 #include <boost/operators.hpp>
 
-#include <boost/mpl/logical.hpp>
-
 #include <CGAL/Interval_nt.h>
 #include <CGAL/Handle.h>
 #include <CGAL/NT_converter.h>

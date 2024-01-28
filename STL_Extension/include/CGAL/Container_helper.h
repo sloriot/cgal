@@ -16,7 +16,6 @@
 #include <CGAL/Has_member.h>
 
 #include <CGAL/assertions.h>
-#include <boost/mpl/logical.hpp>
 
 #include <cstddef>
 #include<type_traits>

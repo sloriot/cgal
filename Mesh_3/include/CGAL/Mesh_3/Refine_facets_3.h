@@ -44,8 +44,6 @@
 
 #include <boost/format.hpp>
 #include <optional>
-#include <boost/optional/optional_io.hpp>
-#include <boost/mpl/has_xxx.hpp>
 #include <CGAL/tuple.h>
 #include <sstream>
 #include <atomic>

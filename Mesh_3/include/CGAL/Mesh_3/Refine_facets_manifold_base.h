@@ -25,7 +25,6 @@
 #include <boost/bimap.hpp>
 #include <boost/bimap/unordered_set_of.hpp>
 #include <boost/bimap/multiset_of.hpp>
-#include <boost/mpl/has_xxx.hpp>
 #include <boost/unordered_set.hpp>
 
 #include <set>

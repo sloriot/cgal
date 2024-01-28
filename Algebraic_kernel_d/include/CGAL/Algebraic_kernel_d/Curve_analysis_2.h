@@ -23,8 +23,6 @@
 #include <type_traits>
 
 #include <boost/mpl/has_xxx.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/logical.hpp>
 
 #include <CGAL/basic.h>
 #include <CGAL/assertions.h>

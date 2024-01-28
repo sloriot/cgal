@@ -21,9 +21,6 @@
 
 #include <vector>
 
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/remove.hpp>
-
 #include <optional>
 #include <variant>
 

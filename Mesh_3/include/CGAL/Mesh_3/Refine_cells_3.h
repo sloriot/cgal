@@ -36,7 +36,6 @@
 #endif
 
 #include <boost/format.hpp>
-#include <boost/mpl/has_xxx.hpp>
 #include <sstream>
 #include <atomic>
 

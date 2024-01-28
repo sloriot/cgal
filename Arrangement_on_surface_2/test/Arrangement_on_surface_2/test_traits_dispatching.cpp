@@ -3,8 +3,6 @@
 
 #include <CGAL/Arrangement_2/Arr_traits_adaptor_2_dispatching.h>
 
-#include <boost/mpl/bool.hpp>
-
 int dispatch(CGAL::Arr_use_dummy_tag) {
   return 0;
 }

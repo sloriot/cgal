@@ -24,7 +24,6 @@
 #include <CGAL/tss.h>
 
 #include <boost/iterator/zip_iterator.hpp>
-#include <boost/mpl/and.hpp>
 #endif //CGAL_TRIANGULATION_2_DONT_INSERT_RANGE_OF_POINTS_WITH_INFO
 
 namespace CGAL

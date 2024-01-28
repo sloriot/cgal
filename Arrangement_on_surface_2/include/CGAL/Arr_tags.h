@@ -19,12 +19,6 @@
 #include <CGAL/disable_warnings.h>
 
 #include <CGAL/config.h>
-#include <boost/type_traits.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/logical.hpp>
 #include <boost/mpl/has_xxx.hpp>
 
 /*! \file

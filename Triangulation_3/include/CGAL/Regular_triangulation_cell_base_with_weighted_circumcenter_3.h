@@ -22,8 +22,6 @@
 #include <CGAL/assertions.h>
 #include <CGAL/Regular_triangulation_cell_base_3.h>
 
-#include <boost/mpl/identity.hpp>
-
 namespace CGAL {
 
 template < typename GT, typename Cb = Regular_triangulation_cell_base_3<GT> >

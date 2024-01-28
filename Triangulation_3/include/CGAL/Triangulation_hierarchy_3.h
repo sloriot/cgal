@@ -46,8 +46,6 @@
 
 #include <boost/tuple/tuple.hpp>
 #include <boost/iterator/zip_iterator.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/identity.hpp>
 
 #include <array>
 #include <CGAL/array.h>

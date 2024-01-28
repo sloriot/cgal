@@ -34,7 +34,6 @@
 #include <CGAL/Exact_rational.h>
 #include <CGAL/Kernel_23/internal/Has_boolean_tags.h>
 
-#include <boost/mpl/has_xxx.hpp>
 #include <boost/iterator/filter_iterator.hpp>
 
 #ifdef CGAL_CDT_2_DEBUG_INTERSECTIONS

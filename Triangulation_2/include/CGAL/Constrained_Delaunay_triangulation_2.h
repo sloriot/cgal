@@ -27,7 +27,6 @@
 
 #include <boost/container/flat_set.hpp>
 #include <boost/iterator/zip_iterator.hpp>
-#include <boost/mpl/and.hpp>
 
 namespace CGAL {
 

@@ -24,8 +24,6 @@
 #include <CGAL/Real_embeddable_traits.h>
 #include <CGAL/squared_distance_3.h>
 
-#include <boost/mpl/has_xxx.hpp>
-
 #include <queue>
 
 #include <CGAL/Surface_mesher/Profile_timer.h>

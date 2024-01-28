@@ -32,7 +32,6 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include <boost/mpl/assert.hpp>
 
 #include <CGAL/Arr_tags.h>
 #include <CGAL/Arr_enums.h>

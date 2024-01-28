@@ -22,8 +22,6 @@
 
 #include <CGAL/basic.h>
 #include <CGAL/Dimension.h>
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/integral_c.hpp>
 #include <type_traits>
 
 namespace CGAL {

@@ -33,12 +33,6 @@
 #include <CGAL/Kernel/Return_base_tag.h>
 #include <CGAL/Kernel/Type_mapper.h>
 #include <vector>
-#include <boost/mpl/lambda.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/logical.hpp>
-#include <boost/mpl/remove.hpp>
 
 #include <type_traits>
 

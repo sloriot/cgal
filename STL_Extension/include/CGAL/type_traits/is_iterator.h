@@ -18,7 +18,6 @@
 #define CGAL_TYPE_TRAITS_IS_ITERATOR_H
 
 #include <boost/mpl/has_xxx.hpp>
-#include <boost/mpl/logical.hpp>
 
 #include <iterator>
 

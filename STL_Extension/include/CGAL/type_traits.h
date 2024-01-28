@@ -13,7 +13,6 @@
 #define CGAL_TYPE_TRAITS_H
 
 #include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/mpl/or.hpp>
 
 #include <type_traits>
 

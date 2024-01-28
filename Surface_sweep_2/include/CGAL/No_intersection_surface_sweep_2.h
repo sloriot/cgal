@@ -24,7 +24,6 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-#include <boost/mpl/assert.hpp>
 
 #include <CGAL/assertions.h>
 #include <CGAL/memory.h>

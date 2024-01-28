@@ -15,14 +15,6 @@
 
 #include <CGAL/license/Arrangement_on_surface_2.h>
 
-
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/logical.hpp>
-#include <boost/mpl/has_xxx.hpp>
-
 #include <CGAL/Arr_tags.h>
 
 /*! \file

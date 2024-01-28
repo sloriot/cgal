@@ -18,8 +18,6 @@
 #define CGAL_HOMOGENEOUS_POINT_3_H
 
 #include <CGAL/Origin.h>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/logical.hpp>
 
 #include <type_traits>
 

@@ -12,7 +12,6 @@
 #ifndef CGAL_TRANSFORMING_ITERATOR_H
 #define CGAL_TRANSFORMING_ITERATOR_H
 #include <boost/iterator/iterator_adaptor.hpp>
-#include <boost/mpl/or.hpp>
 #include <CGAL/Default.h>
 #include <utility>
 

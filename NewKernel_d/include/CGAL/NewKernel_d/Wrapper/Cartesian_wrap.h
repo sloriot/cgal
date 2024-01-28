@@ -29,7 +29,6 @@
 
 #include <CGAL/NewKernel_d/Wrapper/Ref_count_obj.h>
 
-#include <boost/mpl/or.hpp>
 #include <boost/mpl/contains.hpp>
 #include <boost/mpl/vector.hpp>
 

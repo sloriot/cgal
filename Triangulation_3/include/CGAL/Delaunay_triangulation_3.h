@@ -39,7 +39,6 @@
 #include <CGAL/Spatial_sort_traits_adapter_3.h>
 
 #include <boost/tuple/tuple.hpp>
-#include <boost/mpl/and.hpp>
 #endif //CGAL_TRIANGULATION_3_DONT_INSERT_RANGE_OF_POINTS_WITH_INFO
 
 #ifdef CGAL_LINKED_WITH_TBB

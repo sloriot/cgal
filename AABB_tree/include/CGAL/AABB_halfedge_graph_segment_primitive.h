@@ -22,7 +22,6 @@
 #include <CGAL/boost/graph/property_maps.h>
 
 #include <iterator>
-#include <boost/mpl/and.hpp>
 #include <CGAL/type_traits/is_iterator.h>
 
 #include <CGAL/Default.h>
