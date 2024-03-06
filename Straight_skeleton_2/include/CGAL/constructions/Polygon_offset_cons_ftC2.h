@@ -14,6 +14,7 @@
 #include <CGAL/license/Straight_skeleton_2.h>
 
 #include <CGAL/constructions/Straight_skeleton_cons_ftC2.h>
+#include <CGAL/Real_timer.h>
 
 #include <optional>
 
@@ -78,35 +79,54 @@ construct_offset_pointC2 ( typename K::FT const& t,
       }
       else
       {
-        CGAL_STSKEL_TRAITS_TRACE("  DEGENERATE case: Collinear segments involved. Seed event " << ( !tri ? " ABSENT" : " exists." ) ) ;
+        //~ std::cout << "COUCOU\n";
+        //~ CGAL_STSKEL_TRAITS_TRACE("  DEGENERATE case: Collinear segments involved. Seed event " << ( !tri ? " ABSENT" : " exists." ) ) ;
 
-        Optional_point_2 q = tri ? construct_offset_lines_isecC2(tri, aCaches)
-                                 : compute_oriented_midpoint(e0,e1) ;
+        //~ Optional_point_2 q = tri ? construct_offset_lines_isecC2(tri, aCaches)
+                                 //~ : compute_oriented_midpoint(e0,e1) ;
 
-        if ( q )
-        {
-          CGAL_STSKEL_TRAITS_TRACE("  Seed point: " << p2str(*q) ) ;
+        //~ if ( q )
+        //~ {
+          //~ CGAL_STSKEL_TRAITS_TRACE("  Seed point: " << p2str(*q) ) ;
 
-          FT px, py ;
-          line_project_pointC2(l0->a(),l0->b(),l0->c(),q->x(),q->y(),px,py);
+          //~ FT px, py ;
+          //~ line_project_pointC2(l0->a(),l0->b(),l0->c(),q->x(),q->y(),px,py);
 
-          CGAL_STSKEL_TRAITS_TRACE("  Projected seed point: (" << px << "," << py << ")" ) ;
+          //~ CGAL_STSKEL_TRAITS_TRACE("  Projected seed point: (" << px << "," << py << ")" ) ;
 
-          // When reformulating the progression of the front using the line orthogonal
-          // to the input segment, the speed (weight) becomes inverted: a large weight
-          // in the coefficients of the line means the front moves slower
-          x = px + t * l0->a() / w0 ;
-          y = py + t * l0->b() / w0 ;
+          //~ // When reformulating the progression of the front using the line orthogonal
+          //~ // to the input segment, the speed (weight) becomes inverted: a large weight
+          //~ // in the coefficients of the line means the front moves slower
+          //~ x = px + t * l0->a() / w0 ;
+          //~ y = py + t * l0->b() / w0 ;
 
-          ok = CGAL_NTS is_finite(x) && CGAL_NTS is_finite(y) ;
-        }
+          //~ ok = CGAL_NTS is_finite(x) && CGAL_NTS is_finite(y) ;
+        //~ }
       }
     }
   }
 
+  //~ static int k=-1;
+  //~ CGAL::Real_timer timer;
+  //~ timer.start();
+  //~ std::cout << "#" << ++k << " ";
+  //~ std::cout << x << " " << y;
+  //~ timer.stop();
+  //~ std::cout << " - " << timer.time() << "\n";
+
   CGAL_STSKEL_TRAITS_TRACE("  RESULT: (" << x << "," << y << ")" << ( ok ? "" : " NONE really" ) ) ;
 
-  return cgal_make_optional(ok,K().construct_point_2_object()(x,y)) ;
+  auto res = cgal_make_optional(ok,K().construct_point_2_object()(x,y)) ;
+
+  //~ static int k=-1;
+  //~ CGAL::Real_timer timer;
+  //~ timer.start();
+  //~ std::cout << "#" << ++k << " ";
+  //~ std::cout << res->x() << " " << res->y();
+  //~ timer.stop();
+  //~ std::cout << " - " << timer.time() << "\n";
+
+  return res;
 }
 
 } // namespace CGAL_SS_i

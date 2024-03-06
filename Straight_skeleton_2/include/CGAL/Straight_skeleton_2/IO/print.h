@@ -27,7 +27,11 @@ namespace IO {
 template<class K>
 void print_point ( CGAL::Point_2<K> const& p )
 {
+  CGAL::Real_timer timer;
+  timer.start();
   std::cout << "(" << p.x() << "," << p.y() << ")" ;
+  timer.stop();
+  std::cout << " " << timer.time();
 }
 
 template<class HDS_V>
@@ -70,10 +74,12 @@ void print_polygon_with_holes ( CGAL::Polygon_with_holes_2<K,C> const& polywh )
 
   std::cout << "Polygon_with_holes having " << polywh.number_of_holes() << " holes" << std::endl ;
 
-  print_polygon(polywh.outer_boundary());
+  //~ print_polygon(polywh.outer_boundary());
 
+  int k=0;
   for( typename PolygonWithHoles::Hole_const_iterator hi = polywh.holes_begin() ; hi != polywh.holes_end() ; ++ hi )
-    print_polygon(*hi);
+    if (++k==7)
+      print_polygon(*hi);
 }
 
 template<class K, class C>

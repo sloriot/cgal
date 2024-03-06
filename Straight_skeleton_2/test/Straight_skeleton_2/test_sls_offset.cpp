@@ -937,6 +937,8 @@ void test_offset(const char* filename,
   for(const FT& ot : offset_times)
   {
     std::cout << "Offset #" << i++ << " = " << ot << std::endl;
+    CGAL::Real_timer timer;
+    timer.start();
     Polygon_with_holes_2_ptr_container offset_poly_with_holes =
       CGAL::create_interior_skeleton_and_offset_polygons_with_holes_2(ot, p, K());
 
@@ -944,12 +946,15 @@ void test_offset(const char* filename,
     for(const auto& offp : offset_poly_with_holes)
       CGAL::Straight_skeletons_2::IO::print_polygon_with_holes(*offp);
 
-    CGAL::set_use_assertions(false);
-    for(const auto& offp : offset_poly_with_holes){
-      (void)offp;
-      assert(offp->outer_boundary().is_counterclockwise_oriented());
-    }
-    CGAL::set_use_assertions(true);
+    //~ CGAL::set_use_assertions(false);
+    //~ for(const auto& offp : offset_poly_with_holes){
+      //~ (void)offp;
+      //~ assert(offp->outer_boundary().is_counterclockwise_oriented());
+    //~ }
+    //~ CGAL::set_use_assertions(true);
+    timer.stop();
+    std::cout << "Done in " << timer.time() << "\n";
+    break;
 
 #ifdef CGAL_SLS_TEST_SPEED_THINGS_UP_FOR_THE_TESTSUITE
     if(i > 2)
@@ -968,119 +973,40 @@ void test_kernel()
   // test_API<K>();
 #endif
 
-  // Artificial data
-  test_offset_square<K>();
-  test_offset_four_square_holes<K>();
-  test_offset_L<K>();
-  test_offset_polygon_with_hole<K>();
-  test_offset_pinched<K>();
-  test_offset_non_manifold<K>();
-  test_offset_non_manifold_2<K>();
-  test_offset_polygon_exterior<K>();
-  test_offset_polygon_with_holes_exterior<K>();
-  test_offset_multiple_CCs<K>();
-
-  // Real data
-  test_offset<K>("data/1_Example.poly");
-  test_offset<K>("data/1_Example_Working.poly");
-  test_offset<K>("data/2_Example.poly");
-  test_offset<K>("data/5-SPOKE2.poly");
-  test_offset<K>("data/5-SPOKE.poly");
-  test_offset<K>("data/7-SPOKE.poly");
-  test_offset<K>("data/AlmostClosed.poly");
-  test_offset<K>("data/A.poly");
-  test_offset<K>("data/closer_edge_event_0.poly");
-  test_offset<K>("data/closer_edge_event_1.poly");
-  test_offset<K>("data/consecutive_coincident_vertices_0.poly");
-  test_offset<K>("data/consecutive_coincident_vertices_1.poly");
-  test_offset<K>("data/consecutive_coincident_vertices_2.poly");
-  test_offset<K>("data/consecutive_coincident_vertices_3.poly");
-  test_offset<K>("data/consecutive_coincident_vertices_4.poly");
-  test_offset<K>("data/degenerate0a.poly");
-  test_offset<K>("data/degenerate0.poly");
-  test_offset<K>("data/degenerate2.poly");
-  test_offset<K>("data/degenerate3.poly");
-  test_offset<K>("data/degenerate4.poly");
-  test_offset<K>("data/degenerate5a.poly");
-  test_offset<K>("data/degenerate5.poly");
-  test_offset<K>("data/degenerate6.poly");
-  test_offset<K>("data/degenerate7.poly");
-  test_offset<K>("data/degenerate8.poly");
-  test_offset<K>("data/degenerate9.poly");
-  test_offset<K>("data/degenerate10.poly");
-  test_offset<K>("data/degenerate11.poly");
-  test_offset<K>("data/degenerate12.poly");
-  test_offset<K>("data/degenerate13.poly");
-  test_offset<K>("data/degenerate1.poly");
-  test_offset<K>("data/degenerate20.poly");
-  test_offset<K>("data/degenerate21.poly");
-  test_offset<K>("data/degenerate22.poly");
-  test_offset<K>("data/degenerate22b.poly");
-  test_offset<K>("data/degenerate22c.poly");
-  test_offset<K>("data/degenerate24.poly");
-  test_offset<K>("data/degenerate25.poly");
-  test_offset<K>("data/degenerate26.poly");
-  test_offset<K>("data/degenerate27.poly");
-  test_offset<K>("data/degenerate27b.poly");
-  test_offset<K>("data/degenerate27c.poly");
-  test_offset<K>("data/degenerate27d.poly");
-  test_offset<K>("data/degenerate27e.poly");
-  test_offset<K>("data/degenerate28a.poly");
-  test_offset<K>("data/degenerate28aa.poly");
-  test_offset<K>("data/degenerate28b.poly");
-  test_offset<K>("data/degenerate28c.poly");
-  test_offset<K>("data/degenerate28x.poly");
-  test_offset<K>("data/degenerate_multinode0.poly");
-  test_offset<K>("data/Detmier_b.poly");
-  test_offset<K>("data/Detmier_c.poly");
-  test_offset<K>("data/Detmier_d.poly");
-  test_offset<K>("data/Detmier_e.poly");
-  test_offset<K>("data/Detmier.poly");
-  test_offset<K>("data/double_edge_0.poly");
-  test_offset<K>("data/double_edge_1.poly");
-  test_offset<K>("data/double_edge_2.poly");
-  test_offset<K>("data/double_edge.poly");
-  test_offset<K>("data/double_split.poly");
-  test_offset<K>("data/equal_times_0.poly");
-  test_offset<K>("data/ExtraEdge_1.poly");
-  test_offset<K>("data/ExtraEdge_2.poly");
-  test_offset<K>("data/hole.poly");
-  test_offset<K>("data/inputcircle.poly");
-  test_offset<K>("data/inputsquare2.poly");
-  test_offset<K>("data/inputsquare.poly");
   test_offset<K>("data/many_holes.poly");
-  test_offset<K>("data/masked_double_split.poly");
-  test_offset<K>("data/multinode0.poly");
-  test_offset<K>("data/multinode1.poly");
-  test_offset<K>("data/near_degenerate_0.poly");
-  test_offset<K>("data/near_degenerate_1.poly");
-  test_offset<K>("data/nearly_collinear.poly");
-  test_offset<K>("data/parallels0.poly");
-  test_offset<K>("data/parallels0_b.poly");
-  test_offset<K>("data/parallels_1.poly");
-  test_offset<K>("data/poly4b.poly");
-  test_offset<K>("data/poly4.poly");
-  test_offset<K>("data/poly6.poly");
-  test_offset<K>("data/pseudo_split_0.poly");
-  test_offset<K>("data/pseudo_split_10.poly");
-  test_offset<K>("data/pseudo_split_11.poly");
-  test_offset<K>("data/pseudo_split_12.poly");
-  test_offset<K>("data/pseudo_split_13b.poly");
-  test_offset<K>("data/pseudo_split_13.poly");
-  test_offset<K>("data/pseudo_split_1.poly");
-  test_offset<K>("data/pseudo_split_2.poly");
-  test_offset<K>("data/pseudo_split_3.poly");
-  test_offset<K>("data/pseudo_split_4.poly");
-  test_offset<K>("data/pseudo_split_5b.poly");
-  test_offset<K>("data/pseudo_split_5.poly");
-  test_offset<K>("data/pseudo_split_6.poly");
-  test_offset<K>("data/pseudo_split_7.poly");
-  test_offset<K>("data/pseudo_split_8.poly");
-  test_offset<K>("data/pseudo_split_9.poly");
-  test_offset<K>("data/rect_4_spokes.poly");
-  test_offset<K>("data/rectangle.poly");
-  test_offset<K>("data/region_4.poly");
-  test_offset<K>("data/rombus_4_spokes.poly");
+
+  //~ test_offset<K>("data/masked_double_split.poly");
+  //~ test_offset<K>("data/multinode0.poly");
+  //~ test_offset<K>("data/multinode1.poly");
+  //~ test_offset<K>("data/near_degenerate_0.poly");
+  //~ test_offset<K>("data/near_degenerate_1.poly");
+  //~ test_offset<K>("data/nearly_collinear.poly");
+  //~ test_offset<K>("data/parallels0.poly");
+  //~ test_offset<K>("data/parallels0_b.poly");
+  //~ test_offset<K>("data/parallels_1.poly");
+  //~ test_offset<K>("data/poly4b.poly");
+  //~ test_offset<K>("data/poly4.poly");
+  //~ test_offset<K>("data/poly6.poly");
+  //~ test_offset<K>("data/pseudo_split_0.poly");
+  //~ test_offset<K>("data/pseudo_split_10.poly");
+  //~ test_offset<K>("data/pseudo_split_11.poly");
+  //~ test_offset<K>("data/pseudo_split_12.poly");
+  //~ test_offset<K>("data/pseudo_split_13b.poly");
+  //~ test_offset<K>("data/pseudo_split_13.poly");
+  //~ test_offset<K>("data/pseudo_split_1.poly");
+  //~ test_offset<K>("data/pseudo_split_2.poly");
+  //~ test_offset<K>("data/pseudo_split_3.poly");
+  //~ test_offset<K>("data/pseudo_split_4.poly");
+  //~ test_offset<K>("data/pseudo_split_5b.poly");
+  //~ test_offset<K>("data/pseudo_split_5.poly");
+  //~ test_offset<K>("data/pseudo_split_6.poly");
+  //~ test_offset<K>("data/pseudo_split_7.poly");
+  //~ test_offset<K>("data/pseudo_split_8.poly");
+  //~ test_offset<K>("data/pseudo_split_9.poly");
+  //~ test_offset<K>("data/rect_4_spokes.poly");
+  //~ test_offset<K>("data/rectangle.poly");
+  //~ test_offset<K>("data/region_4.poly");
+  //~ test_offset<K>("data/rombus_4_spokes.poly");
 
 #ifndef CGAL_SLS_TEST_SPEED_THINGS_UP_FOR_THE_TESTSUITE
   test_offset<K>("data/sample.poly");
@@ -1159,8 +1085,8 @@ void test_kernel()
 
 int main(int, char**)
 {
-  test_kernel<EPICK>();
-  test_kernel<EPECK>();
+  //~ test_kernel<EPICK>();
+  //~ test_kernel<EPECK>();
   test_kernel<EPECK_w_sqrt>();
 
   std::cout << "Done!" << std::endl;

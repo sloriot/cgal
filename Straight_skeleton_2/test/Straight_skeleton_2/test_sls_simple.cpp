@@ -127,6 +127,8 @@ void test_skeleton(const char* filename,
                    const std::size_t expected_nh = -1,
                    const std::size_t expected_nf = -1)
 {
+  CGAL::Real_timer time;
+  time.start();
   std::cout << "Construct straight skeleton of input: " << filename << std::endl;
   std::cout << "Kernel: " << typeid(K).name() << std::endl;
 
@@ -214,6 +216,9 @@ void test_skeleton(const char* filename,
   Straight_skeleton_Ptr ss_ext = CGAL::create_exterior_straight_skeleton_2(1., p, K());
   assert(ss_ext);
   assert(is_valid<K>(ss_ext));
+
+  time.stop();
+  std::cout << "Done in " << time.time() << "\n";
 }
 
 template <typename K>
