@@ -18,6 +18,11 @@ public:
   using Node_index = unspecified_type; ///< Index type of the orthtree to be traversed
 
   /*!
+    \brief constructible from an object of the type of the orthtree it will be used with
+   */
+  OrthtreeTraversal(const Orthtree& o) const;
+
+  /*!
     \brief returns the first node of the traversal.
    */
   Node_index first_index() const;
