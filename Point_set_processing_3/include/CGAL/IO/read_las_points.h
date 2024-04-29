@@ -43,7 +43,7 @@
 #  pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif
 
-#define USE_AS_DLL
+#define USE_AS_DLL 1
 #include <lasreader_las.hpp>
 #undef USE_AS_DLL
 
@@ -375,21 +375,22 @@ void process_properties (const LASpoint& reader, OutputValueType& new_element,
 template <typename OutputIteratorValueType,
           typename PointOutputIterator,
           typename ... PropertyHandler>
-bool read_LAS_with_properties(std::istream& is,
+bool read_LAS_with_properties(const char* filename,
                               PointOutputIterator output,
                               PropertyHandler&& ... properties)
 {
   typedef OutputIteratorValueType Enriched_point;
 
-  if(!is)
+  LASreadOpener lasreadopener;
+
+  LASreaderLAS* lasreader = dynamic_cast<LASreaderLAS *>(lasreadopener.open(filename, FALSE));
+
+  if (lasreader == nullptr)
     return false;
 
-  LASreaderLAS lasreader;
-  lasreader.open(is);
-
-  while(lasreader.read_point())
+  while(lasreader->read_point())
   {
-    const LASpoint& laspoint = lasreader.point;
+    const LASpoint& laspoint = lasreader->point;
     Enriched_point new_point;
 
     internal::LAS::process_properties (laspoint, new_point, std::forward<PropertyHandler>(properties)...);
@@ -397,7 +398,7 @@ bool read_LAS_with_properties(std::istream& is,
     *(output ++) = new_point;
   }
 
-  lasreader.close();
+  lasreader->close();
 
   return true;
 
@@ -407,11 +408,11 @@ bool read_LAS_with_properties(std::istream& is,
 
 template <typename OutputIterator,
           typename ... PropertyHandler>
-bool read_LAS_with_properties(std::istream& is,
+bool read_LAS_with_properties(const char *filename,
                               OutputIterator output,
                               PropertyHandler&& ... properties)
 {
-  return read_LAS_with_properties<typename value_type_traits<OutputIterator>::type>(is, output, std::forward<PropertyHandler>(properties)...);
+  return read_LAS_with_properties<typename value_type_traits<OutputIterator>::type>(filename, output, std::forward<PropertyHandler>(properties)...);
 }
 
 /// \endcond
