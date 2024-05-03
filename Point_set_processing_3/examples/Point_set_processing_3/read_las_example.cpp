@@ -19,8 +19,9 @@ int main(int argc, char*argv[])
   const char* fname = (argc>1) ? argv[1] : "data/pig_points.las";
 
   // Reads a .las point set file with normal vectors and colors
+  std::ifstream in(fname, std::ios_base::binary);
   std::vector<PointWithColor> points; // store points
-  if(!CGAL::IO::read_LAS_with_properties(fname, std::back_inserter (points),
+  if (!CGAL::IO::read_LAS_with_properties(in, std::back_inserter(points),
                                          CGAL::IO::make_las_point_reader(CGAL::First_of_pair_property_map<PointWithColor>()),
                                          std::make_tuple(CGAL::Second_of_pair_property_map<PointWithColor>(),
                                                          CGAL::Construct_array(),
