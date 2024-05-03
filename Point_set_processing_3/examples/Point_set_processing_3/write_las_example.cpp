@@ -19,7 +19,7 @@ int main(int argc, char*argv[])
 {
   const char* fname = "colored_points.las";
 
-  std::ofstream os(fname, CGAL::IO::BINARY);
+  std::ofstream os(fname, std::ios::binary);
 
   std::vector<PointWithColor> points; // store points
   points.push_back(std::make_pair(Point(0, 0, 0), Color{ 65535, 0, 0, 0 }));
