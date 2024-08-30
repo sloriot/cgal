@@ -16,11 +16,11 @@ typedef std::pair<Point, Color> PointWithColor;
 
 int main(int argc, char* argv[])
 {
-  std::string fname = (argc > 1) ? argv[1] : CGAL::data_file_path("points_3/colors.las");
+  std::ifstream is("data/colored_points.las");
 
   // Reads a .las point set file with normal vectors and colors
   std::vector<PointWithColor> points; // store points
-  if (!CGAL::IO::read_LAS_with_properties(fname.c_str(), std::back_inserter(points),
+  if (!CGAL::IO::read_LAS_with_properties(is, std::back_inserter(points),
     CGAL::IO::make_las_point_reader(CGAL::First_of_pair_property_map<PointWithColor>()),
     std::make_tuple(CGAL::Second_of_pair_property_map<PointWithColor>(),
       CGAL::Construct_array(),
@@ -29,18 +29,35 @@ int main(int argc, char* argv[])
       CGAL::IO::LAS_property::B(),
       CGAL::IO::LAS_property::I())))
   {
-    std::cerr << "Error: cannot read file " << fname << std::endl;
+    std::cerr << "Error: cannot read file data/colored_points.las" << std::endl;
     return EXIT_FAILURE;
   }
 
-  CGAL_assertion(points.size() == 3);
-  CGAL_assertion(points[0].second[0] == 255);
+  CGAL_assertion(points.size() == 5);
+  CGAL_assertion(points[0].second[0] == 65535);
   CGAL_assertion(points[0].second[1] == 0);
   CGAL_assertion(points[0].second[2] == 0);
+  CGAL_assertion(points[0].second[3] == 0);
 
   CGAL_assertion(points[1].second[0] == 0);
-  CGAL_assertion(points[1].second[1] == 255);
+  CGAL_assertion(points[1].second[1] == 65535);
   CGAL_assertion(points[1].second[2] == 0);
+  CGAL_assertion(points[1].second[3] == 0);
+
+  CGAL_assertion(points[2].second[0] == 0);
+  CGAL_assertion(points[2].second[1] == 0);
+  CGAL_assertion(points[2].second[2] == 65535);
+  CGAL_assertion(points[2].second[3] == 0);
+
+  CGAL_assertion(points[3].second[0] == 0);
+  CGAL_assertion(points[3].second[1] == 65535);
+  CGAL_assertion(points[3].second[2] == 65535);
+  CGAL_assertion(points[3].second[3] == 0);
+
+  CGAL_assertion(points[4].second[0] == 65535);
+  CGAL_assertion(points[4].second[1] == 65535);
+  CGAL_assertion(points[4].second[2] == 0);
+  CGAL_assertion(points[4].second[3] == 0);
 
   return EXIT_SUCCESS;
 }
