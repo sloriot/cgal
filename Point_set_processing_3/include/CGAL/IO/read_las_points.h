@@ -384,7 +384,11 @@ bool read_LAS_with_properties(std::istream& is,
   if(!is)
     return false;
 
+#if LAS_TOOLS_VERSION <= 170805
+  LASreaderLAS lasreader;
+#else
   LASreaderLAS lasreader(nullptr);
+#endif
   lasreader.open(is);
 
   while(lasreader.read_point())
