@@ -232,14 +232,25 @@ struct QEMClusterData {
         typename GT::Point_3 point = { this->representative_point.x(), this->representative_point.y(), this->representative_point.z() };
         compute_representative_point<GT>(this->quadric_sum, point, rank_deficiency);
         this->representative_point = { point.x(), point.y(), point.z() };
+
+        if (! CGAL::do_overlap(::my_global_mesh_bbox, typename GT::Point_3(this->representative_point[0],
+                                                                          this->representative_point[1],
+                                                                          this->representative_point[2]).bbox())) {
+          std::cerr << "Warning: " << this->representative_point << " is outside bbox" << std::endl;
+          std::cerr << "QEM FLAG: " << qem << std::endl;
+          std::cerr << "Rank deficiency= " << rank_deficiency << std::endl;
+        }
       }
-      else
+      else {
         this->representative_point = (this->site_sum) / this->weight_sum;
+        // std::cout << "this->representative_point computed to " << this->representative_point << std::endl;
+      }
 
       return this->representative_point;
     }
-    else
+    else {
       return typename GT::Vector_3(0, 0, 0);
+    }
   }
 };
 
@@ -274,10 +285,13 @@ struct IsotropicClusterData {
 
   typename GT::Vector_3 compute_centroid()
   {
-    if (this->weight_sum > 0)
+    if (this->weight_sum > 0) {
       return (this->site_sum) / this->weight_sum;
-    else
+    } else {
+      std::cout << "weight sum is negative" << std::endl;
+      std::exit(1);
       return typename GT::Vector_3 (0, 0, 0);
+    }
   }
 };
 
@@ -489,6 +503,8 @@ std::pair<
     } while (get(vertex_cluster_pmap, vd) != -1);
 
     put(vertex_cluster_pmap, vd, ci);
+    std::cout << vd << " is the starting seed for cluter " << ci << std::endl;
+
     typename GT::Point_3 vp = get(vpm, vd);
     typename GT::Vector_3 vpv(vp.x(), vp.y(), vp.z());
     clusters[ci].add_vertex(vpv, get(vertex_weight_pmap, vd));
@@ -712,7 +728,6 @@ std::pair<
   std::vector<std::vector<int>> polygons;
   TriangleMesh simplified_mesh;
 
-
   for (int i = 0; i < nb_clusters; i++)
   {
     if (clusters[i].weight_sum > 0)
@@ -722,7 +737,6 @@ std::pair<
 
       typename GT::Point_3 cluster_representative_p(cluster_representative.x(), cluster_representative.y(), cluster_representative.z());
       points.push_back(cluster_representative_p);
-
     }
   }
 
@@ -950,9 +964,10 @@ std::pair<
     }
   }
 
+  CGAL::IO::write_OFF("results/subdivided_pmesh.off", pmesh, CGAL::parameters::stream_precision(17));
+
   // creating needed property maps
   VertexClusterMap vertex_cluster_pmap = get(CGAL::dynamic_vertex_property_t<int>(), pmesh);
-  VertexVisitedMap vertex_visited_pmap = get(CGAL::dynamic_vertex_property_t<bool>(), pmesh);
   VertexWeightMap vertex_weight_pmap = get(CGAL::dynamic_vertex_property_t<typename GT::FT>(), pmesh);
   VertexQuadricMap vertex_quadric_pmap = get(CGAL::dynamic_vertex_property_t<Matrix4x4>(), pmesh);
 
@@ -964,7 +979,6 @@ std::pair<
   for (Vertex_descriptor vd : vertices(pmesh))
   {
     put(vertex_weight_pmap, vd, 0);
-    put(vertex_visited_pmap, vd, false);
     put(vertex_cluster_pmap, vd, -1);
 
     Matrix4x4 q;  q.setZero();
@@ -1045,6 +1059,8 @@ std::pair<
       clusters_edges_active.push(hd);
   }
 
+  std::cout << "nb_clusters = " << nb_clusters << std::endl;
+
   // the energy minimization loop (clustering loop)
   int nb_modifications = 0;
   int nb_disconnected = 0;
@@ -1067,6 +1083,11 @@ std::pair<
         Vertex_descriptor v2 = target(hi, pmesh);
 
         int c1 = get(vertex_cluster_pmap, v1);
+
+        // @todo If we _always_ spread from a halfedge whose source is a sane cluster ID,
+        // then we can never have this?
+        CGAL_assertion(c1 != -1); // @todo clean the c1 == -1 branch
+
         int c2 = get(vertex_cluster_pmap, v2);
 
         if (c1 == -1)
@@ -1099,7 +1120,8 @@ std::pair<
         }
         else if (c1 == c2)
         {
-          clusters_edges_new.push(hi);
+          // @todo if v1 or v2 change, the edge will be re-activated if either v1 or v2 change
+          // clusters_edges_new.push(hi);
         }
         else
         {
@@ -1205,6 +1227,19 @@ std::pair<
       clusters_edges_active.swap(clusters_edges_new);
     } while (nb_modifications > 0 /*&& !just_switched_to_qem*/);
 
+    // sanity
+    static int iter = -1;
+    ++iter;
+    for (Vertex_descriptor vd : vertices(pmesh))
+    {
+      int c = get(vertex_cluster_pmap, vd);
+      if (c == -1) {
+        std::cerr << "Warning: " << vd << " ended with no cluster (post flood #" << iter << ")" << std::endl;
+      } else {
+        // std::cout << vd << " is OK" << std::endl;
+      }
+    }
+
     // Disconnected clusters handling
     // the goal is to delete clusters with multiple connected components and only keep the largest connected component of each cluster
     // For each cluster, do a BFS from a vertex in the cluster
@@ -1213,6 +1248,10 @@ std::pair<
     std::queue<Vertex_descriptor> vertex_queue;
 
     // loop over vertices to compute cluster components
+
+    // @todo fix that in the other function as well
+    VertexVisitedMap vertex_visited_pmap = get(CGAL::dynamic_vertex_property_t<bool>(), pmesh, false);
+
     for (Vertex_descriptor vd : vertices(pmesh))
     {
       if (get(vertex_visited_pmap, vd)) continue;
@@ -1241,6 +1280,8 @@ std::pair<
             }
           }
         }
+      } else {
+        std::cerr << "Warning: " << vd << " is unreached" << std::endl;
       }
     }
 
@@ -1267,18 +1308,19 @@ std::pair<
           for (Vertex_descriptor vd : cluster_components[c][component_i])
           {
             put(vertex_cluster_pmap, vd, -1);
+            std::cout << "disconnect " << vd << std::endl;
             // remove vd from cluster c
             typename GT::Point_3 vp = get(vpm, vd);
             typename GT::Vector_3 vpv(vp.x(), vp.y(), vp.z());
             clusters[c].remove_vertex(vpv, get(vertex_weight_pmap, vd), get(vertex_quadric_pmap, vd));
             // add all halfedges around v except hi to the queue
-            for (Halfedge_descriptor hd : halfedges_around_source(vd, pmesh))
+            for (Halfedge_descriptor hd : halfedges_around_target(vd, pmesh))
             {
-              // add hd to the queue if its target is not in the same cluster
-              Vertex_descriptor v2 = target(hd, pmesh);
+              // add hd to the queue if its  is not in the same cluster
+              Vertex_descriptor v2 = source(hd, pmesh);
               int c2 = get(vertex_cluster_pmap, v2);
               if (c2 != c)
-                clusters_edges_new.push(hd);
+                clusters_edges_active.push(hd);
             }
           }
         }
@@ -1288,6 +1330,26 @@ std::pair<
     std::cout << "# nb_disconnected: " << nb_disconnected << "\n";
   } while (nb_disconnected > 0);
 
+  // sanity
+  std::vector<CGAL::Color> colors = {{ CGAL::red(), CGAL::blue(), CGAL::green(), CGAL::orange(),
+                                       CGAL::purple(), CGAL::yellow(), CGAL::violet(), CGAL::deep_blue() }};
+
+  auto color_map = pmesh.template add_property_map<Vertex_descriptor, CGAL::Color>("v:color").first;
+  for (Vertex_descriptor vd : vertices(pmesh))
+  {
+    int c = get(vertex_cluster_pmap, vd);
+    put(color_map, vd, colors[c % colors.size()]);
+    if (c == -1) {
+      std::cerr << "Warning: " << vd << " ended with no cluster (post cluster)" << std::endl;
+    } else {
+      // std::cout << vd << " is OK" << std::endl;
+    }
+  }
+
+  CGAL::IO::write_PLY("flooded_pmesh.ply", pmesh, CGAL::parameters::stream_precision(17)
+                                                                   .vertex_color_map(color_map)
+                                                                   .use_binary_mode(false));
+
   /// Construct new Mesh
   std::vector<int> valid_cluster_map(nb_clusters, -1);
   std::vector<typename GT::Point_3> points;
@@ -1295,6 +1357,8 @@ std::pair<
   std::vector<std::vector<int>> polygons;
   TriangleMesh simplified_mesh;
 
+  std::ofstream out_rep("results/cluster_reps.xyz");
+  out_rep.precision(17);
 
   for (int i = 0; i < nb_clusters; i++)
   {
@@ -1305,7 +1369,10 @@ std::pair<
 
       typename GT::Point_3 cluster_representative_p(cluster_representative.x(), cluster_representative.y(), cluster_representative.z());
       points.push_back(cluster_representative_p);
-
+      out_rep << points.back() << std::endl;
+      // std::cout << points.back() << std::endl;
+    } else {
+      std::cerr << "Warning: negative sum for cluster " << i << std::endl;
     }
   }
 
@@ -1382,6 +1449,12 @@ std::pair<
     int c2 = get(vertex_cluster_pmap, v2);
     int c3 = get(vertex_cluster_pmap, v3);
 
+    if(0 > c1 || c1 >= nb_clusters || 0 > c2 || c2 >= nb_clusters || 0 > c3 || c3 >= nb_clusters) {
+      std::cerr << "Error: weird cluster ID" << std::endl;
+      std::cerr << "Cluster map for this face: " << c1 << " " << c2 << " " << c3 << std::endl;
+      std::exit(1);
+    }
+
     if (c1 != c2 && c1 != c3 && c2 != c3)
     {
       int c1_mapped = valid_cluster_map[c1], c2_mapped = valid_cluster_map[c2], c3_mapped = valid_cluster_map[c3];
@@ -1392,6 +1465,8 @@ std::pair<
       }
     }
   }
+
+  CGAL::IO::write_OFF("results/soup_before_orient.off", points, polygons, CGAL::parameters::stream_precision(17));
 
   orient_polygon_soup(points, polygons);
 

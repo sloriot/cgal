@@ -1,5 +1,10 @@
+#include <CGAL/Bbox_3.h>
+
+CGAL::Bbox_3 my_global_mesh_bbox;
+
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polygon_mesh_processing/acvd/acvd.h>
+#include <CGAL/Polygon_mesh_processing/bbox.h>
 #include <CGAL/Polygon_mesh_processing/IO/polygon_mesh_io.h>
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/property_map.h>
@@ -20,6 +25,12 @@ typedef boost::property_map<Surface_Mesh, CGAL::dynamic_vertex_property_t<CGAL::
 
 int main(int argc, char* argv[])
 {
+  std::cout.precision(17);
+  std::cerr.precision(17);
+
+  CGAL::get_default_random() = CGAL::Random(0);
+  std::cout << "Seed = " << CGAL::get_default_random().get_seed() << std::endl;
+
   Surface_Mesh smesh;
   const std::string filename = (argc > 1) ?
     argv[1] :
@@ -59,6 +70,9 @@ int main(int argc, char* argv[])
   // With QEM Energy Minimization
 
   std::cout << "Uniform QEM ACVD ...." << std::endl;
+
+  my_global_mesh_bbox = PMP::bbox(smesh);
+  my_global_mesh_bbox.scale(1.5);
 
   auto acvd_mesh_qem = PMP::acvd_qem_remeshing(smesh, nb_clusters);
   CGAL::IO::write_polygon_mesh( stem +"_acvd_qem_"+ std::to_string(nb_clusters) + extension, acvd_mesh_qem);
