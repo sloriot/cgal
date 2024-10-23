@@ -582,7 +582,7 @@ struct Filter_wrapper_for_cap_needle_removal<TriangleMesh, VPM, Traits, Identity
 ///   \cgalParamNBegin{filter}
 ///     \cgalParamDescription{A function object providing `bool operator()(geom_traits::Point_3,geom_traits::Point_3,geom_traits::Point_3)`.}
 ///     \cgalParamType{The function object is queried each time a new triangle is about to be created by a flip or a collapse operation.
-///                    If `false` is returned, the operation is cancelled.}
+///                    If `false` is returned, the operation is canceled.}
 ///     \cgalParamDefault{a functor always returning `true`.}
 ///   \cgalParamNEnd
 /// \cgalNamedParamsEnd
@@ -639,7 +639,7 @@ bool remove_almost_degenerate_faces(const FaceRange& face_range,
   // Vertex property map that combines the VCM and the fact that extremities of a constrained edge should be constrained
   typedef CGAL::dynamic_vertex_property_t<bool>                                 Vertex_property_tag;
   typedef typename boost::property_map<TriangleMesh, Vertex_property_tag>::type DVCM;
-  DVCM vcm = get(Vertex_property_tag(), tmesh);
+  DVCM vcm = get(Vertex_property_tag(), tmesh, false);
 
   // parameters
   const double cap_threshold =
@@ -1934,7 +1934,7 @@ bool remove_degenerate_faces(const FaceRange& face_range,
 
   if(degenerate_face_set.size() == faces_size)
   {
-    clear(tmesh);
+    remove_all_elements(tmesh);
     return true;
   }
 
