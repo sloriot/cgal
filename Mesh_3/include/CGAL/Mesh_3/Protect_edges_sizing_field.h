@@ -25,6 +25,8 @@
 
 #include <CGAL/license/Mesh_3.h>
 
+#include <CGAL/Real_timer.h>
+
 #include <CGAL/disable_warnings.h>
 #include <CGAL/Mesh_3/config.h>
 
@@ -234,6 +236,7 @@ private:
                      Weight w,
                      int dim,
                      const Index& index,
+                     Vertex_handle prev,
                      ErasedVeOutIt out);
 
   /// Inserts balls between the points identified by the handles `vp` and `vq`
@@ -549,7 +552,7 @@ Protect_edges_sizing_field<C3T3, MD, Sf, Df>::
 operator()(const bool refine)
 {
   // This class is only meant to be used with non-periodic triangulations
-  CGAL_assertion(!(std::is_same<typename Tr::Periodic_tag, CGAL::Tag_true>::value));
+  CGAL_assertion(!(std::is_same_v<typename Tr::Periodic_tag, CGAL::Tag_true>));
 
 #ifdef CGAL_MESH_3_VERBOSE
   std::cerr << "Inserting protection balls..." << std::endl
@@ -659,7 +662,7 @@ insert_corners()
     }
 
     // Insert corner with ball (dim is zero because p is a corner)
-    Vertex_handle v = smart_insert_point(p, w, 0, p_index,
+    Vertex_handle v = smart_insert_point(p, w, 0, p_index, Vertex_handle(),
                                          CGAL::Emptyset_iterator()).first;
     CGAL_assertion(v != Vertex_handle());
 
@@ -688,6 +691,7 @@ insert_point(const Bare_point& p, const Weight& w, int dim, const Index& index,
             << ", dim=" << dim
             << ", index=" << CGAL::IO::oformat(index) << ")\n";
 #endif
+
 
   // Convert the dimension if it was set to a negative value (marker for special balls).
   if(dim < 0)
@@ -760,9 +764,14 @@ template <typename ErasedVeOutIt>
 std::pair<typename Protect_edges_sizing_field<C3T3, MD, Sf, Df>::Vertex_handle,
           ErasedVeOutIt>
 Protect_edges_sizing_field<C3T3, MD, Sf, Df>::
-smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
+smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index, Vertex_handle prev,
                    ErasedVeOutIt out)
 {
+  int nb_w_update=0;
+  int nb_w_update2=0;
+  int nb_w_update3=0;
+
+
 #if CGAL_MESH_3_PROTECTION_DEBUG & 1
   std::cerr << "smart_insert_point( (" << p
             << "), w=" << w
@@ -786,12 +795,13 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
 
   const Weighted_point wp0 = cwp(p); // with weight 0, used for locate()
 
+
   if ( tr.dimension() > 2 )
   {
     // Check that new point will not be inside a power sphere
     typename Tr::Locate_type lt;
     int li, lj;
-    Cell_handle ch = tr.locate(wp0, lt, li, lj);
+    Cell_handle ch = tr.locate(wp0, lt, li, lj, prev);
 
     Vertex_handle nearest_vh = tr.nearest_power_vertex(p, ch);
     FT sq_d = sq_distance(p, cp(tr.point(nearest_vh)));
@@ -817,6 +827,8 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
         insert_a_special_ball = true;
       }
 
+      ++nb_w_update;
+
       // Adapt size
       *out++ = nearest_vh;
       Vertex_handle new_vh = change_ball_size(nearest_vh, sq_d, special_ball);
@@ -839,6 +851,7 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
 #if CGAL_MESH_3_PROTECTION_DEBUG & 1
     typename Tr::Point nearest_point;
 #endif
+
 
     // fill vertices_in_conflict_zone
     Vertex_set vertices_in_conflict_zone_set;
@@ -870,6 +883,7 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
           if(! is_special(v))
           {
             *out++ = v;
+            ++nb_w_update2;
             ch = change_ball_size(v, minimal_weight(), true)->cell(); // special ball
           }
         }
@@ -885,6 +899,7 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
         }
       }
     }
+
 
     if ( w > min_sq_d )
     {
@@ -931,6 +946,7 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
         if( ! is_special(it) ) {
           *out++ = it;
           change_ball_size(it, sq_d, special_ball);
+          ++nb_w_update3;
         }
       }
     }
@@ -991,6 +1007,11 @@ smart_insert_point(const Bare_point& p, Weight w, int dim, const Index& index,
   /// @TODO `insert_point` does insert in unchecked_vertices anyway!
   if ( add_handle_to_unchecked ) { unchecked_vertices_.insert(v); }
 
+  if (nb_w_update!=0) std::cout << "        nb_w_update: " << nb_w_update << "\n";
+  if (nb_w_update2!=0) std::cout << "        nb_w_update2: " << nb_w_update2 << "\n";
+  if (nb_w_update3!=0) std::cout << "        nb_w_update3: " << nb_w_update3 << "\n";
+
+
   return std::pair<Vertex_handle, ErasedVeOutIt>(v, out);
 }
 
@@ -1000,6 +1021,9 @@ void
 Protect_edges_sizing_field<C3T3, MD, Sf, Df>::
 insert_balls_on_edges()
 {
+
+
+
   // Get features
   struct Feature_tuple
   {
@@ -1009,6 +1033,8 @@ insert_balls_on_edges()
   };
   std::vector<Feature_tuple> input_features;
   domain_.get_curves(std::back_inserter(input_features));
+
+  std::cerr << "\n  number of curves " << input_features.size() << std::endl;
 
   // Iterate on edges
   for (const Feature_tuple& ft : input_features)
@@ -1059,6 +1085,7 @@ insert_balls_on_edges()
                                   CGAL::square(p_size),
                                   1 /*dim*/,
                                   p_index,
+                                  Vertex_handle(),
                                   CGAL::Emptyset_iterator()).first;
         }
         // No 'else' because in that case 'is_vertex(..)' already filled
@@ -1147,7 +1174,7 @@ insert_balls(const Vertex_handle& vp,
              const Curve_index& curve_index,
              ErasedVeOutIt out)
 {
-#if CGAL_MESH_3_PROTECTION_DEBUG & 1
+//~ #if CGAL_MESH_3_PROTECTION_DEBUG & 1
   std::cerr << "insert_balls(vp=" << disp_vert(vp) << ",\n"
             << "             vq=" << disp_vert(vq) << ",\n"
             << "             sp=" << sp << ",\n"
@@ -1155,7 +1182,9 @@ insert_balls(const Vertex_handle& vp,
             << "             d=" << d << ",\n"
             << "             d_sign=" << d_sign << ",\n"
             << "             curve_index=" << curve_index << ")\n";
-#endif
+//~ #endif
+  CGAL::Real_timer global_timer;
+  global_timer.start();
   CGAL_precondition(d > 0);
   CGAL_precondition(sp <= sq);
 
@@ -1164,7 +1193,7 @@ insert_balls(const Vertex_handle& vp,
 
   const Weighted_point& vp_wp = c3t3_.triangulation().point(vp);
 
-#if ! defined(CGAL_NO_PRECONDITIONS)
+//~ #if ! defined(CGAL_NO_PRECONDITIONS)
   if(sp < minimal_size_) {
     std::stringstream msg;
     msg.precision(17);
@@ -1172,7 +1201,7 @@ insert_balls(const Vertex_handle& vp,
     msg << " at point (" << cp(vp_wp) << ")!";
     CGAL_precondition_msg(sp > minimal_size_, msg.str().c_str());
   }
-#endif // ! CGAL_NO_PRECONDITIONS
+//~ #endif // ! CGAL_NO_PRECONDITIONS
 
   // Notations:
   // sp = size_p,   sq = size_q,   d = pq_geodesic
@@ -1213,9 +1242,10 @@ insert_balls(const Vertex_handle& vp,
   const FT d_signF = static_cast<FT>(d_sign);
   int n = static_cast<int>(std::floor(FT(2)*(d-sq) / (sp+sq))+.5);
   // if( minimal_weight() != 0 && n == 0 ) return;
-
+#if 0
   if(nonlinear_growth_of_balls && refine_balls_iteration_nb < 3)
   {
+    std::cout << "ON PASSE PAS ICI!\n";
     // This block tries not to apply the general rule that the size of
     // protecting balls is a linear interpolation of the size of protecting
     // balls at corner. When the curve segment is long enough, pick a point
@@ -1228,7 +1258,7 @@ insert_balls(const Vertex_handle& vp,
                 << n << "\n  between points ("
                 << vp_wp << ") and (" << vq_wp
                 << ") (arc length: "
-                << curve_segment_length(vp_wp, vq_wp,
+                << curve_segment_length(vp, vq,
                                         curve_index, d_sign)
                 << ")\n";
 #endif
@@ -1248,6 +1278,7 @@ insert_balls(const Vertex_handle& vp,
                            point_weight,
                            dim,
                            index,
+                           Vertex_handle(),
                            out);
       if(forced_stop()) return out;
       const Vertex_handle new_vertex = pair.first;
@@ -1266,13 +1297,14 @@ insert_balls(const Vertex_handle& vp,
       return out;
     }
   } // nonlinear_growth_of_balls
-
+#endif
   FT r = (sq - sp) / FT(n+1);
 
-#if CGAL_MESH_3_PROTECTION_DEBUG & 1
+//~ #if CGAL_MESH_3_PROTECTION_DEBUG & 1
+  std::cerr.precision(17);
   std::cerr << "  n=" << n
             << "\n  r=" << r << std::endl;
-#endif
+//~ #endif
 
 
   // Adjust size of steps, D = covered distance
@@ -1322,6 +1354,8 @@ insert_balls(const Vertex_handle& vp,
   }
 
   // Launch balls
+  CGAL::Real_timer time2;
+
   for ( int i = 1 ; i <= n ; ++i )
   {
     // New point position
@@ -1337,8 +1371,10 @@ insert_balls(const Vertex_handle& vp,
     int dim = 1; // new_point is on edge
 
     // Insert point into c3t3
+    time2.start();
     std::pair<Vertex_handle, ErasedVeOutIt> pair =
-      smart_insert_point(new_point, point_weight, dim, index, out);
+      smart_insert_point(new_point, point_weight, dim, index, prev, out);
+    time2.stop();
     Vertex_handle new_vertex = pair.first;
     out = pair.second;
 
@@ -1356,6 +1392,7 @@ insert_balls(const Vertex_handle& vp,
     pt_dist += d_signF * norm_step_size;
   }
 
+
   // Insert last edge into c3t3
   // Warning: if vp==vq (cycle) and if only 1 point was inserted,
   // then (prev,vp) == (prev,vq)
@@ -1365,6 +1402,10 @@ insert_balls(const Vertex_handle& vp,
       c3t3_.add_to_complex(prev, vq, curve_index);
     }
   }
+  global_timer.stop();
+  std::cerr << "  c3t3_.number_of_vertices() " << c3t3_.triangulation().number_of_vertices() << "\n";
+  std::cerr<< "done in " << global_timer.time() << "\n";
+  std::cerr<< "        " << time2.time() << "\n";
   return out;
 }
 
@@ -1379,6 +1420,7 @@ refine_balls()
   dump_c3t3_edges(c3t3_, "dump-before-refine_balls");
 #endif
   Triangulation& tr = c3t3_.triangulation();
+  int nb_w_update4=0;
 
   // Loop
   bool restart = true;
@@ -1387,6 +1429,8 @@ refine_balls()
   while ( (!unchecked_vertices_.empty() || restart) &&
           this->refine_balls_iteration_nb < refine_balls_max_nb_of_loops)
   {
+
+
     if(forced_stop()) break;
 #ifdef CGAL_MESH_3_DUMP_FEATURES_PROTECTION_ITERATIONS
     std::ostringstream oss;
@@ -1474,13 +1518,15 @@ refine_balls()
       const FT new_size = it.second;
       // Set size of the ball to new value
       if(use_minimal_size() && new_size < minimal_size_) {
-        if(!is_special(v)) {
-          change_ball_size(v, minimal_weight(), true); // special ball
 
+        if(!is_special(v)) {
+          ++nb_w_update4;
+          change_ball_size(v, minimal_weight(), true); // special ball
           // Loop will have to be run again
           restart = true;
         }
       } else {
+        ++nb_w_update4;
         change_ball_size(v, CGAL::square(new_size));
 
         // Loop will have to be run again
@@ -1502,6 +1548,7 @@ refine_balls()
     std::cerr << "Warning : features protection has reached maximal "
               << " number of loops." << std::endl
               << "          It might result in a crash." << std::endl;
+  if (nb_w_update4!=0) std::cout << "        nb_w_update4: " << nb_w_update4 << "\n";
 
 } // end refine_balls()
 
