@@ -46,6 +46,44 @@ namespace CGAL {
 namespace Mesh_3 {
 namespace internal {
 
+template <class GeomTraits, class Iterator>
+struct Segment_from_point_iterator_map{
+  //classical typedefs
+  typedef Iterator key_type;
+  typedef typename GeomTraits::Segment_3 value_type;
+  typedef value_type reference;
+  typedef boost::readable_property_map_tag category;
+
+
+  inline friend reference
+  get(Segment_from_point_iterator_map, key_type it)
+  {
+    return typename GeomTraits::Segment_3(*it, *std::next(it));
+  }
+};
+
+template < class GeomTraits,
+           class Iterator,
+           class CacheDatum=Tag_false>
+class AABB_polyline_segment_primitive_3
+#ifndef DOXYGEN_RUNNING
+  : public AABB_primitive<  Iterator,
+                            Segment_from_point_iterator_map<GeomTraits, Iterator>,
+                            Input_iterator_property_map<Iterator>,
+                            Tag_false,
+                            CacheDatum >
+#endif
+{
+  typedef AABB_primitive< Iterator,
+                          Segment_from_point_iterator_map<GeomTraits, Iterator>,
+                          Input_iterator_property_map<Iterator>,
+                          Tag_false,
+                          CacheDatum > Base;
+public:
+  ///constructor from an iterator
+  AABB_polyline_segment_primitive_3(Iterator it) : Base(it){}
+};
+
 template <typename Kernel>
 class Polyline
 {
@@ -331,11 +369,8 @@ private:
     return (points_.end() - 2);
   }
 
-  /// returns an iterator on the starting point of the segment of the
-  /// polyline which contains p
-  /// if end_point_first is true, then --end is returned instead of begin
-  /// if p is the starting point of a loop.
-  const_iterator locate(const Point_3& p, bool end_point_first=false) const
+
+  const_iterator original_locate(const Point_3& p, bool end_point_first=false) const
   {
     CGAL_precondition(is_valid());
 
@@ -416,6 +451,73 @@ private:
     }
   }
 
+  /// returns an iterator on the starting point of the segment of the
+  /// polyline which contains p
+  /// if end_point_first is true, then --end is returned instead of begin
+  /// if p is the starting point of a loop.
+  const_iterator aabb_tree_locate(const Point_3& p, bool end_point_first=false) const
+  {
+    //~ static int tp=0;
+
+    if (!tree_ptr)
+    {
+      //~ std::ofstream debug("segments_"+std::to_string(tp)+".polylines.txt");
+      //~ debug << std::setprecision(17);
+
+      //~ debug << points_.size();
+      //~ for (auto p : points_)
+        //~ debug << " " << p;
+      //~ debug << "\n";
+
+      //~ std::cout << "building tree\n";
+      tree_ptr=std::make_shared<Tree>(points_.begin(), std::prev(points_.end()));
+      tree_ptr->accelerate_distance_queries();
+
+      //~ std::cout << tp << ": " << tree_ptr << "\n";
+
+      //~ ++tp;
+    }
+
+    if (tree_ptr->size()!=points_.size()-1)
+    {
+      std::cerr << "COUCOU!: " <<  tree_ptr->size() << " vs " << points_.size() << "\n";
+      exit(1);
+    }
+
+    auto [cp, it] = tree_ptr->closest_point_and_primitive(p);
+
+    bool closest_is_a_point = (p==*it || p==*std::next(it));
+
+
+    if (closest_is_a_point)
+    {
+      if ( it!= points_.begin() )
+        return --it;
+      if ( end_point_first && p == end_point() )
+        return last_segment_source();
+      return it;
+    }
+    return it;
+  }
+
+  const_iterator locate(const Point_3& p, bool end_point_first=false) const
+  {
+//    std::cout << "calling locate\n";
+//    auto it=original_locate(p,end_point_first);
+    auto it=aabb_tree_locate(p,end_point_first);
+/*
+    if (it1!=it2)
+    {
+      std::cout.precision(17);
+      std::cout << "ERROR for query (" << tree_ptr << ") " << p << ": \n";
+      std::cout << " old: " << *it1 << " " << *std::next(it1) << "\n";
+      std::cout << " new: " << *it2 << " " << *std::next(it2) << "\n";
+      exit(1);
+    }
+*/
+    return it;
+  }
+
   // FT squared_distance(const Point_3& p, const Point_3& q) const
   // {
   //   typename Kernel::Compute_squared_distance_3 sq_distance =
@@ -448,6 +550,10 @@ private:
 
 public:
   Data points_;
+  using Primitive = AABB_polyline_segment_primitive_3<Kernel, typename Data::const_iterator>;
+  using Tree = AABB_tree<AABB_traits_3<Kernel,Primitive>>;
+  mutable std::shared_ptr<Tree> tree_ptr = nullptr;
+
 }; // end class Polyline
 
 
