@@ -372,6 +372,7 @@ private:
 
   const_iterator original_locate(const Point_3& p, bool end_point_first=false) const
   {
+    std::cout << "original_locate\n";
     CGAL_precondition(is_valid());
 
     // First look if p is one of the points of the polyline
@@ -379,14 +380,23 @@ private:
     if ( result != points_.end() )
     {
       if ( result != points_.begin() )
-      { return --result; }
+      {
+        std::cout << "  A\n";
+        return --result;
+      }
       else
       {
         // Treat loops
         if ( end_point_first && p == end_point() )
-        { return last_segment_source(); }
+        {
+          std::cout << "  B\n";
+          return last_segment_source();
+        }
         else
-        { return result; }
+        {
+          std::cout << "  C\n";
+          return result;
+        }
       }
     }
 
@@ -457,6 +467,7 @@ private:
   /// if p is the starting point of a loop.
   const_iterator aabb_tree_locate(const Point_3& p, bool end_point_first=false) const
   {
+//~ std::cout << "aabb_tree_locate\n";
     //~ static int tp=0;
 
     if (!tree_ptr)
@@ -488,13 +499,23 @@ private:
 
     bool closest_is_a_point = (p==*it || p==*std::next(it));
 
+    //~ std::cout << "closest_is_a_point " << closest_is_a_point << "\n";
+    //~ std::cout << "*it " << *it << "\n";
+    //~ std::cout << "*std::next(it) " << *std::next(it) << "\n";
 
     if (closest_is_a_point)
     {
-      if ( it!= points_.begin() )
+      if (  p==*it && it!= points_.begin() )
+      {
+        //~ std::cout << "  A\n";
         return --it;
+      }
       if ( end_point_first && p == end_point() )
+      {
+        //~ std::cout << "  B\n";
         return last_segment_source();
+      }
+      //~ std::cout << "  C\n";
       return it;
     }
     return it;
@@ -503,18 +524,18 @@ private:
   const_iterator locate(const Point_3& p, bool end_point_first=false) const
   {
 //    std::cout << "calling locate\n";
-//    auto it=original_locate(p,end_point_first);
+    //~ auto it_ori=original_locate(p,end_point_first);
     auto it=aabb_tree_locate(p,end_point_first);
-/*
-    if (it1!=it2)
-    {
-      std::cout.precision(17);
-      std::cout << "ERROR for query (" << tree_ptr << ") " << p << ": \n";
-      std::cout << " old: " << *it1 << " " << *std::next(it1) << "\n";
-      std::cout << " new: " << *it2 << " " << *std::next(it2) << "\n";
-      exit(1);
-    }
-*/
+
+    //~ if (it_ori!=it)
+    //~ {
+      //~ std::cout.precision(17);
+      //~ std::cout << "ERROR for query (" << tree_ptr << ") " << p << ": \n";
+      //~ std::cout << " old: " << *it_ori << " " << *std::next(it_ori) << "\n";
+      //~ std::cout << " new: " << *it << " " << *std::next(it) << "\n";
+      //~ exit(1);
+    //~ }
+
     return it;
   }
 
