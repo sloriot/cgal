@@ -251,17 +251,19 @@ public:
   /// returns the length of the polyline
   FT length() const
   {
-    //TODO: cache result
-    FT result (0);
-    const_iterator it = points_.begin();
-    const_iterator previous = it++;
-
-    for ( const_iterator end = points_.end() ; it != end ; ++it, ++previous )
+    if(length_ < 0.)
     {
-      result += distance(*previous,*it);
-    }
+      FT result (0);
+      const_iterator it = points_.begin();
+      const_iterator previous = it++;
 
-    return result;
+      for ( const_iterator end = points_.end() ; it != end ; ++it, ++previous )
+      {
+        result += distance(*previous,*it);
+      }
+      length_ = result;
+    }
+    return length_;
   }
 
   /// returns the signed geodesic distance between `p` and `q`.
@@ -574,6 +576,9 @@ public:
   using Primitive = AABB_polyline_segment_primitive_3<Kernel, typename Data::const_iterator>;
   using Tree = AABB_tree<AABB_traits_3<Kernel,Primitive>>;
   mutable std::shared_ptr<Tree> tree_ptr = nullptr;
+
+private:
+  mutable FT length_ = -1.;
 
 }; // end class Polyline
 
