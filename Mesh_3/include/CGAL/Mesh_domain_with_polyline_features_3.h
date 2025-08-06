@@ -284,13 +284,25 @@ public:
       else
       { return -result; }
     }
-    if(is_loop()) {
-      const FT positive_distance = curve_segment_length(p, q, CGAL::POSITIVE, pit, qit);
-      const FT negative_distance = curve_segment_length(p, q, CGAL::NEGATIVE, pit, qit);
+    if(is_loop())
+    {
+      FT positive_distance, negative_distance;
+      if(pit <= qit)
+      {
+        positive_distance = curve_segment_length(p, q, CGAL::POSITIVE, pit, qit);
+        negative_distance = length() - positive_distance;
+      }
+      else
+      {
+        negative_distance = curve_segment_length(q, p, CGAL::POSITIVE, qit, pit);
+        positive_distance = length() - negative_distance;
+      }
       return (positive_distance < negative_distance)
-        ?    positive_distance
-        : (- negative_distance);
-    } else {
+         ?    positive_distance
+         : (- negative_distance);
+    }
+    else
+    {
       return (pit <= qit)
         ?     curve_segment_length(p, q, CGAL::POSITIVE, pit, qit)
         : ( - curve_segment_length(p, q, CGAL::NEGATIVE, pit, qit) );
