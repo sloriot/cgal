@@ -1283,9 +1283,9 @@ insert_balls(const Vertex_handle& vp,
 
 
   // Adjust size of steps, D = covered distance
-  FT D = sp*FT(n+1) + FT((n+1)*(n+2)) / FT(2) * r ;
+  const FT D = sp*FT(n+1) + FT((n+1)*(n+2)) / FT(2) * r ;
 
-  FT dleft_frac = d / D;
+  const FT dleft_frac = d / D;
 
   // Initialize step sizes
   FT step_size = sp + r;
@@ -1329,6 +1329,7 @@ insert_balls(const Vertex_handle& vp,
   }
 
   // Launch balls
+  const Index index = domain_.index_from_curve_index(curve_index);
   for ( int i = 1 ; i <= n ; ++i )
   {
     // New point position
@@ -1336,12 +1337,11 @@ insert_balls(const Vertex_handle& vp,
       domain_.construct_point_on_curve(p, curve_index, pt_dist);
 
     // Weight (use as size the min between norm_step_size and linear interpolation)
-    FT current_size = (std::min)(norm_step_size, sp + CGAL::abs(pt_dist)/d*(sq-sp));
-    FT point_weight = current_size * current_size;
+    const FT current_size = (std::min)(norm_step_size, sp + CGAL::abs(pt_dist)/d*(sq-sp));
+    const FT point_weight = current_size * current_size;
 
     // Index and dimension
-    Index index = domain_.index_from_curve_index(curve_index);
-    int dim = 1; // new_point is on edge
+    const int dim = 1; // new_point is on edge
 
     // Insert point into c3t3
     std::pair<Vertex_handle, ErasedVeOutIt> pair =
