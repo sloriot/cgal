@@ -18,7 +18,7 @@ create_single_source_cgal_program("quadtree_build_from_point_vector.cpp")
 create_single_source_cgal_program("octree_surface_mesh.cpp")
 create_single_source_cgal_program("quadtree_build_manually.cpp")
 
-find_package(Eigen3 3.1.91 QUIET) #(requires 3.1.91 or greater)
+find_package(Eigen3 3.1.91...5 QUIET) #(requires 3.1.91 or greater)
 include(CGAL_Eigen3_support)
 if (TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("orthtree_build.cpp")

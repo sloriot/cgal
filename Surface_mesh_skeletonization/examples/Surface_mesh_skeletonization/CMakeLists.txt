@@ -6,7 +6,7 @@ project(Surface_mesh_skeletonization_Examples)
 
 find_package(CGAL REQUIRED)
 
-find_package(Eigen3 3.2.0 QUIET) #(requires 3.2.0 or greater)
+find_package(Eigen3 3.2...5 QUIET) #(requires 3.2.0 or greater)
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("simple_mcfskel_example.cpp")

@@ -8,7 +8,7 @@ project(Kinetic_surface_reconstruction_Tests)
 find_package(CGAL REQUIRED)
 include(CGAL_CreateSingleSourceCGALProgram)
 
-find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.1...5 REQUIRED)
 include(CGAL_Eigen3_support)
 
 if(TARGET CGAL::Eigen3_support)

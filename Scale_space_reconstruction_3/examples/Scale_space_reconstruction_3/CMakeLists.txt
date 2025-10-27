@@ -14,7 +14,7 @@ if(ACTIVATE_CONCURRENCY)
   endif()
 endif()
 
-find_package(Eigen3 3.1.0 QUIET)
+find_package(Eigen3 3.1...5 QUIET)
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("scale_space.cpp")

@@ -17,7 +17,7 @@ create_single_source_cgal_program("terrain_height_modeling.cpp")
 # this code is deprecated:
 create_single_source_cgal_program("deprecated_coordinates.cpp")
 
-find_package(Eigen3 3.1.0 QUIET) # (3.1.0 or greater)
+find_package(Eigen3 3.1...5 QUIET) # (3.1.0 or greater)
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("affine_coordinates.cpp")

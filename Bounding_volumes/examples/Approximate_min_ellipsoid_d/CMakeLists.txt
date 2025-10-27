@@ -4,7 +4,7 @@ project(Approximate_min_ellipsoid_d_Examples)
 find_package(CGAL REQUIRED)
 
 # Use Eigen
-find_package(Eigen3 3.1.0 QUIET) #(3.1.0 or greater)
+find_package(Eigen3 3.1...5 QUIET) #(3.1.0 or greater)
 include(CGAL_Eigen3_support)
 
 # create a target per cppfile
