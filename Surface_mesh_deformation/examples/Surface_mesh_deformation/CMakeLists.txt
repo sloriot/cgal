@@ -6,7 +6,13 @@ project(Surface_mesh_deformation_Examples)
 
 find_package(CGAL REQUIRED)
 
-find_package(Eigen3 3.1.91...5 QUIET) #(requires 3.1.91 or greater)
+find_package(Eigen3 QUIET) # (3.1.91 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.91")
+    find_package(Eigen3 3.1.91 QUIET) # (3.1.91 or greater)
+  endif()
+endif()
+
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("all_roi_assign_example.cpp")

@@ -46,7 +46,13 @@ else()
 endif()
 
 # Use Eigen
-find_package(Eigen3 3.1...5 QUIET) #(requires 3.1.0 or greater)
+find_package(Eigen3 QUIET) # (3.1.0 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
+    find_package(Eigen3 3.1 QUIET) # (3.1.0 or greater)
+  endif()
+endif()
+
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   # Executables that require Eigen

@@ -51,7 +51,13 @@ if(Qt6_FOUND)
   add_compile_definitions(QT_NO_KEYWORDS)
 endif(Qt6_FOUND)
 
-find_package(Eigen3 3.2...5 QUIET) #(requires 3.2.0 or greater)
+find_package(Eigen3 QUIET) # (3.2.0 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.2.0")
+    find_package(Eigen3 3.2 QUIET) # (3.2.0 or greater)
+  endif()
+endif()
+
 set_package_properties(
   Eigen3 PROPERTIES
   DESCRIPTION "A library for linear algebra."

@@ -25,7 +25,13 @@ else()
 endif()
 
 # Use Eigen for Mesh_3
-find_package(Eigen3 3.1...5 QUIET) #(3.1.0 or greater)
+find_package(Eigen3 QUIET) # (3.1.0 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
+    find_package(Eigen3 3.1.0 QUIET) # (3.1.0 or greater)
+  endif()
+endif()
+
 include(CGAL_Eigen3_support)
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program( "mesh_and_remesh_polyhedral_domain_with_features.cpp" )

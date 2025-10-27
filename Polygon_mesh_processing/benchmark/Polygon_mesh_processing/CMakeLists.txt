@@ -7,7 +7,13 @@ project(Polygon_mesh_processing)
 # CGAL and its components
 find_package(CGAL REQUIRED)
 
-find_package(Eigen3 3.2...5 QUIET) #(requires 3.2.0 or greater)
+find_package(Eigen3 QUIET) # (3.2.0 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.2.0")
+    find_package(Eigen3 3.2 QUIET) # (3.2.0 or greater)
+  endif()
+endif()
+
 include(CGAL_Eigen3_support)
 if(NOT TARGET CGAL::Eigen3_support)
   message("NOTICE: Benchmarks require Eigen 3.2 (or greater), and will not be compiled")

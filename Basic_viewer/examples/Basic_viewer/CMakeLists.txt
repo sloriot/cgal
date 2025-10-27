@@ -11,7 +11,13 @@ project(Basic_viewer_Examples)
 
 #CGAL_Qt6 is needed for the drawing.
 find_package(CGAL REQUIRED OPTIONAL_COMPONENTS Qt6)
-find_package(Eigen3 3.1...5)
+find_package(Eigen3 QUIET) # (3.1.0 or greater)
+if (EIGEN3_FOUND OR Eigen3_FOUND)
+  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
+    find_package(Eigen3 3.1 QUIET) # (3.1.0 or greater)
+  endif()
+endif()
+
 include(CGAL_Eigen3_support)
 
 create_single_source_cgal_program("draw_lcc.cpp")
