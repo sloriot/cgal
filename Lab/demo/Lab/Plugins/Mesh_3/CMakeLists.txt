@@ -78,14 +78,9 @@ target_link_libraries(
 CGAL_Lab_target_use_c3t3_type(mesh_3_optimization_plugin)
 
 # Use Eigen
-find_package(Eigen3 QUIET) # (3.1.0 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
-    find_package(Eigen3 3.1 QUIET) # (3.1.0 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   target_link_libraries(mesh_3_optimization_plugin PRIVATE CGAL::Eigen3_support)
 else()

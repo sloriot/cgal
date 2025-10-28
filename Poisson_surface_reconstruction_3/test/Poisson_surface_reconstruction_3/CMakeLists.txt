@@ -20,16 +20,10 @@ if(MSVC)
   message(STATUS "USING RELEASE EXEFLAGS = '${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_FLAGS_RELEASE}'")
 endif()
 
-find_package(Eigen3 QUIET) # (3.1.0 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
-    find_package(Eigen3 3.1 QUIET) # (3.1.0 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
-  # Executables that require Eigen 3.1
   if(TARGET CGAL::TBB_support)
     create_single_source_cgal_program("poisson_reconstruction_test_surface_mesher.cpp")
     target_link_libraries(poisson_reconstruction_test_surface_mesher PRIVATE CGAL::Eigen3_support CGAL::TBB_support)

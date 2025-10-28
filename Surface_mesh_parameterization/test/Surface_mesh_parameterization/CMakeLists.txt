@@ -14,14 +14,9 @@ else()
   message(STATUS "NOTICE: Examples will be compiled without the SuiteSparse library and UmfPack. Try setting CMAKE_PREFIX_PATH to your SuiteSparse installation.")
 endif()
 
-find_package(Eigen3 QUIET) # (3.1.0 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
-    find_package(Eigen3 3.1.0 QUIET) # (3.1.0 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("extensive_parameterization_test.cpp")
   target_link_libraries(extensive_parameterization_test PRIVATE CGAL::Eigen3_support)

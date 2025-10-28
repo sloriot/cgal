@@ -11,14 +11,9 @@ create_single_source_cgal_program("projection_traits.cpp")
 create_single_source_cgal_program("custom_traits.cpp")
 create_single_source_cgal_program("convergence.cpp")
 
-find_package(Eigen3 QUIET) # (3.1.0 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
-    find_package(Eigen3 3.1.0 QUIET) # (3.1.0 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("weighted_laplacian.cpp")
   target_link_libraries(weighted_laplacian PRIVATE CGAL::Eigen3_support)

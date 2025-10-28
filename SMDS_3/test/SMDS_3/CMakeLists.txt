@@ -9,14 +9,9 @@ find_package(CGAL REQUIRED)
 create_single_source_cgal_program( "test_simplicial_cb_vb.cpp")
 create_single_source_cgal_program( "test_tet_soup_to_c3t3.cpp")
 
-find_package(Eigen3 QUIET) # (3.1.0 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.0")
-    find_package(Eigen3 3.1 QUIET) # (3.1.0 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program( "test_c3t3.cpp" )
   create_single_source_cgal_program( "test_c3t3_io.cpp" )

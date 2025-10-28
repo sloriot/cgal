@@ -26,14 +26,9 @@ create_single_source_cgal_program("weighted_Minkowski_distance.cpp")
 create_single_source_cgal_program("searching_sphere_orthogonally.cpp")
 create_single_source_cgal_program("splitter_worst_cases.cpp")
 
-find_package(Eigen3 QUIET) # (3.1.91 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.91")
-    find_package(Eigen3 3.1.91 QUIET) # (3.1.91 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("fuzzy_range_query.cpp")
   target_link_libraries(fuzzy_range_query PRIVATE CGAL::Eigen3_support)

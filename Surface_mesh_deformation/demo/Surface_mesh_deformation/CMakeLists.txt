@@ -8,14 +8,9 @@ set_property(DIRECTORY PROPERTY CGAL_NO_TESTING TRUE)
 
 find_package(CGAL REQUIRED)
 
-find_package(Eigen3 QUIET) # (3.1.91 or greater)
-if (EIGEN3_FOUND OR Eigen3_FOUND)
-  if ("${Eigen3_VERSION}" VERSION_LESS "3.1.91")
-    find_package(Eigen3 3.1.91 QUIET) # (3.1.91 or greater)
-  endif()
-endif()
-
+find_package(Eigen3 QUIET)
 include(CGAL_Eigen3_support)
+
 if(TARGET CGAL::Eigen3_support)
   create_single_source_cgal_program("deform_mesh_for_botsch08_format.cpp")
   target_link_libraries(deform_mesh_for_botsch08_format PRIVATE CGAL::Eigen3_support)
