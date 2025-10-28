@@ -29,7 +29,7 @@ if(TARGET CGAL::OSQP_support)
   # Use Eigen.
   find_package(Eigen3 QUIET)
   include(CGAL_Eigen3_support)
-  
+
   if(TARGET CGAL::Eigen3_support)
     message(STATUS "Found Eigen")
 
