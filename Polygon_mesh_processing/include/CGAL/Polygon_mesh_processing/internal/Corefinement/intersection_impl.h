@@ -32,8 +32,14 @@
 #include <boost/functional/hash.hpp>
 
 #include <stdexcept>
+
+#ifdef CGAL_FORCE_COREFINEMENT_DETERMINISM
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
+#else
 #include <unordered_map>
 #include <unordered_set>
+#endif
 
 namespace CGAL{
 namespace Polygon_mesh_processing {
@@ -207,9 +213,13 @@ class Intersection_of_triangle_meshes
   typedef CGAL::Box_intersection_d::ID_FROM_BOX_ADDRESS Box_policy;
   typedef CGAL::Box_intersection_d::Box_with_info_d<double, 3, halfedge_descriptor, Box_policy> Box;
 
+  #ifdef CGAL_FORCE_COREFINEMENT_DETERMINISM
+  typedef boost::unordered_set<face_descriptor> Face_set;
+  typedef boost::unordered_map<edge_descriptor, Face_set> Edge_to_faces;
+  #else
   typedef std::unordered_set<face_descriptor> Face_set;
   typedef std::unordered_map<edge_descriptor, Face_set> Edge_to_faces;
-
+  #endif
   static const bool Predicates_on_constructions_needed =
     Node_visitor::Predicates_on_constructions_needed;
 
@@ -221,7 +231,12 @@ class Intersection_of_triangle_meshes
   // we use Face_pair_and_int and not Face_pair to handle coplanar case.
   // Indeed the boundary of the intersection of two coplanar triangles
   // may contain several segments.
+  #ifdef CGAL_FORCE_COREFINEMENT_DETERMINISM
+  typedef boost::unordered_map< Face_pair, Node_id_set, boost::hash<Face_pair> >    Faces_to_nodes_map;
+  #else
   typedef std::unordered_map< Face_pair, Node_id_set, boost::hash<Face_pair> >    Faces_to_nodes_map;
+  #endif
+
   typedef Intersection_nodes<TriangleMesh,
                              VertexPointMap1, VertexPointMap2,
                              Predicates_on_constructions_needed>    Node_vector;
@@ -1224,8 +1239,13 @@ class Intersection_of_triangle_meshes
                                          const VPM& vpm,
                                          Node_id& current_node)
   {
+#ifdef CGAL_FORCE_COREFINEMENT_DETERMINISM
+    boost::unordered_map<face_descriptor,
+                         std::vector<face_descriptor> > face_intersections;
+#else
     std::unordered_map<face_descriptor,
                        std::vector<face_descriptor> > face_intersections;
+#endif
     for (typename Faces_to_nodes_map::iterator it=f_to_node.begin();
                                                it!=f_to_node.end();
                                                ++it)

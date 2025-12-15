@@ -39,6 +39,7 @@ create_single_source_cgal_program("test_corefinement_and_constraints_nearest.cpp
 create_single_source_cgal_program("test_corefinement_bool_op.cpp")
 create_single_source_cgal_program("test_corefine.cpp")
 create_single_source_cgal_program("test_coref_epic_points_identity.cpp")
+create_single_source_cgal_program("test_coref_clip_determinism.cpp")
 create_single_source_cgal_program("test_does_bound_a_volume.cpp")
 create_single_source_cgal_program("test_pmp_clip.cpp")
 create_single_source_cgal_program("test_autorefinement.cpp")
