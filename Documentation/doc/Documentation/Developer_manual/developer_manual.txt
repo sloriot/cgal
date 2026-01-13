@@ -9,6 +9,7 @@ The developer manual is primarily aimed at \cgal developers, but may also be int
 - \subpage devman_kernels
 - \subpage devman_traits_classes
 - \subpage devman_checks
+- \subpage devman_namedparams
 - \subpage devman_reference_counting
 - \subpage devman_memory_management
 - \subpage devman_namespaces
