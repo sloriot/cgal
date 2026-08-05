@@ -384,7 +384,7 @@ void refine_with_plane(PolygonMesh& pm,
         if (get(vertex_os, tgt)==CGAL::ON_ORIENTED_BOUNDARY)
         {
           bool pure_coplanar=true;
-          if (!is_border(e, pm))
+          if (!is_border(e, pm)) // shouldn't we test the halfedge twice?
           {
             halfedge_descriptor he=halfedge(e, pm);
             for (halfedge_descriptor h : halfedges_around_face(he,pm))
@@ -456,6 +456,10 @@ void refine_with_plane(PolygonMesh& pm,
 
     bool was_marked = get(ecm, edge(h, pm));
     visitor.before_edge_split(h, pm);
+
+    CGAL_assertion(pm.point(source(h,pm))!=ip);
+    CGAL_assertion(pm.point(target(h,pm))!=ip);
+
     h = CGAL::Euler::split_edge(h, pm);
     put(vpm, target(h, pm), ip);
     visitor.new_vertex_added(vid, target(h,pm), pm);

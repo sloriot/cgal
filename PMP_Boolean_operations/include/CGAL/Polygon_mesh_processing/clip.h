@@ -1453,6 +1453,8 @@ void split(PolygonMesh& pm,
   using Visitor_ref = typename internal_np::Lookup_named_param_def<internal_np::visitor_t, NamedParameters, Default_visitor>::reference;
   Visitor_ref visitor = choose_parameter(get_parameter_reference(np, internal_np::visitor), default_visitor);
 
+  std::ofstream("/tmp/before.off") << std::setprecision(17) << pm;
+
   refine_with_plane(pm, plane, parameters::vertex_oriented_side_map(vos)
                                           .edge_is_marked_map(ecm)
                                           .vertex_point_map(vpm)
@@ -1461,6 +1463,95 @@ void split(PolygonMesh& pm,
                                           .throw_on_self_intersection(throw_on_self_intersection)
                                           .concurrency_tag(Concurrency_tag())
                                           .visitor(std::ref(visitor)));
+
+  std::ofstream("/tmp/after.off") << std::setprecision(17) << pm;
+
+  //TODO: non-closed cycles are also an issue
+
+  std::vector<typename PolygonMesh::Halfedge_index> cycles_to_unmark;
+  for (auto f : faces(pm))
+  {
+    auto h = halfedge(f, pm);
+    if (get(ecm, edge(h, pm)))
+    {
+      bool remove_marks=true;
+      for (auto hh : halfedges_around_face(h, pm))
+      {
+        if (!get(ecm, edge(hh, pm)))
+        {
+          remove_marks=false;
+          break;
+        }
+      }
+      if (remove_marks)
+        cycles_to_unmark.push_back(h);
+    }
+  }
+
+
+
+  for (auto h : cycles_to_unmark)
+    for (auto hh : halfedges_around_face(h, pm))
+        put(ecm, edge(hh, pm), false);
+
+
+  //detect degree 1 vertices
+  std::unordered_map<typename PolygonMesh::Vertex_index,int> marked_vertices;
+  for (auto e : edges(pm))
+  {
+    if (get(ecm, e))
+    {
+      marked_vertices.emplace(source(e,pm),0).first->second+=1;
+      marked_vertices.emplace(target(e,pm),0).first->second+=1;
+    }
+  }
+
+  bool something_was_done = true;
+  while (something_was_done)
+  {
+    something_was_done=false;
+    for (auto& [v, d] : marked_vertices)
+    {
+      if (d==1)
+      {
+        //make sure it is not a boundary
+        bool on_border = false;
+        for (auto h : halfedges_around_source(v,pm))
+          if( is_border(h, pm) )
+          {
+            on_border=true;
+            break;
+          }
+        if (!on_border)
+        {
+          for (auto h : halfedges_around_source(v,pm))
+          {
+            if (get(ecm, edge(h, pm)))
+            {
+              put(ecm, edge(h, pm), false);
+              --d;
+              auto it_find=marked_vertices.find(target(h, pm));
+              CGAL_assertion(it_find!=marked_vertices.end());
+              it_find->second-=1;
+              something_was_done=true;
+              break;
+            }
+          }
+        }
+      }
+      else
+      {
+        CGAL_assertion(d==0 || d==2);
+      }
+    }
+  }
+
+  std::ofstream ecm_out("/tmp/edges.polylines.txt");
+  ecm_out.precision(17);
+  for (auto e : edges(pm))
+    if (get(ecm, e))
+      ecm_out << "2 " << pm.point(source(e,pm)) << " " << pm.point(target(e,pm)) << "\n";
+  ecm_out.close();
 
   //split mesh along marked edges
   internal::split_along_edges(pm, ecm, vpm, visitor);
