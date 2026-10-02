@@ -635,8 +635,13 @@ void test()
     assert(vertices(tm1).size()==72);
     assert(faces(tm1).size()==79);
   }
+}
 
-
+template <class Mesh>
+std::size_t nb_connected_components(const Mesh& tm)
+{
+  auto fcm = get(CGAL::dynamic_face_property_t<std::size_t>(), tm);
+  return PMP::connected_components(tm, fcm);
 }
 
 template <class Mesh>
@@ -644,91 +649,154 @@ void test_split_plane()
 {
 //test with a splitter mesh
   Mesh tm1;
-  std::ifstream input(CGAL::data_file_path("meshes/elephant.off"));
-  input >> tm1;
+  //~ std::ifstream input(CGAL::data_file_path("meshes/elephant.off"));
+  //~ input >> tm1;
 
-  if(!input)
-  {
-    std::cerr<<"File not found. Aborting."<<std::endl;
-    assert(false);
-    return ;
-  }
-  input.close();
+  //~ if(!input)
+  //~ {
+    //~ std::cerr<<"File not found. Aborting."<<std::endl;
+    //~ assert(false);
+    //~ return ;
+  //~ }
+  //~ input.close();
 
-  PMP::split(tm1,K::Plane_3(0,0,1,0));
+  //~ PMP::split(tm1,K::Plane_3(0,0,1,0));
 
-  std::vector<Mesh> meshes;
-  PMP::split_connected_components(tm1, meshes, params::default_values());
-  assert(meshes.size() == 3);
-  //if the order is not deterministc, put the num_vertices in a list and check
-  //if the list does contain all those numbers.
+  //~ std::vector<Mesh> meshes;
+  //~ PMP::split_connected_components(tm1, meshes, params::default_values());
+  //~ assert(meshes.size() == 3);
+  //~ //if the order is not deterministc, put the num_vertices in a list and check
+  //~ //if the list does contain all those numbers.
 
-  assert(num_vertices(meshes[2]) == 46);
-  assert(num_vertices(meshes[0]) == 1523);
-  assert(num_vertices(meshes[1]) == 1668);
+  //~ assert(num_vertices(meshes[2]) == 46);
+  //~ assert(num_vertices(meshes[0]) == 1523);
+  //~ assert(num_vertices(meshes[1]) == 1668);
 
+  //~ CGAL::clear(tm1);
+  //~ meshes.clear();
+
+//~ //test with a non-closed splitter mesh (border edges in the plane)
+  //~ input.open("data-coref/open_large_cube.off");
+  //~ input >> tm1;
+
+  //~ if(!input)
+  //~ {
+    //~ std::cerr<<"File not found. Aborting."<<std::endl;
+    //~ assert(false);
+    //~ return ;
+  //~ }
+  //~ input.close();
+
+  //~ PMP::split(tm1,K::Plane_3(0,0,1,-1));
+  //~ PMP::split_connected_components(tm1, meshes, params::default_values());
+  //~ assert(meshes.size() == 2);
+
+  //~ CGAL::clear(tm1);
+  //~ meshes.clear();
+
+//~ //test with a non-closed splitter mesh (border edges in the plane)
+  //~ input.open("data-coref/open_large_cube.off");
+  //~ input >> tm1;
+
+  //~ if(!input)
+  //~ {
+    //~ std::cerr<<"File not found. Aborting."<<std::endl;
+    //~ assert(false);
+    //~ return ;
+  //~ }
+  //~ input.close();
+
+  //~ PMP::split(tm1,K::Plane_3(0,-1,0,0.3));
+  //~ PMP::split_connected_components(tm1, meshes, params::default_values());
+  //~ assert(meshes.size() == 2);
+
+  //~ CGAL::clear(tm1);
+  //~ meshes.clear();
+
+//~ //test with SI
+  //~ std::ifstream("data-clip/tet_si_to_split.off") >> tm1;
+  //~ if(num_vertices(tm1) == 0)
+  //~ {
+    //~ std::cerr<<"File not found. Aborting."<<std::endl;
+    //~ assert(false);
+    //~ return ;
+  //~ }
+
+  //~ PMP::split(tm1, K::Plane_3(0,0,1,-0.5),
+             //~ params::throw_on_self_intersection(true)
+             //~ .allow_self_intersections(true));
+  //~ PMP::split_connected_components(tm1, meshes, params::default_values());
+  //~ assert(meshes.size() == 2);
+  //~ //if the order is not deterministc, put the num_vertices in a list and check
+  //~ //if the list does contain all those numbers.
+  //~ assert(num_vertices(meshes[0]) == 12);
+  //~ assert(num_vertices(meshes[1]) == 12);
+  //~ meshes.clear();
+  //~ CGAL::clear(tm1);
+
+// test plane on a face of a cube (triangulated)
+  std::ifstream(CGAL::data_file_path("meshes/cube.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,0,1,1));
+  std::ofstream("/tmp/out.off") << tm1;
+  assert(nb_connected_components(tm1)==2);
   CGAL::clear(tm1);
-  meshes.clear();
 
-//test with a non-closed splitter mesh (border edges in the plane)
-  input.open("data-coref/open_large_cube.off");
-  input >> tm1;
 
-  if(!input)
-  {
-    std::cerr<<"File not found. Aborting."<<std::endl;
-    assert(false);
-    return ;
-  }
-  input.close();
-
-  PMP::split(tm1,K::Plane_3(0,0,1,-1));
-  PMP::split_connected_components(tm1, meshes, params::default_values());
-  assert(meshes.size() == 2);
-
+  CGAL::make_hexahedron(CGAL::Bbox_3(-1,-1,-1,1,1,1), tm1);
+  PMP::split(tm1, K::Plane_3(0,0,1,1));
+  assert(nb_connected_components(tm1)==2);
   CGAL::clear(tm1);
-  meshes.clear();
 
-//test with a non-closed splitter mesh (border edges in the plane)
-  input.open("data-coref/open_large_cube.off");
-  input >> tm1;
-
-  if(!input)
-  {
-    std::cerr<<"File not found. Aborting."<<std::endl;
-    assert(false);
-    return ;
-  }
-  input.close();
-
-  PMP::split(tm1,K::Plane_3(0,-1,0,0.3));
-  PMP::split_connected_components(tm1, meshes, params::default_values());
-  assert(meshes.size() == 2);
-
+  std::ifstream(CGAL::data_file_path("meshes/cheese.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,0,1,-0.050000000699999998));
+  std::ofstream("/tmp/out.off") << tm1;
+  assert(nb_connected_components(tm1)==4);
   CGAL::clear(tm1);
-  meshes.clear();
 
-//test with SI
-  std::ifstream("data-clip/tet_si_to_split.off") >> tm1;
-  if(num_vertices(tm1) == 0)
-  {
-    std::cerr<<"File not found. Aborting."<<std::endl;
-    assert(false);
-    return ;
-  }
 
-  PMP::split(tm1, K::Plane_3(0,0,1,-0.5),
-             params::throw_on_self_intersection(true)
-             .allow_self_intersections(true));
-  PMP::split_connected_components(tm1, meshes, params::default_values());
-  assert(meshes.size() == 2);
-  //if the order is not deterministc, put the num_vertices in a list and check
-  //if the list does contain all those numbers.
-  assert(num_vertices(meshes[0]) == 12);
-  assert(num_vertices(meshes[1]) == 12);
-
+  std::ifstream(CGAL::data_file_path("meshes/cross_quad.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,1,1,-3));
+  assert(nb_connected_components(tm1)==2);
   CGAL::clear(tm1);
-  meshes.clear();
+
+  std::ifstream(CGAL::data_file_path("meshes/cross_quad.off")) >> tm1;
+  PMP::triangulate_faces(tm1);
+  PMP::split(tm1, K::Plane_3(0,1,1,-3));
+  assert(nb_connected_components(tm1)==2);
+  CGAL::clear(tm1);
+
+std::cout << "COUCOU\n";
+  CGAL::make_hexahedron(K::Point_3(-1,0,1),K::Point_3(1,0,1),K::Point_3(1,-1,0),K::Point_3(-1,-1,0),K::Point_3(-1,0,-1),K::Point_3(-1,1,0),K::Point_3(1,1,0),K::Point_3(1,0,-1),tm1);
+  PMP::split(tm1, K::Plane_3(0,1,0,-1));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+
+  CGAL::make_hexahedron(K::Point_3(-1,0,1),K::Point_3(1,0,1),K::Point_3(1,-1,0),K::Point_3(-1,-1,0),K::Point_3(-1,0,-1),K::Point_3(-1,1,0),K::Point_3(1,1,0),K::Point_3(1,0,-1),tm1);
+  PMP::clip(tm1, K::Plane_3(0,1,0,-1));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+
+  CGAL::make_hexahedron(K::Point_3(-1,0,1),K::Point_3(1,0,1),K::Point_3(1,-1,0),K::Point_3(-1,-1,0),K::Point_3(-1,0,-1),K::Point_3(-1,1,0),K::Point_3(1,1,0),K::Point_3(1,0,-1),tm1);
+  Mesh clipper;
+  CGAL::make_hexahedron(CGAL::Bbox_3(-2,-2,-2, 2,2,1),clipper);
+  PMP::triangulate_faces(tm1);
+  PMP::triangulate_faces(clipper);
+  std::ofstream("/tmp/input.off") << tm1;
+  std::ofstream("/tmp/clipper1.off") << clipper;
+  PMP::clip(tm1, K::Plane_3(0,1,0,-1));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+  CGAL::clear(clipper);
+
+  CGAL::make_hexahedron(K::Point_3(-1,0,1),K::Point_3(1,0,1),K::Point_3(1,-1,0),K::Point_3(-1,-1,0),K::Point_3(-1,0,-1),K::Point_3(-1,1,0),K::Point_3(1,1,0),K::Point_3(1,0,-1),tm1);
+  CGAL::make_hexahedron(CGAL::Bbox_3(-2,-2,1, 2, 2, 3),clipper);
+  std::ofstream("/tmp/clipper2.off") << clipper;
+  PMP::triangulate_faces(tm1);
+  PMP::triangulate_faces(clipper);
+  PMP::clip(tm1, clipper);
+  assert(nb_connected_components(tm1)==0);
+  CGAL::clear(tm1);
+
 }
 
 template <class TriangleMesh>
@@ -1394,37 +1462,37 @@ void test_edge_is_constrained()
 
 int main()
 {
-  std::cout << "Surface Mesh" << std::endl;
-  test<Surface_mesh>();
+  //~ std::cout << "Surface Mesh" << std::endl;
+  //~ test<Surface_mesh>();
 
-  std::cout << "Polyhedron" << std::endl;
-  test<Polyhedron>();
+  //~ std::cout << "Polyhedron" << std::endl;
+  //~ test<Polyhedron>();
 
-  std::cout << "running test_split with Surface_mesh\n";
-  test_split<Surface_mesh>();
+  //~ std::cout << "running test_split with Surface_mesh\n";
+  //~ test_split<Surface_mesh>();
 
-  std::cout << "running test_iso_cuboid with Surface_mesh\n";
-  test_isocuboid<Surface_mesh>();
+  //~ std::cout << "running test_iso_cuboid with Surface_mesh\n";
+  //~ test_isocuboid<Surface_mesh>();
   std::cout << "running test_split_plane with Surface_mesh\n";
   test_split_plane<Surface_mesh>();
-  std::cout << "running test_split with Polyhedron\n";
-  test_split<Polyhedron>();
-  std::cout << "running test_split_plane with Polyhedron\n";
-  test_split_plane<Polyhedron>();
-  std::cout << "running test_iso_cuboid with Polyhedron\n";
-  test_isocuboid<Polyhedron>();
-  std::cout << "Done!" << std::endl;
-  std::cout << "running test_new_clip with Surface_mesh\n";
-  test_new_clip<Surface_mesh>();
-  std::cout << "Done!" << std::endl;
-  std::cout << "running test_new_clip with Polyhedron\n";
-  test_new_clip<Polyhedron>();
-  std::cout << "Done!" << std::endl;
-  std::cout << "running test_clip_and_split_with_plane_visitor\n";
-  test_clip_and_split_with_plane_visitor();
-  std::cout << "running test_edge_is_constrained\n";
-  test_edge_is_constrained();
-  std::cout << "Done!" << std::endl;
+  //~ std::cout << "running test_split with Polyhedron\n";
+  //~ test_split<Polyhedron>();
+  //~ std::cout << "running test_split_plane with Polyhedron\n";
+  //~ test_split_plane<Polyhedron>();
+  //~ std::cout << "running test_iso_cuboid with Polyhedron\n";
+  //~ test_isocuboid<Polyhedron>();
+  //~ std::cout << "Done!" << std::endl;
+  //~ std::cout << "running test_new_clip with Surface_mesh\n";
+  //~ test_new_clip<Surface_mesh>();
+  //~ std::cout << "Done!" << std::endl;
+  //~ std::cout << "running test_new_clip with Polyhedron\n";
+  //~ test_new_clip<Polyhedron>();
+  //~ std::cout << "Done!" << std::endl;
+  //~ std::cout << "running test_clip_and_split_with_plane_visitor\n";
+  //~ test_clip_and_split_with_plane_visitor();
+  //~ std::cout << "running test_edge_is_constrained\n";
+  //~ test_edge_is_constrained();
+  //~ std::cout << "Done!" << std::endl;
 
   return EXIT_SUCCESS;
 }

@@ -61,6 +61,8 @@ CGAL_add_named_parameter(vertex_normal_map_t, vertex_normal_map, vertex_normal_m
 CGAL_add_named_parameter(vertex_color_map_t, vertex_color_map, vertex_color_map)
 CGAL_add_named_parameter(vertex_texture_map_t, vertex_texture_map, vertex_texture_map)
 CGAL_add_named_parameter(vertex_oriented_side_map_t, vertex_oriented_side_map, vertex_oriented_side_map)
+CGAL_add_named_parameter(read_vertex_oriented_side_map_t, read_vertex_oriented_side_map, read_vertex_oriented_side_map)
+
 
 CGAL_add_named_parameter(face_color_map_t, face_color_map, face_color_map)
 CGAL_add_named_parameter(repair_polygon_soup_t, repair_polygon_soup, repair_polygon_soup)
@@ -121,6 +123,9 @@ CGAL_add_named_parameter(allow_move_functor_t, allow_move_functor, allow_move_fu
 CGAL_add_named_parameter(throw_on_self_intersection_t, throw_on_self_intersection, throw_on_self_intersection)
 CGAL_add_named_parameter(clip_volume_t, clip_volume, clip_volume)
 CGAL_add_named_parameter(use_compact_clipper_t, use_compact_clipper, use_compact_clipper)
+CGAL_add_named_parameter(ignore_1d_tangencies_t, ignore_1d_tangencies, ignore_1d_tangencies)
+CGAL_add_named_parameter(ignore_2d_tangencies_t, ignore_2d_tangencies, ignore_2d_tangencies)
+CGAL_add_named_parameter(ignore_faces_on_plane_t, ignore_faces_on_plane, ignore_faces_on_plane)
 CGAL_add_named_parameter(output_iterator_t, output_iterator, output_iterator)
 CGAL_add_named_parameter(erase_policy_t, erase_policy, erase_policy)
 CGAL_add_named_parameter(require_same_orientation_t, require_same_orientation, require_same_orientation)
@@ -194,7 +199,6 @@ CGAL_add_named_parameter(refitting_t, refitting, refitting)
 CGAL_add_named_parameter(volume_error_t, volume_error, volume_error)
 CGAL_add_named_parameter(maximum_number_of_convex_volumes_t, maximum_number_of_convex_volumes, maximum_number_of_convex_volumes)
 CGAL_add_named_parameter(split_at_concavity_t, split_at_concavity, split_at_concavity)
-CGAL_add_named_parameter(use_inverse_transformation_t, use_inverse_transformation, use_inverse_transformation)
 
 #ifndef CGAL_NO_DEPRECATED_CODE
 CGAL_add_named_parameter(erase_all_duplicates_t, erase_all_duplicates, erase_all_duplicates)
@@ -296,7 +300,6 @@ CGAL_add_named_parameter(cell_selector_t, cell_selector, cell_is_selected_map)
 CGAL_add_named_parameter(facet_is_constrained_t, facet_is_constrained, facet_is_constrained_map)
 CGAL_add_named_parameter(smooth_constrained_edges_t, smooth_constrained_edges, smooth_constrained_edges)
 CGAL_add_named_parameter(nb_flip_smooth_iterations_t, nb_flip_smooth_iterations, nb_flip_smooth_iterations)
-CGAL_add_named_parameter(nb_smoothing_iterations_t, nb_smoothing_iterations, nb_smoothing_iterations)
 
 // List of named parameters used in Alpha_wrap_23
 CGAL_add_named_parameter(do_enforce_manifoldness_t, do_enforce_manifoldness, do_enforce_manifoldness)
@@ -313,7 +316,6 @@ CGAL_add_named_parameter(all_cells_t, all_cells, all_cells)
 CGAL_add_named_parameter(rebind_labels_t, rebind_labels, rebind_labels)
 CGAL_add_named_parameter(show_patches_t, show_patches, show_patches)
 CGAL_add_named_parameter(allow_non_manifold_t, allow_non_manifold, allow_non_manifold)
-CGAL_add_named_parameter(allow_negative_orientation_t, allow_negative_orientation, allow_negative_orientation)
 
 // output parameters
 CGAL_add_named_parameter(face_proxy_map_t, face_proxy_map, face_proxy_map)
@@ -453,6 +455,3 @@ CGAL_add_named_parameter(with_plc_face_id_t, with_plc_face_id, with_plc_face_id)
 
 // List of named parameters used in the package 'Barycentric_coordinates_3'
 CGAL_add_named_parameter(computation_policy_t, computation_policy, computation_policy)
-
-//List of named parameters used in Mesh_smoothing_3
-CGAL_add_named_parameter(max_number_of_evaluations_t, max_number_of_evaluations, max_number_of_evaluations)
