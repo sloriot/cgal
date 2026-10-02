@@ -635,8 +635,13 @@ void test()
     assert(vertices(tm1).size()==72);
     assert(faces(tm1).size()==79);
   }
+}
 
-
+template <class Mesh>
+std::size_t nb_connected_components(const Mesh& tm)
+{
+  auto fcm = get(CGAL::dynamic_face_property_t<std::size_t>(), tm);
+  return PMP::connected_components(tm, fcm);
 }
 
 template <class Mesh>
@@ -729,6 +734,35 @@ void test_split_plane()
 
   CGAL::clear(tm1);
   meshes.clear();
+// test plane on a face of a cube (triangulated)
+  std::ifstream(CGAL::data_file_path("meshes/cube.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,0,1,1));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+
+  CGAL::make_hexahedron(CGAL::Bbox_3(-1,-1,-1,1,1,1), tm1);
+  PMP::split(tm1, K::Plane_3(0,0,1,1));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+
+  std::ifstream(CGAL::data_file_path("meshes/cheese.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,0,1,-0.050000000699999998));
+  assert(nb_connected_components(tm1)==1);
+  CGAL::clear(tm1);
+
+
+  std::ifstream(CGAL::data_file_path("meshes/cross_quad.off")) >> tm1;
+  PMP::split(tm1, K::Plane_3(0,1,1,-3));
+  assert(nb_connected_components(tm1)==2);
+  CGAL::clear(tm1);
+
+  std::ifstream(CGAL::data_file_path("meshes/cross_quad.off")) >> tm1;
+  PMP::triangulate_faces(tm1);
+  PMP::split(tm1, K::Plane_3(0,1,1,-3));
+  assert(nb_connected_components(tm1)==2);
+  CGAL::clear(tm1);
+
+
 }
 
 template <class TriangleMesh>

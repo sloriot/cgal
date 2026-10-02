@@ -1039,6 +1039,7 @@ bool clip(PolygonMesh& pm,
   using parameters::choose_parameter;
   using parameters::get_parameter;
   using parameters::get_parameter_reference;
+  using parameters::is_default_parameter;
 
   bool use_convex_specialization = choose_parameter(get_parameter(np, internal_np::use_convex_specialization), false);
   if(use_convex_specialization){
@@ -1078,8 +1079,6 @@ bool clip(PolygonMesh& pm,
     choose_parameter(get_parameter(np, internal_np::allow_self_intersections), false);
   bool triangulate = !choose_parameter(get_parameter(np, internal_np::do_not_triangulate_faces), false);
   constexpr bool traits_supports_cdt2 = !internal::Has_member_Does_not_support_CDT2<GT>::value;
-  auto vos = get(dynamic_vertex_property_t<Oriented_side>(), pm);
-
   using Default_ecm = Static_boolean_property_map<edge_descriptor, false>;
   auto ecm = choose_parameter<Default_ecm>(get_parameter(np, internal_np::edge_is_constrained));
   auto edge_is_marked_map = get(dynamic_edge_property_t<bool>(), pm, false);
@@ -1088,6 +1087,19 @@ bool clip(PolygonMesh& pm,
 
   if (traits_supports_cdt2 && triangulate && !is_triangle_mesh(pm))
     triangulate = false;
+
+  static constexpr bool use_default_vosm =
+    is_default_parameter<NamedParameters, internal_np::vertex_oriented_side_map_t>::value;
+
+  using V_os_tag = dynamic_vertex_property_t<Oriented_side>;
+  using Vertex_oriented_side_map =
+    std::conditional_t<use_default_vosm,
+                       typename boost::property_map<PolygonMesh, V_os_tag>::type,
+                       typename internal_np::Get_param<typename NamedParameters::base,
+                                                       internal_np::vertex_oriented_side_map_t>::type>;
+
+  Vertex_oriented_side_map vos =
+    choose_parameter(get_parameter(np, internal_np::vertex_oriented_side_map), V_os_tag(), pm);
 
   refine_with_plane(pm, plane, parameters::vertex_oriented_side_map(vos)
                                           .edge_is_marked_map(edge_is_marked_map)
@@ -1375,6 +1387,24 @@ void split(TriangleMesh& tm,
   internal::split_along_edges(tm, ecm, vpm_tm, uv);
 }
 
+
+template <class PolygonMesh>
+struct Collect_marked_edge_map
+{
+  using edge_descriptor = typename boost::graph_traits<PolygonMesh>::edge_descriptor;
+  std::vector<edge_descriptor>& marked_edges;
+  friend void put(Collect_marked_edge_map m, edge_descriptor ed, bool t)
+  {
+    if (!t)
+      throw std::runtime_error("Unexpected value");
+    m.marked_edges.push_back(ed);
+  }
+
+  Collect_marked_edge_map(std::vector<edge_descriptor>& marked_edges)
+    : marked_edges(marked_edges)
+  {}
+};
+
 /**
   * \ingroup PMP_clip_grp
   *
@@ -1450,6 +1480,7 @@ void split(PolygonMesh& pm,
   using parameters::choose_parameter;
   using parameters::get_parameter;
   using parameters::get_parameter_reference;
+  using parameters::is_default_parameter;
 
   using GT = typename GetGeomTraits<PolygonMesh, NamedParameters>::type;
   GT traits = choose_parameter<GT>(get_parameter(np, internal_np::geom_traits));
@@ -1462,13 +1493,29 @@ void split(PolygonMesh& pm,
     Sequential_tag
   > ::type Concurrency_tag;
 
+  typedef typename boost::graph_traits<PolygonMesh>::edge_descriptor edge_descriptor;
+
   // config flags
   const bool throw_on_self_intersection =
     choose_parameter(get_parameter(np, internal_np::throw_on_self_intersection), false);
   bool triangulate = !choose_parameter(get_parameter(np, internal_np::do_not_triangulate_faces), false);
 
-  auto vos = get(dynamic_vertex_property_t<Oriented_side>(), pm);
-  auto ecm = get(dynamic_edge_property_t<bool>(), pm, false);
+
+  static constexpr bool use_default_vosm =
+    is_default_parameter<NamedParameters, internal_np::vertex_oriented_side_map_t>::value;
+
+  using V_os_tag = dynamic_vertex_property_t<Oriented_side>;
+  using Vertex_oriented_side_map =
+    std::conditional_t<use_default_vosm,
+                       typename boost::property_map<PolygonMesh, V_os_tag>::type,
+                       typename internal_np::Get_param<typename NamedParameters::base,
+                                                       internal_np::vertex_oriented_side_map_t>::type>;
+
+  Vertex_oriented_side_map vos =
+    choose_parameter(get_parameter(np, internal_np::vertex_oriented_side_map), V_os_tag(), pm);
+
+  std::vector<edge_descriptor> marked_edges;
+  Collect_marked_edge_map<PolygonMesh> marked_edge_collector(marked_edges);
 
   if (triangulate && !is_triangle_mesh(pm))
     triangulate = false;
@@ -1479,7 +1526,8 @@ void split(PolygonMesh& pm,
   Visitor_ref visitor = choose_parameter(get_parameter_reference(np, internal_np::visitor), default_visitor);
 
   refine_with_plane(pm, plane, parameters::vertex_oriented_side_map(vos)
-                                          .edge_is_marked_map(ecm)
+                                          .read_vertex_oriented_side_map(!use_default_vosm)
+                                          .edge_is_marked_map(marked_edge_collector)
                                           .vertex_point_map(vpm)
                                           .geom_traits(traits)
                                           .do_not_triangulate_faces(!triangulate)
@@ -1487,6 +1535,73 @@ void split(PolygonMesh& pm,
                                           .concurrency_tag(Concurrency_tag())
                                           .visitor(std::ref(visitor)));
 
+  //get rid of coplanar patches and tangent lines
+  // --> TODO: not entirely working if you think at the top of a volcano...
+
+  auto ecm = get(dynamic_edge_property_t<bool>(), pm, false);
+
+  for (auto e : marked_edges)
+  {
+    put(ecm, e, true);
+  }
+
+    std::cout << "marked_edges.size() " << marked_edges.size() << "\n";
+
+  std::vector<edge_descriptor> edges_to_unmark;
+  for (auto e : marked_edges)
+  {
+    auto h = halfedge(e, pm);
+    bool remove_mark=true;
+    if (!is_border(h, pm) && !get(ecm, edge(next(h, pm), pm)))
+      remove_mark=false;
+    else
+    {
+      h=opposite(h, pm);
+      if (!is_border(h, pm) && !get(ecm, edge(next(h, pm), pm)))
+        remove_mark=false;
+    }
+
+    if (remove_mark)
+      edges_to_unmark.push_back(e);
+  }
+
+  std::cout << "edges_to_unmark.size() " << edges_to_unmark.size() << "\n";
+
+  for (auto e : edges_to_unmark)
+    put(ecm, e, false);
+/*
+  do
+  {
+    edges_to_unmark.clear();
+
+    for (auto e : marked_edges)
+    {
+      if (get(ecm,e))
+      {
+        auto h1 = halfedge(e, pm);
+        int n=0;
+        for (auto h : halfedges_around_target(h1, pm))
+          if (get(ecm, edge(h, pm)))
+            ++n;
+        if (n!=1)
+        {
+          n=0;
+          for (auto h : halfedges_around_source(h1, pm))
+            if (get(ecm, edge(h, pm)))
+              ++n;
+          if (n==1)
+            edges_to_unmark.push_back(e);
+        }
+        else
+          edges_to_unmark.push_back(e);
+      }
+    }
+
+    for (auto e : edges_to_unmark)
+      put(ecm, e, false);
+  }
+  while(!edges_to_unmark.empty());
+*/
   //split mesh along marked edges
   internal::split_along_edges(pm, ecm, vpm, visitor);
 }

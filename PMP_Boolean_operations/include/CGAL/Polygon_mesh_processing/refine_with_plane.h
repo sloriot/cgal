@@ -211,7 +211,7 @@ struct Orthogonal_cut_plane_traits
  *    \cgalParamNEnd
  *
  *    \cgalParamNBegin{use_convex_specialization}
- *      \cgalParamDescription{If set to `true`, a faster implementation specialized for convex meshes is used. The input mesh must be convex and have no flat vertices to guarantee a correct execution and results.}
+ *      \cgalParamDescription{If set to `true`, a faster implementation specialized for convex meshes is used. The input mesh must be convex to guarantee a correct execution and results.}
  *      \cgalParamType{Boolean}
  *      \cgalParamDefault{`false`}
  *      \cgalParamExtra{convex specialization is only used if `edge_is_constrained_map`, `edge_is_marked_map` and `vertex_oriented_side_map` are unused.}
@@ -339,24 +339,25 @@ void refine_with_plane(PolygonMesh& pm,
                        typename internal_np::Get_param<typename NamedParameters::base,
                                                        internal_np::vertex_oriented_side_map_t>::type>;
 
-
-  Vertex_oriented_side_map vertex_os;
-  if constexpr (use_default_vosm)
-    vertex_os = get(V_os_tag(), pm);
-  else
-    vertex_os = get_parameter(np, internal_np::vertex_oriented_side_map);
+  Vertex_oriented_side_map vertex_os =
+    choose_parameter(get_parameter(np, internal_np::vertex_oriented_side_map), V_os_tag(), pm);
 
   std::vector<edge_descriptor> inters;
+
+  bool read_vos = choose_parameter(get_parameter(np, internal_np::read_vertex_oriented_side_map),false);
 
   bool all_in = true;
   bool all_out = true;
   bool at_least_one_on = false;
+
   std::vector<vertex_descriptor> on_obnd;
   //TODO: parallel for
   for (vertex_descriptor v : vertices(pm))
   {
-    Oriented_side os = oriented_side(plane,  get(vpm, v));
-    put(vertex_os,v,os);
+    Oriented_side os = read_vos ? get(vertex_os,v) : oriented_side(plane,  get(vpm, v));
+    CGAL_assertion(os == oriented_side(plane,  get(vpm, v)));
+    if (!read_vos)
+      put(vertex_os,v,os);
     switch(os)
     {
       case ON_POSITIVE_SIDE:
@@ -456,6 +457,7 @@ void refine_with_plane(PolygonMesh& pm,
 
     bool was_marked = get(ecm, edge(h, pm));
     visitor.before_edge_split(h, pm);
+
     h = CGAL::Euler::split_edge(h, pm);
     put(vpm, target(h, pm), ip);
     visitor.new_vertex_added(vid, target(h,pm), pm);
