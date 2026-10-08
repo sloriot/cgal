@@ -522,22 +522,33 @@ clip_to_bbox(const Plane_3& plane,
   return ON_ORIENTED_BOUNDARY;
 }
 
-template <class TriangleMesh, class Ecm, class VPM, class UserVisitor>
-void split_along_edges(TriangleMesh& tm,
-                       Ecm ecm,
-                       VPM vpm,
-                       UserVisitor& user_visitor)
+template <class PolygonMesh>
+struct Collect_marked_edge_map
+{
+  using edge_descriptor = typename boost::graph_traits<PolygonMesh>::edge_descriptor;
+  std::vector<edge_descriptor>& marked_edges;
+  friend void put(Collect_marked_edge_map m, edge_descriptor ed, bool t)
+  {
+    CGAL_USE(t);
+    CGAL_assertion(t);
+    m.marked_edges.push_back(ed);
+  }
+
+  Collect_marked_edge_map(std::vector<edge_descriptor>& marked_edges)
+    : marked_edges(marked_edges)
+  {}
+};
+
+template <class TriangleMesh, class edge_descriptor, class VPM, class UserVisitor>
+void split_along_edges_impl(TriangleMesh& tm,
+                            std::vector<edge_descriptor>& shared_edges,
+                            VPM vpm,
+                            UserVisitor& user_visitor)
 {
   typedef boost::graph_traits<TriangleMesh> GT;
   typedef typename GT::face_descriptor face_descriptor;
-  typedef typename GT::edge_descriptor edge_descriptor;
   typedef typename GT::vertex_descriptor vertex_descriptor;
   typedef typename GT::halfedge_descriptor halfedge_descriptor;
-
-  std::vector<edge_descriptor> shared_edges;
-  for(edge_descriptor e : edges(tm))
-    if(get(ecm, e))
-      shared_edges.push_back(e);
 
   std::size_t nb_shared_edges = shared_edges.size();
   std::vector<halfedge_descriptor> hedges_to_update;
@@ -659,6 +670,22 @@ void split_along_edges(TriangleMesh& tm,
   }
 
   CGAL_assertion(is_valid_polygon_mesh(tm));
+}
+
+template <class TriangleMesh, class Ecm, class VPM, class UserVisitor>
+void split_along_edges(TriangleMesh& tm,
+                       Ecm ecm,
+                       VPM vpm,
+                       UserVisitor& user_visitor)
+{
+  typedef boost::graph_traits<TriangleMesh> GT;
+  typedef typename GT::edge_descriptor edge_descriptor;
+
+  std::vector<edge_descriptor> shared_edges;
+  for(edge_descriptor e : edges(tm))
+    if(get(ecm, e))
+      shared_edges.push_back(e);
+  split_along_edges_impl(tm, shared_edges, vpm, user_visitor);
 }
 
 template <class TriangleMesh,
@@ -1475,12 +1502,13 @@ void split(PolygonMesh& pm,
     Sequential_tag
   > ::type Concurrency_tag;
 
+  typedef typename boost::graph_traits<PolygonMesh>::edge_descriptor edge_descriptor;
+
   // config flags
   const bool throw_on_self_intersection =
     choose_parameter(get_parameter(np, internal_np::throw_on_self_intersection), false);
   bool triangulate = !choose_parameter(get_parameter(np, internal_np::do_not_triangulate_faces), false);
 
-  auto ecm = get(dynamic_edge_property_t<bool>(), pm, false);
 
   static constexpr bool use_default_vosm =
     is_default_parameter<NamedParameters, internal_np::vertex_oriented_side_map_t>::value;
@@ -1495,6 +1523,9 @@ void split(PolygonMesh& pm,
   Vertex_oriented_side_map vos =
     choose_parameter(get_parameter(np, internal_np::vertex_oriented_side_map), V_os_tag(), pm);
 
+  std::vector<edge_descriptor> marked_edges;
+  internal::Collect_marked_edge_map<PolygonMesh> marked_edge_collector(marked_edges);
+
   if (triangulate && !is_triangle_mesh(pm))
     triangulate = false;
 
@@ -1505,7 +1536,7 @@ void split(PolygonMesh& pm,
 
   refine_with_plane(pm, plane, parameters::vertex_oriented_side_map(vos)
                                           .read_vertex_oriented_side_map(!use_default_vosm)
-                                          .edge_is_marked_map(ecm)
+                                          .edge_is_marked_map(marked_edge_collector)
                                           .vertex_point_map(vpm)
                                           .geom_traits(traits)
                                           .do_not_mark_intersection_polylines(true)
@@ -1515,7 +1546,7 @@ void split(PolygonMesh& pm,
                                           .visitor(std::ref(visitor)));
 
   //split mesh along marked edges
-  internal::split_along_edges(pm, ecm, vpm, visitor);
+  internal::split_along_edges_impl(pm, marked_edges, vpm, visitor);
 }
 
 
